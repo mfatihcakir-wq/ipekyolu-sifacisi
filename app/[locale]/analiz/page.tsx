@@ -33,6 +33,7 @@ const s = {
 
 export default function AnalizForm() {
   const router = useRouter()
+  const [adim, setAdim] = useState(1)
   const [form, setForm] = useState({
     ad_soyad: '', telefon: '', age_group: '', gender: '', pregnancy: 'hayir',
     sikayet_suresi: '', chronic: 'yok', season: '', climate: '', temp_feel: '', location: '',
@@ -95,17 +96,63 @@ export default function AnalizForm() {
         </button>
       </header>
 
+      {/* PROGRESS BAR */}
+      <div style={{ background: C.white, borderBottom: `1px solid ${C.border}`, padding: '12px 24px' }}>
+        <div style={{ maxWidth: 900, margin: '0 auto' }}>
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 10 }}>
+            <div style={{ fontSize: 13, color: C.secondary, fontFamily: cinzel.style.fontFamily, letterSpacing: 1 }}>
+              {"Adım"} {adim} / 8
+            </div>
+            <div style={{ fontSize: 12, color: '#999' }}>{"Otomatik kaydedilir"}</div>
+          </div>
+          <div style={{ height: 4, background: C.border, borderRadius: 2, marginBottom: 12 }}>
+            <div style={{ height: 4, background: C.gold, borderRadius: 2, width: `${(adim / 8) * 100}%`, transition: 'width 0.3s ease' }} />
+          </div>
+          <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap' as const }}>
+            {[
+              '1 Kisisel', '2 Cevre', '3 Nabiz', '4 Dil/Yuz',
+              '5 Vucut', '6 Lab', '7 Fitri', '8 Sikayet'
+            ].map((label, i) => {
+              const stepNum = i + 1
+              const isDone = stepNum < adim
+              const isActive = stepNum === adim
+              return (
+                <button
+                  key={stepNum}
+                  onClick={() => setAdim(stepNum)}
+                  style={{
+                    padding: '4px 12px',
+                    borderRadius: 20,
+                    border: `1px solid ${isActive ? C.gold : isDone ? C.primary : C.border}`,
+                    background: isActive ? C.gold : isDone ? C.primary : C.white,
+                    color: isActive ? C.primary : isDone ? C.gold : '#999',
+                    fontSize: 11,
+                    fontWeight: isActive ? 600 : 400,
+                    cursor: 'pointer',
+                    opacity: stepNum > adim + 1 ? 0.5 : 1,
+                  }}
+                >
+                  {isDone ? '\u2713 ' : ''}{label}
+                </button>
+              )
+            })}
+          </div>
+        </div>
+      </div>
+
       <div style={{ maxWidth: 860, margin: '0 auto', padding: '32px 20px 80px' }}>
 
         <div style={{ textAlign: 'center', marginBottom: 32 }}>
-          <h1 style={{ fontFamily: cinzel.style.fontFamily, fontSize: 26, fontWeight: 500, color: C.primary, marginBottom: 8 }}>Mizaç Analiz Formu</h1>
-          <p style={{ fontSize: 16, color: C.secondary, fontStyle: 'italic', maxWidth: 560, margin: '0 auto' }}>Bilgileriniz danışmanınıza iletilecektir. Formu eksiksiz doldurun.</p>
+          <h1 style={{ fontFamily: cinzel.style.fontFamily, fontSize: 26, fontWeight: 500, color: C.primary, marginBottom: 8 }}>{"Mizaç Analiz Formu"}</h1>
+          <p style={{ fontSize: 16, color: C.secondary, fontStyle: 'italic', maxWidth: 560, margin: '0 auto' }}>{"Bilgileriniz danışmanınıza iletilecektir. Formu eksiksiz doldurun."}</p>
         </div>
 
         <div style={{ background: '#FFF8E7', border: `1px solid ${C.gold}`, borderRadius: 12, padding: '12px 18px', marginBottom: 24, fontSize: 13, color: C.secondary }}>
-          Tüm bilgiler KVKK kapsamında korunur. Üçüncü taraflarla paylaşılmaz.
+          {"Tüm bilgiler KVKK kapsamında korunur. Üçüncü taraflarla paylaşılmaz."}
         </div>
 
+        {/* === ADIM 1: KİŞİSEL === */}
+        <div style={{ display: adim === 1 ? 'block' : 'none' }}>
         {/* 1. KİŞİSEL BİLGİLER */}
         <div style={s.sectionTitle}>
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
@@ -181,6 +228,13 @@ export default function AnalizForm() {
           </div>
         </div>
 
+        <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: 24 }}>
+          <button onClick={() => setAdim(2)} style={{ padding: '10px 28px', background: C.primary, border: 'none', borderRadius: 8, color: C.gold, cursor: 'pointer', fontSize: 13, fontWeight: 600, fontFamily: cinzel.style.fontFamily }}>{"İleri →"}</button>
+        </div>
+        </div>
+
+        {/* === ADIM 2: ÇEVRE === */}
+        <div style={{ display: adim === 2 ? 'block' : 'none' }}>
         {/* 2. MEVSİM & ÇEVRE */}
         <div style={s.sectionTitle}>
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/></svg>
@@ -228,6 +282,14 @@ export default function AnalizForm() {
           </div>
         </div>
 
+        <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: 24 }}>
+          <button onClick={() => setAdim(1)} style={{ padding: '10px 24px', border: `1px solid ${C.border}`, borderRadius: 8, background: C.white, color: C.secondary, cursor: 'pointer', fontSize: 13 }}>{"← Geri"}</button>
+          <button onClick={() => setAdim(3)} style={{ padding: '10px 28px', background: C.primary, border: 'none', borderRadius: 8, color: C.gold, cursor: 'pointer', fontSize: 13, fontWeight: 600, fontFamily: cinzel.style.fontFamily }}>{"İleri →"}</button>
+        </div>
+        </div>
+
+        {/* === ADIM 3: NABIZ === */}
+        <div style={{ display: adim === 3 ? 'block' : 'none' }}>
         {/* 3. NABIZ */}
         <div style={s.sectionTitle}>
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
@@ -258,6 +320,14 @@ export default function AnalizForm() {
           </div>
         </div>
 
+        <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: 24 }}>
+          <button onClick={() => setAdim(2)} style={{ padding: '10px 24px', border: `1px solid ${C.border}`, borderRadius: 8, background: C.white, color: C.secondary, cursor: 'pointer', fontSize: 13 }}>{"← Geri"}</button>
+          <button onClick={() => setAdim(4)} style={{ padding: '10px 28px', background: C.primary, border: 'none', borderRadius: 8, color: C.gold, cursor: 'pointer', fontSize: 13, fontWeight: 600, fontFamily: cinzel.style.fontFamily }}>{"İleri →"}</button>
+        </div>
+        </div>
+
+        {/* === ADIM 4: DİL/YÜZ === */}
+        <div style={{ display: adim === 4 ? 'block' : 'none' }}>
         {/* 4. DİL & YÜZ */}
         <div style={s.sectionTitle}>
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="3"/></svg>
@@ -299,6 +369,14 @@ export default function AnalizForm() {
           </div>
         </div>
 
+        <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: 24 }}>
+          <button onClick={() => setAdim(3)} style={{ padding: '10px 24px', border: `1px solid ${C.border}`, borderRadius: 8, background: C.white, color: C.secondary, cursor: 'pointer', fontSize: 13 }}>{"← Geri"}</button>
+          <button onClick={() => setAdim(5)} style={{ padding: '10px 28px', background: C.primary, border: 'none', borderRadius: 8, color: C.gold, cursor: 'pointer', fontSize: 13, fontWeight: 600, fontFamily: cinzel.style.fontFamily }}>{"İleri →"}</button>
+        </div>
+        </div>
+
+        {/* === ADIM 5: VÜCUT === */}
+        <div style={{ display: adim === 5 ? 'block' : 'none' }}>
         {/* 5. VÜCUT GÖSTERGELERİ */}
         <div style={s.sectionTitle}>
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M12 2a10 10 0 100 20A10 10 0 0012 2z"/><path d="M12 8v4l3 3"/></svg>
@@ -417,6 +495,14 @@ export default function AnalizForm() {
           </div>
         </div>
 
+        <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: 24 }}>
+          <button onClick={() => setAdim(4)} style={{ padding: '10px 24px', border: `1px solid ${C.border}`, borderRadius: 8, background: C.white, color: C.secondary, cursor: 'pointer', fontSize: 13 }}>{"← Geri"}</button>
+          <button onClick={() => setAdim(6)} style={{ padding: '10px 28px', background: C.primary, border: 'none', borderRadius: 8, color: C.gold, cursor: 'pointer', fontSize: 13, fontWeight: 600, fontFamily: cinzel.style.fontFamily }}>{"İleri →"}</button>
+        </div>
+        </div>
+
+        {/* === ADIM 6: İDRAR + LAB === */}
+        <div style={{ display: adim === 6 ? 'block' : 'none' }}>
         {/* 6. İDRAR & DIŞKI */}
         <div style={s.sectionTitle}>
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2z"/><path d="M12 8v8M8 12h8"/></svg>
@@ -535,6 +621,14 @@ export default function AnalizForm() {
           </div>
         </div>
 
+        <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: 24 }}>
+          <button onClick={() => setAdim(5)} style={{ padding: '10px 24px', border: `1px solid ${C.border}`, borderRadius: 8, background: C.white, color: C.secondary, cursor: 'pointer', fontSize: 13 }}>{"← Geri"}</button>
+          <button onClick={() => setAdim(7)} style={{ padding: '10px 28px', background: C.primary, border: 'none', borderRadius: 8, color: C.gold, cursor: 'pointer', fontSize: 13, fontWeight: 600, fontFamily: cinzel.style.fontFamily }}>{"İleri →"}</button>
+        </div>
+        </div>
+
+        {/* === ADIM 7: YAŞAM + FITRİ === */}
+        <div style={{ display: adim === 7 ? 'block' : 'none' }}>
         {/* 7. YAŞAM TARZI */}
         <div style={s.sectionTitle}>
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
@@ -597,6 +691,14 @@ export default function AnalizForm() {
           </div>
         </div>
 
+        <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: 24 }}>
+          <button onClick={() => setAdim(6)} style={{ padding: '10px 24px', border: `1px solid ${C.border}`, borderRadius: 8, background: C.white, color: C.secondary, cursor: 'pointer', fontSize: 13 }}>{"← Geri"}</button>
+          <button onClick={() => setAdim(8)} style={{ padding: '10px 28px', background: C.primary, border: 'none', borderRadius: 8, color: C.gold, cursor: 'pointer', fontSize: 13, fontWeight: 600, fontFamily: cinzel.style.fontFamily }}>{"İleri →"}</button>
+        </div>
+        </div>
+
+        {/* === ADIM 8: ŞİKAYETLER + SUBMIT === */}
+        <div style={{ display: adim === 8 ? 'block' : 'none' }}>
         {/* 8. ŞİKAYETLER */}
         <div style={s.sectionTitle}>
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
@@ -621,21 +723,9 @@ export default function AnalizForm() {
           </label>
         </div>
 
-        <div style={{ background: 'white', borderRadius: 12, border: '1px solid #E0D5C5', padding: '16px 20px', marginBottom: 16 }}>
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 8 }}>
-            <span style={{ fontSize: 11, color: '#5C4A2A', fontWeight: 600, letterSpacing: 1 }}>FORM TAMAMLANDI MI?</span>
-            <span style={{ fontSize: 11, color: '#1B4332', fontWeight: 600 }}>Zorunlu alanları doldurun</span>
-          </div>
-          <div style={{ display: 'flex', gap: 4 }}>
-            {['Kişisel', 'Çevre', 'Nabız', 'Dil/Yüz', 'Vücut', 'Lab', 'Fıtrî', 'Şikayet'].map((b) => (
-              <div key={b} style={{ flex: 1, height: 4, borderRadius: 2, background: '#E0D5C5' }} title={b} />
-            ))}
-          </div>
-          <div style={{ display: 'flex', gap: 4, marginTop: 4 }}>
-            {['Kişisel', 'Çevre', 'Nabız', 'Dil/Yüz', 'Vücut', 'Lab', 'Fıtrî', 'Şikayet'].map((b) => (
-              <div key={b} style={{ flex: 1, fontSize: 9, color: '#999', textAlign: 'center' as const, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' as const }}>{b}</div>
-            ))}
-          </div>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: 24 }}>
+          <button onClick={() => setAdim(7)} style={{ padding: '10px 24px', border: `1px solid ${C.border}`, borderRadius: 8, background: C.white, color: C.secondary, cursor: 'pointer', fontSize: 13 }}>{"← Geri"}</button>
+          <div style={{ fontSize: 11, color: '#999' }}>{"8 / 8 — Son adım"}</div>
         </div>
 
         <button
@@ -646,8 +736,10 @@ export default function AnalizForm() {
         </button>
 
         <p style={{ textAlign: 'center', fontSize: 13, color: '#999', marginTop: 16, fontStyle: 'italic' }}>
-          Danışmanınız 24-48 saat içinde WhatsApp üzerinden size ulaşacaktır.
+          {"Danışmanınız 24-48 saat içinde WhatsApp üzerinden size ulaşacaktır."}
         </p>
+        </div>
+        {/* === ADIM 8 SONU === */}
 
       </div>
     </div>
