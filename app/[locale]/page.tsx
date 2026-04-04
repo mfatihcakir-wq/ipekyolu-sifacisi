@@ -682,9 +682,9 @@ export default function LandingPage() {
           <div style={{ fontSize: 11, color: '#999', letterSpacing: 2, marginBottom: 16, fontFamily: cinzel.style.fontFamily }}>{"KULLANICI DENEYİMLERİ"}</div>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: 16 }}>
             {[
-              { yorum: 'Yillarca cozum bulamadigim yorgunluk sikayetim icin verilen protokol 3 haftada fark yaratti.', ad: 'A.K.', sehir: 'Istanbul' },
-              { yorum: 'Nabiz ve dil degerlerime gore yapilan analiz bana cok ozgun geldi. Baska hicbir yerde gormedigim bir yaklasim.', ad: 'M.Y.', sehir: 'Ankara' },
-              { yorum: 'Klasik kaynaklara dayanan, bilimsel temelli bir danismanlik ariyordum. Tam aradigim buydu.', ad: 'F.D.', sehir: 'Izmir' },
+              { yorum: 'Y\u0131llarca \u00e7\u00f6z\u00fcm bulamad\u0131\u011f\u0131m yorgunluk \u015fikayetim i\u00e7in verilen protokol 3 haftada fark yaratt\u0131.', ad: 'A.K.', sehir: '\u0130stanbul' },
+              { yorum: 'Nab\u0131z ve dil de\u011ferlerime g\u00f6re yap\u0131lan analiz bana \u00e7ok \u00f6zg\u00fcn geldi. Ba\u015fka hi\u00e7bir yerde g\u00f6rmedi\u011fim bir yakla\u015f\u0131m.', ad: 'M.Y.', sehir: 'Ankara' },
+              { yorum: 'Klasik kaynaklara dayanan, bilimsel temelli bir dan\u0131\u015fmanl\u0131k ar\u0131yordum. Tam arad\u0131\u011f\u0131m buydu.', ad: 'F.D.', sehir: '\u0130zmir' },
             ].map((t, i) => (
               <div key={i} style={{ background: COLORS.white, borderRadius: 10, padding: '16px 20px', border: '1px solid #E0D5C5' }}>
                 <div style={{ fontSize: 24, color: COLORS.gold, marginBottom: 8, lineHeight: 1 }}>{'"'}</div>
