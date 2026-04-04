@@ -328,17 +328,17 @@ export default function AnalizForm() {
           <div style={s.tip}>İbn Sînâ el-Kânûn: Nabız mizacın doğrudan aynasıdır. 9 sıfatın tümü değerlendirilmelidir.</div>
           <div style={s.grid3}>
             {[
-              { key: 'nb_buyukluk', label: 'Büyüklük', ar: 'الكبر والصغر', opts: [['orta','Orta'],['buyuk','Büyük'],['kucuk','Küçük']] },
-              { key: 'nb_kuvvet', label: 'Kuvvet', ar: 'القوة والضعف', opts: [['orta','Orta'],['kuvvetli','Kuvvetli'],['zayif','Zayıf']] },
-              { key: 'nb_hiz_sinif', label: 'Hız', ar: 'السرعة والبطء', opts: [['orta','Orta'],['hizli','Hızlı (>90)'],['yavas','Yavaş (<60)']] },
-              { key: 'nb_dolgunluk', label: 'Dolgunluk', ar: 'الامتلاء والخواء', opts: [['orta','Orta'],['dolu','Dolu'],['bos','Boş']] },
-              { key: 'nb_sertlik', label: 'Sertlik', ar: 'الصلابة واللين', opts: [['orta','Orta'],['sert','Sert'],['yumusak','Yumuşak']] },
-              { key: 'nb_isi', label: 'Isı', ar: 'الحرارة والبرودة', opts: [['ilik','Ilık'],['sicak','Sıcak'],['soguk','Soğuk']] },
-              { key: 'nb_ritim', label: 'Ritim', ar: 'الانتظام', opts: [['muntazam','Muntazam'],['hafif_duzensiz','Hafif düzensiz'],['duzensiz','Düzensiz']] },
-              { key: 'nb_esitlik', label: 'Eşitlik', ar: 'التساوي', opts: [['esit','Eşit'],['hafif_esitsiz','Hafif eşitsiz'],['esitsiz','Eşitsiz']] },
-              { key: 'nb_sureklitik', label: 'Süreklilik', ar: 'الاتصال والانقطاع', opts: [['surekli','Sürekli'],['hafif_kesik','Hafif kesik'],['kesik','Kesik']] },
+              { key: 'nb_buyukluk', label: 'Büyüklük', ar: 'الكبر والصغر', tip: 'İbn Sînâ: Büyük nabız → kan ve hararet fazlası; Küçük → balgam/soğukluk', opts: [['orta','Orta'],['buyuk','Büyük'],['kucuk','Küçük']] },
+              { key: 'nb_kuvvet', label: 'Kuvvet', ar: 'القوة والضعف', tip: 'İbn Sînâ: Kuvvetli nabız → güçlü ruh; Zayıf → yorgunluk, kuvvet azalması', opts: [['orta','Orta'],['kuvvetli','Kuvvetli'],['zayif','Zayıf']] },
+              { key: 'nb_hiz_sinif', label: 'Hız', ar: 'السرعة والبطء', tip: 'İbn Sînâ: Hızlı nabız → hararet fazlası; Yavaş → soğukluk baskınlığı', opts: [['orta','Orta'],['hizli','Hızlı (>90)'],['yavas','Yavaş (<60)']] },
+              { key: 'nb_dolgunluk', label: 'Dolgunluk', ar: 'الامتلاء والخواء', tip: 'İbn Sînâ: Dolu nabız → dem fazlası; Boş → kuruluk veya kansızlık', opts: [['orta','Orta'],['dolu','Dolu'],['bos','Boş']] },
+              { key: 'nb_sertlik', label: 'Sertlik', ar: 'الصلابة واللين', tip: 'İbn Sînâ: Sert nabız → ateş/yangı; Yumuşak → balgam veya nem fazlası', opts: [['orta','Orta'],['sert','Sert'],['yumusak','Yumuşak']] },
+              { key: 'nb_isi', label: 'Isı', ar: 'الحرارة والبرودة', tip: 'İbn Sînâ: Sıcak nabız → safrâvî/demevî; Soğuk → balgamî/sevdâvî', opts: [['ilik','Ilık'],['sicak','Sıcak'],['soguk','Soğuk']] },
+              { key: 'nb_ritim', label: 'Ritim', ar: 'الانتظام', tip: 'İbn Sînâ: Düzensiz nabız → kalp güçsüzlüğü veya ağır hastalık', opts: [['muntazam','Muntazam'],['hafif_duzensiz','Hafif düzensiz'],['duzensiz','Düzensiz']] },
+              { key: 'nb_esitlik', label: 'Eşitlik', ar: 'التساوي', tip: 'İbn Sînâ: Eşitsiz nabız → mizaç bozukluğu; ağır hastalıkta görülür', opts: [['esit','Eşit'],['hafif_esitsiz','Hafif eşitsiz'],['esitsiz','Eşitsiz']] },
+              { key: 'nb_sureklitik', label: 'Süreklilik', ar: 'الاتصال والانقطاع', tip: 'İbn Sînâ: Kesik nabız → kuvvet tükenmesi; çok ciddi belirti', opts: [['surekli','Sürekli'],['hafif_kesik','Hafif kesik'],['kesik','Kesik']] },
             ].map(f => (
-              <div key={f.key}>
+              <div key={f.key} title={f.tip}>
                 <label style={s.label}>{f.label}</label>
                 <span style={s.labelAr}>{f.ar}</span>
                 <select style={s.select} value={(form as Record<string, string | boolean>)[f.key] as string} onChange={e => set(f.key, e.target.value)}>
@@ -363,6 +363,7 @@ export default function AnalizForm() {
           Dil ve Yüz Gözlemi
         </div>
         <div style={s.card}>
+          <div style={s.tip}>İbn Sînâ: Dil ve yüz rengi, mizacın görünür aynasıdır. Üç kanal (nabız+idrar+yüz) örtüşüyorsa teşhis kesindir.</div>
           <div style={{ fontSize: 12, fontWeight: 600, color: C.primary, marginBottom: 10, letterSpacing: 1 }}>DİL MUAYENESİ</div>
           <div style={s.grid2}>
             {[
@@ -583,6 +584,7 @@ export default function AnalizForm() {
           <div style={s.tip}>Tahlil değerleriniz varsa girin. Yoksa atlayabilirsiniz — analiz yine de yapılacaktır.</div>
 
           <div style={{ fontSize: 12, fontWeight: 600, color: C.primary, marginBottom: 10, letterSpacing: 1 }}>KAN SAYIMI</div>
+          <div style={s.tip}>el-Kânûn Kitab 1 — İbn Sînâ: Hemoglobin kan hıltının miktarını ve kalitesini gösterir; düşüklüğü soğuk-nemli mizaca işaret eder. CRP ve Sedimantasyon vücuttaki yangıyı sayısal olarak ölçer — safra baskısının nesnel kanıtıdır.</div>
           <div style={{ ...s.grid3, marginBottom: 12 }}>
             <div>
               <label style={s.label}>HGB (g/dL)</label>
@@ -607,6 +609,7 @@ export default function AnalizForm() {
           </div>
 
           <div style={{ fontSize: 12, fontWeight: 600, color: C.primary, marginBottom: 10, letterSpacing: 1 }}>KARACİĞER & SAFRA</div>
+          <div style={s.tip}>el-Kânûn Kitab 3 — Karaciğer: Sarı safra karaciğerde üretilir, AST/ALT/GGT bu organın sağlığını gösterir. Ürik asit kara safra birikiminin somut ölçütüdür.</div>
           <div style={{ ...s.grid3, marginBottom: 12 }}>
             <div>
               <label style={s.label}>ALT (U/L)</label>
@@ -627,6 +630,7 @@ export default function AnalizForm() {
           </div>
 
           <div style={{ fontSize: 12, fontWeight: 600, color: C.primary, marginBottom: 10, letterSpacing: 1 }}>TİROİD — TABİÎ HARARET</div>
+          <div style={s.tip}>el-Kânûn — Tabiî Hararet: TSH yüksekliği → yavaş metabolizma → balgam baskınlığı. TSH düşüklüğü → hızlı metabolizma → safra baskınlığı.</div>
           <div style={{ ...s.grid2, marginBottom: 12 }}>
             <div>
               <label style={s.label}>TSH (mIU/L)</label>
@@ -647,6 +651,7 @@ export default function AnalizForm() {
           </div>
 
           <div style={{ fontSize: 12, fontWeight: 600, color: C.primary, marginBottom: 10, letterSpacing: 1 }}>ŞEKER METABOLİZMASI</div>
+          <div style={s.tip}>{"el-Kânûn Kitab 3 — Ziyabitus: İbn Sînâ diyabeti \"böbreklerin iç rutubeti tutamaması\" olarak tanımlar; balgam baskınlığının böbreğe yansımasıdır."}</div>
           <div style={{ ...s.grid2, marginBottom: 12 }}>
             <div>
               <label style={s.label}>Açlık Glukozu (mg/dL)</label>
@@ -659,6 +664,7 @@ export default function AnalizForm() {
           </div>
 
           <div style={{ fontSize: 12, fontWeight: 600, color: C.primary, marginBottom: 10, letterSpacing: 1 }}>VİTAMİN & MİNERAL</div>
+          <div style={s.tip}>{"Bahrü'l-Cevâhir — el-Herevî: D vitamini eksikliği soğuk-kuru mizaca, B12 eksikliği kara safra baskısına zemin hazırlar."}</div>
           <div style={s.grid2}>
             <div>
               <label style={s.label}>D Vitamini (ng/mL)</label>
