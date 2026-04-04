@@ -85,6 +85,21 @@ export default function DashboardCiltDetailPage() {
   async function onaylaVeGonder() {
     setOnayYukleniyor(true)
     try {
+      // Email gonder
+      if (form?.hasta_email && form?.sonuc_verisi) {
+        await fetch('/api/email/send', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            to: form.hasta_email,
+            hasta_adi: form.hasta_adi || 'Hasta',
+            type: 'cilt',
+            sonuc_verisi: form.sonuc_verisi,
+            kayit_no: form.kayit_no || '',
+          }),
+        })
+      }
+      // Status guncelle
       const now = new Date().toISOString()
       await supabase.from('cilt_forms').update({
         durum: 'email_gonderildi',

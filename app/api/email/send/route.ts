@@ -5,7 +5,7 @@ import { analizRaporuHtml } from '@/app/emails/analiz-raporu'
 
 const resend = new Resend(process.env.RESEND_API_KEY)
 const FROM_EMAIL = process.env.FROM_EMAIL || 'onboarding@resend.dev'
-const ADMIN_EMAIL = process.env.ADMIN_EMAIL || 'mfatihckrr@gmail.com'
+const ADMIN_EMAIL = process.env.ADMIN_EMAIL || 'm.fatih.cakir@gmail.com'
 
 export async function POST(request: NextRequest) {
   try {
