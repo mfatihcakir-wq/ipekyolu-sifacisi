@@ -379,12 +379,10 @@ export default function LandingPage() {
             onMouseOver={(e) => (e.currentTarget.style.transform = 'translateY(-2px)')}
             onMouseOut={(e) => (e.currentTarget.style.transform = 'translateY(0)')}
           >
-            Ücretsiz Analizi Başlat
+            {"Analizimi Baslat"}
           </button>
           <button
-            onClick={() => {
-              document.getElementById('nasil-calisir')?.scrollIntoView({ behavior: 'smooth' })
-            }}
+            onClick={() => router.push('/bitkiler')}
             style={{
               backgroundColor: 'transparent',
               color: COLORS.primary,
@@ -398,7 +396,7 @@ export default function LandingPage() {
               letterSpacing: 1,
             }}
           >
-            Nasıl Çalışır?
+            {"Bitki Ansiklopedisi"}
           </button>
         </div>
       </section>
