@@ -608,7 +608,7 @@ export default function LandingPage() {
                 </p>
 
                 <button
-                  onClick={() => router.push(`/register?plan=${plan.id}`)}
+                  onClick={() => router.push(`/odeme?plan=${plan.id}`)}
                   style={{
                     width: '100%',
                     padding: '14px 0',
