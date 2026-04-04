@@ -77,6 +77,14 @@ export default function SonucPage() {
         setKayitNo(no)
 
         localStorage.removeItem('ipekyolu_analiz_form')
+
+        // Odeme kapisi — uye degilse yonlendir
+        if (!user) {
+          const plan = localStorage.getItem('ipekyolu_secili_plan') || 'yearly'
+          localStorage.setItem('ipekyolu_kayit_no', no)
+          setTimeout(() => router.push(`/odeme?plan=${plan}`), 2000)
+        }
+
         setDurum('gonderildi')
       } catch (err) {
         console.error(err)

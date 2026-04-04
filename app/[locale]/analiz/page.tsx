@@ -67,6 +67,7 @@ export default function AnalizForm() {
     if (!form.kvkk) { alert('KVKK onayı gereklidir.'); return }
     if (!form.telefon) { alert('Telefon numarası gereklidir.'); return }
     localStorage.setItem('ipekyolu_analiz_form', JSON.stringify(form))
+    localStorage.setItem('ipekyolu_secili_plan', 'yearly')
     router.push('/sonuc')
   }
 
