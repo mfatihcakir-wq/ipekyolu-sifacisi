@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
+import { useRouter as useIntlRouter, usePathname as useIntlPathname } from '@/i18n/navigation'
 import { Cinzel, EB_Garamond, Noto_Naskh_Arabic } from 'next/font/google'
 import { createClient } from '@/lib/supabase'
 
@@ -164,6 +165,8 @@ export default function LandingPage() {
   const [acikModal, setAcikModal] = useState<string | null>(null)
   const [user, setUser] = useState<{email?: string} | null>(null)
   const router = useRouter()
+  const intlRouter = useIntlRouter()
+  const intlPathname = useIntlPathname()
   const supabase = createClient()
   // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => { supabase.auth.getUser().then(({ data }) => setUser(data.user)) }, [])
@@ -251,7 +254,7 @@ export default function LandingPage() {
                     key={lang.code}
                     onClick={() => {
                       setCurrentLang(lang); setLangOpen(false)
-                      window.location.href = lang.code === 'TR' ? '/' : '/' + lang.code.toLowerCase()
+                      intlRouter.replace(intlPathname, { locale: lang.code.toLowerCase() })
                     }}
                     style={{
                       display: 'flex', alignItems: 'center', gap: 8,

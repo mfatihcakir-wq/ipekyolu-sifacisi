@@ -1,17 +1,16 @@
 import createMiddleware from 'next-intl/middleware'
 import { createServerClient } from '@supabase/ssr'
-import { NextResponse, type NextRequest } from 'next/server'
+import { NextResponse } from 'next/server'
+import type { NextRequest } from 'next/server'
+import { routing } from './i18n/routing'
 
-const intlMiddleware = createMiddleware({
-  locales: ['tr', 'en', 'ar', 'es', 'ru'],
-  defaultLocale: 'tr',
-  localePrefix: 'as-needed'
-})
+const intlMiddleware = createMiddleware(routing)
 
 export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl
-  const isDashboard = pathname.includes('/dashboard')
 
+  // Dashboard auth kontrolü
+  const isDashboard = pathname.includes('/dashboard')
   if (isDashboard) {
     const response = NextResponse.next()
     const supabase = createServerClient(
@@ -21,22 +20,24 @@ export async function middleware(request: NextRequest) {
         cookies: {
           getAll() { return request.cookies.getAll() },
           setAll(cookiesToSet) {
-            cookiesToSet.forEach(({ name, value, options }) =>
-              response.cookies.set(name, value, options))
-          }
-        }
+            cookiesToSet.forEach(({ name, value, options }) => {
+              request.cookies.set(name, value)
+              response.cookies.set(name, value, options)
+            })
+          },
+        },
       }
     )
     const { data: { user } } = await supabase.auth.getUser()
     if (!user) {
       return NextResponse.redirect(new URL('/login', request.url))
     }
-    return intlMiddleware(request)
+    return response
   }
 
   return intlMiddleware(request)
 }
 
 export const config = {
-  matcher: ['/((?!api|_next|_vercel|.*\\..*).*)']
+  matcher: ['/((?!_next|_vercel|.*\\..*).*)']
 }
