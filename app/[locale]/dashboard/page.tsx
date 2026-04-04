@@ -327,28 +327,6 @@ export default function DashboardPage() {
     printWindow.document.close()
   }
 
-  function waMesajHazirla() {
-    if (!analiz || !secili) return ''
-    let mesaj = `Merhaba ${secili.tam_ad},\n\n`
-    mesaj += `*Ipek Yolu Sifacisi - Mizac Analiz Sonucunuz*\n\n`
-    mesaj += `*Mizac:* ${analiz.mizac || ''}\n\n`
-    if (analiz.fitri_hali?.tedavi_hedefi) {
-      mesaj += `*Tedavi Hedefi:* ${analiz.fitri_hali.tedavi_hedefi}\n\n`
-    }
-    if (analiz.ozet) mesaj += `*Degerlendirme:*\n${analiz.ozet}\n\n`
-    if (analiz.bitki_recetesi?.length) {
-      mesaj += `*Bitkisel Protokol:*\n`
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      analiz.bitki_recetesi.forEach((b: any) => {
-        mesaj += `- ${b.bitki}: ${b.doz} - ${b.zaman}\n`
-      })
-      mesaj += '\n'
-    }
-    if (analiz.beslenme_onerileri) mesaj += `*Beslenme:* ${analiz.beslenme_onerileri}\n\n`
-    mesaj += `_Bu analiz klasik Islam tibbi gelenegine dayanir. Bilgilendirme amaclidir._`
-    return encodeURIComponent(mesaj)
-  }
-
   const durumRenk = (d: string) => {
     if (d === 'bekliyor') return { bg: '#FFF8E7', color: '#92400E', text: 'Bekliyor' }
     if (d === 'inceleniyor') return { bg: '#E3F2FD', color: '#1565C0', text: 'Inceleniyor' }
@@ -914,16 +892,17 @@ export default function DashboardPage() {
 
                   {/* AKSIYON BUTONLARI */}
                   <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10, marginTop: 16 }}>
-                    <a href={`https://wa.me/${secili.telefon.replace(/[^0-9]/g, '')}?text=${waMesajHazirla()}`}
-                      target="_blank"
-                      style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8, background: '#25D366', color: 'white', borderRadius: 10, padding: 14, fontSize: 13, fontWeight: 600, textDecoration: 'none', fontFamily: cinzel.style.fontFamily, letterSpacing: 1 }}>
-                      WhatsApp Gonder
-                    </a>
                     <button onClick={tamamlandiIsaretle}
                       style={{ background: secili.durum === 'tamamlandi' ? '#E8F5E9' : C.primary, color: secili.durum === 'tamamlandi' ? C.primary : 'white', border: 'none', borderRadius: 10, padding: 14, fontSize: 13, fontWeight: 600, cursor: 'pointer', fontFamily: cinzel.style.fontFamily }}>
-                      {secili.durum === 'tamamlandi' ? 'Tamamlandi' : 'Tamamlandi Isaretle'}
+                      {secili.durum === 'tamamlandi' ? 'Tamamlandi' : 'Onayla ve Gonder'}
                     </button>
+                    <a href="https://wa.me/905331687226"
+                      target="_blank"
+                      style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6, background: 'transparent', color: '#25D366', border: '1px solid #25D366', borderRadius: 10, padding: 14, fontSize: 12, fontWeight: 600, textDecoration: 'none', fontFamily: cinzel.style.fontFamily }}>
+                      {"💬 Kisisel Not Ekle"}
+                    </a>
                   </div>
+                  <div style={{ fontSize: 10, color: '#999', marginTop: 4, textAlign: 'center' as const }}>{"Rapora ek yorum veya soru sormak icin"}</div>
 
                   <button onClick={analizYap}
                     style={{ width: '100%', marginTop: 8, padding: 10, background: 'transparent', border: `1px solid ${C.border}`, borderRadius: 8, cursor: 'pointer', fontSize: 12, color: C.secondary, fontFamily: cinzel.style.fontFamily }}>

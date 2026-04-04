@@ -342,9 +342,9 @@ export default function ArsivPage() {
               )}
 
               {/* WA BUTONU */}
-              <a href={`https://wa.me/${(secili.detailed_forms?.telefon || '').replace(/[^0-9]/g, '')}`} target="_blank"
-                style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8, background: '#25D366', color: 'white', borderRadius: 10, padding: '12px', fontSize: 13, fontWeight: 600, textDecoration: 'none', fontFamily: cinzel.style.fontFamily }}>
-                WhatsApp
+              <a href="https://wa.me/905331687226" target="_blank"
+                style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6, background: 'transparent', color: '#25D366', border: '1px solid #25D366', borderRadius: 10, padding: '12px', fontSize: 12, fontWeight: 600, textDecoration: 'none', fontFamily: cinzel.style.fontFamily }}>
+                {"💬 Kisisel Not Ekle"}
               </a>
             </div>
           )}

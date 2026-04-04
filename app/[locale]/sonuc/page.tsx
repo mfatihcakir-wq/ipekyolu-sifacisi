@@ -225,18 +225,19 @@ export default function SonucPage() {
               </div>
             )}
 
-            {/* WhatsApp */}
+            {/* Butonlar */}
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10 }}>
-              <a href={`https://wa.me/905331687226?text=${encodeURIComponent(`Merhaba, ${kayitNo} numarali analiz formumu gonderdim.`)}`}
+              <a href="https://wa.me/905331687226"
                 target="_blank"
-                style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8, background: '#25D366', color: 'white', borderRadius: 10, padding: 13, fontSize: 13, fontWeight: 600, textDecoration: 'none', fontFamily: cinzel.style.fontFamily, letterSpacing: 1 }}>
-                WhatsApp
+                style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6, background: '#25D366', color: 'white', borderRadius: 10, padding: 13, fontSize: 13, fontWeight: 600, textDecoration: 'none', fontFamily: cinzel.style.fontFamily }}>
+                {"💬 Danismana Sor"}
               </a>
               <button onClick={() => router.push('/')}
                 style={{ background: 'transparent', border: `1.5px solid ${C.primary}`, borderRadius: 10, padding: 13, fontSize: 13, fontWeight: 600, color: C.primary, cursor: 'pointer', fontFamily: cinzel.style.fontFamily, letterSpacing: 1 }}>
                 Ana Sayfa
               </button>
             </div>
+            <div style={{ fontSize: 10, color: '#999', marginTop: 4 }}>{"Soru sormak veya geri bildirim vermek icin"}</div>
           </div>
         )}
 
@@ -245,7 +246,7 @@ export default function SonucPage() {
           <div style={{ background: C.white, borderRadius: 20, border: '1px solid #FFCDD2', padding: '48px 40px', textAlign: 'center' }}>
             <div style={{ fontSize: 48, marginBottom: 16 }}>!</div>
             <h2 style={{ fontFamily: cinzel.style.fontFamily, fontSize: 20, color: '#C62828', marginBottom: 12 }}>Bir Sorun Olustu</h2>
-            <p style={{ fontSize: 14, color: C.secondary, marginBottom: 24, lineHeight: 1.6 }}>Formunuz kaydedilemedi. Lutfen tekrar deneyin veya WhatsApp uzerinden ulasin.</p>
+            <p style={{ fontSize: 14, color: C.secondary, marginBottom: 24, lineHeight: 1.6 }}>{"Formunuz kaydedilemedi. Lutfen tekrar deneyin veya danismana ulasin."}</p>
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10 }}>
               <button onClick={() => router.push('/analiz')}
                 style={{ background: C.primary, color: 'white', border: 'none', borderRadius: 10, padding: 12, fontSize: 13, cursor: 'pointer', fontFamily: cinzel.style.fontFamily }}>
@@ -253,7 +254,7 @@ export default function SonucPage() {
               </button>
               <a href="https://wa.me/905331687226" target="_blank"
                 style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6, background: '#25D366', color: 'white', borderRadius: 10, padding: 12, fontSize: 13, fontWeight: 600, textDecoration: 'none' }}>
-                WhatsApp
+                {"💬 Danismana Sor"}
               </a>
             </div>
           </div>

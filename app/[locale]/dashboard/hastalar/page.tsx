@@ -167,9 +167,9 @@ export default function HastalarPage() {
                             style={{ fontSize: 10, padding: '4px 10px', background: C.primary, color: 'white', border: 'none', borderRadius: 6, cursor: 'pointer', fontWeight: 600 }}>
                             Analiz
                           </button>
-                          <a href={`https://wa.me/${f.telefon.replace(/[^0-9]/g, '')}`} target="_blank"
-                            style={{ fontSize: 10, padding: '4px 10px', background: '#25D366', color: 'white', borderRadius: 6, cursor: 'pointer', fontWeight: 600, textDecoration: 'none', display: 'inline-block' }}>
-                            WA
+                          <a href="https://wa.me/905331687226" target="_blank"
+                            style={{ fontSize: 10, padding: '4px 10px', background: 'transparent', color: '#25D366', border: '1px solid #25D366', borderRadius: 6, fontWeight: 600, textDecoration: 'none', display: 'inline-block' }}>
+                            {"💬"}
                           </a>
                           <button onClick={() => sil(f.id)}
                             style={{ fontSize: 10, padding: '4px 10px', background: '#FFEBEE', color: '#C62828', border: 'none', borderRadius: 6, cursor: 'pointer', fontWeight: 600 }}>
