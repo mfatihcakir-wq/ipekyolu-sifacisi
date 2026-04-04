@@ -685,8 +685,8 @@ export default function LandingPage() {
               </h4>
               <div style={{ display: 'flex', flexDirection: 'column', gap: 10, fontSize: 14 }}>
                 <a href="/kvkk" style={{ color: 'rgba(255,255,255,0.7)', textDecoration: 'none' }}>KVKK Aydınlatma Metni</a>
-                <a href="#" style={{ color: 'rgba(255,255,255,0.7)', textDecoration: 'none' }}>Gizlilik Politikası</a>
-                <a href="#" style={{ color: 'rgba(255,255,255,0.7)', textDecoration: 'none' }}>Kullanım Koşulları</a>
+                <a href="/kvkk" style={{ color: 'rgba(255,255,255,0.7)', textDecoration: 'none' }}>Gizlilik Politikası</a>
+                <a href="/kvkk" style={{ color: 'rgba(255,255,255,0.7)', textDecoration: 'none' }}>Kullanım Koşulları</a>
               </div>
             </div>
             <div>
@@ -702,7 +702,7 @@ export default function LandingPage() {
               </h4>
               <div style={{ display: 'flex', flexDirection: 'column', gap: 10, fontSize: 14 }}>
                 <span>info@ipekyolusicifacisi.com</span>
-                <span>WhatsApp Destek</span>
+                <a href="https://wa.me/905324418615" target="_blank" style={{ color: 'rgba(255,255,255,0.7)', textDecoration: 'none' }}>WhatsApp Destek</a>
               </div>
             </div>
           </div>
