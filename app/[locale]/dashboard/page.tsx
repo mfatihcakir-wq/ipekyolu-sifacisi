@@ -353,9 +353,9 @@ export default function DashboardPage() {
         </div>
       </header>
 
-      <div style={{ display: 'grid', gridTemplateColumns: '200px 1fr' }}>
+      <div style={{ display: 'grid', gridTemplateColumns: 'min(200px, 100%) 1fr' }}>
         {/* SIDEBAR */}
-        <aside style={{ background: C.white, borderRight: `1px solid ${C.border}`, height: 'calc(100vh - 64px)', position: 'sticky' as const, top: 64, display: 'flex', flexDirection: 'column' as const, padding: '20px 0' }}>
+        <aside style={{ background: C.white, borderRight: `1px solid ${C.border}`, height: 'calc(100vh - 64px)', position: 'sticky' as const, top: 64, display: 'flex', flexDirection: 'column' as const, padding: '20px 0', overflow: 'hidden' as const }}>
           <div style={{ padding: '0 16px 16px', borderBottom: `1px solid ${C.border}`, marginBottom: 12 }}>
             <div style={{ fontFamily: cinzel.style.fontFamily, fontSize: 11, color: C.gold, letterSpacing: 3, marginBottom: 2 }}>{"İPEK YOLU"}</div>
             <div style={{ fontSize: 10, color: '#999' }}>{"Danışman Paneli"}</div>
