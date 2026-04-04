@@ -1,7 +1,8 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import { useRouter } from 'next/navigation'
+import { useRouter, usePathname } from 'next/navigation'
+import Link from 'next/link'
 import { Cinzel, EB_Garamond } from 'next/font/google'
 import { createClient } from '@/lib/supabase'
 
@@ -34,6 +35,7 @@ export default function DashboardPage() {
   const [analizYukleniyor, setAnalizYukleniyor] = useState(false)
   const [istatistik, setIstatistik] = useState({ bekleyen: 0, tamamlanan: 0, toplam: 0 })
   const router = useRouter()
+  const pathname = usePathname()
   const supabase = createClient()
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -351,7 +353,47 @@ export default function DashboardPage() {
         </div>
       </header>
 
-      <div style={{ maxWidth: 1400, margin: '0 auto', padding: '24px 20px' }}>
+      <div style={{ display: 'grid', gridTemplateColumns: '200px 1fr' }}>
+        {/* SIDEBAR */}
+        <aside style={{ background: C.white, borderRight: `1px solid ${C.border}`, height: 'calc(100vh - 64px)', position: 'sticky' as const, top: 64, display: 'flex', flexDirection: 'column' as const, padding: '20px 0' }}>
+          <div style={{ padding: '0 16px 16px', borderBottom: `1px solid ${C.border}`, marginBottom: 12 }}>
+            <div style={{ fontFamily: cinzel.style.fontFamily, fontSize: 11, color: C.gold, letterSpacing: 3, marginBottom: 2 }}>{"İPEK YOLU"}</div>
+            <div style={{ fontSize: 10, color: '#999' }}>{"Danışman Paneli"}</div>
+          </div>
+          <nav style={{ flex: 1, padding: '0 8px' }}>
+            {[
+              { label: 'Ana Panel', href: '/dashboard', icon: '\u229E' },
+              { label: 'Hastalar', href: '/dashboard/hastalar', icon: '\uD83D\uDC65' },
+              { label: 'Vaka Arsivi', href: '/dashboard/arsiv', icon: '\uD83D\uDCCB' },
+              { label: 'Analiz Formu', href: '/analiz', icon: '\u2697' },
+            ].map(item => {
+              const isActive = pathname === item.href || (item.href !== '/dashboard' && pathname.startsWith(item.href))
+              return (
+                <Link key={item.href} href={item.href} style={{
+                  display: 'flex', alignItems: 'center', gap: 10,
+                  padding: '9px 12px', borderRadius: 6, marginBottom: 4,
+                  background: isActive ? C.primary : 'transparent',
+                  color: isActive ? C.gold : C.secondary,
+                  fontSize: 13, fontWeight: isActive ? 600 : 400,
+                  textDecoration: 'none', transition: 'all .15s',
+                }}>
+                  <span style={{ fontSize: 15 }}>{item.icon}</span>
+                  {item.label}
+                </Link>
+              )
+            })}
+          </nav>
+          <div style={{ padding: '12px 16px', borderTop: `1px solid ${C.border}` }}>
+            <div style={{ fontSize: 12, color: C.secondary, marginBottom: 8 }}>{"Dr. M. Fatih Çakır"}</div>
+            <button onClick={() => { supabase.auth.signOut(); router.push('/login') }}
+              style={{ width: '100%', padding: '7px 12px', background: 'transparent', border: `1px solid ${C.border}`, borderRadius: 6, color: '#999', fontSize: 11, cursor: 'pointer' }}>
+              {"Çıkış Yap"}
+            </button>
+          </div>
+        </aside>
+
+        {/* ANA İÇERİK */}
+        <div style={{ padding: '24px 20px', maxWidth: 1200 }}>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 12, marginBottom: 24 }}>
           {[
             { label: 'Bekleyen Form', val: istatistik.bekleyen, accent: '#B8860B' },
@@ -825,6 +867,7 @@ export default function DashboardPage() {
             </div>
           )}
         </div>
+      </div>
       </div>
     </div>
   )
