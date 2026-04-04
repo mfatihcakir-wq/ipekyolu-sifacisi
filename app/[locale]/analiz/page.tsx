@@ -47,14 +47,14 @@ export default function AnalizForm() {
     dil_renk: '', dil_kaplama: '', dil_nem: '', dil_sekil: '',
     yuz_ten: '', yuz_sekil: '', yuz_cilt: '', yuz_gozalti: '',
     body_temp: 'normal', extremity_temp: 'normal',
-    urine_color: '', urine_amount: '', urine_clarity: '', urine_foam: 'yok', urine_sediment: 'yok',
+    urine_color: '', urine_amount: '', urine_clarity: '', urine_foam: 'yok', urine_sediment: 'yok', urine_smell: '',
     stool_color: '', stool_consistency: '',
     skin_type: '', mood_detail: '', exercise_habit: '', diet_type: '',
     height: '', weight: '', sweating: '', chillhot: '',
     sleep: '', digestion: '', appetite: '',
-    hgb: '', htc: '', ferritin: '', crp: '', sedim: '',
+    hgb: '', htc: '', hematokrit: '', ferritin: '', crp: '', sedim: '',
     alt: '', ast: '', ggt: '', bilirubin: '', uric_acid: '',
-    tsh: '', t3: '', t4: '',
+    tsh: '', t3: '', t4: '', ft3: '', ft4: '',
     glucose: '', hba1c: '',
     vit_d: '', b12: '',
     fitri_sac: '', fitri_cilt: '', fitri_beden: '', fitri_uyku: '',
@@ -547,6 +547,7 @@ export default function AnalizForm() {
               { key: 'urine_clarity', label: 'Kıvam / Berraklık', opts: [['','Seçin'],['berrak','Berrak / saydam'],['hafif_bulanik','Hafif bulanık'],['bulanik','Bulanık'],['tortu_var','Tortu var']] },
               { key: 'urine_foam', label: 'Köpük', opts: [['yok','Yok'],['az','Az köpük'],['fazla','Fazla / kalıcı köpük']] },
               { key: 'urine_sediment', label: 'Tortu', opts: [['yok','Yok'],['beyaz','Beyaz / krem'],['kirmizi','Kırmızı / turuncu'],['koyu','Koyu / siyah']] },
+              { key: 'urine_smell', label: 'Koku', opts: [['','Seçin'],['normal','Normal'],['keskin_amonyak','Keskin/Amonyak'],['tatlimsi','Tatlımsı'],['curuk','Çürük'],['kokusuz','Kokusuz']] },
             ].map(f => (
               <div key={f.key}>
                 <label style={s.label}>{f.label}</label>
@@ -595,6 +596,14 @@ export default function AnalizForm() {
               <label style={s.label}>CRP (mg/L)</label>
               <input style={s.input} type="number" step="0.1" value={form.crp} onChange={e => set('crp', e.target.value)} placeholder="0-5" />
             </div>
+            <div>
+              <label style={s.label}>Hematokrit (%)</label>
+              <input style={s.input} type="number" step="0.1" value={form.hematokrit} onChange={e => set('hematokrit', e.target.value)} placeholder="36-50" />
+            </div>
+            <div>
+              <label style={s.label}>Sedimantasyon (mm/h)</label>
+              <input style={s.input} type="number" value={form.sedim} onChange={e => set('sedim', e.target.value)} placeholder="0-20" />
+            </div>
           </div>
 
           <div style={{ fontSize: 12, fontWeight: 600, color: C.primary, marginBottom: 10, letterSpacing: 1 }}>KARACİĞER & SAFRA</div>
@@ -611,6 +620,10 @@ export default function AnalizForm() {
               <label style={s.label}>GGT (U/L)</label>
               <input style={s.input} type="number" value={form.ggt} onChange={e => set('ggt', e.target.value)} placeholder="8-61" />
             </div>
+            <div>
+              <label style={s.label}>Bilirubin Total (mg/dL)</label>
+              <input style={s.input} type="number" step="0.1" value={form.bilirubin} onChange={e => set('bilirubin', e.target.value)} placeholder="0.2-1.2" />
+            </div>
           </div>
 
           <div style={{ fontSize: 12, fontWeight: 600, color: C.primary, marginBottom: 10, letterSpacing: 1 }}>TİROİD — TABİÎ HARARET</div>
@@ -622,6 +635,14 @@ export default function AnalizForm() {
             <div>
               <label style={s.label}>Ürik Asit (mg/dL)</label>
               <input style={s.input} type="number" step="0.1" value={form.uric_acid} onChange={e => set('uric_acid', e.target.value)} placeholder="2.4-7.0" />
+            </div>
+            <div>
+              <label style={s.label}>Serbest T3 (pg/mL)</label>
+              <input style={s.input} type="number" step="0.1" value={form.ft3} onChange={e => set('ft3', e.target.value)} placeholder="2.3-4.2" />
+            </div>
+            <div>
+              <label style={s.label}>Serbest T4 (ng/dL)</label>
+              <input style={s.input} type="number" step="0.1" value={form.ft4} onChange={e => set('ft4', e.target.value)} placeholder="0.8-1.8" />
             </div>
           </div>
 
@@ -742,6 +763,18 @@ export default function AnalizForm() {
             <label style={s.label}>Ek Notlar / İlaç Kullanımı</label>
             <textarea style={{ ...s.textarea, height: 60 }} value={form.notlar} onChange={e => set('notlar', e.target.value)} placeholder="Kullandığınız ilaçlar, takviyeler, ek bilgiler..." />
           </div>
+        </div>
+
+        {/* TAHLİL YÜKLEME */}
+        <div style={s.card}>
+          <label style={s.label}>Tahlil Dosyası (opsiyonel)</label>
+          <input
+            type="file"
+            accept=".pdf,.jpg,.jpeg,.png"
+            multiple
+            style={{ display: 'block', marginTop: 8, fontSize: 13, color: C.dark }}
+          />
+          <div style={{ fontSize: 11, color: '#999', marginTop: 6 }}>PDF, JPG, PNG — Kan tahlili, EKG, ultrason</div>
         </div>
 
         {/* KVKK */}
