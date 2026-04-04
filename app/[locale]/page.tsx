@@ -129,7 +129,7 @@ Doğru soruyu soran, gerçekten dinleyen bir danışmana ihtiyacınız vardı. B
   {
     icon: '📜',
     title: 'Klasik Kaynaklar',
-    desc: "el-Kânûn, Tahbîzü'l-Mathûn ve 7 büyük İslam tıbbı kaynağından beslenen bilgi tabanı — yapay zeka ile analiz edilerek size sunulur.",
+    desc: "el-Kânûn, Tahbîzü'l-Mathûn ve 18 klasik İslam tıbbı eserinden beslenen bilgi tabanı — yapay zeka ile analiz edilerek size sunulur.",
     detay: `Bin yılı aşkın bir süre önce yazılan metinler, bugün bir algoritmaya dönüştü. Ama özü aynı kaldı: insanı anlamak.
 
 Sistemimizin bilgi tabanında sekiz büyük İslam tıbbı otoritesinin eserleri yer alıyor. Bunlar rafta duran kitaplar değil, her analiz yapıldığında içlerinden geçilen, şikayetinizle eşleştirilen, size özel yanıt aranan metinler.
@@ -321,7 +321,7 @@ export default function LandingPage() {
           lineHeight: 1.1,
           letterSpacing: 2,
         }}>
-          İpek Yolu Şifacısı
+          {"Vücudunuzun Dilini Anlıyoruz."}
         </h1>
 
         {/* Subtitle */}
@@ -330,11 +330,11 @@ export default function LandingPage() {
           fontStyle: 'italic',
           fontSize: 'clamp(18px, 2.5vw, 24px)',
           color: COLORS.secondary,
-          maxWidth: 600,
+          maxWidth: 640,
           margin: '0 auto 16px auto',
           lineHeight: 1.6,
         }}>
-          Vücudunuzun dilini anlıyoruz. Bin yıllık İslam tıbbı geleneğiyle hazırlanmış, size özel sağlık danışmanlığı.
+          {"Bin yıllık İslam ve Osmanlı tıbbının birikimi ile hazırlanmış, sizin mizacınıza özel sağlık danışmanlığı."}
         </p>
 
         {/* Arabic Text */}
@@ -685,8 +685,9 @@ export default function LandingPage() {
               </h4>
               <div style={{ display: 'flex', flexDirection: 'column', gap: 10, fontSize: 14 }}>
                 <a href="/kvkk" style={{ color: 'rgba(255,255,255,0.7)', textDecoration: 'none' }}>KVKK Aydınlatma Metni</a>
-                <a href="/kvkk" style={{ color: 'rgba(255,255,255,0.7)', textDecoration: 'none' }}>Gizlilik Politikası</a>
-                <a href="/kvkk" style={{ color: 'rgba(255,255,255,0.7)', textDecoration: 'none' }}>Kullanım Koşulları</a>
+                <a href="/gizlilik-politikasi" style={{ color: 'rgba(255,255,255,0.7)', textDecoration: 'none' }}>Gizlilik Politikası</a>
+                <a href="/sss" style={{ color: 'rgba(255,255,255,0.7)', textDecoration: 'none' }}>Sıkça Sorulan Sorular</a>
+                <a href="/hakkimizda" style={{ color: 'rgba(255,255,255,0.7)', textDecoration: 'none' }}>Hakkımızda</a>
               </div>
             </div>
             <div>
