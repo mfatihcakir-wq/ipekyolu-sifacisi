@@ -34,10 +34,24 @@ export default function BitkilerPage() {
   const [arama, setArama] = useState('')
   const [mizacFiltre, setMizacFiltre] = useState('')
   const [secili, setSecili] = useState<Bitki | null>(null)
+  const [isAbone, setIsAbone] = useState(false)
+  const [aboneUyari, setAboneUyari] = useState(false)
   const supabase = createClient()
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  useEffect(() => { yukle() }, [])
+  useEffect(() => { yukle(); aboneKontrol() }, [])
+
+  async function aboneKontrol() {
+    const { data: { user } } = await supabase.auth.getUser()
+    if (!user) return
+    const { data: abonelik } = await supabase
+      .from('abonelikler')
+      .select('durum')
+      .eq('kullanici_id', user.id)
+      .eq('durum', 'aktif')
+      .single()
+    setIsAbone(!!abonelik)
+  }
 
   useEffect(() => {
     let list = bitkiler
@@ -72,6 +86,7 @@ export default function BitkilerPage() {
   }
 
   const mizacRenk = (b: Bitki) => {
+    if (!isAbone) return C.surface
     if (b.mizac_sicaklik === 'sıcak' && b.mizac_nem === 'kuru') return '#FFF8E7'
     if (b.mizac_sicaklik === 'sıcak' && b.mizac_nem === 'nemli') return '#FFE8E8'
     if (b.mizac_sicaklik === 'soğuk' && b.mizac_nem === 'nemli') return '#E3F2FD'
@@ -127,12 +142,15 @@ export default function BitkilerPage() {
               { label: "Bahrü'l-Cevâhir", val: 'bhr' },
               { label: "Aynu'l-Hayât", val: 'ayn' },
               { label: 'el-Agziye', val: 'agz' },
-            ].map(f => (
-              <button key={f.val} onClick={() => setMizacFiltre(f.val)}
-                style={{ padding: '8px 14px', borderRadius: 20, fontSize: 12, cursor: 'pointer', fontWeight: 600, border: `1px solid ${mizacFiltre === f.val ? C.primary : C.border}`, background: mizacFiltre === f.val ? C.primary : 'transparent', color: mizacFiltre === f.val ? 'white' : C.secondary }}>
-                {f.label}
-              </button>
-            ))}
+            ].map(f => {
+              const filtreDisabled = !isAbone && f.val !== ''
+              return (
+                <button key={f.val} onClick={() => filtreDisabled ? setAboneUyari(true) : setMizacFiltre(f.val)}
+                  style={{ padding: '8px 14px', borderRadius: 20, fontSize: 12, cursor: filtreDisabled ? 'not-allowed' : 'pointer', fontWeight: 600, opacity: filtreDisabled ? 0.5 : 1, border: `1px solid ${mizacFiltre === f.val ? C.primary : C.border}`, background: mizacFiltre === f.val ? C.primary : 'transparent', color: mizacFiltre === f.val ? 'white' : C.secondary }}>
+                  {f.label}
+                </button>
+              )
+            })}
           </div>
           <div style={{ fontSize: 12, color: '#999' }}>{filtered.length} sonuc</div>
         </div>
@@ -163,17 +181,24 @@ export default function BitkilerPage() {
         ) : (
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(260px, 1fr))', gap: 12 }}>
             {filtered.slice(0, 100).map(b => (
-              <div key={b.id} onClick={() => setSecili(b)}
+              <div key={b.id} onClick={() => isAbone ? setSecili(b) : setAboneUyari(true)}
                 style={{ background: mizacRenk(b), border: `1px solid ${C.border}`, borderRadius: 12, padding: '16px', cursor: 'pointer', transition: 'all .15s' }}>
                 <div style={{ fontFamily: cinzel.style.fontFamily, fontSize: 15, color: C.primary, marginBottom: 4 }}>{b.ad_tr}</div>
                 {b.ad_ar && <div style={{ fontSize: 14, color: C.gold, fontFamily: 'serif', marginBottom: 4, direction: 'rtl' }}>{b.ad_ar}</div>}
                 {b.ad_lat && <div style={{ fontSize: 11, color: '#999', fontStyle: 'italic', marginBottom: 8 }}>{b.ad_lat}</div>}
                 {b.mizac_sicaklik && b.mizac_sicaklik !== 'bilinmiyor' && (
-                  <div style={{ fontSize: 11, color: C.secondary }}>
-                    {b.mizac_sicaklik} · {b.mizac_nem} {b.mizac_derece && `· derece ${b.mizac_derece}`}
-                  </div>
+                  isAbone ? (
+                    <div style={{ fontSize: 11, color: C.secondary }}>
+                      {b.mizac_sicaklik} · {b.mizac_nem} {b.mizac_derece && `· derece ${b.mizac_derece}`}
+                    </div>
+                  ) : (
+                    <div style={{ fontSize: 11, color: C.secondary, filter: 'blur(4px)', userSelect: 'none', display: 'inline-flex', alignItems: 'center', gap: 4 }}>
+                      sıcak · kuru · derece 2
+                      <span style={{ filter: 'none', fontSize: 13 }}>🔒</span>
+                    </div>
+                  )
                 )}
-                {b.faydalari && <div style={{ fontSize: 12, color: C.dark, marginTop: 8, lineHeight: 1.5, overflow: 'hidden', display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical' as const }}>{b.faydalari}</div>}
+                {isAbone && b.faydalari && <div style={{ fontSize: 12, color: C.dark, marginTop: 8, lineHeight: 1.5, overflow: 'hidden', display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical' as const }}>{b.faydalari}</div>}
               </div>
             ))}
           </div>
@@ -240,6 +265,27 @@ export default function BitkilerPage() {
                 ))}
               </div>
             )}
+          </div>
+        </div>
+      )}
+
+      {/* ABONE UYARI MODAL */}
+      {aboneUyari && (
+        <div onClick={() => setAboneUyari(false)} style={{ position: 'fixed', inset: 0, zIndex: 1000, background: 'rgba(0,0,0,0.6)', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 20 }}>
+          <div onClick={e => e.stopPropagation()} style={{ background: C.white, borderRadius: 20, maxWidth: 420, width: '100%', padding: '40px 36px', textAlign: 'center', position: 'relative' as const }}>
+            <div style={{ fontSize: 48, marginBottom: 16 }}>🔒</div>
+            <div style={{ fontFamily: cinzel.style.fontFamily, fontSize: 20, color: C.primary, marginBottom: 8 }}>Bu İçerik Abonelere Özeldir</div>
+            <div style={{ fontSize: 14, color: C.secondary, lineHeight: 1.6, marginBottom: 24 }}>
+              Bitki Ansiklopedisi&apos;ne tam erişim için üyelik gereklidir.
+            </div>
+            <div style={{ display: 'flex', gap: 12, justifyContent: 'center' }}>
+              <a href="/odeme" style={{ textDecoration: 'none', padding: '12px 28px', borderRadius: 10, background: C.primary, color: C.gold, fontFamily: cinzel.style.fontFamily, fontSize: 14, fontWeight: 600, letterSpacing: 1 }}>
+                Abone Ol
+              </a>
+              <button onClick={() => setAboneUyari(false)} style={{ padding: '12px 28px', borderRadius: 10, background: 'transparent', border: `1px solid ${C.border}`, color: C.secondary, fontSize: 14, cursor: 'pointer' }}>
+                Kapat
+              </button>
+            </div>
           </div>
         </div>
       )}
