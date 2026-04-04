@@ -51,9 +51,11 @@ export default function BitkilerPage() {
     if (mizacFiltre === 'soguk') list = list.filter(b => b.mizac_sicaklik === 'soğuk')
     if (mizacFiltre === 'kuru') list = list.filter(b => b.mizac_nem === 'kuru')
     if (mizacFiltre === 'nemli') list = list.filter(b => b.mizac_nem === 'nemli')
-    if (mizacFiltre === 'byt') list = list.filter(b => b.kaynaklar?.some(k => k.toLowerCase().includes('câmi') || k.toLowerCase().includes('cami')))
-    if (mizacFiltre === 'havi') list = list.filter(b => b.kaynaklar?.some(k => k.toLowerCase().includes('hâvî') || k.toLowerCase().includes('havi')))
-    if (mizacFiltre === 'tahbiz') list = list.filter(b => b.kaynaklar?.some(k => k.toLowerCase().includes('tahbîz') || k.toLowerCase().includes('tahbiz')))
+    if (mizacFiltre === 'byt') list = list.filter(b => b.kaynaklar?.some((k: string) => k.toLowerCase().includes('câmi') || k.toLowerCase().includes('cami')))
+    if (mizacFiltre === 'blh') list = list.filter(b => b.kaynaklar?.some((k: string) => k.toLowerCase().includes('masalihu') || k.toLowerCase().includes('masâlihu')))
+    if (mizacFiltre === 'bhr') list = list.filter(b => b.kaynaklar?.some((k: string) => k.toLowerCase().includes('cevahir') || k.toLowerCase().includes('cevâhir')))
+    if (mizacFiltre === 'ayn') list = list.filter(b => b.kaynaklar?.some((k: string) => k.toLowerCase().includes('hayat') || k.toLowerCase().includes('hayât')))
+    if (mizacFiltre === 'agz') list = list.filter(b => b.kaynaklar?.some((k: string) => k.toLowerCase().includes('agziye')))
     setFiltered(list)
   }, [bitkiler, arama, mizacFiltre])
 
@@ -63,7 +65,7 @@ export default function BitkilerPage() {
       .from('bitkiler')
       .select('*')
       .order('ad_tr', { ascending: true })
-      .limit(1000)
+      .limit(1200)
     setBitkiler(data || [])
     setFiltered(data || [])
     setLoading(false)
@@ -115,14 +117,16 @@ export default function BitkilerPage() {
           />
           <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap' as const }}>
             {[
-              { label: 'Tumu', val: '' },
-              { label: 'Sicak', val: 'sicak' },
-              { label: 'Soguk', val: 'soguk' },
-              { label: 'Kuru', val: 'kuru' },
-              { label: 'Nemli', val: 'nemli' },
-              { label: 'Ibn Beytar', val: 'byt' },
-              { label: 'el-Havi', val: 'havi' },
-              { label: 'Tahbiz', val: 'tahbiz' },
+              { label: 'Tümü', val: '' },
+              { label: '🔥 Sıcak', val: 'sicak' },
+              { label: '❄️ Soğuk', val: 'soguk' },
+              { label: '🏜️ Kuru', val: 'kuru' },
+              { label: '💧 Nemli', val: 'nemli' },
+              { label: 'İbn Beytâr', val: 'byt' },
+              { label: "Masâlihu'l-Ebdân", val: 'blh' },
+              { label: "Bahrü'l-Cevâhir", val: 'bhr' },
+              { label: "Aynu'l-Hayât", val: 'ayn' },
+              { label: 'el-Agziye', val: 'agz' },
             ].map(f => (
               <button key={f.val} onClick={() => setMizacFiltre(f.val)}
                 style={{ padding: '8px 14px', borderRadius: 20, fontSize: 12, cursor: 'pointer', fontWeight: 600, border: `1px solid ${mizacFiltre === f.val ? C.primary : C.border}`, background: mizacFiltre === f.val ? C.primary : 'transparent', color: mizacFiltre === f.val ? 'white' : C.secondary }}>

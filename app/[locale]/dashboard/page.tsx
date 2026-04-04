@@ -353,14 +353,14 @@ export default function DashboardPage() {
         </div>
       </header>
 
-      <div style={{ display: 'grid', gridTemplateColumns: 'min(200px, 100%) 1fr' }}>
+      <div style={{ display: 'flex', flexDirection: 'row' as const, flexWrap: 'wrap' as const }}>
         {/* SIDEBAR */}
-        <aside style={{ background: C.white, borderRight: `1px solid ${C.border}`, height: 'calc(100vh - 64px)', position: 'sticky' as const, top: 64, display: 'flex', flexDirection: 'column' as const, padding: '20px 0', overflow: 'hidden' as const }}>
+        <aside style={{ background: C.white, borderRight: `1px solid ${C.border}`, height: 'calc(100vh - 64px)', position: 'sticky' as const, top: 64, display: 'flex', flexDirection: 'column' as const, padding: '20px 0', overflow: 'hidden' as const, width: 200, flexShrink: 0 }}>
           <div style={{ padding: '0 16px 16px', borderBottom: `1px solid ${C.border}`, marginBottom: 12 }}>
             <div style={{ fontFamily: cinzel.style.fontFamily, fontSize: 11, color: C.gold, letterSpacing: 3, marginBottom: 2 }}>{"İPEK YOLU"}</div>
             <div style={{ fontSize: 10, color: '#999' }}>{"Danışman Paneli"}</div>
           </div>
-          <nav style={{ flex: 1, padding: '0 8px' }}>
+          <nav style={{ flex: 1, padding: '0 8px', display: 'flex', flexDirection: 'column' as const }}>
             {[
               { label: 'Ana Panel', href: '/dashboard', icon: '\u229E' },
               { label: 'Hastalar', href: '/dashboard/hastalar', icon: '\uD83D\uDC65' },
@@ -393,7 +393,7 @@ export default function DashboardPage() {
         </aside>
 
         {/* ANA İÇERİK */}
-        <div style={{ padding: '24px 20px', maxWidth: 1200 }}>
+        <div style={{ padding: '24px 20px', maxWidth: 1200, flex: 1, minWidth: 0 }}>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 12, marginBottom: 24 }}>
           {[
             { label: 'Bekleyen Form', val: istatistik.bekleyen, accent: '#B8860B' },
