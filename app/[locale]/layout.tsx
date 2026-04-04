@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import localFont from "next/font/local";
 import { NextIntlClientProvider } from 'next-intl';
 import { getMessages } from 'next-intl/server';
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { Analytics } from '@vercel/analytics/react';
 import "./globals.css";
 
