@@ -51,6 +51,9 @@ export default function BitkilerPage() {
     if (mizacFiltre === 'soguk') list = list.filter(b => b.mizac_sicaklik === 'soğuk')
     if (mizacFiltre === 'kuru') list = list.filter(b => b.mizac_nem === 'kuru')
     if (mizacFiltre === 'nemli') list = list.filter(b => b.mizac_nem === 'nemli')
+    if (mizacFiltre === 'byt') list = list.filter(b => b.kaynaklar?.some(k => k.toLowerCase().includes('câmi') || k.toLowerCase().includes('cami')))
+    if (mizacFiltre === 'havi') list = list.filter(b => b.kaynaklar?.some(k => k.toLowerCase().includes('hâvî') || k.toLowerCase().includes('havi')))
+    if (mizacFiltre === 'tahbiz') list = list.filter(b => b.kaynaklar?.some(k => k.toLowerCase().includes('tahbîz') || k.toLowerCase().includes('tahbiz')))
     setFiltered(list)
   }, [bitkiler, arama, mizacFiltre])
 
@@ -60,7 +63,7 @@ export default function BitkilerPage() {
       .from('bitkiler')
       .select('*')
       .order('ad_tr', { ascending: true })
-      .limit(500)
+      .limit(1000)
     setBitkiler(data || [])
     setFiltered(data || [])
     setLoading(false)
@@ -117,6 +120,9 @@ export default function BitkilerPage() {
               { label: 'Soguk', val: 'soguk' },
               { label: 'Kuru', val: 'kuru' },
               { label: 'Nemli', val: 'nemli' },
+              { label: 'Ibn Beytar', val: 'byt' },
+              { label: 'el-Havi', val: 'havi' },
+              { label: 'Tahbiz', val: 'tahbiz' },
             ].map(f => (
               <button key={f.val} onClick={() => setMizacFiltre(f.val)}
                 style={{ padding: '8px 14px', borderRadius: 20, fontSize: 12, cursor: 'pointer', fontWeight: 600, border: `1px solid ${mizacFiltre === f.val ? C.primary : C.border}`, background: mizacFiltre === f.val ? C.primary : 'transparent', color: mizacFiltre === f.val ? 'white' : C.secondary }}>
