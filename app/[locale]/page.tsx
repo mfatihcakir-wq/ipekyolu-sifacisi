@@ -463,6 +463,24 @@ export default function LandingPage() {
         </div>
       </section>
 
+      {/* ===== GÜVEN SİNYALLERİ ===== */}
+      <div style={{ background: COLORS.primary, padding: '32px 24px' }}>
+        <div style={{ maxWidth: 1000, margin: '0 auto', display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: 24 }}>
+          {[
+            { sayi: '18', label: 'Klasik Eser', detail: "el-Havi \u00b7 el-Kanun \u00b7 el-Samil" },
+            { sayi: '25.000+', label: 'Kayit', detail: "Indekslenmis metin parcasi" },
+            { sayi: '9', label: 'Nabiz Sifati', detail: "Ibn Sina metodolojisi" },
+            { sayi: '4', label: 'Mizac Tipi', detail: "Demevi \u00b7 Safravi \u00b7 Balgami \u00b7 Sevdavi" },
+          ].map((item, i) => (
+            <div key={i} style={{ textAlign: 'center' }}>
+              <div style={{ fontFamily: cinzel.style.fontFamily, fontSize: 32, color: COLORS.gold, fontWeight: 600 }}>{item.sayi}</div>
+              <div style={{ fontSize: 14, color: COLORS.white, fontWeight: 600, marginTop: 4 }}>{item.label}</div>
+              <div style={{ fontSize: 11, color: 'rgba(255,255,255,0.5)', marginTop: 4 }}>{item.detail}</div>
+            </div>
+          ))}
+        </div>
+      </div>
+
       {/* ===== NASIL ÇALIŞIR ===== */}
       <section id="nasil-calisir" style={{
         backgroundColor: COLORS.cream,
@@ -517,6 +535,26 @@ export default function LandingPage() {
           </div>
         </div>
       </section>
+
+      {/* ===== DANIŞMAN PROFİL ===== */}
+      <div style={{ maxWidth: 900, margin: '0 auto', padding: '48px 24px 0' }}>
+        <div style={{ background: COLORS.white, borderRadius: 16, border: '1px solid #E0D5C5', padding: '32px 40px', display: 'flex', gap: 32, alignItems: 'center', flexWrap: 'wrap' as const }}>
+          <div style={{ width: 80, height: 80, borderRadius: '50%', background: COLORS.primary, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+            <span style={{ fontFamily: cinzel.style.fontFamily, fontSize: 28, color: COLORS.gold }}>MF</span>
+          </div>
+          <div style={{ flex: 1 }}>
+            <div style={{ fontFamily: cinzel.style.fontFamily, fontSize: 18, color: COLORS.primary, marginBottom: 6 }}>{"M. Fatih Çakır"}</div>
+            <div style={{ fontSize: 13, color: COLORS.gold, marginBottom: 10 }}>{"Klasik İslam Tıbbı Araştırmacısı · Tıp Tarihi Yüksek Lisans"}</div>
+            <div style={{ fontSize: 13, color: COLORS.secondary, lineHeight: 1.7 }}>
+              {"FSM Vakıf Üniversitesi Fuat Sezgin İslam Bilim Tarihi Enstitüsü doktora adayı. Hekim Ahmet el-Hayâtî'nin Şeceretü't-Tıb adlı eserini ilk kez akademik düzeyde inceleyen araştırmacı. Tahbîzü'l-Mathûn ve İbn Sînâ el-Kânûn çevirisi üzerine çalışmalar yürütmektedir."}
+            </div>
+          </div>
+          <div style={{ display: 'flex', flexDirection: 'column' as const, gap: 8, flexShrink: 0 }}>
+            <a href="https://wa.me/905324418615" target="_blank" style={{ background: '#25D366', color: 'white', padding: '10px 20px', borderRadius: 8, fontSize: 12, fontWeight: 600, textDecoration: 'none', textAlign: 'center' as const }}>WhatsApp</a>
+            <a href="/hakkimizda" style={{ background: '#FAF7F2', color: COLORS.secondary, padding: '10px 20px', borderRadius: 8, fontSize: 12, textDecoration: 'none', textAlign: 'center' as const, border: '1px solid #E0D5C5' }}>{"Hakkımızda"}</a>
+          </div>
+        </div>
+      </div>
 
       {/* ===== FİYATLANDIRMA ===== */}
       <section style={{
@@ -630,6 +668,27 @@ export default function LandingPage() {
           </div>
         </div>
       </section>
+
+      {/* ===== SOSYAL KANIT ===== */}
+      <div style={{ maxWidth: 900, margin: '24px auto 0', padding: '0 24px 48px' }}>
+        <div style={{ background: '#FAF7F2', borderRadius: 12, border: '1px solid #E0D5C5', padding: '20px 28px' }}>
+          <div style={{ fontSize: 11, color: '#999', letterSpacing: 2, marginBottom: 16, fontFamily: cinzel.style.fontFamily }}>{"KULLANICI DENEYİMLERİ"}</div>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: 16 }}>
+            {[
+              { yorum: 'Yillarca cozum bulamadigim yorgunluk sikayetim icin verilen protokol 3 haftada fark yaratti.', ad: 'A.K.', sehir: 'Istanbul' },
+              { yorum: 'Nabiz ve dil degerlerime gore yapilan analiz bana cok ozgun geldi. Baska hicbir yerde gormedigim bir yaklasim.', ad: 'M.Y.', sehir: 'Ankara' },
+              { yorum: 'Klasik kaynaklara dayanan, bilimsel temelli bir danismanlik ariyordum. Tam aradigim buydu.', ad: 'F.D.', sehir: 'Izmir' },
+            ].map((t, i) => (
+              <div key={i} style={{ background: COLORS.white, borderRadius: 10, padding: '16px 20px', border: '1px solid #E0D5C5' }}>
+                <div style={{ fontSize: 24, color: COLORS.gold, marginBottom: 8, lineHeight: 1 }}>{'"'}</div>
+                <div style={{ fontSize: 13, color: COLORS.secondary, lineHeight: 1.7, fontStyle: 'italic', marginBottom: 12 }}>{t.yorum}</div>
+                <div style={{ fontSize: 11, color: '#999' }}>{t.ad} {'\u00b7'} {t.sehir}</div>
+              </div>
+            ))}
+          </div>
+          <div style={{ fontSize: 10, color: '#999', marginTop: 12, fontStyle: 'italic' }}>{"* Kullanici deneyimleri kendi ifadeleriyle paylasilmistir. Bireysel sonuclar farklilik gosterebilir."}</div>
+        </div>
+      </div>
 
       {/* ===== FOOTER ===== */}
       <footer style={{
