@@ -32,6 +32,11 @@ export default function DashboardPage() {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [analiz, setAnaliz] = useState<any>(null)
   const [yukleniyor, setYukleniyor] = useState(false)
+  const [toast, setToast] = useState<{mesaj: string, tip: 'hata' | 'basari'} | null>(null)
+  function gosterToast(mesaj: string, tip: 'hata' | 'basari' = 'hata') {
+    setToast({ mesaj, tip })
+    setTimeout(() => setToast(null), 4000)
+  }
   const [analizYukleniyor, setAnalizYukleniyor] = useState(false)
   const [istatistik, setIstatistik] = useState({ bekleyen: 0, tamamlanan: 0, toplam: 0 })
   const router = useRouter()
@@ -147,7 +152,7 @@ export default function DashboardPage() {
       formlariYukle()
     } catch (err) {
       const msg = err instanceof Error ? err.message : 'Bilinmeyen hata'
-      alert('Analiz hatasi: ' + msg)
+      gosterToast('Analiz hatasi: ' + msg)
     }
     setAnalizYukleniyor(false)
   }
@@ -352,6 +357,26 @@ export default function DashboardPage() {
           <button onClick={() => { supabase.auth.signOut(); router.push('/login') }} style={{ background: 'rgba(255,255,255,0.1)', border: '1px solid rgba(255,255,255,0.2)', color: 'white', borderRadius: 8, padding: '7px 14px', fontSize: 12, cursor: 'pointer' }}>Cikis</button>
         </div>
       </header>
+
+      {/* TOAST */}
+      {toast && (
+        <div style={{
+          position: 'fixed' as const, top: 20, right: 20, zIndex: 9999,
+          background: toast.tip === 'hata' ? '#FCEBEB' : '#EAF3DE',
+          border: `1px solid ${toast.tip === 'hata' ? '#F7C1C1' : '#C0DD97'}`,
+          color: toast.tip === 'hata' ? '#A32D2D' : '#3B6D11',
+          padding: '14px 20px', borderRadius: 10, fontSize: 13,
+          maxWidth: 360, boxShadow: '0 4px 20px rgba(0,0,0,0.12)',
+          display: 'flex', alignItems: 'center', gap: 10
+        }}>
+          <span>{toast.tip === 'hata' ? '\u26A0' : '\u2713'}</span>
+          <span>{toast.mesaj}</span>
+          <button onClick={() => setToast(null)}
+            style={{ marginLeft: 'auto', background: 'none', border: 'none', cursor: 'pointer', fontSize: 16, color: 'inherit', padding: '0 4px' }}>
+            {'\u2715'}
+          </button>
+        </div>
+      )}
 
       <div style={{ display: 'flex', flexDirection: 'row' as const, flexWrap: 'wrap' as const }}>
         {/* SIDEBAR */}

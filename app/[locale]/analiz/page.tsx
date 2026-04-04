@@ -34,6 +34,11 @@ const s = {
 export default function AnalizForm() {
   const router = useRouter()
   const [adim, setAdim] = useState(1)
+  const [toast, setToast] = useState<{mesaj: string, tip: 'hata' | 'basari'} | null>(null)
+  function gosterToast(mesaj: string, tip: 'hata' | 'basari' = 'hata') {
+    setToast({ mesaj, tip })
+    setTimeout(() => setToast(null), 4000)
+  }
   const [form, setForm] = useState({
     ad_soyad: '', telefon: '', age_group: '', gender: '', pregnancy: 'hayir',
     sikayet_suresi: '', chronic: 'yok', season: '', climate: '', temp_feel: '', location: '',
@@ -64,10 +69,10 @@ export default function AnalizForm() {
   const set = (key: string, val: any) => setForm(f => ({ ...f, [key]: val }))
 
   const handleSubmit = () => {
-    if (!form.ad_soyad?.trim()) { alert('Ad Soyad alanı zorunludur.'); setAdim(1); return }
-    if (!form.telefon?.trim()) { alert('Telefon numarası zorunludur.'); setAdim(1); return }
-    if (!form.symptoms?.trim()) { alert('Şikayetler alanı zorunludur.'); setAdim(8); return }
-    if (!form.kvkk) { alert('KVKK onayı gereklidir.'); return }
+    if (!form.ad_soyad?.trim()) { gosterToast('Ad Soyad alani zorunludur.'); setAdim(1); return }
+    if (!form.telefon?.trim()) { gosterToast('Telefon numarasi zorunludur.'); setAdim(1); return }
+    if (!form.symptoms?.trim()) { gosterToast('Sikayetler alani zorunludur.'); setAdim(8); return }
+    if (!form.kvkk) { gosterToast('KVKK onayi gereklidir.'); return }
     localStorage.setItem('ipekyolu_analiz_form', JSON.stringify(form))
     localStorage.setItem('ipekyolu_secili_plan', 'yearly')
     router.push('/sonuc')
@@ -96,6 +101,26 @@ export default function AnalizForm() {
           Ana Sayfa
         </button>
       </header>
+
+      {/* TOAST */}
+      {toast && (
+        <div style={{
+          position: 'fixed' as const, top: 20, right: 20, zIndex: 9999,
+          background: toast.tip === 'hata' ? '#FCEBEB' : '#EAF3DE',
+          border: `1px solid ${toast.tip === 'hata' ? '#F7C1C1' : '#C0DD97'}`,
+          color: toast.tip === 'hata' ? '#A32D2D' : '#3B6D11',
+          padding: '14px 20px', borderRadius: 10, fontSize: 13,
+          maxWidth: 360, boxShadow: '0 4px 20px rgba(0,0,0,0.12)',
+          display: 'flex', alignItems: 'center', gap: 10
+        }}>
+          <span>{toast.tip === 'hata' ? '\u26A0' : '\u2713'}</span>
+          <span>{toast.mesaj}</span>
+          <button onClick={() => setToast(null)}
+            style={{ marginLeft: 'auto', background: 'none', border: 'none', cursor: 'pointer', fontSize: 16, color: 'inherit', padding: '0 4px' }}>
+            {'\u2715'}
+          </button>
+        </div>
+      )}
 
       {/* PROGRESS BAR */}
       <div style={{ background: C.white, borderBottom: `1px solid ${C.border}`, padding: '12px 24px' }}>
@@ -231,7 +256,7 @@ export default function AnalizForm() {
 
         <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: 24 }}>
           <button onClick={() => {
-            if (!form.ad_soyad?.trim() || !form.telefon?.trim()) { alert('Ad Soyad ve Telefon alanları zorunludur.'); return }
+            if (!form.ad_soyad?.trim() || !form.telefon?.trim()) { gosterToast('Ad Soyad ve Telefon alanlari zorunludur.'); return }
             setAdim(2)
           }} style={{ padding: '10px 28px', background: C.primary, border: 'none', borderRadius: 8, color: C.gold, cursor: 'pointer', fontSize: 13, fontWeight: 600, fontFamily: cinzel.style.fontFamily }}>{"İleri →"}</button>
         </div>

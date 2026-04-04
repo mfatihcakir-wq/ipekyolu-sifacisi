@@ -65,7 +65,7 @@ export default function BitkilerPage() {
       .from('bitkiler')
       .select('*')
       .order('ad_tr', { ascending: true })
-      .limit(1200)
+      .range(0, 1199)
     setBitkiler(data || [])
     setFiltered(data || [])
     setLoading(false)

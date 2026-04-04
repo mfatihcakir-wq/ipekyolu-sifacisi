@@ -27,6 +27,11 @@ function OdemeIcerik() {
   const [ad, setAd] = useState('')
   const [soyad, setSoyad] = useState('')
   const [email, setEmail] = useState('')
+  const [toast, setToast] = useState<{mesaj: string, tip: 'hata' | 'basari'} | null>(null)
+  function gosterToast(mesaj: string, tip: 'hata' | 'basari' = 'hata') {
+    setToast({ mesaj, tip })
+    setTimeout(() => setToast(null), 4000)
+  }
 
   useEffect(() => {
     const plan = searchParams.get('plan')
@@ -37,7 +42,7 @@ function OdemeIcerik() {
 
   async function odemeBaslat() {
     if (!ad || !soyad || !email) {
-      alert('Lütfen tüm alanları doldurun.')
+      gosterToast('Lutfen tum alanlari doldurun.')
       return
     }
     setYukleniyor(true)
@@ -59,10 +64,10 @@ function OdemeIcerik() {
           document.body.appendChild(s)
         }
       } else if (data.error) {
-        alert('Ödeme başlatılamadı: ' + data.error)
+        gosterToast('Odeme baslatilamadi: ' + data.error)
       }
     } catch {
-      alert('Bir hata oluştu. Lütfen tekrar deneyin.')
+      gosterToast('Bir hata olustu. Lutfen tekrar deneyin.')
     }
     setYukleniyor(false)
   }
@@ -75,6 +80,26 @@ function OdemeIcerik() {
         </div>
         <div style={{ fontSize: 11, color: 'rgba(255,255,255,.5)' }}>{"Güvenli Ödeme · SSL"}</div>
       </header>
+
+      {/* TOAST */}
+      {toast && (
+        <div style={{
+          position: 'fixed' as const, top: 20, right: 20, zIndex: 9999,
+          background: toast.tip === 'hata' ? '#FCEBEB' : '#EAF3DE',
+          border: `1px solid ${toast.tip === 'hata' ? '#F7C1C1' : '#C0DD97'}`,
+          color: toast.tip === 'hata' ? '#A32D2D' : '#3B6D11',
+          padding: '14px 20px', borderRadius: 10, fontSize: 13,
+          maxWidth: 360, boxShadow: '0 4px 20px rgba(0,0,0,0.12)',
+          display: 'flex', alignItems: 'center', gap: 10
+        }}>
+          <span>{toast.tip === 'hata' ? '\u26A0' : '\u2713'}</span>
+          <span>{toast.mesaj}</span>
+          <button onClick={() => setToast(null)}
+            style={{ marginLeft: 'auto', background: 'none', border: 'none', cursor: 'pointer', fontSize: 16, color: 'inherit', padding: '0 4px' }}>
+            {'\u2715'}
+          </button>
+        </div>
+      )}
 
       <div style={{ maxWidth: 900, margin: '0 auto', padding: '40px 20px' }}>
         <div style={{ textAlign: 'center', marginBottom: 32 }}>
