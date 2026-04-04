@@ -1,0 +1,84 @@
+{
+  "nav": {
+    "home": "Ana Sayfa",
+    "about": "Hakkında",
+    "login": "Giriş Yap",
+    "register": "Kayıt Ol",
+    "logout": "Çıkış"
+  },
+  "landing": {
+    "hero_title": "İpek Yolu Şifacısı",
+    "hero_sub": "Bin yıllık İslam tıbbı geleneği ile kişisel sağlık danışmanlığı",
+    "cta_start": "Ücretsiz Analizi Başlat",
+    "cta_login": "Giriş Yap",
+    "feature_1": "Mizaç tespiti — 4 temel tip",
+    "feature_2": "Kişiye özel bitki sonucu",
+    "feature_3": "Danışman desteği ve WhatsApp",
+    "feature_4": "Tahbîzü'l-Mathûn temelli analiz"
+  },
+  "form": {
+    "basic_title": "Temel Bilgiler",
+    "age_group": "Yaş Grubu",
+    "gender": "Cinsiyet",
+    "season": "Mevsim",
+    "chronic": "Kronik Hastalık",
+    "complaint": "Ana Şikayetiniz",
+    "sleep": "Uyku Kalitesi",
+    "stress": "Stres Düzeyi",
+    "body_temp": "Vücut Isısı",
+    "appetite": "İştah",
+    "kvkk": "Sağlık verilerimin işlenmesine KVKK kapsamında onay veriyorum.",
+    "submit": "Analiz Et",
+    "next": "Devam Et"
+  },
+  "gate": {
+    "title": "Analiziniz hazır",
+    "sub": "Sonuçlarınızı görmek için üye olun.",
+    "monthly": "Aylık",
+    "yearly": "Yıllık",
+    "best_value": "En Avantajlı",
+    "monthly_price": "690₺",
+    "monthly_period": "aylık · iptal edilebilir",
+    "monthly_day": "günde 23₺",
+    "yearly_price": "390₺",
+    "yearly_period": "ay başına · %43 indirim",
+    "yearly_day": "günde sadece 13₺",
+    "cta": "Üye Ol ve Sonucu Gör",
+    "payment_secure": "iyzico güvencesiyle · SSL şifreli"
+  },
+  "result": {
+    "pre_title": "Ön Analiz Sonucunuz",
+    "mizac_label": "Tahmini Mizaç",
+    "locked": "Detaylı analiz gerekli",
+    "detail_cta": "Danışman Analizine Geç",
+    "detail_info_title": "Danışman Analizi ile neler öğrenirsiniz?",
+    "detail_1": "Tam hılt dağılımı ve organ etkisi",
+    "detail_2": "Kişisel bitki sonucu ve doz",
+    "detail_3": "Beslenme ve yaşam protokolü",
+    "detail_4": "WhatsApp ile doğrudan iletişim"
+  },
+  "payment": {
+    "title": "Danışman Analizi",
+    "sub": "Detaylı formu dolduracaksınız. Danışman inceleyip size özel sonucunuzu WhatsApp'tan gönderecek.",
+    "one_time": "Tek Seferlik",
+    "one_time_price": "990₺",
+    "one_time_desc": "1 analiz + sonuç",
+    "three_pack": "3 Analiz Paketi",
+    "three_pack_price": "2.490₺",
+    "three_pack_desc": "analiz başına 830₺",
+    "cta": "Ödeme Yap ve Forma Geç"
+  },
+  "success": {
+    "title": "Bilgileriniz Danışmana İletildi",
+    "sub": "Dr. Çakır formunuzu inceleyip 24-48 saat içinde WhatsApp'tan size ulaşacak.",
+    "back": "Ana Sayfaya Dön"
+  },
+  "common": {
+    "loading": "Yükleniyor...",
+    "error": "Bir hata oluştu",
+    "back": "Geri",
+    "cancel": "Vazgeç",
+    "save": "Kaydet",
+    "close": "Kapat"
+  }
+}

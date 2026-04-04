@@ -1,0 +1,84 @@
+{
+  "nav": {
+    "home": "Home",
+    "about": "About",
+    "login": "Log In",
+    "register": "Sign Up",
+    "logout": "Log Out"
+  },
+  "landing": {
+    "hero_title": "İpek Yolu Şifacısı",
+    "hero_sub": "Personalized health guidance rooted in a thousand years of Islamic medical tradition",
+    "cta_start": "Start Free Analysis",
+    "cta_login": "Log In",
+    "feature_1": "Temperament assessment — 4 fundamental types",
+    "feature_2": "Personalized herbal results",
+    "feature_3": "Consultant support & WhatsApp",
+    "feature_4": "Tahbîzü'l-Mathûn based analysis"
+  },
+  "form": {
+    "basic_title": "Basic Information",
+    "age_group": "Age Group",
+    "gender": "Gender",
+    "season": "Season",
+    "chronic": "Chronic Illness",
+    "complaint": "Your Main Complaint",
+    "sleep": "Sleep Quality",
+    "stress": "Stress Level",
+    "body_temp": "Body Temperature",
+    "appetite": "Appetite",
+    "kvkk": "I consent to the processing of my health data in accordance with KVKK regulations.",
+    "submit": "Analyze",
+    "next": "Continue"
+  },
+  "gate": {
+    "title": "Your analysis is ready",
+    "sub": "Sign up to view your results.",
+    "monthly": "Monthly",
+    "yearly": "Yearly",
+    "best_value": "Best Value",
+    "monthly_price": "690₺",
+    "monthly_period": "monthly · cancelable",
+    "monthly_day": "23₺ per day",
+    "yearly_price": "390₺",
+    "yearly_period": "per month · 43% discount",
+    "yearly_day": "only 13₺ per day",
+    "cta": "Sign Up & View Results",
+    "payment_secure": "Secured by iyzico · SSL encrypted"
+  },
+  "result": {
+    "pre_title": "Your Preliminary Analysis",
+    "mizac_label": "Estimated Temperament",
+    "locked": "Detailed analysis required",
+    "detail_cta": "Proceed to Consultant Analysis",
+    "detail_info_title": "What will you learn with Consultant Analysis?",
+    "detail_1": "Full humoral distribution and organ impact",
+    "detail_2": "Personalized herbal results and dosage",
+    "detail_3": "Nutrition and lifestyle protocol",
+    "detail_4": "Direct communication via WhatsApp"
+  },
+  "payment": {
+    "title": "Consultant Analysis",
+    "sub": "You will fill out a detailed form. The consultant will review it and send your personalized results via WhatsApp.",
+    "one_time": "One-Time",
+    "one_time_price": "990₺",
+    "one_time_desc": "1 analysis + results",
+    "three_pack": "3 Analysis Package",
+    "three_pack_price": "2.490₺",
+    "three_pack_desc": "830₺ per analysis",
+    "cta": "Pay & Proceed to Form"
+  },
+  "success": {
+    "title": "Your Information Has Been Sent to the Consultant",
+    "sub": "Dr. Çakır will review your form and contact you via WhatsApp within 24–48 hours.",
+    "back": "Return to Home Page"
+  },
+  "common": {
+    "loading": "Loading...",
+    "error": "An error occurred",
+    "back": "Back",
+    "cancel": "Cancel",
+    "save": "Save",
+    "close": "Close"
+  }
+}
