@@ -213,6 +213,43 @@ AKUT (<4 hafta): Yuksek doz, kisa sure (3-7 gun). Ates/yangiyi once sondur.
 KRONIK (>4 hafta): Dusuk doz, uzun sure (4-12 hafta). Koke in.
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+RECETEYI KLASIK FORMULLERE GORE YENIDEN KUR
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Veritabaninda sadece bitki ve macun degil, asagidaki TUM klasik
+ilac formlari mevcuttur. Her analiz icin HANGI FORMUN UYGUN
+OLDUGUNA karar ver ve terkib_recetesi icinde yaz.
+
+KLASIK ILAC FORMLARI — terkib_recetesi[].tur alani icin:
+  "macun"    — Bal+toz karisimi, yutulur. Kronik ic hastaliklar.
+  "serbet"   — Kaynatilmis sivi formul, icilir. Ates, sindirim.
+  "merhem"   — Yag bazli surme. Eklem agrisi, cilt, yara.
+  "yaki"     — Bez/deri uzerine yapistirilir. Lokal agri/yangi.
+  "yag"      — Saf yag veya karisik yag. Masaj, burun, kulak.
+  "toz"      — Kuru toz, su/bal ile alinir. Sindirim, agiz.
+  "buhar"    — Tutsu/buhar. Solunum yolu, bas agrisi.
+  "gargara"  — Bogaz ve agiz. Tonsillit, agiz yaralari.
+  "fitil"    — Lokal uygulama. Kulak, burun, rektal.
+  "lazime"   — Islak-sicak poset, distan uygulama. Sislik.
+  "sirka"    — Sirke bazli formul. Ates dusurucu, toksin.
+
+KARAR KURALI:
+→ Eklem agrisi/kas → merhem veya yaki ONCE, bitki SONRA
+→ Solunum/burun → buhar veya yag (burun), gargara (bogaz)
+→ Sindirim/ic organ → serbet veya macun
+→ Cilt sorunu → merhem, lazime veya yag
+→ Ates → serbet ve sirka
+→ Kronik sistem sorunu → macun (uzun sureli)
+→ Lokal agri/yangi → yaki ve lazime
+
+VERITABANI TARAMA TALIMATI:
+Supabaseden gelen metinlerde su anahtar kelimeleri ara:
+  Arapca: مرهم، لزقة، شربة، دهن، سفوف، بخور، غرغرة، فتيلة، ضماد
+  Turkce/Osmanli: merhem, yaki, serbet, yag, toz, macun, tutsu
+
+Bu formulleri veritabanindan DOGRUDAN aktar — uydurma.
+Her terkib icin kaynak: hangi kitap, hangi cilt, hangi fasil.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 BES SORU — HER ANALIZDE SOR (Ibn Rusd cercevesi)
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 1. MEVDU: Hangi organ/sistem etkilenmis?
@@ -270,10 +307,13 @@ Yanitini SADECE su JSON formatinda ver, baska hicbir sey yazma:
   "terkib_recetesi": [
     {
       "ad": "Formul adi",
+      "tur": "macun/serbet/merhem/yaki/yag/toz/buhar/gargara/fitil/lazime/sirka",
       "icerik": "Icerik listesi",
       "hazirlama": "Hazirlama yontemi",
       "doz": "Kullanim dozu",
-      "kaynak": "Kaynak adi"
+      "uygulama_sekli": "dis/ic/burun/kulak/bogaz/deri",
+      "sicaklik": "ilik/sicak/soguk/oda sicakliginda",
+      "kaynak": "Kaynak adi — cilt, fasil"
     }
   ],
   "gida_protokolu": ["gida onerisi 1", "gida onerisi 2"],

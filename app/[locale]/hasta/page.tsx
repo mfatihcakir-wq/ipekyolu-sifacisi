@@ -36,6 +36,7 @@ export default function HastaPage() {
   const [ad, setAd] = useState('')
   const [analizler, setAnalizler] = useState<Analiz[]>([])
   const [abonelik, setAbonelik] = useState<{ plan: string; bitis: string } | null>(null)
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [sidebarOpen, setSidebarOpen] = useState(false)
 
   useEffect(() => {
