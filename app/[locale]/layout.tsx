@@ -16,8 +16,29 @@ const geistMono = localFont({
 });
 
 export const metadata: Metadata = {
-  title: "İpek Yolu Şifacısı",
-  description: "Klasik İslam tıbbı geleneğiyle kişisel sağlık danışmanlığı",
+  title: {
+    default: "İpek Yolu Şifacısı — Klasik İslam Tıbbı Danışmanlığı",
+    template: "%s · İpek Yolu Şifacısı"
+  },
+  description: "Bin yıllık İslam ve Osmanlı tıbbının birikimi ile hazırlanmış, sizin mizacınıza özel sağlık danışmanlığı. el-Hâvî, el-Kânûn, Tahbîzü'l-Mathûn — 18 klasik eserden 25.000+ kayıt.",
+  keywords: ["İslam tıbbı", "mizaç analizi", "klasik tıp", "bitkisel tedavi", "danışmanlık", "İbn Sînâ", "el-Kânûn"],
+  openGraph: {
+    title: "İpek Yolu Şifacısı",
+    description: "Vücudunuzun dilini anlıyoruz. Bin yıllık İslam tıbbı geleneğiyle hazırlanmış, size özel sağlık danışmanlığı.",
+    url: "https://ipekyolu-sifacisi.vercel.app",
+    siteName: "İpek Yolu Şifacısı",
+    locale: "tr_TR",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "İpek Yolu Şifacısı",
+    description: "Vücudunuzun dilini anlıyoruz. Klasik İslam tıbbı ile mizaç analizi.",
+  },
+  robots: {
+    index: true,
+    follow: true,
+  },
 };
 
 export default async function RootLayout({
