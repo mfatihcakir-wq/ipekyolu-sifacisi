@@ -1,6 +1,6 @@
 import Anthropic from '@anthropic-ai/sdk'
 import { NextRequest, NextResponse } from 'next/server'
-import { createClient } from '@supabase/supabase-js'
+import { createClient, type SupabaseClient } from '@supabase/supabase-js'
 
 const anthropic = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY! })
 const supabase = createClient(
@@ -8,69 +8,152 @@ const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
 )
 
-async function klasikKaynaklariGetir(sikayet: string, mevsim: string): Promise<string> {
+// Turkce -> Arapca terim koprusu
+const TR_AR_KOPRU: Record<string, string> = {
+  'karin': 'batn mide', 'bas': 'ras dimag', 'karaciger': 'kebid',
+  'bobrek': 'kulye', 'kalp': 'kalb fuad', 'akciger': 'ria',
+  'mide': 'mide mead', 'bagirsak': 'emaa', 'dalak': 'tihal',
+  'beyin': 'dimag', 'eklem': 'mafsal', 'agri': 'elem veca',
+  'ates': 'humma hararet', 'ishal': 'ishal', 'kabiz': 'imsak',
+  'oksuruk': 'sual', 'bas agrisi': 'suda', 'bulanti': 'gishyan',
+  'sislik': 'veram', 'sarilk': 'yerkan', 'yorgunluk': 'taaeb',
+  'nefes': 'nefes dariku', 'safra': 'safra', 'balgam': 'balgam nizc',
+  'melankoli': 'vesvese sevda', 'sicak': 'harr hararet',
+  'soguk': 'berd burudet', 'kuru': 'yubs', 'nemli': 'rutb',
+  'mushil': 'mushil', 'bitki': 'nebat', 'nabiz': 'nabz',
+  'cilt': 'cild', 'uyku': 'nevm', 'istah': 'sehvet',
+  'sindirim': 'hazm', 'uykusuzluk': 'seher', 'kansizlik': 'dem',
+}
+
+function trdenArapcaKelimeler(metin: string): string[] {
+  const sonuc: string[] = []
+  const metinKucuk = metin.toLowerCase()
+  for (const [tr, ar] of Object.entries(TR_AR_KOPRU)) {
+    if (metinKucuk.includes(tr)) {
+      sonuc.push(...ar.split(' '))
+    }
+  }
+  return Array.from(new Set(sonuc)).slice(0, 6)
+}
+
+function kelimeKokleri(kelime: string): string[] {
+  const kokler = [kelime]
+  if (kelime.length > 5) kokler.push(kelime.slice(0, -2))
+  if (kelime.length > 6) kokler.push(kelime.slice(0, -3))
+  return kokler
+}
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+async function klasikKaynaklariGetir(sikayetler: string, sb: SupabaseClient<any, any, any>): Promise<string> {
   try {
-    const kelimeler = sikayet
-      .toLowerCase()
-      .split(/[\s,،؛\n]+/)
-      .map(k => k.trim())
-      .filter(k => k.length > 3)
+    const fields = 'kaynak_kodu,kitap_adi,yazar,bolum,icerik_tr,oncelik'
+    const tumSonuclar = new Map<string, Record<string, string>>()
+
+    // 1. Turkce kelimeler + kokleri
+    const kelimeler = sikayetler
+      .split(/[\s,;.\n]+/)
+      .filter(w => w.length > 3)
       .slice(0, 6)
 
-    const aramaKelimeler = [...kelimeler, mevsim].filter(Boolean)
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    let tumSatirlar: any[] = []
+    const tumKelimeler = Array.from(new Set(
+      kelimeler.flatMap(w => kelimeKokleri(w.toLowerCase()))
+    )).slice(0, 10)
 
-    // Tum kelimeleri tek sorguda ara (OR)
-    if (aramaKelimeler.length > 0) {
-      const orFiltre = aramaKelimeler.slice(0, 4).map(k => `icerik_tr.ilike.%${k}%`).join(',')
-      const { data } = await supabase
-        .from('klasik_kaynaklar')
-        .select('kaynak_kodu, kitap_adi, yazar, bolum, icerik_tr, oncelik')
-        .or(orFiltre)
-        .gte('oncelik', 5)
-        .order('oncelik', { ascending: false })
-        .limit(20)
-      if (data?.length) tumSatirlar.push(...data)
+    // 2. Arapca kopru kelimeleri
+    const arapcaKelimeler = trdenArapcaKelimeler(sikayetler)
+
+    // 3. Her kelime icin FTS sorgusu
+    for (const kw of tumKelimeler.slice(0, 6)) {
+      try {
+        const { data } = await sb
+          .from('klasik_kaynaklar')
+          .select(fields)
+          .textSearch('icerik_tr', kw, { type: 'plain', config: 'simple' })
+          .gte('oncelik', 5)
+          .order('oncelik', { ascending: false })
+          .limit(15)
+
+        data?.forEach((r: Record<string, string>) => {
+          const key = r.kaynak_kodu + r.bolum
+          if (!tumSonuclar.has(key)) tumSonuclar.set(key, r)
+        })
+      } catch { /* devam */ }
     }
 
-    const { data: sabitData } = await supabase
+    // 4. ilike fallback + Arapca kelimeler
+    const aramaKelimeler = [...tumKelimeler.slice(0, 4), ...arapcaKelimeler.slice(0, 3)]
+    for (const kw of aramaKelimeler) {
+      try {
+        const { data } = await sb
+          .from('klasik_kaynaklar')
+          .select(fields)
+          .ilike('icerik_tr', `%${kw}%`)
+          .gte('oncelik', 5)
+          .order('oncelik', { ascending: false })
+          .limit(10)
+
+        data?.forEach((r: Record<string, string>) => {
+          const key = r.kaynak_kodu + r.bolum
+          if (!tumSonuclar.has(key)) tumSonuclar.set(key, r)
+        })
+      } catch { /* devam */ }
+    }
+
+    // 5. Sabit kritik kaynaklar (her analizde)
+    const { data: sabit } = await sb
       .from('klasik_kaynaklar')
-      .select('kaynak_kodu, kitap_adi, yazar, bolum, icerik_tr, oncelik')
+      .select(fields)
       .in('kaynak_kodu', ['SRC-012', 'SRC-006', 'SRC-005'])
       .gte('oncelik', 7)
       .order('oncelik', { ascending: false })
       .limit(6)
-    if (sabitData?.length) tumSatirlar.push(...sabitData)
 
-    if (tumSatirlar.length === 0) {
-      const { data } = await supabase
+    sabit?.forEach((r: Record<string, string>) => {
+      const key = r.kaynak_kodu + r.bolum
+      if (!tumSonuclar.has(key)) tumSonuclar.set(key, r)
+    })
+
+    // 6. Puanlama — FTS + sikayet eslesmesi
+    const skorla = (r: Record<string, string>) => {
+      const icerik = (r.icerik_tr || '').toLowerCase()
+      let skor = parseInt(r.oncelik) || 5
+      tumKelimeler.forEach(w => { if (icerik.includes(w)) skor += 5 })
+      arapcaKelimeler.forEach(w => { if (icerik.includes(w)) skor += 3 })
+      return skor
+    }
+
+    // 7. Fallback — hic sonuc yoksa
+    if (tumSonuclar.size < 5) {
+      const { data: fallback } = await sb
         .from('klasik_kaynaklar')
-        .select('kaynak_kodu, kitap_adi, yazar, bolum, icerik_tr, oncelik')
+        .select(fields)
         .gte('oncelik', 7)
         .order('oncelik', { ascending: false })
         .limit(10)
-      tumSatirlar = data || []
+      fallback?.forEach((r: Record<string, string>) => {
+        const key = r.kaynak_kodu + r.bolum
+        if (!tumSonuclar.has(key)) tumSonuclar.set(key, r)
+      })
     }
 
-    const benzersiz = new Map()
-    for (const s of tumSatirlar) {
-      const anahtar = s.kaynak_kodu + (s.bolum || '')
-      if (!benzersiz.has(anahtar)) benzersiz.set(anahtar, s)
+    // 8. Sirala ve baglam metni olustur
+    const sirali = Array.from(tumSonuclar.values())
+      .sort((a, b) => skorla(b) - skorla(a))
+      .slice(0, 20)
+
+    let baglamMetni = ''
+    const tokenBudget = 6000
+
+    for (const k of sirali) {
+      const parca = `\n[${k.kaynak_kodu}] ${k.kitap_adi} — ${k.bolum}\n${(k.icerik_tr || '').slice(0, 400)}\n`
+      if (baglamMetni.length + parca.length > tokenBudget) break
+      baglamMetni += parca
     }
 
-    const secilen = Array.from(benzersiz.values()).slice(0, 15)
-    if (secilen.length === 0) return ''
+    return baglamMetni || 'Klasik kaynaklarda esleme bulunamadi.'
 
-    let baglam = `KLASIK KAYNAKLARDAN ILGILI METINLER (${secilen.length} kayit)\n\n`
-    for (const s of secilen) {
-      baglam += `[${s.kaynak_kodu}] ${s.kitap_adi} — ${s.yazar}\n`
-      if (s.bolum) baglam += `Bolum: ${s.bolum}\n`
-      baglam += `${s.icerik_tr}\n\n`
-    }
-    return baglam.slice(0, 5000)
-  } catch (err) {
-    console.error('Klasik kaynak hatasi:', err)
+  } catch (e) {
+    console.error('klasikKaynaklariGetir hatasi:', e)
     return ''
   }
 }
@@ -289,7 +372,7 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'Sikayet bilgisi gerekli' }, { status: 400 })
     }
 
-    const klasikBaglam = await klasikKaynaklariGetir(sikayet, mevsim || '')
+    const klasikBaglam = await klasikKaynaklariGetir(sikayet, supabase)
 
     const labVarMi = hgb || ferritin || crp || alt || ast || ggt || tsh || glucose || hba1c || vit_d || b12
 
