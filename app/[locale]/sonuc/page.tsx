@@ -9,14 +9,9 @@ const cinzel = Cinzel({ subsets: ['latin'], weight: ['400', '500', '600'] })
 const garamond = EB_Garamond({ subsets: ['latin'], weight: ['400', '500'], style: ['normal', 'italic'] })
 
 const C = {
-  primary: '#1B4332',
-  gold: '#C9A84C',
-  cream: '#F5EFE6',
-  dark: '#1C1C1C',
-  secondary: '#5C4A2A',
-  border: '#E0D5C5',
-  white: '#FFFFFF',
-  surface: '#FAF7F2',
+  primary: '#1B4332', gold: '#C9A84C', cream: '#F5EFE6',
+  dark: '#1C1C1C', secondary: '#5C4A2A', border: '#E0D5C5',
+  white: '#FFFFFF', surface: '#FAF7F2',
 }
 
 export default function SonucPage() {
@@ -25,6 +20,8 @@ export default function SonucPage() {
   const [telefon, setTelefon] = useState('')
   const [ad, setAd] = useState('')
   const [kayitNo, setKayitNo] = useState('')
+  const [isAbone, setIsAbone] = useState(false)
+  const [kopyalandi, setKopyalandi] = useState(false)
   const supabase = createClient()
 
   useEffect(() => {
@@ -38,6 +35,17 @@ export default function SonucPage() {
         setAd(form.ad_soyad || '')
 
         const { data: { user } } = await supabase.auth.getUser()
+
+        // Abonelik kontrol
+        if (user) {
+          const { data: abonelik } = await supabase
+            .from('abonelikler')
+            .select('durum')
+            .eq('kullanici_id', user.id)
+            .eq('durum', 'aktif')
+            .single()
+          setIsAbone(!!abonelik)
+        }
 
         const { data, error } = await supabase
           .from('basic_forms')
@@ -77,14 +85,6 @@ export default function SonucPage() {
         setKayitNo(no)
 
         localStorage.removeItem('ipekyolu_analiz_form')
-
-        // Odeme kapisi — uye degilse yonlendir
-        if (!user) {
-          const plan = localStorage.getItem('ipekyolu_secili_plan') || 'yearly'
-          localStorage.setItem('ipekyolu_kayit_no', no)
-          setTimeout(() => router.push(`/odeme?plan=${plan}`), 2000)
-        }
-
         setDurum('gonderildi')
       } catch (err) {
         console.error(err)
@@ -95,118 +95,169 @@ export default function SonucPage() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
+  function kopyala() {
+    navigator.clipboard.writeText(kayitNo)
+    setKopyalandi(true)
+    setTimeout(() => setKopyalandi(false), 2000)
+  }
+
   return (
     <div style={{ background: C.cream, minHeight: '100vh', fontFamily: garamond.style.fontFamily }}>
       <header style={{ background: C.primary, padding: '0 24px', height: 64, display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
-          <svg width="36" height="36" viewBox="0 0 64 64" fill="none">
-            <ellipse cx="32" cy="37" rx="13" ry="11" fill="none" stroke="#C9A84C" strokeWidth="1.5"/>
-            <path d="M22 37 Q22 25 32 23 Q42 25 42 37" fill="none" stroke="#C9A84C" strokeWidth="1.5"/>
-            <rect x="28" y="21" width="8" height="4" rx="1.5" fill="none" stroke="#C9A84C" strokeWidth="1.5"/>
-            <path d="M32 14 Q36 10 40 12 Q38 18 32 20 Q26 18 24 12 Q28 10 32 14Z" fill="#C9A84C"/>
-            <circle cx="32" cy="32" r="2.8" fill="#EF5350"/>
-            <circle cx="26.5" cy="34" r="2" fill="#FF7043"/>
-            <circle cx="37.5" cy="34" r="2" fill="#42A5F5"/>
-            <circle cx="32" cy="38.5" r="1.8" fill="#AB47BC"/>
-          </svg>
-          <div>
-            <div style={{ fontFamily: cinzel.style.fontFamily, color: C.gold, fontSize: 15, fontWeight: 600, letterSpacing: 3 }}>İPEK YOLU ŞİFACISI</div>
-          </div>
+          <div style={{ fontFamily: cinzel.style.fontFamily, color: C.gold, fontSize: 15, fontWeight: 600, letterSpacing: 3 }}>IPEK YOLU SIFACISI</div>
         </div>
       </header>
 
       <div style={{ maxWidth: 600, margin: '0 auto', padding: '60px 20px' }}>
-
+        {/* YUKLENIYOR */}
         {durum === 'yukleniyor' && (
           <div style={{ textAlign: 'center', padding: '60px 0' }}>
             <div style={{ width: 48, height: 48, border: `3px solid ${C.border}`, borderTop: `3px solid ${C.primary}`, borderRadius: '50%', animation: 'spin 1s linear infinite', margin: '0 auto 24px auto' }} />
-            <p style={{ fontFamily: cinzel.style.fontFamily, color: C.primary, fontSize: 16, letterSpacing: 2 }}>Formunuz İletiliyor...</p>
+            <p style={{ fontFamily: cinzel.style.fontFamily, color: C.primary, fontSize: 16, letterSpacing: 2 }}>Formunuz Iletiliyor...</p>
             <style>{`@keyframes spin { to { transform: rotate(360deg) } }`}</style>
           </div>
         )}
 
+        {/* GONDERILDI */}
         {durum === 'gonderildi' && (
           <div>
+            {/* Basari kart */}
             <div style={{ background: C.white, borderRadius: 20, border: `1px solid ${C.border}`, padding: '48px 40px', textAlign: 'center', marginBottom: 24 }}>
-              <div style={{ width: 72, height: 72, background: '#EAF3DE', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 24px auto' }}>
-                <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#1B4332" strokeWidth="2.5">
-                  <polyline points="20 6 9 17 4 12"/>
-                </svg>
+              <div style={{ width: 72, height: 72, background: '#EAF3DE', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 24px' }}>
+                <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke={C.primary} strokeWidth="2.5"><polyline points="20 6 9 17 4 12"/></svg>
               </div>
               <h1 style={{ fontFamily: cinzel.style.fontFamily, fontSize: 24, fontWeight: 500, color: C.primary, marginBottom: 12, letterSpacing: 1 }}>
-                Formunuz Danışmana İletildi
+                Formunuz Danismana Iletildi
               </h1>
               <p style={{ fontSize: 16, color: C.secondary, fontStyle: 'italic', lineHeight: 1.7, marginBottom: 24 }}>
-                {ad ? `${ad}, f` : 'F'}ormunuz alındı. Danışmanınız inceleyip 24-48 saat içinde WhatsApp üzerinden size ulaşacaktır.
+                {ad ? `${ad}, f` : 'F'}ormunuz alindi. Danismaniniz 24-48 saat icinde WhatsApp uzerinden size ulasacaktir.
               </p>
 
+              {/* Kayit no + kopyala */}
               {kayitNo && (
-                <div style={{ background: C.surface, border: `1px solid ${C.border}`, borderRadius: 10, padding: '12px 20px', marginBottom: 24, display: 'inline-block' }}>
-                  <div style={{ fontSize: 11, color: '#999', letterSpacing: 1, marginBottom: 4 }}>KAYIT NUMARASI</div>
-                  <div style={{ fontFamily: cinzel.style.fontFamily, fontSize: 18, color: C.primary, fontWeight: 600, letterSpacing: 3 }}>{kayitNo}</div>
+                <div style={{ background: C.surface, border: `1px solid ${C.border}`, borderRadius: 10, padding: '12px 20px', marginBottom: 24, display: 'inline-flex', alignItems: 'center', gap: 10 }}>
+                  <div>
+                    <div style={{ fontSize: 11, color: '#999', letterSpacing: 1, marginBottom: 4 }}>KAYIT NUMARASI</div>
+                    <div style={{ fontFamily: cinzel.style.fontFamily, fontSize: 18, color: C.primary, fontWeight: 600, letterSpacing: 3 }}>{kayitNo}</div>
+                  </div>
+                  <button onClick={kopyala}
+                    style={{ background: 'none', border: `1px solid ${C.border}`, borderRadius: 6, padding: '6px 10px', cursor: 'pointer', fontSize: 11, color: C.secondary }}>
+                    {kopyalandi ? 'Kopyalandi' : 'Kopyala'}
+                  </button>
                 </div>
               )}
 
               {telefon && (
                 <div style={{ background: '#E8F5E9', border: '1px solid #A5D6A7', borderRadius: 12, padding: '16px 20px', marginBottom: 24 }}>
-                  <div style={{ fontSize: 12, color: '#2E7D32', fontWeight: 600, marginBottom: 4 }}>WhatsApp bildirim numaranız</div>
+                  <div style={{ fontSize: 12, color: '#2E7D32', fontWeight: 600, marginBottom: 4 }}>WhatsApp bildirim numaraniz</div>
                   <div style={{ fontSize: 16, color: '#1B5E20', fontWeight: 600 }}>{telefon}</div>
                 </div>
               )}
-
-              <p style={{ fontSize: 13, color: '#999', fontStyle: 'italic', lineHeight: 1.6 }}>
-                Kayıt numaranızı saklayın. Danışmanınızla iletişimde referans olarak kullanabilirsiniz.
-              </p>
             </div>
 
-            <div style={{ background: C.white, borderRadius: 16, border: `1px solid ${C.border}`, padding: '24px 28px', marginBottom: 16 }}>
-              <div style={{ fontFamily: cinzel.style.fontFamily, fontSize: 13, color: C.gold, letterSpacing: 2, marginBottom: 12 }}>SONRAKI ADIMLAR</div>
-              {[
-                { num: '1', text: 'Danışmanınız formunuzu klasik İslam tıbbı kaynakları ile analiz eder.' },
-                { num: '2', text: 'Mizaç tipiniz, hılt dengeniz ve etkilenen organlar belirlenir.' },
-                { num: '3', text: 'Size özel bitkisel protokol hazırlanır.' },
-                { num: '4', text: 'WhatsApp üzerinden sonuçlarınız ve önerileriniz iletilir.' },
-              ].map(item => (
-                <div key={item.num} style={{ display: 'flex', gap: 14, marginBottom: 12, alignItems: 'flex-start' }}>
-                  <div style={{ width: 28, height: 28, background: C.primary, borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, fontFamily: cinzel.style.fontFamily, fontSize: 13, color: C.gold, fontWeight: 600 }}>{item.num}</div>
-                  <p style={{ fontSize: 14, color: C.secondary, lineHeight: 1.6, margin: 0, paddingTop: 3 }}>{item.text}</p>
+            {/* ABONE DEGIL — Blur + Plan kartlari */}
+            {!isAbone && (
+              <div>
+                {/* Bulanik analiz onizleme */}
+                <div style={{ background: C.white, borderRadius: 16, border: `1px solid ${C.border}`, padding: '24px', marginBottom: 20, position: 'relative' as const, overflow: 'hidden' }}>
+                  <div style={{ filter: 'blur(6px)', pointerEvents: 'none', userSelect: 'none' }}>
+                    <div style={{ fontFamily: cinzel.style.fontFamily, fontSize: 14, color: C.primary, marginBottom: 8 }}>MIZAC ANALIZI</div>
+                    <div style={{ height: 20, background: '#FFE8E8', borderRadius: 4, marginBottom: 8, width: '70%' }} />
+                    <div style={{ height: 14, background: C.surface, borderRadius: 4, marginBottom: 6, width: '100%' }} />
+                    <div style={{ height: 14, background: C.surface, borderRadius: 4, marginBottom: 6, width: '85%' }} />
+                    <div style={{ height: 14, background: C.surface, borderRadius: 4, width: '60%' }} />
+                  </div>
+                  <div style={{ position: 'absolute' as const, inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'rgba(255,255,255,0.6)' }}>
+                    <div style={{ textAlign: 'center' }}>
+                      <div style={{ fontSize: 32, marginBottom: 8 }}>🔒</div>
+                      <div style={{ fontFamily: cinzel.style.fontFamily, fontSize: 13, color: C.primary, letterSpacing: 1 }}>Analiz Sonucu</div>
+                      <div style={{ fontSize: 12, color: C.secondary }}>Uyelik ile goruntulenebilir</div>
+                    </div>
+                  </div>
                 </div>
-              ))}
-            </div>
 
+                {/* Plan kartlari */}
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(160px, 1fr))', gap: 10, marginBottom: 16 }}>
+                  {[
+                    { ad: 'Aylik', fiyat: '890', birim: '/ay' },
+                    { ad: 'Yillik', fiyat: '590', birim: '/ay', popular: true },
+                    { ad: 'Tek Seferlik', fiyat: '1.290', birim: '' },
+                  ].map(p => (
+                    <div key={p.ad} style={{ background: C.white, borderRadius: 10, padding: '16px', border: `1px solid ${p.popular ? C.gold : C.border}`, textAlign: 'center', position: 'relative' as const }}>
+                      {p.popular && <div style={{ position: 'absolute' as const, top: -8, left: '50%', transform: 'translateX(-50%)', background: C.gold, color: C.primary, fontSize: 8, fontWeight: 600, padding: '2px 8px', borderRadius: 8, letterSpacing: 1 }}>POPULER</div>}
+                      <div style={{ fontSize: 11, color: C.secondary, marginBottom: 4 }}>{p.ad}</div>
+                      <div style={{ fontSize: 22, fontWeight: 600, color: C.dark }}>{p.fiyat}{'\u20BA'}<span style={{ fontSize: 11, fontWeight: 400, color: C.secondary }}>{p.birim}</span></div>
+                    </div>
+                  ))}
+                </div>
+
+                <button onClick={() => router.push('/odeme')}
+                  style={{ width: '100%', padding: 16, background: C.gold, border: 'none', borderRadius: 12, fontFamily: cinzel.style.fontFamily, fontSize: 14, fontWeight: 600, color: C.primary, letterSpacing: 1, cursor: 'pointer', marginBottom: 12 }}>
+                  Uye Ol ve Sonucu Gor
+                </button>
+              </div>
+            )}
+
+            {/* ABONE — Tam icerik */}
+            {isAbone && (
+              <div>
+                <div style={{ background: C.white, borderRadius: 16, border: `1px solid ${C.border}`, padding: '24px 28px', marginBottom: 16 }}>
+                  <div style={{ fontFamily: cinzel.style.fontFamily, fontSize: 13, color: C.gold, letterSpacing: 2, marginBottom: 12 }}>SONRAKI ADIMLAR</div>
+                  {[
+                    'Danismaniniz formunuzu klasik Islam tibbi kaynaklari ile analiz eder.',
+                    'Mizac tipiniz, hilt dengeniz ve etkilenen organlar belirlenir.',
+                    'Size ozel bitkisel protokol hazirlanir.',
+                    'WhatsApp uzerinden sonuclariniz ve onerileriniz iletilir.',
+                  ].map((text, i) => (
+                    <div key={i} style={{ display: 'flex', gap: 14, marginBottom: 12, alignItems: 'flex-start' }}>
+                      <div style={{ width: 28, height: 28, background: C.primary, borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, fontFamily: cinzel.style.fontFamily, fontSize: 13, color: C.gold, fontWeight: 600 }}>{i + 1}</div>
+                      <p style={{ fontSize: 14, color: C.secondary, lineHeight: 1.6, margin: 0, paddingTop: 3 }}>{text}</p>
+                    </div>
+                  ))}
+                </div>
+
+                <div style={{ background: C.surface, border: `1px solid ${C.border}`, borderRadius: 12, padding: '14px 18px', marginBottom: 16 }}>
+                  <p style={{ fontSize: 13, color: C.secondary, fontStyle: 'italic', lineHeight: 1.6, margin: 0 }}>
+                    &ldquo;Beden, ancak mizaci bilindiginde tedavi edilebilir.&rdquo; — el-Kanun fi&apos;t-Tib
+                  </p>
+                </div>
+              </div>
+            )}
+
+            {/* WhatsApp */}
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10 }}>
-              <a href={`https://wa.me/905331687226?text=${encodeURIComponent(`Merhaba, ${kayitNo} numaralı analiz formumu gönderdim. İletişime geçmek istedim.`)}`}
+              <a href={`https://wa.me/905331687226?text=${encodeURIComponent(`Merhaba, ${kayitNo} numarali analiz formumu gonderdim.`)}`}
                 target="_blank"
-                style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8, background: '#25D366', color: 'white', borderRadius: 10, padding: '13px', fontSize: 13, fontWeight: 600, textDecoration: 'none', fontFamily: cinzel.style.fontFamily, letterSpacing: 1 }}>
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347zM12 0C5.373 0 0 5.373 0 12c0 2.136.563 4.14 1.544 5.877L.057 23.943l6.25-1.508A11.953 11.953 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.793 9.793 0 01-5.01-1.375l-.36-.213-3.712.896.934-3.613-.234-.372A9.774 9.774 0 012.182 12C2.182 6.565 6.565 2.182 12 2.182c5.434 0 9.818 4.383 9.818 9.818 0 5.434-4.384 9.818-9.818 9.818z"/></svg>
+                style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8, background: '#25D366', color: 'white', borderRadius: 10, padding: 13, fontSize: 13, fontWeight: 600, textDecoration: 'none', fontFamily: cinzel.style.fontFamily, letterSpacing: 1 }}>
                 WhatsApp
               </a>
               <button onClick={() => router.push('/')}
-                style={{ background: 'transparent', border: `1.5px solid ${C.primary}`, borderRadius: 10, padding: '13px', fontSize: 13, fontWeight: 600, color: C.primary, cursor: 'pointer', fontFamily: cinzel.style.fontFamily, letterSpacing: 1 }}>
+                style={{ background: 'transparent', border: `1.5px solid ${C.primary}`, borderRadius: 10, padding: 13, fontSize: 13, fontWeight: 600, color: C.primary, cursor: 'pointer', fontFamily: cinzel.style.fontFamily, letterSpacing: 1 }}>
                 Ana Sayfa
               </button>
             </div>
           </div>
         )}
 
+        {/* HATA */}
         {durum === 'hata' && (
           <div style={{ background: C.white, borderRadius: 20, border: '1px solid #FFCDD2', padding: '48px 40px', textAlign: 'center' }}>
-            <div style={{ fontSize: 48, marginBottom: 16 }}>⚠️</div>
-            <h2 style={{ fontFamily: cinzel.style.fontFamily, fontSize: 20, color: '#C62828', marginBottom: 12 }}>Bir Sorun Oluştu</h2>
-            <p style={{ fontSize: 14, color: C.secondary, marginBottom: 24, lineHeight: 1.6 }}>Formunuz kaydedilemedi. Lütfen tekrar deneyin veya doğrudan WhatsApp üzerinden ulaşın.</p>
+            <div style={{ fontSize: 48, marginBottom: 16 }}>!</div>
+            <h2 style={{ fontFamily: cinzel.style.fontFamily, fontSize: 20, color: '#C62828', marginBottom: 12 }}>Bir Sorun Olustu</h2>
+            <p style={{ fontSize: 14, color: C.secondary, marginBottom: 24, lineHeight: 1.6 }}>Formunuz kaydedilemedi. Lutfen tekrar deneyin veya WhatsApp uzerinden ulasin.</p>
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10 }}>
               <button onClick={() => router.push('/analiz')}
-                style={{ background: C.primary, color: 'white', border: 'none', borderRadius: 10, padding: '12px', fontSize: 13, cursor: 'pointer', fontFamily: cinzel.style.fontFamily }}>
+                style={{ background: C.primary, color: 'white', border: 'none', borderRadius: 10, padding: 12, fontSize: 13, cursor: 'pointer', fontFamily: cinzel.style.fontFamily }}>
                 Tekrar Dene
               </button>
               <a href="https://wa.me/905331687226" target="_blank"
-                style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6, background: '#25D366', color: 'white', borderRadius: 10, padding: '12px', fontSize: 13, fontWeight: 600, textDecoration: 'none' }}>
+                style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6, background: '#25D366', color: 'white', borderRadius: 10, padding: 12, fontSize: 13, fontWeight: 600, textDecoration: 'none' }}>
                 WhatsApp
               </a>
             </div>
           </div>
         )}
-
       </div>
     </div>
   )
