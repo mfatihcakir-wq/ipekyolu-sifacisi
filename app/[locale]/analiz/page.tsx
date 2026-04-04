@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useRef, useCallback } from 'react'
 import { useRouter } from 'next/navigation'
 import { Cinzel, EB_Garamond } from 'next/font/google'
 
@@ -67,6 +67,137 @@ export default function AnalizForm() {
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const set = (key: string, val: any) => setForm(f => ({ ...f, [key]: val }))
+
+  // PPG & Kamera state
+  const [ppgStatus, setPpgStatus] = useState('Kamerayı başlatın, parmak ucunuzu kameraya tutun')
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [ppgBpm, setPpgBpm] = useState<number | null>(null)
+  const [ppgRunning, setPpgRunning] = useState(false)
+  const [dilFoto, setDilFoto] = useState<string | null>(null)
+  const [yuzFoto, setYuzFoto] = useState<string | null>(null)
+  const [cameraDevices, setCameraDevices] = useState<MediaDeviceInfo[]>([])
+  const [showCameraSelect, setShowCameraSelect] = useState(false)
+  const ppgVideoRef = useRef<HTMLVideoElement | null>(null)
+  const ppgStreamRef = useRef<MediaStream | null>(null)
+  const ppgIntervalRef = useRef<ReturnType<typeof setInterval> | null>(null)
+  const selectedCameraRef = useRef<string>('')
+
+  const stopPPG = useCallback(() => {
+    if (ppgIntervalRef.current) { clearInterval(ppgIntervalRef.current); ppgIntervalRef.current = null }
+    if (ppgStreamRef.current) { ppgStreamRef.current.getTracks().forEach(t => t.stop()); ppgStreamRef.current = null }
+    setPpgRunning(false)
+  }, [])
+
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const startPPG = useCallback(async () => {
+    try {
+      stopPPG()
+      setPpgStatus('Kamera açılıyor...')
+      const constraints: MediaStreamConstraints = {
+        video: selectedCameraRef.current
+          ? { deviceId: { exact: selectedCameraRef.current } }
+          : { facingMode: 'environment' }
+      }
+      const stream = await navigator.mediaDevices.getUserMedia(constraints)
+      ppgStreamRef.current = stream
+      const video = ppgVideoRef.current
+      if (!video) return
+      video.srcObject = stream
+      video.style.display = 'block'
+      await video.play()
+      setPpgRunning(true)
+      setPpgStatus('Parmak ucunuzu kameraya tutun... Ölçüm başlıyor (30 sn)')
+
+      const canvas = document.getElementById('ppg-canvas') as HTMLCanvasElement
+      if (!canvas) return
+      const ctx = canvas.getContext('2d')
+      if (!ctx) return
+      canvas.width = 64
+      canvas.height = 64
+
+      const redValues: number[] = []
+      const startTime = Date.now()
+
+      ppgIntervalRef.current = setInterval(() => {
+        ctx.drawImage(video, 0, 0, 64, 64)
+        const frame = ctx.getImageData(0, 0, 64, 64)
+        let rSum = 0
+        for (let i = 0; i < frame.data.length; i += 4) rSum += frame.data[i]
+        const avgR = rSum / (frame.data.length / 4)
+        redValues.push(avgR)
+
+        const elapsed = (Date.now() - startTime) / 1000
+        if (elapsed < 30) {
+          setPpgStatus(`Ölçülüyor... ${Math.round(elapsed)}s / 30s`)
+        } else {
+          let peaks = 0
+          for (let i = 2; i < redValues.length - 2; i++) {
+            if (redValues[i] > redValues[i-1] && redValues[i] > redValues[i-2] &&
+                redValues[i] > redValues[i+1] && redValues[i] > redValues[i+2]) {
+              peaks++
+            }
+          }
+          const bpm = Math.round((peaks / elapsed) * 60)
+          const clampedBpm = Math.max(40, Math.min(180, bpm))
+          setPpgBpm(clampedBpm)
+          setPpgStatus(`Ölçüm tamamlandı: ~${clampedBpm} BPM`)
+          if (clampedBpm > 90) set('nb_hiz_sinif', 'hizli')
+          else if (clampedBpm < 60) set('nb_hiz_sinif', 'yavas')
+          else set('nb_hiz_sinif', 'orta')
+          stopPPG()
+          video.style.display = 'none'
+        }
+      }, 100)
+    } catch {
+      setPpgStatus('Kamera erişimi reddedildi. Tarayıcı ayarlarını kontrol edin.')
+    }
+  }, [stopPPG])
+
+  const selectCameraFn = useCallback(async () => {
+    try {
+      await navigator.mediaDevices.getUserMedia({ video: true })
+      const devices = await navigator.mediaDevices.enumerateDevices()
+      const videoDevices = devices.filter(d => d.kind === 'videoinput')
+      setCameraDevices(videoDevices)
+      setShowCameraSelect(true)
+    } catch {
+      setPpgStatus('Kamera erişimi reddedildi.')
+    }
+  }, [])
+
+  const pickCamera = useCallback((deviceId: string) => {
+    selectedCameraRef.current = deviceId
+    setShowCameraSelect(false)
+    setPpgStatus('Kamera seçildi. "Kamerayı Başlat" butonuna tıklayın.')
+  }, [])
+
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const capturePhoto = useCallback(async (type: 'dil' | 'yuz') => {
+    try {
+      const stream = await navigator.mediaDevices.getUserMedia({
+        video: { facingMode: type === 'yuz' ? 'user' : 'environment' }
+      })
+      const video = document.createElement('video')
+      video.srcObject = stream
+      video.setAttribute('playsinline', 'true')
+      await video.play()
+      await new Promise(r => setTimeout(r, 500))
+      const canvas = document.createElement('canvas')
+      canvas.width = video.videoWidth
+      canvas.height = video.videoHeight
+      const ctx = canvas.getContext('2d')
+      if (ctx) ctx.drawImage(video, 0, 0)
+      stream.getTracks().forEach(t => t.stop())
+      const dataUrl = canvas.toDataURL('image/jpeg', 0.7)
+      if (type === 'dil') setDilFoto(dataUrl)
+      else setYuzFoto(dataUrl)
+    } catch {
+      gosterToast('Kamera erişimi sağlanamadı.')
+    }
+  }, [])
+
+  const openDilCamera = useCallback(() => capturePhoto('dil'), [capturePhoto])
+  const openYuzCamera = useCallback(() => capturePhoto('yuz'), [capturePhoto])
 
   const handleSubmit = () => {
     if (!form.ad_soyad?.trim()) { gosterToast('Ad Soyad alani zorunludur.'); setAdim(1); return }
@@ -324,6 +455,53 @@ export default function AnalizForm() {
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
           Nabız Gözlemi — el-Kânûn (9 Sıfat)
         </div>
+        {/* PPG Kamera */}
+        <div style={{ background: '#F0F9F4', border: '1px solid #C8E6C9', borderRadius: 12, padding: '16px 20px', marginBottom: 20 }}>
+          <div style={{ fontFamily: cinzel.style.fontFamily, fontSize: 10, color: C.primary, letterSpacing: 2, marginBottom: 8 }}>
+            KAMERA İLE NABIZ ÖLÇÜMÜ (PPG)
+          </div>
+          <div style={{ fontSize: 13, color: C.secondary, fontStyle: 'italic', marginBottom: 12, lineHeight: 1.6 }}>
+            Telefonunuzun kamerasını kullanarak nabız ölçümü yapabilirsiniz. Parmak ucunuzu arka kameraya tutun, 30 saniye bekleyin.
+          </div>
+          <div style={{ fontSize: 11, color: '#9C8B72', marginBottom: 12 }}>
+            MacBook kullanıcıları: Kamera Seç butonundan iPhone Süreklilik Kamerasını seçebilirsiniz.
+          </div>
+          <button onClick={startPPG} disabled={ppgRunning}
+            style={{ background: C.primary, color: 'white', border: 'none', borderRadius: 8, padding: '10px 20px', fontFamily: cinzel.style.fontFamily, fontSize: 11, letterSpacing: 1, cursor: ppgRunning ? 'not-allowed' : 'pointer', marginRight: 8, opacity: ppgRunning ? 0.6 : 1 }}>
+            Kamerayı Başlat
+          </button>
+          <button onClick={selectCameraFn}
+            style={{ background: 'transparent', color: C.primary, border: `1px solid ${C.primary}`, borderRadius: 8, padding: '10px 16px', fontFamily: cinzel.style.fontFamily, fontSize: 11, letterSpacing: 1, cursor: 'pointer' }}>
+            Kamera Seç
+          </button>
+          {ppgRunning && (
+            <button onClick={stopPPG}
+              style={{ background: '#C62828', color: 'white', border: 'none', borderRadius: 8, padding: '10px 16px', fontFamily: cinzel.style.fontFamily, fontSize: 11, letterSpacing: 1, cursor: 'pointer', marginLeft: 8 }}>
+              Durdur
+            </button>
+          )}
+          {showCameraSelect && cameraDevices.length > 0 && (
+            <div style={{ marginTop: 10, background: C.white, border: `1px solid ${C.border}`, borderRadius: 8, padding: 10 }}>
+              {cameraDevices.map((d, i) => (
+                <button key={d.deviceId} onClick={() => pickCamera(d.deviceId)}
+                  style={{ display: 'block', width: '100%', textAlign: 'left', padding: '8px 12px', border: 'none', background: i % 2 === 0 ? C.surface : C.white, cursor: 'pointer', fontSize: 12, color: C.dark, borderRadius: 4, marginBottom: 2 }}>
+                  {d.label || `Kamera ${i + 1}`}
+                </button>
+              ))}
+            </div>
+          )}
+          <div style={{ marginTop: 10, fontSize: 12, color: '#666' }}>{ppgStatus}</div>
+          <video ref={ppgVideoRef} playsInline style={{ display: 'none', width: '100%', maxWidth: 300, borderRadius: 8, marginTop: 10 }} />
+          <canvas id="ppg-canvas" style={{ display: 'none' }} />
+        </div>
+
+        {/* Ayırıcı */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 16 }}>
+          <div style={{ flex: 1, height: 1, background: C.border }} />
+          <span style={{ fontSize: 11, color: '#999', fontStyle: 'italic' }}>veya manuel olarak girin</span>
+          <div style={{ flex: 1, height: 1, background: C.border }} />
+        </div>
+
         <div style={s.card}>
           <div style={s.tip}>İbn Sînâ el-Kânûn: Nabız mizacın doğrudan aynasıdır. 9 sıfatın tümü değerlendirilmelidir.</div>
           <div style={s.grid3}>
@@ -362,6 +540,52 @@ export default function AnalizForm() {
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="3"/></svg>
           Dil ve Yüz Gözlemi
         </div>
+        {/* Dil/Yüz Kamera */}
+        <div style={{ background: '#F0F9F4', border: '1px solid #C8E6C9', borderRadius: 12, padding: '16px 20px', marginBottom: 20 }}>
+          <div style={{ fontFamily: cinzel.style.fontFamily, fontSize: 10, color: C.primary, letterSpacing: 2, marginBottom: 8 }}>
+            KAMERA İLE DİL / YÜZ ANALİZİ
+          </div>
+          <div style={{ fontSize: 13, color: C.secondary, fontStyle: 'italic', marginBottom: 12, lineHeight: 1.6 }}>
+            Dilinizin veya yüzünüzün fotoğrafını çekin. Fotoğraf el-Kânûn çerçevesinde analiz edilecektir.
+          </div>
+          <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap' as const }}>
+            <button onClick={openDilCamera}
+              style={{ background: C.primary, color: 'white', border: 'none', borderRadius: 8, padding: '10px 20px', fontFamily: cinzel.style.fontFamily, fontSize: 11, letterSpacing: 1, cursor: 'pointer' }}>
+              Dil Fotoğrafı Çek
+            </button>
+            <button onClick={openYuzCamera}
+              style={{ background: C.primary, color: 'white', border: 'none', borderRadius: 8, padding: '10px 20px', fontFamily: cinzel.style.fontFamily, fontSize: 11, letterSpacing: 1, cursor: 'pointer' }}>
+              Yüz Fotoğrafı Çek
+            </button>
+          </div>
+          {(dilFoto || yuzFoto) && (
+            <div style={{ display: 'flex', gap: 12, marginTop: 12, flexWrap: 'wrap' as const }}>
+              {dilFoto && (
+                <div style={{ textAlign: 'center' }}>
+                  <img src={dilFoto} alt="Dil" style={{ width: 100, height: 100, objectFit: 'cover', borderRadius: 8, border: `1px solid ${C.border}` }} />
+                  <div style={{ fontSize: 10, color: '#999', marginTop: 4 }}>Dil</div>
+                </div>
+              )}
+              {yuzFoto && (
+                <div style={{ textAlign: 'center' }}>
+                  <img src={yuzFoto} alt="Yüz" style={{ width: 100, height: 100, objectFit: 'cover', borderRadius: 8, border: `1px solid ${C.border}` }} />
+                  <div style={{ fontSize: 10, color: '#999', marginTop: 4 }}>Yüz</div>
+                </div>
+              )}
+            </div>
+          )}
+          <div style={{ marginTop: 10, fontSize: 11, color: '#9C8B72', fontStyle: 'italic' }}>
+            İbn Sînâ: Dil ve yüz rengi mizacın görünür aynasıdır. Fotoğraf çektikten sonra manuel alanları da doldurun.
+          </div>
+        </div>
+
+        {/* Ayırıcı */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 16 }}>
+          <div style={{ flex: 1, height: 1, background: C.border }} />
+          <span style={{ fontSize: 11, color: '#999', fontStyle: 'italic' }}>veya manuel olarak girin</span>
+          <div style={{ flex: 1, height: 1, background: C.border }} />
+        </div>
+
         <div style={s.card}>
           <div style={s.tip}>İbn Sînâ: Dil ve yüz rengi, mizacın görünür aynasıdır. Üç kanal (nabız+idrar+yüz) örtüşüyorsa teşhis kesindir.</div>
           <div style={{ fontSize: 12, fontWeight: 600, color: C.primary, marginBottom: 10, letterSpacing: 1 }}>DİL MUAYENESİ</div>
