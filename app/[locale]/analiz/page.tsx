@@ -64,9 +64,10 @@ export default function AnalizForm() {
   const set = (key: string, val: any) => setForm(f => ({ ...f, [key]: val }))
 
   const handleSubmit = () => {
-    if (!form.symptoms) { alert('Lütfen şikayetlerinizi yazın.'); return }
+    if (!form.ad_soyad?.trim()) { alert('Ad Soyad alanı zorunludur.'); setAdim(1); return }
+    if (!form.telefon?.trim()) { alert('Telefon numarası zorunludur.'); setAdim(1); return }
+    if (!form.symptoms?.trim()) { alert('Şikayetler alanı zorunludur.'); setAdim(8); return }
     if (!form.kvkk) { alert('KVKK onayı gereklidir.'); return }
-    if (!form.telefon) { alert('Telefon numarası gereklidir.'); return }
     localStorage.setItem('ipekyolu_analiz_form', JSON.stringify(form))
     localStorage.setItem('ipekyolu_secili_plan', 'yearly')
     router.push('/sonuc')
@@ -229,7 +230,10 @@ export default function AnalizForm() {
         </div>
 
         <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: 24 }}>
-          <button onClick={() => setAdim(2)} style={{ padding: '10px 28px', background: C.primary, border: 'none', borderRadius: 8, color: C.gold, cursor: 'pointer', fontSize: 13, fontWeight: 600, fontFamily: cinzel.style.fontFamily }}>{"İleri →"}</button>
+          <button onClick={() => {
+            if (!form.ad_soyad?.trim() || !form.telefon?.trim()) { alert('Ad Soyad ve Telefon alanları zorunludur.'); return }
+            setAdim(2)
+          }} style={{ padding: '10px 28px', background: C.primary, border: 'none', borderRadius: 8, color: C.gold, cursor: 'pointer', fontSize: 13, fontWeight: 600, fontFamily: cinzel.style.fontFamily }}>{"İleri →"}</button>
         </div>
         </div>
 
