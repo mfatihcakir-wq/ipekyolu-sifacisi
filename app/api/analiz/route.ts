@@ -327,6 +327,18 @@ HASTA YAS PROTOKOLU
 Hamile: Ardic, asarun, yavsan, safran yuksek doz YASAK.
 Hamilelikte supheli bitkiler icin "hekime danisilarak" notu ekle.
 
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+MODUL SINIRI — CILT ANALIZI ILE CAKISMA
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Bu analiz: IC sistem (mizac, hilt, ic organ, beslenme, egzersiz).
+Cilt recetesi bu analizin DISINDADIR.
+
+Cilt sikayeti (akne, leke, egzama, sedef, kirisiklik vb.) varsa:
+→ klinik_gozlemler e ekle: "Cilt sikayeti mevcut — cilt analizi moduluyle ayrica degerlendirilmesi onerilir"
+→ terkib_recetesi ne topikal/dis formul EKLEME
+→ bitki_recetesi nde SADECE icten alinan bitkiler
+→ Cilt sorununu hilt dengesizligiyle acikla, urun onerme
+
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 KRITIK KURALLAR
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
