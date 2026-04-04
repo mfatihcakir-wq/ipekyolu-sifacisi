@@ -20,6 +20,7 @@ const HEKIM_PROFILLER = [
   { id: 'rusd', ad: '\u0130bn R\u00fc\u015fd', renk: '#7C3AED', kitap: 'el-K\u00fclliyy\u00e2t', aciklama: 'Mant\u0131k \u00e7er\u00e7evesi', sistem_prompt_eki: 'Sen \u0130bn R\u00fc\u015fd perspektifinden yan\u0131t ver. Mant\u0131ksal sebep-sonu\u00e7 \u00e7er\u00e7evesini kullan. el-K\u00fclliyy\u00e2t fit-T\u0131b eserindeki taksim metoduna at\u0131f yap.' },
   { id: 'zehravi', ad: 'ez-Zehrav\u00ee', renk: '#EA580C', kitap: 'et-Tasr\u00eef', aciklama: 'Cerrahi bak\u0131\u015f', sistem_prompt_eki: 'Sen ez-Zehrav\u00ee perspektifinden yan\u0131t ver. Pratik m\u00fcdahale ve cerrahi bak\u0131\u015f a\u00e7\u0131s\u0131n\u0131 \u00f6n plana \u00e7\u0131kar. et-Tasr\u00eef eserindeki uygulamalara at\u0131f yap.' },
   { id: 'beytar', ad: '\u0130bn Beyt\u00e2r', renk: '#92400E', kitap: 'el-C\u00e2mi', aciklama: 'Bitki otoritesi', sistem_prompt_eki: 'Sen \u0130bn Beyt\u00e2r perspektifinden yan\u0131t ver. Bitki ve m\u00fcfredat bilgisini \u00f6n plana \u00e7\u0131kar. el-C\u00e2mi li-M\u00fcfred\u00e2t eserindeki maddelere at\u0131f yap.' },
+  { id: 'tokadi', ad: 'Tokad\u00ee', renk: '#92600A', kitap: 'Tahb\u00eez\u00fcl-Math\u00fbn', aciklama: 'Osmanl\u0131 tatbik gelene\u011fi', isim: 'Mustafa b. Yusuf Tokad\u00ee', isim_ar: '\u0637\u0648\u0642\u0627\u062f\u064a', lakap: '\u015e\u00e2rihu\u2019l-K\u00e2n\u00fbn', olum: '\u00f6. 1195/1781', kaynak_kodu: 'SRC-007', ikon: '\uD83D\uDCDC', metot: 'Osmanl\u0131 tatbik gelene\u011fi, el-K\u00e2n\u00fbn T\u00fcrk\u00e7e \u015ferhi, yerel form\u00fcller', sistem_prompt_eki: 'Sen Mustafa b. Yusuf Tokadi sin (\u00f6.1195/1781) \u2014 Tahbiz\u00fcl-Math\u00fbn m\u00fcellifi, el-Kanun un en kapsaml\u0131 Osmanl\u0131ca sarihisin. Methodun: Ibn Sina n\u0131n teorisini Osmanl\u0131 cografyas\u0131n\u0131n bitkilerine ve iklimine uygula. Teoriden pratige k\u00f6pr\u00fc kur. Anadolu da temin edilebilir bitkilerle form\u00fcller \u00f6ner. Osmanl\u0131ca t\u0131b terminolojisini kullan, modern T\u00fcrk\u00e7eye \u00e7evir. Kaynak: Tahbiz\u00fcl-Math\u00fbn fit-Tib a at\u0131f yap.' },
 ]
 
 interface VakaKayit {
@@ -43,6 +44,8 @@ export default function ArsivPage() {
   const [loading, setLoading] = useState(true)
   const [secili, setSecili] = useState<VakaKayit | null>(null)
   const [mizacFiltre, setMizacFiltre] = useState('')
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [kaynakFiltre, setKaynakFiltre] = useState('')
   const [arama, setArama] = useState('')
   const router = useRouter()
   const supabase = createClient()
@@ -71,12 +74,17 @@ export default function ArsivPage() {
   useEffect(() => {
     let list = vakalar
     if (mizacFiltre) list = list.filter(v => v.mizac?.toLowerCase().includes(mizacFiltre.toLowerCase()))
+    if (kaynakFiltre) list = list.filter(v => {
+      const bitkiler = v.sonuc_json?.bitki_recetesi || []
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      return bitkiler.some((b: any) => b.kaynak?.toLowerCase().includes(kaynakFiltre.toLowerCase()))
+    })
     if (arama) list = list.filter(v =>
       v.detailed_forms?.tam_ad?.toLowerCase().includes(arama.toLowerCase()) ||
       v.detailed_forms?.telefon?.includes(arama)
     )
     setFiltered(list)
-  }, [vakalar, mizacFiltre, arama])
+  }, [vakalar, mizacFiltre, kaynakFiltre, arama])
 
   const mizacRenk = (m: string) => {
     if (!m) return { bg: '#F5F5F5', color: '#999' }
@@ -205,11 +213,20 @@ export default function ArsivPage() {
           />
           <select value={mizacFiltre} onChange={e => setMizacFiltre(e.target.value)}
             style={{ padding: '8px 12px', border: `1px solid ${C.border}`, borderRadius: 8, fontSize: 13, outline: 'none', fontFamily: garamond.style.fontFamily }}>
-            <option value="">{"T\u00fcm Miza\u00e7lar"}</option>
+            <option value="">{"\u00fcm Miza\u00e7lar"}</option>
             <option value="safra">{"Safrav\u00ee"}</option>
             <option value="balgam">{"Balgam\u00ee"}</option>
             <option value="dem">{"Demev\u00ee"}</option>
             <option value="sevda">{"Sevdav\u00ee"}</option>
+          </select>
+          <select value={kaynakFiltre} onChange={e => setKaynakFiltre(e.target.value)}
+            style={{ padding: '8px 12px', border: `1px solid ${C.border}`, borderRadius: 8, fontSize: 13, outline: 'none', fontFamily: garamond.style.fontFamily }}>
+            <option value="">{"T\u00fcm Kaynaklar"}</option>
+            <option value="havi">{"el-H\u00e2v\u00ee \u2014 er-R\u00e2z\u00ee"}</option>
+            <option value="tahbiz">{"Tahb\u00eez\u00fcl-Math\u00fbn \u2014 Tokad\u00ee"}</option>
+            <option value="samil">{"el-\u015e\u00e2mil \u2014 \u0130bn Nef\u00ees"}</option>
+            <option value="cevahir">{"Bahr\u00fcl-Cev\u00e2hir"}</option>
+            <option value="kanun">{"el-K\u00e2n\u00fbn"}</option>
           </select>
         </div>
 
@@ -325,8 +342,9 @@ export default function ArsivPage() {
                   <div style={{ fontFamily: cinzel.style.fontFamily, fontSize: 10, color: C.gold, letterSpacing: 2, marginBottom: 8, textTransform: 'uppercase' as const }}>Bitkisel Protokol</div>
                   {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
                   {secili.sonuc_json.bitki_recetesi.map((b: any, i: number) => (
-                    <div key={i} style={{ fontSize: 12, padding: '4px 0', borderBottom: `1px solid ${C.border}` }}>
-                      {'\uD83C\uDF3F'} <strong>{b.bitki}</strong> {'\u2014'} {b.doz}
+                    <div key={i} style={{ fontSize: 12, padding: '6px 0', borderBottom: `1px solid ${C.border}` }}>
+                      <div>{'\uD83C\uDF3F'} <strong>{b.bitki}</strong>{b.ar ? ` (${b.ar})` : ''} {'\u2014'} {b.doz}</div>
+                      {b.kaynak && <div style={{ fontSize: 10, color: '#888', marginTop: 2, fontStyle: 'italic' }}>{b.kaynak}</div>}
                     </div>
                   ))}
                 </div>
