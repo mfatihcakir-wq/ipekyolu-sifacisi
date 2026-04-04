@@ -116,9 +116,15 @@ export default function DashboardCiltListPage() {
           </div>
         ) : filtered.length === 0 ? (
           <div style={{ background: C.white, borderRadius: 14, border: `1px solid ${C.border}`, padding: 40, textAlign: 'center' }}>
-            <p style={{ fontSize: 14, color: C.secondary }}>
-              {arama ? 'Aramayla eslesen kayit bulunamadi.' : 'Henuz cilt analizi kaydi yok.'}
-            </p>
+            {arama ? (
+              <p style={{ fontSize: 14, color: C.secondary }}>{"Aramayla eslesen kayit bulunamadi."}</p>
+            ) : (
+              <div style={{ textAlign: 'center', padding: '60px 20px' }}>
+                <div style={{ fontSize: 48, marginBottom: 12, opacity: 0.4 }}>{"🌸"}</div>
+                <div style={{ fontFamily: cinzel.style.fontFamily, fontSize: 18, color: '#1B4332', marginBottom: 8 }}>{"Henüz cilt analizi formu gelmedi"}</div>
+                <div style={{ fontSize: 14, color: '#5C4A2A' }}>{"Hastalar cilt formu doldurduğunda burada görünecek"}</div>
+              </div>
+            )}
           </div>
         ) : (
           /* Table-like list */

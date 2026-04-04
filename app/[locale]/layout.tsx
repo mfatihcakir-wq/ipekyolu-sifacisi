@@ -17,6 +17,12 @@ const geistMono = localFont({
   weight: "100 900",
 });
 
+export const viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  maximumScale: 1,
+}
+
 export const metadata: Metadata = {
   title: {
     default: "İpek Yolu Şifacısı — Klasik İslam Tıbbı Danışmanlığı",

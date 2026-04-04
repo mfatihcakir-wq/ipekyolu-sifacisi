@@ -493,7 +493,11 @@ export default function DashboardPage() {
             {yukleniyor ? (
               <div style={{ textAlign: 'center', padding: 40, color: C.secondary }}>Yukleniyor...</div>
             ) : forms.length === 0 ? (
-              <div style={{ textAlign: 'center', padding: 40, color: C.secondary, fontStyle: 'italic' }}>Henuz form yok.</div>
+              <div style={{ textAlign: 'center', padding: '60px 20px' }}>
+                <div style={{ fontSize: 48, marginBottom: 12, opacity: 0.4 }}>{"🏛️"}</div>
+                <div style={{ fontFamily: cinzel.style.fontFamily, fontSize: 18, color: '#1B4332', marginBottom: 8 }}>{"Henüz analiz formu gelmedi"}</div>
+                <div style={{ fontSize: 14, color: '#5C4A2A' }}>{"Hastalar form doldurduğunda burada görünecek"}</div>
+              </div>
             ) : (
               <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
                 {forms.filter(f => {
