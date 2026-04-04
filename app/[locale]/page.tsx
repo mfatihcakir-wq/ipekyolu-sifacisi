@@ -550,7 +550,7 @@ export default function LandingPage() {
             </div>
           </div>
           <div style={{ display: 'flex', flexDirection: 'column' as const, gap: 8, flexShrink: 0 }}>
-            <a href="https://wa.me/905324418615" target="_blank" style={{ background: '#25D366', color: 'white', padding: '10px 20px', borderRadius: 8, fontSize: 12, fontWeight: 600, textDecoration: 'none', textAlign: 'center' as const }}>WhatsApp</a>
+            <a href="https://wa.me/905331687226" target="_blank" style={{ background: '#25D366', color: 'white', padding: '10px 20px', borderRadius: 8, fontSize: 12, fontWeight: 600, textDecoration: 'none', textAlign: 'center' as const }}>WhatsApp</a>
             <a href="/hakkimizda" style={{ background: '#FAF7F2', color: COLORS.secondary, padding: '10px 20px', borderRadius: 8, fontSize: 12, textDecoration: 'none', textAlign: 'center' as const, border: '1px solid #E0D5C5' }}>{"Hakkımızda"}</a>
           </div>
         </div>
@@ -762,7 +762,7 @@ export default function LandingPage() {
               </h4>
               <div style={{ display: 'flex', flexDirection: 'column', gap: 10, fontSize: 14 }}>
                 <span>info@ipekyolusicifacisi.com</span>
-                <a href="https://wa.me/905324418615" target="_blank" style={{ color: 'rgba(255,255,255,0.7)', textDecoration: 'none' }}>WhatsApp Destek</a>
+                <a href="https://wa.me/905331687226" target="_blank" style={{ color: 'rgba(255,255,255,0.7)', textDecoration: 'none' }}>WhatsApp Destek</a>
               </div>
             </div>
           </div>
