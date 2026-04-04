@@ -5,6 +5,8 @@ import { useRouter } from 'next/navigation'
 import { useRouter as useIntlRouter, usePathname as useIntlPathname } from '@/i18n/navigation'
 import { Cinzel, EB_Garamond, Noto_Naskh_Arabic } from 'next/font/google'
 import { createClient } from '@/lib/supabase'
+import Header from './components/Header'
+import Footer from './components/Footer'
 
 const cinzel = Cinzel({ subsets: ['latin'], weight: ['400', '500', '600'] })
 const garamond = EB_Garamond({ subsets: ['latin'], weight: ['400', '500'], style: ['normal', 'italic'] })
@@ -174,8 +176,10 @@ export default function LandingPage() {
   return (
     <div style={{ fontFamily: garamond.style.fontFamily, color: COLORS.dark, margin: 0 }}>
 
-      {/* ===== HEADER ===== */}
-      <header style={{
+      <Header />
+
+      {/* ===== ESKİ HEADER KALDIRILDI ===== */}
+      {false && <header style={{
         position: 'sticky', top: 0, zIndex: 100,
         backgroundColor: COLORS.primary,
         padding: '0 24px',
@@ -293,7 +297,7 @@ export default function LandingPage() {
             )}
           </div>
         </div>
-      </header>
+      </header>}
 
       {/* ===== HERO ===== */}
       <section style={{
@@ -697,8 +701,10 @@ export default function LandingPage() {
         </div>
       </div>
 
-      {/* ===== FOOTER ===== */}
-      <footer style={{
+      <Footer />
+
+      {/* ===== ESKİ FOOTER KALDIRILDI ===== */}
+      {false && <footer style={{
         backgroundColor: COLORS.primary,
         padding: '48px 24px',
         color: 'rgba(255,255,255,0.7)',
@@ -789,7 +795,7 @@ export default function LandingPage() {
         }}>
           © 2026 İpek Yolu Şifacısı. Tüm hakları saklıdır.
         </div>
-      </footer>
+      </footer>}
 
       {/* ===== YENİ MODAL ===== */}
       {acikModal && (
