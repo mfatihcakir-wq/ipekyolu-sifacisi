@@ -148,7 +148,7 @@ Asırlık bilgelik ile insani dikkat, ikisi bir arada.`,
 
 const STEPS = [
   { num: '1', title: 'Formu Doldurun', desc: 'Şikayetlerinizi, yaşam alışkanlıklarınızı ve sağlık geçmişinizi kısa bir formla iletin. Üye olmadan başlayabilirsiniz.' },
-  { num: '2', title: 'Danışmana İletilir', desc: 'Formunuz danışmanınıza iletilir. Klasik İslam tıbbı kaynakları ile analiz edilir, size özel protokol hazırlanır.' },
+  { num: '2', title: 'Danışmana İletilir', desc: 'Formunuz danışmanınıza iletilir. 18 klasik eserden ilgili bölümler derlenir, size özel protokol hazırlanır.' },
   { num: '3', title: 'WhatsApp ile Ulaşır', desc: '24-48 saat içinde danışmanınız WhatsApp üzerinden size ulaşır. Bitkisel protokolünüz ve sorularınız yanıtlanır.' },
 ]
 
