@@ -274,6 +274,10 @@ export default function LandingPage() {
             )}
           </div>
 
+          <button onClick={() => router.push('/bitkiler')}
+            style={{ background: 'transparent', border: '1px solid rgba(255,255,255,0.3)', color: 'rgba(255,255,255,0.8)', borderRadius: 8, padding: '7px 14px', fontFamily: cinzel.style.fontFamily, fontSize: 11, fontWeight: 600, letterSpacing: 1, cursor: 'pointer' }}>
+            {"Bitki Ansiklopedisi"}
+          </button>
           {/* Auth Button */}
           <div style={{ display: 'flex', gap: 8 }}>
             {user ? (
@@ -734,6 +738,10 @@ export default function LandingPage() {
 
           {/* Links */}
           <div style={{ display: 'flex', gap: 48, flexWrap: 'wrap' }}>
+            <div style={{ marginBottom: 16 }}>
+              <div style={{ fontFamily: cinzel.style.fontFamily, fontSize: 11, color: 'rgba(255,255,255,0.4)', letterSpacing: 2, marginBottom: 8 }}>{"KAYNAKLAR"}</div>
+              <a href="/bitkiler" style={{ display: 'block', color: 'rgba(255,255,255,0.6)', textDecoration: 'none', fontSize: 13, marginBottom: 4 }}>{"Bitki Ansiklopedisi"}</a>
+            </div>
             <div>
               <h4 style={{
                 fontFamily: cinzel.style.fontFamily,
