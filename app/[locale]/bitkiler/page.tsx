@@ -133,6 +133,26 @@ export default function BitkilerPage() {
           <div style={{ fontSize: 12, color: '#999' }}>{filtered.length} sonuc</div>
         </div>
 
+        {/* RENK AÇIKLAMASI */}
+        <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' as const, marginBottom: 16, padding: '12px 16px', background: C.white, borderRadius: 10, border: `1px solid ${C.border}`, alignItems: 'center' }}>
+          <span style={{ fontSize: 11, color: C.secondary, fontWeight: 600, letterSpacing: 1, textTransform: 'uppercase' as const, marginRight: 8 }}>Kart Rengi:</span>
+          {[
+            { renk: '#FFF8E7', etiket: 'Sıcak + Kuru', mizac: 'Safravî' },
+            { renk: '#FFE8E8', etiket: 'Sıcak + Nemli', mizac: 'Demevî' },
+            { renk: '#E3F2FD', etiket: 'Soğuk + Nemli', mizac: 'Balgamî' },
+            { renk: '#F3E5F5', etiket: 'Soğuk + Kuru', mizac: 'Sevdavî' },
+            { renk: '#FAF7F2', etiket: 'Bilinmiyor', mizac: '' },
+          ].map(item => (
+            <div key={item.renk} style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
+              <div style={{ width: 16, height: 16, borderRadius: 4, background: item.renk, border: `1px solid ${C.border}` }} />
+              <span style={{ fontSize: 11, color: C.dark }}>
+                {item.etiket}
+                {item.mizac && <span style={{ color: C.gold, marginLeft: 4 }}>({item.mizac})</span>}
+              </span>
+            </div>
+          ))}
+        </div>
+
         {/* BITKI KARTLARI */}
         {loading ? (
           <div style={{ textAlign: 'center', padding: 60, color: C.secondary }}>Yukleniyor...</div>
