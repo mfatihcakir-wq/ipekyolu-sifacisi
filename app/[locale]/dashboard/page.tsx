@@ -38,6 +38,7 @@ export default function DashboardPage() {
     setTimeout(() => setToast(null), 4000)
   }
   const [analizYukleniyor, setAnalizYukleniyor] = useState(false)
+  const [analizTipi, setAnalizTipi] = useState('tumu')
   const [istatistik, setIstatistik] = useState({ bekleyen: 0, tamamlanan: 0, toplam: 0 })
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [gecmisAnalizler, setGecmisAnalizler] = useState<any[]>([])
@@ -76,7 +77,25 @@ export default function DashboardPage() {
       .from('detailed_forms')
       .select('*')
       .order('created_at', { ascending: false })
-    const list = data || []
+    const genelList = (data || []).map((f: DetailedForm) => ({ ...f, _tip: 'genel' as const }))
+
+    // Cilt formlarini da cek
+    const { data: ciltData } = await supabase
+      .from('cilt_forms')
+      .select('id, created_at, durum, sorunlar, user_id')
+      .order('created_at', { ascending: false })
+    const ciltList = (ciltData || []).map((f: { id: string; created_at: string; durum: string; sorunlar: string[]; user_id: string }) => ({
+      id: f.id,
+      tam_ad: 'Cilt Analizi',
+      telefon: '',
+      durum: f.durum === 'bekliyor' ? 'bekliyor' : f.durum === 'onaylandi' ? 'tamamlandi' : f.durum,
+      created_at: f.created_at,
+      tum_form_verisi: { symptoms: f.sorunlar?.join(', ') || '' },
+      user_id: f.user_id,
+      _tip: 'cilt' as const,
+    }))
+
+    const list = [...genelList, ...ciltList].sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime())
     setForms(list)
     setIstatistik({
       bekleyen: list.filter(f => f.durum === 'bekliyor').length,
@@ -392,6 +411,7 @@ export default function DashboardPage() {
               { label: 'Genel Bakis', href: '/dashboard', icon: '\u229E' },
               { label: 'Hastalar', href: '/dashboard/hastalar', icon: '\uD83D\uDC65' },
               { label: 'Bekleyen Analizler', href: '/dashboard', icon: '\u23F3' },
+              { label: 'Cilt Analizleri', href: '/dashboard/cilt', icon: '\uD83C\uDF38' },
               { label: 'Klinik Arsiv', href: '/dashboard/arsiv', icon: '\uD83D\uDCCB' },
               { label: 'Bitkiler', href: '/bitkiler', icon: '\uD83C\uDF3F' },
               { label: 'Ayarlar', href: '/dashboard', icon: '\u2699' },
@@ -438,6 +458,20 @@ export default function DashboardPage() {
           ))}
         </div>
 
+        {/* Analiz Tipi Sekmeleri */}
+        <div style={{ display: 'flex', gap: 6, marginBottom: 12, flexWrap: 'wrap' as const }}>
+          {[
+            { label: 'Tum Analizler', val: 'tumu' },
+            { label: 'Genel Analiz', val: 'genel' },
+            { label: 'Cilt Analizi', val: 'cilt' },
+          ].map(t => (
+            <button key={t.val} onClick={() => setAnalizTipi(t.val)}
+              style={{ padding: '7px 16px', borderRadius: 8, fontSize: 12, fontWeight: 600, cursor: 'pointer', border: analizTipi === t.val ? 'none' : `1px solid ${C.border}`, background: analizTipi === t.val ? C.primary : 'transparent', color: analizTipi === t.val ? C.gold : C.secondary, transition: 'all .15s' }}>
+              {t.label}
+            </button>
+          ))}
+        </div>
+
         {/* Filtre bar */}
         <div style={{ display: 'flex', gap: 6, marginBottom: 16, flexWrap: 'wrap' as const }}>
           {[
@@ -462,14 +496,25 @@ export default function DashboardPage() {
               <div style={{ textAlign: 'center', padding: 40, color: C.secondary, fontStyle: 'italic' }}>Henuz form yok.</div>
             ) : (
               <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
-                {forms.map(f => {
+                {forms.filter(f => {
+                  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                  const tip = (f as any)._tip || 'genel'
+                  if (analizTipi === 'tumu') return true
+                  return analizTipi === tip
+                }).map(f => {
                   const dr = durumRenk(f.durum)
+                  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                  const tip = (f as any)._tip || 'genel'
+                  const isCilt = tip === 'cilt'
                   const tarih = new Date(f.created_at).toLocaleDateString('tr-TR', { day: '2-digit', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' })
                   return (
-                    <div key={f.id} onClick={() => { setSecili(f); setAnaliz(null) }}
-                      style={{ background: secili?.id === f.id ? '#E8F5E9' : C.white, border: `1px solid ${secili?.id === f.id ? C.primary : C.border}`, borderRadius: 12, padding: '14px 16px', cursor: 'pointer' }}>
+                    <div key={f.id} onClick={() => { if (isCilt) { router.push(`/dashboard/cilt/${f.id}`) } else { setSecili(f); setAnaliz(null) } }}
+                      style={{ background: secili?.id === f.id ? '#E8F5E9' : C.white, border: `1px solid ${secili?.id === f.id ? C.primary : C.border}`, borderRadius: 12, padding: '14px 16px', cursor: 'pointer', borderLeft: isCilt ? '3px solid #AB47BC' : undefined }}>
                       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 6 }}>
-                        <div style={{ fontWeight: 600, fontSize: 14, color: C.dark }}>{f.tam_ad}</div>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
+                          <div style={{ fontWeight: 600, fontSize: 14, color: C.dark }}>{f.tam_ad}</div>
+                          <span style={{ fontSize: 9, background: isCilt ? '#F3E5F5' : '#EFF6FF', color: isCilt ? '#7B1FA2' : '#2563EB', padding: '2px 7px', borderRadius: 20, fontWeight: 600 }}>{isCilt ? 'Cilt' : 'Genel'}</span>
+                        </div>
                         <span style={{ fontSize: 10, background: dr.bg, color: dr.color, padding: '2px 8px', borderRadius: 20, fontWeight: 600 }}>{dr.text}</span>
                       </div>
                       <div style={{ fontSize: 12, color: C.secondary }}>{f.telefon}</div>
