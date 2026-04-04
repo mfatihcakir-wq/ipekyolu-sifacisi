@@ -411,10 +411,12 @@ export default function DashboardPage() {
           </div>
           <nav style={{ flex: 1, padding: '0 8px', display: 'flex', flexDirection: 'column' as const }}>
             {[
-              { label: 'Ana Panel', href: '/dashboard', icon: '\u229E' },
+              { label: 'Genel Bakis', href: '/dashboard', icon: '\u229E' },
               { label: 'Hastalar', href: '/dashboard/hastalar', icon: '\uD83D\uDC65' },
-              { label: 'Vaka Arsivi', href: '/dashboard/arsiv', icon: '\uD83D\uDCCB' },
-              { label: 'Analiz Formu', href: '/analiz', icon: '\u2697' },
+              { label: 'Bekleyen Analizler', href: '/dashboard', icon: '\u23F3' },
+              { label: 'Klinik Arsiv', href: '/dashboard/arsiv', icon: '\uD83D\uDCCB' },
+              { label: 'Bitkiler', href: '/bitkiler', icon: '\uD83C\uDF3F' },
+              { label: 'Ayarlar', href: '/dashboard', icon: '\u2699' },
             ].map(item => {
               const isActive = pathname === item.href || (item.href !== '/dashboard' && pathname.startsWith(item.href))
               return (
@@ -443,16 +445,33 @@ export default function DashboardPage() {
 
         {/* ANA İÇERİK */}
         <div style={{ padding: '24px 20px', maxWidth: 1200, flex: 1, minWidth: 0 }}>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 12, marginBottom: 24 }}>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(160px, 1fr))', gap: 12, marginBottom: 24 }}>
           {[
-            { label: 'Bekleyen Form', val: istatistik.bekleyen, accent: '#B8860B' },
+            { label: 'Toplam Hasta', val: istatistik.toplam, accent: '#5C4A2A' },
+            { label: 'Bekleyen', val: istatistik.bekleyen, accent: '#B8860B' },
+            { label: 'Bu Hafta', val: forms.filter(f => (Date.now() - new Date(f.created_at).getTime()) / 86400000 <= 7).length, accent: C.gold },
             { label: 'Tamamlanan', val: istatistik.tamamlanan, accent: C.primary },
-            { label: 'Toplam Form', val: istatistik.toplam, accent: '#5C4A2A' },
+            { label: 'Ort. Yakinlasma', val: '-', accent: '#AB47BC' },
           ].map(s => (
             <div key={s.label} style={{ background: C.white, borderRadius: 12, padding: '16px 20px', border: `1px solid ${C.border}`, borderLeft: `4px solid ${s.accent}` }}>
-              <div style={{ fontSize: 11, color: C.secondary, marginBottom: 6, letterSpacing: 1, textTransform: 'uppercase' as const }}>{s.label}</div>
-              <div style={{ fontSize: 28, fontWeight: 600, fontFamily: cinzel.style.fontFamily, color: s.accent }}>{s.val}</div>
+              <div style={{ fontSize: 10, color: C.secondary, marginBottom: 6, letterSpacing: 1, textTransform: 'uppercase' as const }}>{s.label}</div>
+              <div style={{ fontSize: 24, fontWeight: 600, fontFamily: cinzel.style.fontFamily, color: s.accent }}>{s.val}</div>
             </div>
+          ))}
+        </div>
+
+        {/* Filtre bar */}
+        <div style={{ display: 'flex', gap: 6, marginBottom: 16, flexWrap: 'wrap' as const }}>
+          {[
+            { label: 'Tumunu Goster', val: '' },
+            { label: 'Acil', val: 'acil' },
+            { label: 'Bekleyen', val: 'bekliyor' },
+            { label: 'Tamamlanan', val: 'tamamlandi' },
+          ].map(f => (
+            <button key={f.val} onClick={() => { /* filtre state eklenebilir */ }}
+              style={{ padding: '6px 14px', borderRadius: 20, fontSize: 11, fontWeight: 600, cursor: 'pointer', border: `1px solid ${C.border}`, background: f.val === '' ? C.primary : 'transparent', color: f.val === '' ? C.gold : C.secondary }}>
+              {f.label}
+            </button>
           ))}
         </div>
 
