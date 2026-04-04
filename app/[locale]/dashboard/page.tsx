@@ -205,6 +205,33 @@ export default function DashboardPage() {
     await supabase.from('detailed_forms')
       .update({ durum: 'tamamlandi' })
       .eq('id', secili.id)
+
+    // Email gonderimi
+    if (analiz && secili.tum_form_verisi) {
+      try {
+        const hastaEmail = secili.tum_form_verisi.email || ''
+        const kayitNo = 'IYS-' + new Date().toISOString().slice(2, 10).replace(/-/g, '')
+        if (hastaEmail) {
+          await fetch('/api/email/send', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              to: hastaEmail,
+              type: 'analiz',
+              sonuc_verisi: analiz,
+              hasta_adi: secili.tam_ad,
+              kayit_no: kayitNo,
+            }),
+          })
+          gosterToast('Rapor e-posta ile gonderildi', 'basari')
+        } else {
+          gosterToast('Hasta e-posta adresi bulunamadi', 'hata')
+        }
+      } catch {
+        gosterToast('E-posta gonderilemedi', 'hata')
+      }
+    }
+
     setSecili(prev => prev ? { ...prev, durum: 'tamamlandi' } : null)
     formlariYukle()
   }
