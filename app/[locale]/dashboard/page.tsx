@@ -39,12 +39,36 @@ export default function DashboardPage() {
   }
   const [analizYukleniyor, setAnalizYukleniyor] = useState(false)
   const [istatistik, setIstatistik] = useState({ bekleyen: 0, tamamlanan: 0, toplam: 0 })
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const [gecmisAnalizler, setGecmisAnalizler] = useState<any[]>([])
+  const [gecmisYukleniyor, setGecmisYukleniyor] = useState(false)
   const router = useRouter()
   const pathname = usePathname()
   const supabase = createClient()
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => { formlariYukle() }, [])
+
+  useEffect(() => {
+    if (!secili) { setGecmisAnalizler([]); return }
+    const formId = secili.id
+    async function gecmisiYukle() {
+      setGecmisYukleniyor(true)
+      try {
+        const { data } = await supabase
+          .from('analyses')
+          .select('id, mizac, durum, created_at, sonuc_json')
+          .eq('form_id', formId)
+          .order('created_at', { ascending: false })
+        setGecmisAnalizler(data || [])
+      } catch {
+        setGecmisAnalizler([])
+      }
+      setGecmisYukleniyor(false)
+    }
+    gecmisiYukle()
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [secili?.id])
 
   async function formlariYukle() {
     setYukleniyor(true)
@@ -886,6 +910,42 @@ export default function DashboardPage() {
                     style={{ width: '100%', marginTop: 8, padding: 10, background: 'transparent', border: `1px solid ${C.border}`, borderRadius: 8, cursor: 'pointer', fontSize: 12, color: C.secondary, fontFamily: cinzel.style.fontFamily }}>
                     Yeniden Analiz Et
                   </button>
+
+                  {/* ANALİZ GEÇMİŞİ */}
+                  <div style={{ marginTop: 20, borderTop: `1px solid ${C.border}`, paddingTop: 16 }}>
+                    <div style={{ fontFamily: cinzel.style.fontFamily, fontSize: 11, color: C.gold, letterSpacing: 2, marginBottom: 10, textTransform: 'uppercase' as const }}>{"Analiz Ge\u00e7mi\u015fi"}</div>
+                    {gecmisYukleniyor ? (
+                      <div style={{ fontSize: 12, color: C.secondary, fontStyle: 'italic', padding: '8px 0' }}>{"Y\u00fckleniyor..."}</div>
+                    ) : gecmisAnalizler.length === 0 ? (
+                      <div style={{ fontSize: 12, color: '#999', fontStyle: 'italic', padding: '8px 0' }}>{"Hen\u00fcz analiz yap\u0131lmam\u0131\u015f."}</div>
+                    ) : (
+                      <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
+                        {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
+                        {gecmisAnalizler.map((ga: any) => {
+                          const gTarih = new Date(ga.created_at).toLocaleDateString('tr-TR', { day: '2-digit', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' })
+                          const gMizac = ga.mizac || '-'
+                          const gMr = (() => {
+                            const ml = (ga.mizac || '').toLowerCase()
+                            if (ml.includes('safra')) return { bg: '#FFF8E7', color: '#B8860B' }
+                            if (ml.includes('dem')) return { bg: '#FFE8E8', color: '#C62828' }
+                            if (ml.includes('balgam')) return { bg: '#E3F2FD', color: '#1565C0' }
+                            if (ml.includes('sevda')) return { bg: '#F3E5F5', color: '#6A1B9A' }
+                            return { bg: '#E8F5E9', color: '#1B5E20' }
+                          })()
+                          const gDurum = ga.durum === 'tamamlandi'
+                            ? { bg: '#E8F5E9', color: '#1B5E20', text: 'Tamamland\u0131' }
+                            : { bg: '#FFF8E7', color: '#92400E', text: ga.durum || 'Bekliyor' }
+                          return (
+                            <div key={ga.id} style={{ background: C.surface, borderRadius: 8, padding: '8px 12px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 8 }}>
+                              <div style={{ fontSize: 11, color: '#999', minWidth: 100 }}>{gTarih}</div>
+                              <span style={{ fontSize: 10, background: gMr.bg, color: gMr.color, padding: '2px 8px', borderRadius: 20, fontWeight: 600 }}>{gMizac.split(',')[0]}</span>
+                              <span style={{ fontSize: 10, background: gDurum.bg, color: gDurum.color, padding: '2px 8px', borderRadius: 20 }}>{gDurum.text}</span>
+                            </div>
+                          )
+                        })}
+                      </div>
+                    )}
+                  </div>
 
                 </div>
               )}
