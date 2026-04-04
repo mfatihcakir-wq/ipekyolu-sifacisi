@@ -14,6 +14,9 @@ export default function LoginPage() {
   const [password, setPassword] = useState('')
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
+  const [sifreSifirla, setSifreSifirla] = useState(false)
+  const [sifirlaEmail, setSifirlaEmail] = useState('')
+  const [sifirlaMsg, setSifirlaMsg] = useState('')
   const router = useRouter()
   const supabase = createClient()
 
@@ -30,6 +33,15 @@ export default function LoginPage() {
       setError(err instanceof Error ? err.message : 'Bağlantı hatası oluştu')
       setLoading(false)
     }
+  }
+
+  async function handleSifreSifirla() {
+    if (!sifirlaEmail.trim()) { setSifirlaMsg('E-posta adresinizi girin.'); return }
+    const { error } = await supabase.auth.resetPasswordForEmail(sifirlaEmail, {
+      redirectTo: 'https://ipekyolu-sifacisi.vercel.app/sifre-guncelle',
+    })
+    if (error) { setSifirlaMsg('Hata: ' + error.message) }
+    else { setSifirlaMsg('Sifre sifirlama baglantisi e-postaniza gonderildi.') }
   }
 
   return (
@@ -113,6 +125,39 @@ export default function LoginPage() {
             {loading ? 'Giriş yapılıyor...' : 'Giriş Yap'}
           </button>
         </form>
+
+        {!sifreSifirla ? (
+          <div style={{ textAlign: 'center', marginTop: 12 }}>
+            <button onClick={() => setSifreSifirla(true)}
+              style={{ background: 'none', border: 'none', color: '#C9A84C', fontSize: 12, cursor: 'pointer', textDecoration: 'underline' }}>
+              {"Şifremi Unuttum"}
+            </button>
+          </div>
+        ) : (
+          <div style={{ marginTop: 16, padding: '16px', background: '#FAF7F2', borderRadius: 10, border: '1px solid #E0D5C5' }}>
+            <div style={{ fontSize: 13, color: '#1B4332', marginBottom: 10, fontWeight: 600 }}>{"Şifre Sıfırlama"}</div>
+            <input
+              type="email" value={sifirlaEmail} onChange={e => setSifirlaEmail(e.target.value)}
+              placeholder="E-posta adresiniz"
+              style={{ width: '100%', padding: '10px 12px', border: '1px solid #E0D5C5', borderRadius: 8, fontSize: 13, marginBottom: 8, boxSizing: 'border-box' as const }}
+            />
+            {sifirlaMsg && (
+              <div style={{ fontSize: 12, color: sifirlaMsg.startsWith('Hata') ? '#C62828' : '#2E7D32', marginBottom: 8 }}>
+                {sifirlaMsg}
+              </div>
+            )}
+            <div style={{ display: 'flex', gap: 8 }}>
+              <button onClick={handleSifreSifirla}
+                style={{ flex: 1, padding: '10px', background: '#1B4332', border: 'none', borderRadius: 8, color: '#C9A84C', fontSize: 12, fontWeight: 600, cursor: 'pointer' }}>
+                {"Gönder"}
+              </button>
+              <button onClick={() => { setSifreSifirla(false); setSifirlaMsg('') }}
+                style={{ flex: 1, padding: '10px', background: 'transparent', border: '1px solid #E0D5C5', borderRadius: 8, color: '#5C4A2A', fontSize: 12, cursor: 'pointer' }}>
+                {"İptal"}
+              </button>
+            </div>
+          </div>
+        )}
 
         <p style={{ textAlign: 'center', fontSize: 14, color: '#5C4A2A', marginTop: 24 }}>
           Hesabınız yok mu?{' '}
