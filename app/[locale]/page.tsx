@@ -161,7 +161,7 @@ const PLANS = [
 export default function LandingPage() {
   const [langOpen, setLangOpen] = useState(false)
   const [currentLang, setCurrentLang] = useState(LANGS[0])
-  const [aktifKart, setAktifKart] = useState<number | null>(null)
+  const [acikModal, setAcikModal] = useState<string | null>(null)
   const [user, setUser] = useState<{email?: string} | null>(null)
   const router = useRouter()
   const supabase = createClient()
@@ -424,7 +424,7 @@ export default function LandingPage() {
             gap: 24,
           }}>
             {FEATURES.map((f, i) => (
-              <div key={i} onClick={() => setAktifKart(i)} style={{
+              <div key={i} onClick={() => setAcikModal(['mizac','bitki','danisман','kaynaklar'][i] || null)} style={{
                 backgroundColor: COLORS.cream,
                 borderRadius: 16,
                 padding: 32,
@@ -721,97 +721,63 @@ export default function LandingPage() {
         </div>
       </footer>
 
-      {/* ===== DETAY MODAL ===== */}
-      {aktifKart !== null && (
-        <div
-          onClick={() => setAktifKart(null)}
-          style={{
-            position: 'fixed', inset: 0, zIndex: 1000,
-            backgroundColor: 'rgba(0,0,0,0.6)',
-            display: 'flex', alignItems: 'center', justifyContent: 'center',
-            padding: '20px',
-          }}
-        >
-          <div
-            onClick={(e) => e.stopPropagation()}
-            style={{
-              backgroundColor: '#fff',
-              borderRadius: 20,
-              maxWidth: 720,
-              width: '100%',
-              maxHeight: '85vh',
-              overflowY: 'auto',
-              padding: '40px 48px',
-              position: 'relative',
-            }}
-          >
-            <button
-              onClick={() => setAktifKart(null)}
-              style={{
-                position: 'absolute', top: 20, right: 24,
-                background: 'none', border: 'none',
-                fontSize: 24, cursor: 'pointer', color: '#5C4A2A',
-                lineHeight: 1,
-              }}
-            >
-              ✕
+      {/* ===== YENİ MODAL ===== */}
+      {acikModal && (
+        <div onClick={() => setAcikModal(null)} style={{ position: 'fixed' as const, inset: 0, background: 'rgba(0,0,0,0.6)', zIndex: 1000, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '20px' }}>
+          <div onClick={e => e.stopPropagation()} style={{ background: '#FAF7F2', borderRadius: 16, maxWidth: 560, width: '100%', maxHeight: '80vh', overflow: 'auto', padding: '40px' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 24 }}>
+              <div style={{ fontFamily: cinzel.style.fontFamily, fontSize: 20, color: '#1B4332', fontWeight: 500 }}>
+                {acikModal === 'mizac' && 'Mizac Tespiti'}
+                {acikModal === 'bitki' && 'Bitkisel Protokol'}
+                {acikModal === 'danisман' && 'Uzman Danismanlik'}
+                {acikModal === 'kaynaklar' && '18 Klasik Eser'}
+              </div>
+              <button onClick={() => setAcikModal(null)} style={{ background: 'none', border: 'none', fontSize: 20, cursor: 'pointer', color: '#5C4A2A', padding: '0 4px' }}>{'\u2715'}</button>
+            </div>
+
+            {acikModal === 'mizac' && (
+              <div style={{ fontFamily: garamond.style.fontFamily, color: '#5C4A2A', lineHeight: 1.8 }}>
+                <p style={{ marginBottom: 16 }}>{"Islam tibbinda mizac, bedenin temel yapisini belirleyen dort unsur dengesini ifade eder: Demevi, Safravi, Balgami ve Sevdavi. Her mizac tipi farkli bir sicaklik-nem dengesi tasir."}</p>
+                <p style={{ marginBottom: 16 }}>{"Analizimizde nabzinizin 9 temel sifati, dil ve yuz rengi, vucut isisi, uyku ve sindirim duzeni ile lab degerleriniz birlikte degerlendirilir."}</p>
+                <p style={{ marginBottom: 16, fontStyle: 'italic', color: '#C9A84C' }}>{"Mizac dengesi bozulmadan hastalik yerlesemez. — el-Kanun fit-Tib, Ibn Sina"}</p>
+              </div>
+            )}
+
+            {acikModal === 'bitki' && (
+              <div style={{ fontFamily: garamond.style.fontFamily, color: '#5C4A2A', lineHeight: 1.8 }}>
+                <p style={{ marginBottom: 16 }}>{"Her bitkinin kendine ozgu bir mizaci vardir — sicak, soguk, islak veya kuru. Sifa, bitkinin mizaci ile hastanin mizacinin uyumlu eslestirilmesinden dogar."}</p>
+                <p style={{ marginBottom: 16 }}>{"Protokolunuz el-Havi (er-Razi), Ibn Beytar el-Cami ve el-Samildeki 25.000i askin kayittan, sizin mizaciniz ve sikayetiniz gozetilerek derlenir."}</p>
+                <p style={{ marginBottom: 0, fontStyle: 'italic', color: '#C9A84C' }}>{"Basit ilac, mizaca uygun kullanildiginda bilesik formulden gucludur. — el-Havi, er-Razi"}</p>
+              </div>
+            )}
+
+            {acikModal === 'danisман' && (
+              <div style={{ fontFamily: garamond.style.fontFamily, color: '#5C4A2A', lineHeight: 1.8 }}>
+                <p style={{ marginBottom: 16 }}>{"Formunuzu bir sistem degil, alaninda uzmanlasмis bir danisман inceler. Nabiz sifatlariniz, lab degerleriniz ve yasam aliskanliklariniz bir butun olarak degerlendirilir."}</p>
+                <p style={{ marginBottom: 16 }}>{"24-48 saat icinde WhatsApp uzerinden ulasilir. Protokolunuz aciklanir, sorulariniz yanitlanir. Takip analizi icin tekrar ulasabilirsiniz."}</p>
+                <p style={{ marginBottom: 0, fontStyle: 'italic', color: '#C9A84C' }}>{"Hekim, hastanin butununu gormеlidir; yalnizca sikayetini degil. — Tahbizul-Mathun"}</p>
+              </div>
+            )}
+
+            {acikModal === 'kaynaklar' && (
+              <div style={{ fontFamily: garamond.style.fontFamily, color: '#5C4A2A', lineHeight: 1.8 }}>
+                <p style={{ marginBottom: 16 }}>{"Sistemimiz 18 temel Islam tibbi eserinden derlenen 25.000i askin kaydi kapsar:"}</p>
+                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '6px 16px', marginBottom: 16 }}>
+                  {['el-Havi — er-Razi', 'el-Kanun — Ibn Sina', 'el-Samil — Ibn Nefis', 'Tahbizul-Mathun — Tokadi', 'el-Cami — Ibn Beytar', 'el-Kulliyyat — Ibn Rusd', 'el-Mucez — Ibn Nefis', 'el-Mecusi — el-Ahvazi', 'Bahrul-Cevahir — el-Herevi', 'el-Mansuri — er-Razi'].map(k => (
+                    <div key={k} style={{ fontSize: 13, color: '#1B4332', padding: '4px 0', borderBottom: '1px solid #E0D5C5' }}>{'\u2022'} {k}</div>
+                  ))}
+                </div>
+                <p style={{ marginBottom: 0, fontSize: 12, color: '#999', fontStyle: 'italic' }}>{"Her analiz sonucunda kullanilan kaynaklar ve ilgili bolumler belirtilir."}</p>
+              </div>
+            )}
+
+            <button onClick={() => setAcikModal(null)} style={{ marginTop: 28, width: '100%', padding: '12px', background: '#1B4332', border: 'none', borderRadius: 10, color: '#C9A84C', fontFamily: cinzel.style.fontFamily, fontSize: 13, fontWeight: 600, cursor: 'pointer', letterSpacing: 1 }}>
+              KAPAT
             </button>
-            <div style={{ fontSize: 48, marginBottom: 16 }}>
-              {FEATURES[aktifKart].icon}
-            </div>
-            <h2 style={{
-              fontFamily: cinzel.style.fontFamily,
-              fontSize: 28, fontWeight: 600,
-              color: '#1B4332', marginBottom: 24,
-            }}>
-              {FEATURES[aktifKart].title}
-            </h2>
-            <div style={{
-              fontFamily: garamond.style.fontFamily,
-              fontSize: 17, lineHeight: 1.85,
-              color: '#2C1A00',
-              whiteSpace: 'pre-line',
-            }}>
-              {FEATURES[aktifKart].detay
-                .split('\n')
-                .map((line, i) => {
-                  if (line.startsWith('## ')) {
-                    return <h2 key={i} style={{ fontFamily: cinzel.style.fontFamily, fontSize: 22, color: '#1B4332', margin: '0 0 16px 0', fontWeight: 600 }}>{line.replace('## ', '')}</h2>
-                  }
-                  if (line.startsWith('### ')) {
-                    return <h3 key={i} style={{ fontFamily: cinzel.style.fontFamily, fontSize: 17, color: '#C9A84C', margin: '24px 0 10px 0', fontWeight: 600 }}>{line.replace('### ', '')}</h3>
-                  }
-                  if (line.startsWith('- ')) {
-                    return <div key={i} style={{ display: 'flex', gap: 10, marginBottom: 6 }}><span style={{ color: '#C9A84C', flexShrink: 0 }}>•</span><span>{line.replace('- ', '')}</span></div>
-                  }
-                  if (line.startsWith('**') && line.endsWith('**')) {
-                    return <p key={i} style={{ fontWeight: 700, color: '#1B4332', margin: '12px 0 4px 0' }}>{line.replace(/\*\*/g, '')}</p>
-                  }
-                  if (line.trim() === '') {
-                    return <div key={i} style={{ height: 10 }} />
-                  }
-                  return <p key={i} style={{ margin: '0 0 12px 0' }}>{line}</p>
-                })
-              }
-            </div>
-            <div style={{ marginTop: 32, paddingTop: 24, borderTop: '1px solid #F0E8DC' }}>
-              <button
-                onClick={() => { setAktifKart(null); router.push('/register') }}
-                style={{
-                  backgroundColor: '#1B4332', color: '#fff',
-                  border: 'none', borderRadius: 10,
-                  padding: '14px 32px',
-                  fontFamily: cinzel.style.fontFamily,
-                  fontWeight: 600, fontSize: 15,
-                  cursor: 'pointer', letterSpacing: 1,
-                }}
-              >
-                Ücretsiz Analizi Başlat
-              </button>
-            </div>
           </div>
         </div>
       )}
+
     </div>
   )
 }
