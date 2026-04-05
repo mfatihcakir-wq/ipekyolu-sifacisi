@@ -163,7 +163,7 @@ export default function LandingPage() {
               {
                 icon: <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke={C.primary} strokeWidth="1.5"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>,
                 title: 'Uzman Danismanlik',
-                desc: 'Formunuzu bizzat inceleyen, 24 ile 48 saat icinde WhatsApp ile ulasin uzman danisma. Protokolunuz takip edilir, sorulariniz yanitlanir.',
+                desc: 'Formunuzu bizzat inceleyen, 24 ile 48 saat icinde WhatsApp uzerinden ulasan uzman danisman. Protokolunuz takip edilir, sorulariniz yanitlanir.',
               },
               {
                 icon: <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke={C.primary} strokeWidth="1.5"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>,
