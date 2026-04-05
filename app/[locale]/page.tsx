@@ -113,6 +113,25 @@ export default function LandingPage() {
         </div>
       </section>
 
+      {/* ═══════ TANITIM ═══════ */}
+      <section style={{ background: C.primary, padding: '64px 56px', textAlign: 'center' as const }} className="tanitim-section">
+        <div style={{ maxWidth: 1200, margin: '0 auto' }}>
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 14 }}>
+            <div style={{ width: 32, height: 1, background: C.gold, opacity: 0.3 }} />
+            <span style={{ fontFamily: cinzel.style.fontFamily, fontSize: 9, color: 'rgba(201,168,76,0.7)', letterSpacing: 3, textTransform: 'uppercase' as const }}>{"Klasik Islam Tibbi"}</span>
+            <div style={{ width: 32, height: 1, background: C.gold, opacity: 0.3 }} />
+          </div>
+          <p style={{ fontStyle: 'italic', fontSize: 22, color: 'rgba(255,255,255,0.75)', lineHeight: 1.9, maxWidth: 680, margin: '20px auto 0 auto' }}>
+            {"Ibn Sina, er-Razi ve Osmanli hekimlerinin bin yil boyunca gelistirdigi tip gelenegi; her insanin dogustan gelen mizacini esas alir. Hastaligi degil, hastayi tanir. Semptomu degil, sebebi arar."}
+          </p>
+          <div style={{ marginTop: 32, display: 'flex', justifyContent: 'center', gap: 40, flexWrap: 'wrap' as const }}>
+            {["el-Kanun fi't-Tib, Ibn Sina", "el-Havi fi't-Tib, er-Razi", "Tahbizu'l-Mathun, Tokadi"].map(k => (
+              <span key={k} style={{ fontFamily: cinzel.style.fontFamily, fontSize: 9, color: 'rgba(201,168,76,0.55)', letterSpacing: 2 }}>{k}</span>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* ═══════ 4. FEATURES ═══════ */}
       <section style={{ background: C.white, padding: '80px 56px' }} className="features-section">
         <div style={{ maxWidth: 1200, margin: '0 auto' }}>
@@ -410,6 +429,7 @@ export default function LandingPage() {
           .danisman-grid > div:first-child { width: 100% !important; height: 280px !important; }
           .pricing-grid { grid-template-columns: 1fr !important; }
           .testimonials-grid { grid-template-columns: 1fr !important; }
+          .tanitim-section { padding: 40px 24px !important; }
           .footer-grid { grid-template-columns: 1fr 1fr !important; gap: 32px !important; }
           .akademik-grid { grid-template-columns: 1fr !important; }
         }
