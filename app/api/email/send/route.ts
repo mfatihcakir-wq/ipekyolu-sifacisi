@@ -23,10 +23,10 @@ export async function POST(request: NextRequest) {
       html = analizRaporuHtml(raporData)
     }
 
-    const emailSubject = subject || `Ipek Yolu Sifacisi — ${type === 'cilt' ? 'Cilt Analiz' : 'Mizac Analiz'} Raporu`
+    const emailSubject = subject || `İpek Yolu Şifacısı — ${type === 'cilt' ? 'Cilt Analiz' : 'Mizac Analiz'} Raporu`
 
     const { data, error } = await resend.emails.send({
-      from: `Ipek Yolu Sifacisi <${FROM_EMAIL}>`,
+      from: `İpek Yolu Şifacısı <${FROM_EMAIL}>`,
       to: [to],
       subject: emailSubject,
       html,
@@ -40,7 +40,7 @@ export async function POST(request: NextRequest) {
     // Admin'e de bildirim
     try {
       await resend.emails.send({
-        from: `Ipek Yolu Sifacisi <${FROM_EMAIL}>`,
+        from: `İpek Yolu Şifacısı <${FROM_EMAIL}>`,
         to: [ADMIN_EMAIL],
         subject: `[Rapor Gonderildi] ${hasta_adi} — ${type}`,
         html: `<p><strong>${hasta_adi}</strong> icin ${type} raporu gonderildi.</p><p>Alici: ${to}</p><p>Kayit: ${kayit_no}</p>`,

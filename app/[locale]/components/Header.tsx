@@ -15,10 +15,10 @@ const C = {
 const DANISМАН_EMAIL = 'm.fatih.cakir@gmail.com'
 
 const NAV_LINKS = [
-  { href: '/#nasil-calisir', label: 'Nasil Calisir' },
+  { href: '/#nasil-calisir', label: 'Nasıl Çalışır' },
   { href: '/bitkiler', label: 'Bitkiler' },
   { href: '/#fiyatlandirma', label: 'Fiyatlar' },
-  { href: '/hakkimizda', label: 'Hakkimizda' },
+  { href: '/hakkimizda', label: 'Hakkımızda' },
 ]
 
 // Dil secici kaldirildi — sadece TR
@@ -71,7 +71,7 @@ export default function Header() {
               <circle cx="32" cy="38.5" r="1.8" fill="#AB47BC"/>
             </svg>
             <span style={{ fontFamily: cinzel.style.fontFamily, color: C.gold, fontSize: 14, fontWeight: 600, letterSpacing: 3 }}>
-              {"IPEK YOLU"}
+              {"İPEK YOLU"}
             </span>
           </div>
 
@@ -108,11 +108,11 @@ export default function Header() {
               <div style={{ display: 'flex', gap: 6 }}>
                 <button onClick={() => router.push('/login')}
                   style={{ background: 'rgba(255,255,255,0.1)', border: '1px solid rgba(255,255,255,0.2)', color: 'white', borderRadius: 6, padding: '6px 14px', fontSize: 11, cursor: 'pointer', fontFamily: cinzel.style.fontFamily, letterSpacing: 1 }}>
-                  {"Giris"}
+                  {"Giriş"}
                 </button>
                 <button onClick={() => router.push('/analiz')}
                   style={{ background: '#059669', border: 'none', color: 'white', borderRadius: 6, padding: '7px 16px', fontSize: 11, cursor: 'pointer', fontFamily: cinzel.style.fontFamily, fontWeight: 600, letterSpacing: 1 }}>
-                  {"Ucretsiz Basla \u2192"}
+                  {"Ücretsiz Başla \u2192"}
                 </button>
               </div>
             ) : isDanisман ? (
@@ -160,7 +160,7 @@ export default function Header() {
             ))}
             <button onClick={() => { setMenuAcik(false); router.push('/analiz') }}
               style={{ display: 'block', width: '100%', padding: '12px 0', marginTop: 8, border: 'none', background: '#059669', color: 'white', borderRadius: 8, fontSize: 13, cursor: 'pointer', fontFamily: cinzel.style.fontFamily, fontWeight: 600, letterSpacing: 1 }}>
-              {"Ucretsiz Basla \u2192"}
+              {"Ücretsiz Başla \u2192"}
             </button>
           </div>
         )}

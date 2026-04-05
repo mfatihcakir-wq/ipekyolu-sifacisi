@@ -95,7 +95,7 @@ export default function HastaPage() {
         display: 'flex', flexDirection: 'column', position: 'sticky' as const, top: 0, height: '100vh',
       }}>
         <div style={{ padding: '0 20px', marginBottom: 32 }}>
-          <div style={{ fontFamily: cinzel.style.fontFamily, color: C.gold, fontSize: 13, fontWeight: 600, letterSpacing: 2 }}>IPEK YOLU</div>
+          <div style={{ fontFamily: cinzel.style.fontFamily, color: C.gold, fontSize: 13, fontWeight: 600, letterSpacing: 2 }}>İPEK YOLU</div>
           <div style={{ fontFamily: cinzel.style.fontFamily, color: C.gold, fontSize: 10, letterSpacing: 3, opacity: 0.6 }}>SIFACISI</div>
         </div>
         <nav style={{ flex: 1 }}>
@@ -249,7 +249,7 @@ export default function HastaPage() {
           )}
         </div>
 
-        {/* Uyelik durumu — pasif ise */}
+        {/* Üyelik durumu — pasif ise */}
         {!abonelik && (
           <div style={{ background: `linear-gradient(135deg, ${C.primary}, #122B1C)`, borderRadius: 16, padding: '28px', textAlign: 'center' }}>
             <div style={{ fontFamily: cinzel.style.fontFamily, fontSize: 16, color: C.gold, marginBottom: 8, letterSpacing: 1 }}>Uyeliginiz Aktif Degil</div>

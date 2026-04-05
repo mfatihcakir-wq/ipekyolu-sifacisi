@@ -36,7 +36,7 @@ export default function AyarlarPage() {
   const [sifreSaving, setSifreSaving] = useState(false)
   const [iptalOnay, setIptalOnay] = useState(false)
   const [iptalSaving, setIptalSaving] = useState(false)
-  const [uyelik, setUyelik] = useState<{ plan: string; bitis: string } | null>(null)
+  const [uyelik, setÜyelik] = useState<{ plan: string; bitis: string } | null>(null)
 
   useEffect(() => {
     async function yukle() {
@@ -50,7 +50,7 @@ export default function AyarlarPage() {
       }
 
       const { data: ab } = await supabase.from('abonelikler').select('plan, bitis').eq('kullanici_id', user.id).eq('durum', 'aktif').single()
-      setUyelik(ab)
+      setÜyelik(ab)
 
       setLoading(false)
     }

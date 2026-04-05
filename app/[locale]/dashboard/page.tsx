@@ -315,9 +315,9 @@ export default function DashboardPage() {
 <div class="page">
   <div class="header">
     <div class="logo-area">
-      <div class="logo-title">IPEK YOLU SIFACISI</div>
+      <div class="logo-title">İPEK YOLU ŞİFACISI</div>
       <div class="logo-ar">\u0637\u0631\u064a\u0642 \u0627\u0644\u062d\u0631\u064a\u0631 \u0627\u0644\u0634\u0627\u0641\u064a</div>
-      <div style="font-size:10px;color:#999;margin-top:4px;">Klasik Islam Tibbi Danismanligi</div>
+      <div style="font-size:10px;color:#999;margin-top:4px;">Klasik İslam Tıbbı Danismanligi</div>
     </div>
     <div class="meta">
       <div style="font-family:'Cinzel',serif;font-size:13px;font-weight:600;color:#1C3A26;">KISISEL MIZAC RECETESI</div>
@@ -361,7 +361,7 @@ export default function DashboardPage() {
   <div class="uyari">Bu analiz klasik Islam tibbi gelenegine dayanmaktadir. Modern tibbin yerini tutmaz. Ciddi sikayetlerde mutlaka uzman hekime basvurunuz.</div>
 
   <div class="footer">
-    Ipek Yolu Sifacisi - Klasik Islam Tibbi Danismanligi<br>
+    İpek Yolu Şifacısı - Klasik İslam Tıbbı Danismanligi<br>
     Bu protokol yalnizca ${safeStr(secili.tam_ad)} icin hazirlanmistir.
   </div>
 </div>
@@ -394,7 +394,7 @@ export default function DashboardPage() {
             <circle cx="32" cy="38.5" r="1.8" fill="#AB47BC"/>
           </svg>
           <div>
-            <div style={{ fontFamily: cinzel.style.fontFamily, color: C.gold, fontSize: 15, fontWeight: 600, letterSpacing: 3 }}>IPEK YOLU PANEL</div>
+            <div style={{ fontFamily: cinzel.style.fontFamily, color: C.gold, fontSize: 15, fontWeight: 600, letterSpacing: 3 }}>İPEK YOLU PANEL</div>
             <div style={{ fontSize: 10, color: 'rgba(255,255,255,0.5)', fontStyle: 'italic' }}>Danisман Paneli</div>
           </div>
         </div>

@@ -141,7 +141,7 @@ export default function BitkilerPage() {
       <header style={{ background: C.primary, padding: '0 24px', height: 64, display: 'flex', alignItems: 'center', justifyContent: 'space-between', position: 'sticky', top: 0, zIndex: 100 }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
           <a href="/" style={{ textDecoration: 'none' }}>
-            <div style={{ fontFamily: cinzel.style.fontFamily, color: C.gold, fontSize: 15, fontWeight: 600, letterSpacing: 3 }}>IPEK YOLU SIFACISI</div>
+            <div style={{ fontFamily: cinzel.style.fontFamily, color: C.gold, fontSize: 15, fontWeight: 600, letterSpacing: 3 }}>İPEK YOLU ŞİFACISI</div>
           </a>
           <div style={{ color: 'rgba(255,255,255,0.3)' }}>{'\u203A'}</div>
           <div style={{ fontFamily: cinzel.style.fontFamily, color: 'rgba(255,255,255,0.7)', fontSize: 13, letterSpacing: 2 }}>MUFREDAT</div>
@@ -151,7 +151,7 @@ export default function BitkilerPage() {
       {/* HERO */}
       <div style={{ background: C.primary, padding: '40px 24px 36px', textAlign: 'center' }}>
         <div style={{ fontFamily: cinzel.style.fontFamily, fontSize: 'clamp(22px, 4vw, 30px)', color: C.gold, marginBottom: 8, letterSpacing: 2 }}>
-          Klasik Islam Tibbi Mufredat Ansiklopedisi
+          Klasik İslam Tıbbı Mufredat Ansiklopedisi
         </div>
         <div style={{ fontSize: 15, color: 'rgba(255,255,255,0.6)', fontStyle: 'italic', marginBottom: 6 }}>
           el-Cami li-Mufredat (Ibn Beytar) kaynakli {stats.toplam} bitki

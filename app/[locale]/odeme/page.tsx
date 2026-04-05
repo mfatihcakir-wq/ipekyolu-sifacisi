@@ -136,7 +136,7 @@ function OdemeIcerik() {
 
         <div style={{ textAlign: 'center', marginBottom: 28 }}>
           <div style={{ fontFamily: cinzel.style.fontFamily, fontSize: 24, color: C.primary, marginBottom: 6 }}>Planinizi Secin</div>
-          <div style={{ fontSize: 14, color: C.secondary, fontStyle: 'italic' }}>Ilk analizden sonra farki hissedeceksiniz</div>
+          <div style={{ fontSize: 14, color: C.secondary, fontStyle: 'italic' }}>İlk analizden sonra farki hissedeceksiniz</div>
         </div>
 
         {/* PLAN KARTLARI */}

@@ -45,7 +45,7 @@ export const metadata: Metadata = {
     default: "İpek Yolu Şifacısı — Klasik İslam Tıbbı Danışmanlığı",
     template: "%s · İpek Yolu Şifacısı"
   },
-  description: "Bin yıllık İslam ve Osmanlı tıbbının birikimi ile hazırlanmış, sizin mizacınıza özel sağlık danışmanlığı. el-Hâvî, el-Kânûn, Tahbîzü'l-Mathûn — 38 klasik eserden 31.400+ kayıt.",
+  description: "Bin yıllık İslam ve Osmanlı tıbbının birikimi ile hazırlanmış, sizin mizacınıza özel sağlık danışmanlığı. el-Hâvî, el-Kânûn, Tahbîzü'l-Mathûn — 38 klasik eserden 46.000+ kayıt.",
   keywords: ["İslam tıbbı", "mizaç analizi", "klasik tıp", "bitkisel tedavi", "danışmanlık", "İbn Sînâ", "el-Kânûn"],
   openGraph: {
     title: "İpek Yolu Şifacısı",

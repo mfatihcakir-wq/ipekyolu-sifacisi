@@ -77,7 +77,7 @@ export default function GirisPage() {
             <circle cx="32" cy="38.5" r="1.8" fill="#AB47BC"/>
           </svg>
           <div style={{ fontFamily: cinzel.style.fontFamily, color: C.gold, fontSize: 20, fontWeight: 600, letterSpacing: 3, marginBottom: 24 }}>
-            IPEK YOLU SIFACISI
+            İPEK YOLU ŞİFACISI
           </div>
           <div style={{ width: 40, height: 1, background: C.gold, margin: '0 auto 24px', opacity: 0.4 }} />
           <p style={{ fontSize: 18, color: 'rgba(255,255,255,0.8)', fontStyle: 'italic', lineHeight: 1.8 }}>

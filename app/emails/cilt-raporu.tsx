@@ -94,7 +94,7 @@ export function ciltRaporuHtml(data: {
 <table width="100%" cellpadding="0" cellspacing="0" style="max-width:600px;margin:0 auto;background:#FFFFFF;">
   <!-- Header -->
   <tr><td style="background:${primary};padding:24px;text-align:center;">
-    <div style="font-size:18px;color:${gold};letter-spacing:4px;font-weight:600;">IPEK YOLU SIFACISI</div>
+    <div style="font-size:18px;color:${gold};letter-spacing:4px;font-weight:600;">İPEK YOLU ŞİFACISI</div>
     <div style="font-size:11px;color:rgba(255,255,255,0.5);margin-top:4px;letter-spacing:2px;">CILT BAKIM RAPORU</div>
   </td></tr>
 

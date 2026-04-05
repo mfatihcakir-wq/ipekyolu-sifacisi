@@ -160,7 +160,7 @@ async function klasikKaynaklariGetir(sikayetler: string, sb: SupabaseClient<any,
 
 const SYSTEM_PROMPT = `
 Sen klasik Islam tibbinin ortak aklisin.
-Supabasedeki 31.400+ kayitlik veritabanindan beslenerek analiz yaparsin.
+Supabasedeki 46.000+ kayitlik veritabanindan beslenerek analiz yaparsin.
 Her analizde asagidaki 5 katmani SIRASYLA uygularsin.
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━

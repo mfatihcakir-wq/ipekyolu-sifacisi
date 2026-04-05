@@ -170,7 +170,7 @@ export default function SonucPage() {
                     <div style={{ textAlign: 'center' }}>
                       <div style={{ fontSize: 32, marginBottom: 8 }}>🔒</div>
                       <div style={{ fontFamily: cinzel.style.fontFamily, fontSize: 13, color: C.primary, letterSpacing: 1 }}>Analiz Sonucu</div>
-                      <div style={{ fontSize: 12, color: C.secondary }}>Uyelik ile goruntulenebilir</div>
+                      <div style={{ fontSize: 12, color: C.secondary }}>Üyelik ile goruntulenebilir</div>
                     </div>
                   </div>
                 </div>

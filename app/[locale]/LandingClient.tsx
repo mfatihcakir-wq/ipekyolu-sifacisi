@@ -36,7 +36,7 @@ export default function LandingClient() {
   const router = useRouter()
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [yorumlar, setYorumlar] = useState<any[]>([])
-  const [kayitSayisi, setKayitSayisi] = useState('31.400+')
+  const [kayitSayisi, setKayitSayisi] = useState('46.000+')
 
   useEffect(() => {
     const supabase = createClient()
@@ -73,7 +73,7 @@ export default function LandingClient() {
           <div style={{ display: 'flex', alignItems: 'center', gap: 14, marginBottom: 28 }}>
             <div style={{ width: 32, height: 2, background: C.gold, opacity: 0.65 }} />
             <span style={{ fontFamily: cinzel.style.fontFamily, fontSize: 9, color: C.gold, opacity: 0.65, letterSpacing: 3.5, textTransform: 'uppercase' as const }}>
-              {"KLASIK ISLAM VE OSMANLI TIBBI"}
+              {"KLASİK İSLAM VE OSMANLI TIBBI"}
             </span>
           </div>
 
@@ -89,15 +89,15 @@ export default function LandingClient() {
           <div style={{ display: 'flex', gap: 14, flexWrap: 'wrap' as const }}>
             <button onClick={() => router.push('/analiz')}
               style={{ fontFamily: cinzel.style.fontFamily, fontSize: 12, fontWeight: 700, color: C.primary, background: C.gold, border: 'none', borderRadius: 12, padding: '18px 36px', cursor: 'pointer', letterSpacing: 1.5, textTransform: 'uppercase' as const }}>
-              {"ANALIZIMI BASLAT"}
+              {"ANALİZİMİ BAŞLAT"}
             </button>
             <button onClick={() => router.push('/bitkiler')}
               style={{ fontFamily: cinzel.style.fontFamily, fontSize: 11, color: 'rgba(255,255,255,0.45)', background: 'transparent', border: '1px solid rgba(255,255,255,0.12)', borderRadius: 12, padding: '15px 22px', cursor: 'pointer', letterSpacing: 1, textTransform: 'uppercase' as const }}>
-              {"BITKI ANSIKLOPEDISI"}
+              {"BİTKİ ANSİKLOPEDİSİ"}
             </button>
           </div>
           <div style={{ fontSize: 12, color: 'rgba(255,255,255,0.35)', marginTop: 16, fontStyle: 'italic' }}>
-            {"Simdiye kadar 400+ kisi analizini tamamladi"}
+            {"Şimdiye kadar 400+ kişi analizini tamamladı"}
           </div>
         </div>
 
@@ -111,7 +111,7 @@ export default function LandingClient() {
           <div style={{ position: 'absolute' as const, top: '50%', left: '50%', transform: 'translate(-50%, -50%)', textAlign: 'center' as const }}>
             <AlembikSVG size={80} />
             <div style={{ fontFamily: cinzel.style.fontFamily, fontSize: 8, color: 'rgba(184,146,42,0.35)', letterSpacing: 3, marginTop: 8, whiteSpace: 'nowrap' as const }}>
-              {"Dort Hilt . Dort Mevsim . Dort Mizac"}
+              {"Dört Hılt . Dört Mevsim . Dört Mizaç"}
             </div>
           </div>
         </div>
@@ -127,7 +127,7 @@ export default function LandingClient() {
         <div style={{ maxWidth: 1200, margin: '0 auto', display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 18 }} className="stats-grid">
           {[
             { n: '38', l: 'KLASIK ESER', s: 'el-Havi, el-Kanun, el-Samil, 35 eser daha' },
-            { n: kayitSayisi, l: 'METIN KAYDI', s: 'Indekslenmis klasik metin parcasi' },
+            { n: kayitSayisi, l: 'METIN KAYDI', s: 'İndekslenmiş klasik metin parçası' },
             { n: '9', l: 'NABIZ SIFATI', s: 'Ibn Sina metodolojisi' },
             { n: '4', l: 'MIZAC TIPI', s: 'Demevi, Safravi, Balgami, Sevdavi' },
           ].map(st => (
@@ -186,13 +186,13 @@ export default function LandingClient() {
               },
               {
                 icon: <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke={C.primary} strokeWidth="1.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>,
-                title: 'Kisisel Bitki Protokolu',
+                title: 'Kişisel Bitki Protokolü',
                 desc: '1180 bitki ve tibbi madde iceren Ibn Beytar kaynakli veritabanindan, sizin mizaciniza ve sikayetinize ozel protokol hazirlanir.',
                 href: '/bitkiler',
               },
               {
                 icon: <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke={C.primary} strokeWidth="1.5"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>,
-                title: 'Uzman Danismanlik',
+                title: 'Uzman Danışmanlık',
                 desc: 'Formunuzu bizzat inceleyen, 24 ile 48 saat icinde WhatsApp uzerinden ulasan uzman danisman. Protokolunuz takip edilir, sorulariniz yanitlanir.',
                 href: '/hakkimizda',
               },
@@ -231,7 +231,7 @@ export default function LandingClient() {
             <div style={{ width: 32, height: 1, background: C.gold, opacity: 0.4 }} />
           </div>
           <h2 style={{ fontFamily: cinzel.style.fontFamily, fontSize: 33, fontWeight: 600, color: C.primary, textAlign: 'center' as const, marginBottom: 12 }}>
-            {"Nasil Calisir?"}
+            {"Nasıl Çalışır?"}
           </h2>
           <p style={{ textAlign: 'center' as const, fontStyle: 'italic', fontSize: 16, color: C.secondary, marginBottom: 52 }}>
             {"Uc adimda kisisel saglik protokolunuze kavusun."}
@@ -279,7 +279,7 @@ export default function LandingClient() {
               <span style={{ fontFamily: cinzel.style.fontFamily, fontSize: 9, color: C.gold, letterSpacing: 3, textTransform: 'uppercase' as const }}>{"Danismaniniz"}</span>
             </div>
             <div style={{ fontFamily: cinzel.style.fontFamily, fontSize: 26, fontWeight: 600, color: C.primary, marginBottom: 8 }}>{"M. Fatih Cakir"}</div>
-            <div style={{ fontSize: 16, color: C.gold, fontStyle: 'italic', marginBottom: 20 }}>{"Klasik Islam Tibbi Arastirmacisi, Tip Tarihi Yuksek Lisans"}</div>
+            <div style={{ fontSize: 16, color: C.gold, fontStyle: 'italic', marginBottom: 20 }}>{"Klasik Islam Tibbi Arastirmacisi, Tıp Tarihi Yüksek Lisans"}</div>
             <p style={{ fontSize: 16, color: C.secondary, lineHeight: 1.88, marginBottom: 24 }}>
               {"FSM Vakif Universitesi Fuat Sezgin Islam Bilim Tarihi Enstitusu doktora adayi. Hekim Ahmet el-Hayati'nin Seceretut-Tib adli eserini ilk kez akademik duzeyde inceleyen arastirmaci. Ibn Sina el-Kanun ve Tahbizul-Mathun cevirileri uzerine calismalar yurutmektedir."}
             </p>
@@ -301,7 +301,7 @@ export default function LandingClient() {
 
             {/* Tag chipler */}
             <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' as const, marginBottom: 24 }}>
-              {['KLASIK ISLAM TIBBI', 'TIP TARIHI', 'ARAPCA, FARSCA, OSMANLICA'].map(t => (
+              {['KLASİK İSLAM TIBBI', 'TIP TARİHİ', 'ARAPÇA, FARSÇA, OSMANLICA'].map(t => (
                 <span key={t} style={{ fontFamily: cinzel.style.fontFamily, fontSize: 9, color: C.gold, border: `1px solid rgba(184,146,42,0.25)`, padding: '5px 12px', borderRadius: 8, letterSpacing: 1.5 }}>{t}</span>
               ))}
             </div>
@@ -314,7 +314,7 @@ export default function LandingClient() {
               </a>
               <a href="/hakkimizda"
                 style={{ background: C.surface, color: C.secondary, padding: '12px 24px', borderRadius: 10, fontSize: 13, textDecoration: 'none', border: `1px solid ${C.border}`, fontFamily: cinzel.style.fontFamily, letterSpacing: 1 }}>
-                {"Hakkimizda"}
+                {"Hakkımızda"}
               </a>
             </div>
           </div>
@@ -365,14 +365,14 @@ export default function LandingClient() {
         <div style={{ maxWidth: 1200, margin: '0 auto' }}>
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 14, marginBottom: 16 }}>
             <div style={{ width: 32, height: 1, background: C.gold, opacity: 0.4 }} />
-            <span style={{ fontFamily: cinzel.style.fontFamily, fontSize: 9, color: C.gold, letterSpacing: 3, textTransform: 'uppercase' as const }}>{"Uyelik"}</span>
+            <span style={{ fontFamily: cinzel.style.fontFamily, fontSize: 9, color: C.gold, letterSpacing: 3, textTransform: 'uppercase' as const }}>{"Üyelik"}</span>
             <div style={{ width: 32, height: 1, background: C.gold, opacity: 0.4 }} />
           </div>
           <h2 style={{ fontFamily: cinzel.style.fontFamily, fontSize: 33, fontWeight: 600, color: C.primary, textAlign: 'center' as const, marginBottom: 12 }}>
             {"Size Uygun Plani Secin"}
           </h2>
           <p style={{ textAlign: 'center' as const, fontStyle: 'italic', fontSize: 16, color: C.secondary, marginBottom: 52 }}>
-            {"Ilk analizden sonra fark yasarsiniz. Yillik planda aylik 590\u20BA ile sinirsiz takip."}
+            {"İlk analizden sonra fark yaşarsınız. Yıllık planda aylık 590\u20BA ile sınırsız takip."}
           </p>
 
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 20, marginTop: 52 }} className="pricing-grid">
@@ -423,12 +423,12 @@ export default function LandingClient() {
             <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 16 }}>
               <AlembikSVG size={34} />
               <div>
-                <div style={{ fontFamily: cinzel.style.fontFamily, fontSize: 13, fontWeight: 600, color: C.gold, letterSpacing: 3 }}>{"IPEK YOLU SIFACISI"}</div>
+                <div style={{ fontFamily: cinzel.style.fontFamily, fontSize: 13, fontWeight: 600, color: C.gold, letterSpacing: 3 }}>{"İPEK YOLU ŞİFACISI"}</div>
                 <div style={{ fontFamily: naskh.style.fontFamily, fontSize: 11, color: 'rgba(184,146,42,0.4)' }}>{"طريق الحرير الشافي"}</div>
               </div>
             </div>
             <p style={{ fontSize: 14, color: 'rgba(255,255,255,0.38)', fontStyle: 'italic', lineHeight: 1.7, marginBottom: 20 }}>
-              {"Bin yillik sifa gelenegi, modern danismanlik."}
+              {"Bin yillik sifa gelenegi, modern danışmanlık."}
             </p>
             <div style={{ display: 'flex', gap: 12 }}>
               {[
@@ -443,9 +443,9 @@ export default function LandingClient() {
 
           {/* Kolon 2-4 */}
           {[
-            { title: 'HIZMETLER', links: [['Analiz Baslat', '/analiz'], ['Bitki Ansiklopedisi', '/bitkiler'], ['Cilt Bakimi', '/hasta/cilt'], ['Mizac Testi', '/analiz']] },
-            { title: 'KURUMSAL', links: [['Hakkimizda', '/hakkimizda'], ['SSS', '/sss'], ['Iletisim', 'https://wa.me/905331687226']] },
-            { title: 'YASAL', links: [['KVKK', '/kvkk'], ['Gizlilik Politikasi', '/gizlilik-politikasi'], ['Kullanim Kosullari', '/kvkk']] },
+            { title: 'HIZMETLER', links: [['Analiz Başlat', '/analiz'], ['Bitki Ansiklopedisi', '/bitkiler'], ['Cilt Bakımı', '/hasta/cilt'], ['Mizaç Testi', '/analiz']] },
+            { title: 'KURUMSAL', links: [['Hakkımızda', '/hakkimizda'], ['SSS', '/sss'], ['İletişim', 'https://wa.me/905331687226']] },
+            { title: 'YASAL', links: [['KVKK', '/kvkk'], ['Gizlilik Politikası', '/gizlilik-politikasi'], ['Kullanım Koşulları', '/kvkk']] },
           ].map(col => (
             <div key={col.title}>
               <div style={{ fontFamily: cinzel.style.fontFamily, fontSize: 9, color: C.gold, letterSpacing: 2.5, marginBottom: 20, opacity: 0.7 }}>{col.title}</div>
@@ -458,8 +458,8 @@ export default function LandingClient() {
 
         {/* Alt cizgi */}
         <div style={{ maxWidth: 1200, margin: '0 auto', display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '20px 0', flexWrap: 'wrap' as const, gap: 12 }}>
-          <span style={{ fontSize: 12, color: 'rgba(255,255,255,0.2)' }}>{"\u00A9 2026 Ipek Yolu Sifacisi. Tum haklari saklidir."}</span>
-          <span style={{ fontSize: 11, color: 'rgba(255,255,255,0.14)', fontStyle: 'italic' }}>{"Bu site tibbi tavsiye vermez. Uzman hekime danisiniz."}</span>
+          <span style={{ fontSize: 12, color: 'rgba(255,255,255,0.2)' }}>{"\u00A9 2026 İpek Yolu Şifacısı. Tüm hakları saklıdır."}</span>
+          <span style={{ fontSize: 11, color: 'rgba(255,255,255,0.14)', fontStyle: 'italic' }}>{"Bu site tibbi tavsiye vermez. Uzman hekime danışınız."}</span>
         </div>
       </footer>
 

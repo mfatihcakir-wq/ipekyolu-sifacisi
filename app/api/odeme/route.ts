@@ -53,7 +53,7 @@ export async function POST(req: NextRequest) {
       basketItems: [
         {
           id: plan,
-          name: `Ipek Yolu Sifacisi - ${plan}`,
+          name: `İpek Yolu Şifacısı - ${plan}`,
           category1: 'Saglik',
           itemType: 'VIRTUAL',
           price: fiyatStr,
