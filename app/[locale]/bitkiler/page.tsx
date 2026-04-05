@@ -2,7 +2,12 @@
 
 import { useEffect, useState, useMemo } from 'react'
 import { Cinzel, EB_Garamond, Noto_Naskh_Arabic } from 'next/font/google'
-import { createClient } from '@/lib/supabase'
+import { createClient } from '@supabase/supabase-js'
+
+const supabase = createClient(
+  process.env.NEXT_PUBLIC_SUPABASE_URL!,
+  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+)
 
 const cinzel = Cinzel({ display: 'swap', preload: false, subsets: ['latin', 'latin-ext'], weight: ['400', '500', '600'] })
 const garamond = EB_Garamond({ display: 'swap', preload: false, subsets: ['latin', 'latin-ext'], weight: ['400', '500'], style: ['normal', 'italic'] })
@@ -47,8 +52,6 @@ export default function BitkilerPage() {
   const [expandedId, setExpandedId] = useState<string | null>(null)
   const [isAbone, setIsAbone] = useState(false)
   const [aboneUyari, setAboneUyari] = useState(false)
-  const supabase = createClient()
-
   useEffect(() => {
     async function yukle() {
       setLoading(true)
@@ -58,6 +61,11 @@ export default function BitkilerPage() {
           .select('*')
           .order('ad_tr', { ascending: true })
           .range(0, 1999)
+        console.log('[Bitkiler]', {
+          count: data?.length,
+          error: error?.message,
+          url: process.env.NEXT_PUBLIC_SUPABASE_URL?.slice(0, 30)
+        })
         if (error) console.error('bitkiler fetch error:', error)
         setBitkiler(data || [])
       } catch (e) {
