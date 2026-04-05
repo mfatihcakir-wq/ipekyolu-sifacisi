@@ -14,12 +14,12 @@ serve(async (req) => {
 
     const html = `
       <div style="font-family:sans-serif;max-width:600px;margin:0 auto">
-        <div style="background:#1B4332;padding:20px;text-align:center">
+        <div style="background:#1C3A26;padding:20px;text-align:center">
           <h1 style="color:#8B6914;margin:0;font-size:20px">İpek Yolu Şifacısı</h1>
           <p style="color:rgba(255,255,255,.6);margin:4px 0 0;font-size:12px">Yeni Danışmanlık Formu</p>
         </div>
-        <div style="padding:24px;background:#F5EFE6">
-          <h2 style="color:#1B4332;margin:0 0 16px">${record.tam_ad}</h2>
+        <div style="padding:24px;background:#FDFAF5">
+          <h2 style="color:#1C3A26;margin:0 0 16px">${record.tam_ad}</h2>
           <table style="width:100%;border-collapse:collapse">
             <tr><td style="padding:8px 0;color:#666;width:140px">Telefon</td><td style="padding:8px 0;font-weight:600">${record.telefon}</td></tr>
             <tr><td style="padding:8px 0;color:#666">Tarih</td><td style="padding:8px 0">${new Date(record.created_at).toLocaleString('tr-TR')}</td></tr>
@@ -29,9 +29,9 @@ serve(async (req) => {
           </table>
           <div style="background:white;border-radius:8px;padding:16px;margin:16px 0">
             <div style="font-size:11px;color:#999;text-transform:uppercase;letter-spacing:1px;margin-bottom:8px">Şikayetler</div>
-            <div style="color:#1B4332">${fv.symptoms || 'Belirtilmemiş'}</div>
+            <div style="color:#1C3A26">${fv.symptoms || 'Belirtilmemiş'}</div>
           </div>
-          <a href="https://ipekyolu-sifacisi.vercel.app/dashboard" style="display:block;background:#1B4332;color:#8B6914;text-align:center;padding:14px;border-radius:8px;text-decoration:none;font-weight:600">Panelde İncele →</a>
+          <a href="https://ipekyolu-sifacisi.vercel.app/dashboard" style="display:block;background:#1C3A26;color:#8B6914;text-align:center;padding:14px;border-radius:8px;text-decoration:none;font-weight:600">Panelde İncele →</a>
         </div>
       </div>
     `

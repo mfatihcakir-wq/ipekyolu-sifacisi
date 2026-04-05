@@ -10,7 +10,7 @@ const config: Config = {
       colors: {
         background: "var(--background)",
         foreground: "var(--foreground)",
-        koyu: '#1B4332',
+        koyu: '#1C3A26',
         orta: '#2D6A4F',
         altin: '#B8922A',
         'altin-acik': '#F0E6C8',
