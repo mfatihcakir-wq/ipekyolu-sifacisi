@@ -4,8 +4,8 @@ import { useEffect, useState, useMemo } from 'react'
 import { Cinzel, EB_Garamond, Noto_Naskh_Arabic } from 'next/font/google'
 import { createClient } from '@/lib/supabase'
 
-const cinzel = Cinzel({ subsets: ['latin'], weight: ['400', '500', '600'] })
-const garamond = EB_Garamond({ subsets: ['latin'], weight: ['400', '500'], style: ['normal', 'italic'] })
+const cinzel = Cinzel({ subsets: ['latin', 'latin-ext'], weight: ['400', '500', '600'] })
+const garamond = EB_Garamond({ subsets: ['latin', 'latin-ext'], weight: ['400', '500'], style: ['normal', 'italic'] })
 const naskh = Noto_Naskh_Arabic({ subsets: ['arabic'], weight: ['400', '500'] })
 
 const C = {

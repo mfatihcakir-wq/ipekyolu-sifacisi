@@ -1,8 +1,8 @@
 'use client'
 import { Cinzel, EB_Garamond } from 'next/font/google'
 
-const cinzel = Cinzel({ subsets: ['latin'], weight: ['400', '500', '600'] })
-const garamond = EB_Garamond({ subsets: ['latin'], weight: ['400', '500'], style: ['normal', 'italic'] })
+const cinzel = Cinzel({ subsets: ['latin', 'latin-ext'], weight: ['400', '500', '600'] })
+const garamond = EB_Garamond({ subsets: ['latin', 'latin-ext'], weight: ['400', '500'], style: ['normal', 'italic'] })
 
 export default function Error({ error, reset }: { error: Error & { digest?: string }; reset: () => void }) {
   return (

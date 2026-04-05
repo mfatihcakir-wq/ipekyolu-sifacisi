@@ -12,8 +12,8 @@ const PPGNabiz = dynamic(() => import('@/components/analiz/PPGNabiz'), { ssr: fa
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const DilYuzKamera = dynamic(() => import('@/components/analiz/DilYuzKamera'), { ssr: false })
 
-const cinzel = Cinzel({ subsets: ['latin'], weight: ['400', '500', '600'] })
-const garamond = EB_Garamond({ subsets: ['latin'], weight: ['400', '500'], style: ['normal', 'italic'] })
+const cinzel = Cinzel({ subsets: ['latin', 'latin-ext'], weight: ['400', '500', '600'] })
+const garamond = EB_Garamond({ subsets: ['latin', 'latin-ext'], weight: ['400', '500'], style: ['normal', 'italic'] })
 
 const C = {
   primary: '#1B4332',

@@ -4,8 +4,8 @@ import { useRouter } from 'next/navigation'
 import { Cinzel, EB_Garamond, Noto_Naskh_Arabic } from 'next/font/google'
 import Header from './components/Header'
 
-const cinzel = Cinzel({ subsets: ['latin'], weight: ['400', '500', '600', '700'] })
-const garamond = EB_Garamond({ subsets: ['latin'], weight: ['400', '500'], style: ['normal', 'italic'] })
+const cinzel = Cinzel({ subsets: ['latin', 'latin-ext'], weight: ['400', '500', '600', '700'] })
+const garamond = EB_Garamond({ subsets: ['latin', 'latin-ext'], weight: ['400', '500'], style: ['normal', 'italic'] })
 const naskh = Noto_Naskh_Arabic({ subsets: ['arabic'], weight: ['400', '500'] })
 
 const C = {

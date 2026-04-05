@@ -7,8 +7,8 @@ import { createClient } from '@/lib/supabase'
 import Header from '../components/Header'
 import Footer from '../components/Footer'
 
-const cinzel = Cinzel({ subsets: ['latin'], weight: ['400', '500', '600'] })
-const garamond = EB_Garamond({ subsets: ['latin'], weight: ['400', '500'], style: ['normal', 'italic'] })
+const cinzel = Cinzel({ subsets: ['latin', 'latin-ext'], weight: ['400', '500', '600'] })
+const garamond = EB_Garamond({ subsets: ['latin', 'latin-ext'], weight: ['400', '500'], style: ['normal', 'italic'] })
 
 const C = {
   primary: '#1B4332', gold: '#C9A84C', cream: '#F5EFE6',
