@@ -128,7 +128,7 @@ export default function LandingClient() {
       <section style={{ background: C.cream, padding: '48px 56px' }} className="stats-section">
         <div style={{ maxWidth: 1200, margin: '0 auto', display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 18 }} className="stats-grid">
           {[
-            { n: '38', l: 'KLASIK ESER', s: 'el-Havi, el-Kânûn, el-Samil, 35 eser daha' },
+            { n: '38', l: 'KLASIK ESER', s: 'el-Hâvî, el-Kânûn, el-Şâmil ve 38 klasik eser' },
             { n: kayitSayisi, l: 'METIN KAYDI', s: 'İndekslenmiş klasik metin parçası' },
             { n: '9', l: 'NABIZ SIFATI', s: 'İbn Sînâ metodolojisi' },
             { n: '4', l: 'MIZAC TIPI', s: 'Demevi, Safravi, Balgami, Sevdavi' },
@@ -201,7 +201,7 @@ export default function LandingClient() {
               {
                 icon: <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke={C.primary} strokeWidth="1.5"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>,
                 title: '38 Klasik Kaynak',
-                desc: 'el-Havi, Tahbizul-Mathun, el-Samil ve 35 eser daha; her analizde sikayetinize en uygun metinler bulunup getirilir.',
+                desc: 'el-Hâvî, Tahbîzü\u2019l-Mathûn, el-Şâmil ve 38 klasik eser; her analizde sikayetinize en uygun metinler bulunup getirilir.',
                 href: '/hakkimizda',
               },
               {
