@@ -621,7 +621,7 @@ export default function DashboardPage() {
                     {"KLASİK KAYNAKLAR TARANIYOR"}
                   </div>
                   <div style={{ fontSize: 12, color: C.secondary, fontStyle: 'italic', marginBottom: 20 }}>
-                    {"el-H\u00e2v\u00ee \u00b7 el-\u015e\u00e2mil \u00b7 Tahb\u00eez\u00fcl-Math\u00fbn \u00b7 el-C\u00e2mi"}
+                    {"el-Hâvî · el-Şâmil · Tahbîzül-Mathûn · el-Câmi"}
                   </div>
                   <div style={{ display: 'flex', gap: 8, justifyContent: 'center', flexWrap: 'wrap' as const }}>
                     {['el-Mansuri', 'el-Samil', 'Tahbiz', 'el-Havi', 'el-Cami', 'el-Kulliyyat'].map((k, i) => (
@@ -988,11 +988,11 @@ export default function DashboardPage() {
 
                   {/* ANALİZ GEÇMİŞİ */}
                   <div style={{ marginTop: 20, borderTop: `1px solid ${C.border}`, paddingTop: 16 }}>
-                    <div style={{ fontFamily: cinzel.style.fontFamily, fontSize: 11, color: C.gold, letterSpacing: 2, marginBottom: 10, textTransform: 'uppercase' as const }}>{"Analiz Ge\u00e7mi\u015fi"}</div>
+                    <div style={{ fontFamily: cinzel.style.fontFamily, fontSize: 11, color: C.gold, letterSpacing: 2, marginBottom: 10, textTransform: 'uppercase' as const }}>{"Analiz Geçmişi"}</div>
                     {gecmisYukleniyor ? (
-                      <div style={{ fontSize: 12, color: C.secondary, fontStyle: 'italic', padding: '8px 0' }}>{"Y\u00fckleniyor..."}</div>
+                      <div style={{ fontSize: 12, color: C.secondary, fontStyle: 'italic', padding: '8px 0' }}>{"Yükleniyor..."}</div>
                     ) : gecmisAnalizler.length === 0 ? (
-                      <div style={{ fontSize: 12, color: '#999', fontStyle: 'italic', padding: '8px 0' }}>{"Hen\u00fcz analiz yap\u0131lmam\u0131\u015f."}</div>
+                      <div style={{ fontSize: 12, color: '#999', fontStyle: 'italic', padding: '8px 0' }}>{"Henüz analiz yapılmamış."}</div>
                     ) : (
                       <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
                         {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
@@ -1008,7 +1008,7 @@ export default function DashboardPage() {
                             return { bg: '#E8F5E9', color: '#1B5E20' }
                           })()
                           const gDurum = ga.durum === 'tamamlandi'
-                            ? { bg: '#E8F5E9', color: '#1B5E20', text: 'Tamamland\u0131' }
+                            ? { bg: '#E8F5E9', color: '#1B5E20', text: 'Tamamlandı' }
                             : { bg: '#FFF8E7', color: '#92400E', text: ga.durum || 'Bekliyor' }
                           return (
                             <div key={ga.id} style={{ background: C.surface, borderRadius: 8, padding: '8px 12px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 8 }}>

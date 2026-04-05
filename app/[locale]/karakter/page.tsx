@@ -245,7 +245,7 @@ export default function KarakterAnaliziPage() {
             {/* Progress */}
             <div style={{ marginBottom: 20 }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 11, color: '#999', marginBottom: 6 }}>
-                <span>{mevcutSoru.cephe.ad} {'\u00b7'} {mevcutSoru.askerIdx + 1}/10</span>
+                <span>{mevcutSoru.cephe.ad} {'·'} {mevcutSoru.askerIdx + 1}/10</span>
                 <span>{soruIndex + 1}/{toplamSoru}</span>
               </div>
               <div style={{ height: 4, background: C.border, borderRadius: 2 }}>
@@ -257,7 +257,7 @@ export default function KarakterAnaliziPage() {
               {/* SOL: Asker kimligi */}
               <div style={{ background: C.white, borderRadius: 14, border: `1px solid ${C.border}`, padding: '24px' }}>
                 <div style={{ fontSize: 10, color: CEPHE_RENK[mevcutSoru.cephe.id], letterSpacing: 2, marginBottom: 6 }}>
-                  {mevcutSoru.cephe.ad.toUpperCase()} {'\u00b7'} {CEPHE_YON[mevcutSoru.cephe.id]} {'\u00b7'} {mevcutSoru.askerIdx + 1}/10
+                  {mevcutSoru.cephe.ad.toUpperCase()} {'·'} {CEPHE_YON[mevcutSoru.cephe.id]} {'·'} {mevcutSoru.askerIdx + 1}/10
                 </div>
                 <h2 style={{ fontFamily: cinzel.style.fontFamily, fontSize: 22, color: C.primary, marginBottom: 4 }}>{mevcutSoru.id.charAt(0).toUpperCase() + mevcutSoru.id.slice(1).replace('_', ' ')}</h2>
                 <div style={{ background: C.surface, borderLeft: `3px solid ${C.gold}`, borderRadius: '0 8px 8px 0', padding: '10px 14px', marginBottom: 12, fontSize: 13, color: C.secondary, lineHeight: 1.6 }}>

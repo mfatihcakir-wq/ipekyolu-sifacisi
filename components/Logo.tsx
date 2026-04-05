@@ -50,7 +50,7 @@ export default function Logo({
       {showText && (
         <div style={{ display: 'flex', flexDirection: 'column' as const, gap: 1 }}>
           <span style={{ fontFamily: 'Cinzel, serif', fontSize: 12, fontWeight: 600, color: textColor, letterSpacing: 3, lineHeight: 1.1 }}>
-            {"\u0130PEK YOLU \u015e\u0130FACISI"}
+            {"İPEK YOLU ŞİFACISI"}
           </span>
           <span style={{ fontFamily: 'serif', fontSize: 9, color: arColor, direction: 'rtl' as const }}>
             {"\u0637\u0631\u064A\u0642 \u0627\u0644\u062D\u0631\u064A\u0631 \u0627\u0644\u0634\u0627\u0641\u064A"}

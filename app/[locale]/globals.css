@@ -99,6 +99,23 @@ p {
   color: #1C3A26;
 }
 
+@media (max-width: 768px) {
+  .hero-grid {
+    grid-template-columns: 1fr !important;
+  }
+  .hero-card-desktop {
+    display: none !important;
+  }
+  .hero-card-mobile {
+    display: flex !important;
+  }
+}
+@media (min-width: 769px) {
+  .hero-card-mobile {
+    display: none !important;
+  }
+}
+
 @layer utilities {
   .text-balance {
     text-wrap: balance;

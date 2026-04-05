@@ -15,12 +15,12 @@ const C = {
 }
 
 const HEKIM_PROFILLER = [
-  { id: 'razi', ad: 'er-R\u00e2z\u00ee', renk: '#2563EB', kitap: 'el-H\u00e2v\u00ee', aciklama: 'Ampirik g\u00f6zlem', sistem_prompt_eki: 'Sen er-R\u00e2z\u00ee perspektifinden yan\u0131t ver. Ampirik g\u00f6zlem ve klinik deneyimi \u00f6n plana \u00e7\u0131kar. el-H\u00e2v\u00ee fit-T\u0131b eserindeki vaka kay\u0131tlar\u0131na at\u0131f yap.' },
-  { id: 'nefis', ad: '\u0130bn Nef\u00ees', renk: '#059669', kitap: 'el-\u015e\u00e2mil', aciklama: 'Sistematik analiz', sistem_prompt_eki: 'Sen \u0130bn Nef\u00ees perspektifinden yan\u0131t ver. Sistematik nab\u0131z ve idrar analizini \u00f6n plana \u00e7\u0131kar. el-\u015e\u00e2mil eserindeki fas\u0131llara at\u0131f yap.' },
-  { id: 'rusd', ad: '\u0130bn R\u00fc\u015fd', renk: '#7C3AED', kitap: 'el-K\u00fclliyy\u00e2t', aciklama: 'Mant\u0131k \u00e7er\u00e7evesi', sistem_prompt_eki: 'Sen \u0130bn R\u00fc\u015fd perspektifinden yan\u0131t ver. Mant\u0131ksal sebep-sonu\u00e7 \u00e7er\u00e7evesini kullan. el-K\u00fclliyy\u00e2t fit-T\u0131b eserindeki taksim metoduna at\u0131f yap.' },
-  { id: 'zehravi', ad: 'ez-Zehrav\u00ee', renk: '#EA580C', kitap: 'et-Tasr\u00eef', aciklama: 'Cerrahi bak\u0131\u015f', sistem_prompt_eki: 'Sen ez-Zehrav\u00ee perspektifinden yan\u0131t ver. Pratik m\u00fcdahale ve cerrahi bak\u0131\u015f a\u00e7\u0131s\u0131n\u0131 \u00f6n plana \u00e7\u0131kar. et-Tasr\u00eef eserindeki uygulamalara at\u0131f yap.' },
-  { id: 'beytar', ad: '\u0130bn Beyt\u00e2r', renk: '#92400E', kitap: 'el-C\u00e2mi', aciklama: 'Bitki otoritesi', sistem_prompt_eki: 'Sen \u0130bn Beyt\u00e2r perspektifinden yan\u0131t ver. Bitki ve m\u00fcfredat bilgisini \u00f6n plana \u00e7\u0131kar. el-C\u00e2mi li-M\u00fcfred\u00e2t eserindeki maddelere at\u0131f yap.' },
-  { id: 'tokadi', ad: 'Tokad\u00ee', renk: '#92600A', kitap: 'Tahb\u00eez\u00fcl-Math\u00fbn', aciklama: 'Osmanl\u0131 tatbik gelene\u011fi', isim: 'Mustafa b. Yusuf Tokad\u00ee', isim_ar: '\u0637\u0648\u0642\u0627\u062f\u064a', lakap: '\u015e\u00e2rihu\u2019l-K\u00e2n\u00fbn', olum: '\u00f6. 1195/1781', kaynak_kodu: 'SRC-007', ikon: '\uD83D\uDCDC', metot: 'Osmanl\u0131 tatbik gelene\u011fi, el-K\u00e2n\u00fbn T\u00fcrk\u00e7e \u015ferhi, yerel form\u00fcller', sistem_prompt_eki: 'Sen Mustafa b. Yusuf Tokadi sin (\u00f6.1195/1781) \u2014 Tahbiz\u00fcl-Math\u00fbn m\u00fcellifi, el-Kânûn un en kapsaml\u0131 Osmanl\u0131ca sarihisin. Methodun: İbn Sînâ n\u0131n teorisini Osmanl\u0131 cografyas\u0131n\u0131n bitkilerine ve iklimine uygula. Teoriden pratige k\u00f6pr\u00fc kur. Anadolu da temin edilebilir bitkilerle form\u00fcller \u00f6ner. Osmanl\u0131ca t\u0131b terminolojisini kullan, modern T\u00fcrk\u00e7eye \u00e7evir. Kaynak: Tahbiz\u00fcl-Math\u00fbn fit-Tib a at\u0131f yap.' },
+  { id: 'razi', ad: 'er-Râzî', renk: '#2563EB', kitap: 'el-Hâvî', aciklama: 'Ampirik gözlem', sistem_prompt_eki: 'Sen er-Râzî perspektifinden yanıt ver. Ampirik gözlem ve klinik deneyimi ön plana çıkar. el-Hâvî fit-Tıb eserindeki vaka kayıtlarına atıf yap.' },
+  { id: 'nefis', ad: 'İbn Nefîs', renk: '#059669', kitap: 'el-Şâmil', aciklama: 'Sistematik analiz', sistem_prompt_eki: 'Sen İbn Nefîs perspektifinden yanıt ver. Sistematik nabız ve idrar analizini ön plana çıkar. el-Şâmil eserindeki fasıllara atıf yap.' },
+  { id: 'rusd', ad: 'İbn Rüşd', renk: '#7C3AED', kitap: 'el-Külliyyât', aciklama: 'Mantık çerçevesi', sistem_prompt_eki: 'Sen İbn Rüşd perspektifinden yanıt ver. Mantıksal sebep-sonuç çerçevesini kullan. el-Külliyyât fit-Tıb eserindeki taksim metoduna atıf yap.' },
+  { id: 'zehravi', ad: 'ez-Zehravî', renk: '#EA580C', kitap: 'et-Tasrîf', aciklama: 'Cerrahi bakış', sistem_prompt_eki: 'Sen ez-Zehravî perspektifinden yanıt ver. Pratik müdahale ve cerrahi bakış açısını ön plana çıkar. et-Tasrîf eserindeki uygulamalara atıf yap.' },
+  { id: 'beytar', ad: 'İbn Beytâr', renk: '#92400E', kitap: 'el-Câmi', aciklama: 'Bitki otoritesi', sistem_prompt_eki: 'Sen İbn Beytâr perspektifinden yanıt ver. Bitki ve müfredat bilgisini ön plana çıkar. el-Câmi li-Müfredât eserindeki maddelere atıf yap.' },
+  { id: 'tokadi', ad: 'Tokadî', renk: '#92600A', kitap: 'Tahbîzül-Mathûn', aciklama: 'Osmanlı tatbik geleneği', isim: 'Mustafa b. Yusuf Tokadî', isim_ar: '\u0637\u0648\u0642\u0627\u062f\u064a', lakap: 'Şârihu\u2019l-Kânûn', olum: 'ö. 1195/1781', kaynak_kodu: 'SRC-007', ikon: '\uD83D\uDCDC', metot: 'Osmanlı tatbik geleneği, el-Kânûn Türkçe şerhi, yerel formüller', sistem_prompt_eki: 'Sen Mustafa b. Yusuf Tokadi sin (ö.1195/1781) \u2014 Tahbizül-Mathûn müellifi, el-Kânûn un en kapsamlı Osmanlıca sarihisin. Methodun: İbn Sînâ nın teorisini Osmanlı cografyasının bitkilerine ve iklimine uygula. Teoriden pratige köprü kur. Anadolu da temin edilebilir bitkilerle formüller öner. Osmanlıca tıb terminolojisini kullan, modern Türkçeye çevir. Kaynak: Tahbizül-Mathûn fit-Tib a atıf yap.' },
 ]
 
 interface VakaKayit {
@@ -152,13 +152,13 @@ export default function ArsivPage() {
 
     setTimeout(() => {
       setHekimYorum(
-        `${hekim.ad} (${hekim.kitap}) perspektifinden de\u011ferlendirme:\n\n` +
-        `Hasta ${ad}, bask\u0131n mizac\u0131 ${mizac} olarak tespit edilmi\u015ftir. ` +
-        `${hekim.aciklama} yakla\u015f\u0131m\u0131yla inceledi\u011fimizde:\n\n` +
-        (ozet ? `Genel de\u011ferlendirme: ${ozet}\n\n` : '') +
-        `${hekim.kitap} eserinde belirtildi\u011fi \u00fczere, bu mizac tipinde ` +
-        `dikkat edilmesi gereken hususlar mevcuttur. Detayl\u0131 hekim yorumu i\u00e7in ` +
-        `API entegrasyonu yap\u0131land\u0131r\u0131lmal\u0131d\u0131r.\n\n` +
+        `${hekim.ad} (${hekim.kitap}) perspektifinden değerlendirme:\n\n` +
+        `Hasta ${ad}, baskın mizacı ${mizac} olarak tespit edilmiştir. ` +
+        `${hekim.aciklama} yaklaşımıyla incelediğimizde:\n\n` +
+        (ozet ? `Genel değerlendirme: ${ozet}\n\n` : '') +
+        `${hekim.kitap} eserinde belirtildiği üzere, bu mizac tipinde ` +
+        `dikkat edilmesi gereken hususlar mevcuttur. Detaylı hekim yorumu için ` +
+        `API entegrasyonu yapılandırılmalıdır.\n\n` +
         `\u2014 ${hekim.ad}, ${hekim.kitap}`
       )
       setHekimYukleniyor(false)
@@ -166,11 +166,11 @@ export default function ArsivPage() {
   }
 
   const MIZAC_FILTRE_BUTONLARI = [
-    { label: 'T\u00fcm\u00fc', value: '' },
-    { label: 'Demev\u00ee', value: 'dem' },
-    { label: 'Safrav\u00ee', value: 'safra' },
-    { label: 'Balgam\u00ee', value: 'balgam' },
-    { label: 'Sevdav\u00ee', value: 'sevda' },
+    { label: 'Tümü', value: '' },
+    { label: 'Demevî', value: 'dem' },
+    { label: 'Safravî', value: 'safra' },
+    { label: 'Balgamî', value: 'balgam' },
+    { label: 'Sevdavî', value: 'sevda' },
   ]
 
   return (
@@ -180,14 +180,14 @@ export default function ArsivPage() {
           <button onClick={() => router.push('/dashboard')} style={{ background: 'rgba(255,255,255,0.1)', border: '1px solid rgba(255,255,255,0.2)', color: 'white', borderRadius: 8, padding: '7px 14px', fontSize: 12, cursor: 'pointer' }}>
             {'\u2190'} Panel
           </button>
-          <div style={{ fontFamily: cinzel.style.fontFamily, color: C.gold, fontSize: 15, fontWeight: 600, letterSpacing: 3 }}>{"VAKA AR\u015e\u0130V\u0130"}</div>
+          <div style={{ fontFamily: cinzel.style.fontFamily, color: C.gold, fontSize: 15, fontWeight: 600, letterSpacing: 3 }}>{"VAKA ARŞİVİ"}</div>
         </div>
         <button onClick={yukle} style={{ background: 'rgba(255,255,255,0.1)', border: '1px solid rgba(255,255,255,0.2)', color: 'white', borderRadius: 8, padding: '7px 14px', fontSize: 12, cursor: 'pointer' }}>Yenile</button>
       </header>
 
       <div style={{ maxWidth: 1200, margin: '0 auto', padding: '24px 20px' }}>
 
-        {/* \u0130STAT\u0130ST\u0130K */}
+        {/* İSTATİSTİK */}
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 12, marginBottom: 24 }}>
           {[
             { label: 'Toplam Analiz', val: vakalar.length, accent: C.secondary },
@@ -202,7 +202,7 @@ export default function ArsivPage() {
           ))}
         </div>
 
-        {/* F\u0130LTRE */}
+        {/* FİLTRE */}
         <div style={{ background: C.white, borderRadius: 12, padding: '14px 18px', marginBottom: 16, border: `1px solid ${C.border}`, display: 'flex', gap: 12, alignItems: 'center', flexWrap: 'wrap' as const }}>
           <input
             type="text"
@@ -213,20 +213,20 @@ export default function ArsivPage() {
           />
           <select value={mizacFiltre} onChange={e => setMizacFiltre(e.target.value)}
             style={{ padding: '8px 12px', border: `1px solid ${C.border}`, borderRadius: 8, fontSize: 13, outline: 'none', fontFamily: garamond.style.fontFamily }}>
-            <option value="">{"\u00fcm Miza\u00e7lar"}</option>
-            <option value="safra">{"Safrav\u00ee"}</option>
-            <option value="balgam">{"Balgam\u00ee"}</option>
-            <option value="dem">{"Demev\u00ee"}</option>
-            <option value="sevda">{"Sevdav\u00ee"}</option>
+            <option value="">{"üm Mizaçlar"}</option>
+            <option value="safra">{"Safravî"}</option>
+            <option value="balgam">{"Balgamî"}</option>
+            <option value="dem">{"Demevî"}</option>
+            <option value="sevda">{"Sevdavî"}</option>
           </select>
           <select value={kaynakFiltre} onChange={e => setKaynakFiltre(e.target.value)}
             style={{ padding: '8px 12px', border: `1px solid ${C.border}`, borderRadius: 8, fontSize: 13, outline: 'none', fontFamily: garamond.style.fontFamily }}>
-            <option value="">{"T\u00fcm Kaynaklar"}</option>
-            <option value="havi">{"el-H\u00e2v\u00ee \u2014 er-R\u00e2z\u00ee"}</option>
-            <option value="tahbiz">{"Tahb\u00eez\u00fcl-Math\u00fbn \u2014 Tokad\u00ee"}</option>
-            <option value="samil">{"el-\u015e\u00e2mil \u2014 \u0130bn Nef\u00ees"}</option>
-            <option value="cevahir">{"Bahr\u00fcl-Cev\u00e2hir"}</option>
-            <option value="kanun">{"el-K\u00e2n\u00fbn"}</option>
+            <option value="">{"Tüm Kaynaklar"}</option>
+            <option value="havi">{"el-Hâvî \u2014 er-Râzî"}</option>
+            <option value="tahbiz">{"Tahbîzül-Mathûn \u2014 Tokadî"}</option>
+            <option value="samil">{"el-Şâmil \u2014 İbn Nefîs"}</option>
+            <option value="cevahir">{"Bahrül-Cevâhir"}</option>
+            <option value="kanun">{"el-Kânûn"}</option>
           </select>
         </div>
 
@@ -253,18 +253,18 @@ export default function ArsivPage() {
           ))}
         </div>
 
-        {/* \u0130K\u0130 KOLON */}
+        {/* İKİ KOLON */}
         <div style={{ display: 'grid', gridTemplateColumns: secili ? '380px 1fr' : '1fr', gap: 16 }}>
 
-          {/* L\u0130STE */}
+          {/* LİSTE */}
           <div>
             <div style={{ fontFamily: cinzel.style.fontFamily, fontSize: 12, color: C.primary, letterSpacing: 2, marginBottom: 12, textTransform: 'uppercase' as const }}>
               Analizler ({filtered.length})
             </div>
             {loading ? (
-              <div style={{ textAlign: 'center', padding: 40, color: C.secondary }}>{"Y\u00fckleniyor..."}</div>
+              <div style={{ textAlign: 'center', padding: 40, color: C.secondary }}>{"Yükleniyor..."}</div>
             ) : filtered.length === 0 ? (
-              <div style={{ textAlign: 'center', padding: 40, color: C.secondary, fontStyle: 'italic' }}>{"Analiz bulunamad\u0131."}</div>
+              <div style={{ textAlign: 'center', padding: 40, color: C.secondary, fontStyle: 'italic' }}>{"Analiz bulunamadı."}</div>
             ) : (
               <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
                 {filtered.map(v => {
@@ -318,10 +318,10 @@ export default function ArsivPage() {
                 <button onClick={() => setSecili(null)} style={{ background: 'none', border: 'none', fontSize: 20, cursor: 'pointer', color: '#999' }}>{'\u2715'}</button>
               </div>
 
-              {/* M\u0130ZA\u00c7 */}
+              {/* MİZAÇ */}
               {secili.sonuc_json?.mizac && (
                 <div style={{ background: C.primary, borderRadius: 10, padding: '14px 18px', marginBottom: 14 }}>
-                  <div style={{ fontSize: 10, color: 'rgba(255,255,255,0.4)', letterSpacing: 2, marginBottom: 4 }}>{"BASKIN M\u0130ZA\u00c7"}</div>
+                  <div style={{ fontSize: 10, color: 'rgba(255,255,255,0.4)', letterSpacing: 2, marginBottom: 4 }}>{"BASKIN MİZAÇ"}</div>
                   <div style={{ fontFamily: cinzel.style.fontFamily, fontSize: 18, color: C.gold }}>{secili.sonuc_json.mizac}</div>
                   {secili.sonuc_json.fitri_hali?.tedavi_hedefi && (
                     <div style={{ fontSize: 11, color: 'rgba(255,255,255,0.6)', marginTop: 8, fontStyle: 'italic' }}>{secili.sonuc_json.fitri_hali.tedavi_hedefi}</div>
@@ -329,14 +329,14 @@ export default function ArsivPage() {
                 </div>
               )}
 
-              {/* \u00d6ZET */}
+              {/* ÖZET */}
               {secili.sonuc_json?.ozet && (
                 <div style={{ background: C.surface, borderRadius: 8, padding: '12px 14px', marginBottom: 12, fontSize: 13, color: C.dark, lineHeight: 1.7 }}>
                   {secili.sonuc_json.ozet}
                 </div>
               )}
 
-              {/* B\u0130TK\u0130LER */}
+              {/* BİTKİLER */}
               {secili.sonuc_json?.bitki_recetesi?.length > 0 && (
                 <div style={{ marginBottom: 12 }}>
                   <div style={{ fontFamily: cinzel.style.fontFamily, fontSize: 10, color: C.gold, letterSpacing: 2, marginBottom: 8, textTransform: 'uppercase' as const }}>Bitkisel Protokol</div>
@@ -369,7 +369,7 @@ export default function ArsivPage() {
         </div>
       </div>
 
-      {/* HEK\u0130M YORUM MODAL */}
+      {/* HEKİM YORUM MODAL */}
       {hekimModal && (
         <div style={{
           position: 'fixed' as const, top: 0, left: 0, right: 0, bottom: 0,
@@ -389,7 +389,7 @@ export default function ArsivPage() {
           >
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 16 }}>
               <div>
-                <div style={{ fontFamily: cinzel.style.fontFamily, fontSize: 14, color: C.primary, letterSpacing: 2 }}>{"HEK\u0130M YORUMU"}</div>
+                <div style={{ fontFamily: cinzel.style.fontFamily, fontSize: 14, color: C.primary, letterSpacing: 2 }}>{"HEKİM YORUMU"}</div>
                 {hekimVaka && (
                   <div style={{ fontSize: 12, color: C.secondary, marginTop: 2 }}>{hekimVaka.detailed_forms?.tam_ad} {'\u2014'} {hekimVaka.mizac}</div>
                 )}
@@ -397,7 +397,7 @@ export default function ArsivPage() {
               <button onClick={() => setHekimModal(false)} style={{ background: 'none', border: 'none', fontSize: 20, cursor: 'pointer', color: '#999' }}>{'\u2715'}</button>
             </div>
 
-            {/* HEK\u0130M SE\u00c7\u0130M KARTLARI */}
+            {/* HEKİM SEÇİM KARTLARI */}
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(min(160px, 100%), 1fr))', gap: 10, marginBottom: 16 }}>
               {HEKIM_PROFILLER.map(h => (
                 <button
@@ -422,7 +422,7 @@ export default function ArsivPage() {
             {/* YORUM ALANI */}
             {hekimYukleniyor && (
               <div style={{ textAlign: 'center' as const, padding: 24, color: C.secondary }}>
-                <div style={{ fontSize: 13, fontStyle: 'italic', marginBottom: 8 }}>{"Hekim yorumu haz\u0131rlan\u0131yor..."}</div>
+                <div style={{ fontSize: 13, fontStyle: 'italic', marginBottom: 8 }}>{"Hekim yorumu hazırlanıyor..."}</div>
                 <div style={{ width: 24, height: 24, border: `3px solid ${C.border}`, borderTopColor: C.primary, borderRadius: '50%', margin: '0 auto', animation: 'spin 1s linear infinite' }} />
                 <style>{`@keyframes spin { to { transform: rotate(360deg) } }`}</style>
               </div>

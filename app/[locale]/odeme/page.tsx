@@ -1,9 +1,8 @@
 'use client'
 
 import { Suspense, useEffect, useState } from 'react'
-import { useSearchParams, useRouter } from 'next/navigation'
+import { useSearchParams } from 'next/navigation'
 import { Cinzel, EB_Garamond } from 'next/font/google'
-import { createClient } from '@/lib/supabase'
 import Header from '../components/Header'
 import Footer from '../components/Footer'
 

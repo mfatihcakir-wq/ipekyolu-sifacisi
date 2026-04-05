@@ -67,7 +67,7 @@ export default function KarakterSonucPage() {
               {s.baskin_cephe_ar && <div style={{ fontSize: 18, color: C.gold, fontFamily: 'serif', direction: 'rtl' as const, opacity: 0.7 }}>{s.baskin_cephe_ar}</div>}
               <div style={{ fontSize: 12, color: 'rgba(255,255,255,0.5)', marginTop: 8 }}>
                 {s.ikincil_cephe && `Ikincil: ${CN[s.ikincil_cephe] || s.ikincil_cephe}`}
-                {s.aktif_askerler && ` \u00b7 ${Array.isArray(s.aktif_askerler) ? s.aktif_askerler.length : 0} aktif asker`}
+                {s.aktif_askerler && ` · ${Array.isArray(s.aktif_askerler) ? s.aktif_askerler.length : 0} aktif asker`}
               </div>
             </div>
             <button onClick={() => setAkd(!akd)} style={{ background: 'rgba(255,255,255,0.1)', border: '1px solid rgba(255,255,255,0.2)', borderRadius: 6, padding: '6px 14px', color: akd ? C.gold : 'rgba(255,255,255,0.6)', fontSize: 11, cursor: 'pointer' }}>
