@@ -460,7 +460,7 @@ export default function DashboardPage() {
             })}
           </nav>
           <div style={{ padding: '12px 16px', borderTop: `1px solid ${C.border}` }}>
-            <div style={{ fontSize: 12, color: C.secondary, marginBottom: 8 }}>{"Dr. M. Fatih Çakır"}</div>
+            <div style={{ fontSize: 12, color: C.secondary, marginBottom: 8 }}>{"M. Fatih Çakır"}</div>
             <button onClick={() => { supabase.auth.signOut(); router.push('/login') }}
               style={{ width: '100%', padding: '7px 12px', background: 'transparent', border: `1px solid ${C.border}`, borderRadius: 6, color: '#999', fontSize: 11, cursor: 'pointer' }}>
               {"Çıkış Yap"}
