@@ -5,6 +5,8 @@ import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { Cinzel, EB_Garamond } from 'next/font/google'
 import { createClient } from '@/lib/supabase'
+import Header from '../components/Header'
+import Footer from '../components/Footer'
 
 const cinzel = Cinzel({ subsets: ['latin'], weight: ['400', '500', '600'] })
 const garamond = EB_Garamond({ subsets: ['latin'], weight: ['400', '500'], style: ['normal', 'italic'] })
@@ -49,6 +51,7 @@ export default function LoginPage() {
       minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center',
       backgroundColor: '#F5EFE6', fontFamily: garamond.style.fontFamily,
     }}>
+      <Header />
       <div style={{
         width: '100%', maxWidth: 420, padding: 40,
         backgroundColor: '#fff', borderRadius: 20,
@@ -166,6 +169,7 @@ export default function LoginPage() {
           </Link>
         </p>
       </div>
+      <Footer />
     </div>
   )
 }

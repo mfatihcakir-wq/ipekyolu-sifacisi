@@ -1,6 +1,8 @@
 'use client'
 import { useRouter } from 'next/navigation'
 import { Cinzel, EB_Garamond } from 'next/font/google'
+import Header from '../components/Header'
+import Footer from '../components/Footer'
 
 const cinzel = Cinzel({ subsets: ['latin'], weight: ['400', '500', '600'] })
 const garamond = EB_Garamond({ subsets: ['latin'], weight: ['400', '500'], style: ['normal', 'italic'] })
@@ -29,13 +31,11 @@ const KAYNAKLAR = [
 ]
 
 export default function HakkimizdaPage() {
-  const router = useRouter()
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+const router = useRouter()
   return (
     <div style={{ background: C.cream, minHeight: '100vh', fontFamily: garamond.style.fontFamily }}>
-      <header style={{ background: C.primary, padding: '0 24px', height: 64, display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-        <div style={{ fontFamily: cinzel.style.fontFamily, color: C.gold, fontSize: 15, fontWeight: 600, letterSpacing: 3, cursor: 'pointer' }} onClick={() => router.push('/')}>{"İPEK YOLU ŞİFACISI"}</div>
-        <button onClick={() => router.push('/')} style={{ background: 'rgba(255,255,255,0.1)', border: '1px solid rgba(255,255,255,0.2)', color: 'white', borderRadius: 8, padding: '7px 14px', fontSize: 12, cursor: 'pointer' }}>Ana Sayfa</button>
-      </header>
+      <Header />
 
       <div style={{ maxWidth: 800, margin: '0 auto', padding: '48px 24px' }}>
         <h1 style={{ fontFamily: cinzel.style.fontFamily, fontSize: 32, color: C.primary, marginBottom: 16, fontWeight: 500 }}>{"Hakkımızda"}</h1>
@@ -101,9 +101,7 @@ export default function HakkimizdaPage() {
       </div>
 
       {/* FOOTER */}
-      <footer style={{ background: C.primary, padding: '32px 24px', marginTop: 48, textAlign: 'center' as const }}>
-        <div style={{ fontSize: 13, color: 'rgba(255,255,255,0.5)' }}>{"© 2026 İpek Yolu Şifacısı. Tüm hakları saklıdır."}</div>
-      </footer>
+      <Footer />
     </div>
   )
 }

@@ -4,6 +4,8 @@ import { useState, useRef, useCallback, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import { Cinzel, EB_Garamond } from 'next/font/google'
 import dynamic from 'next/dynamic'
+import Header from '../components/Header'
+import Footer from '../components/Footer'
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const PPGNabiz = dynamic(() => import('@/components/analiz/PPGNabiz'), { ssr: false })
@@ -340,7 +342,8 @@ export default function AnalizForm() {
 
   return (
     <div style={{ background: C.cream, minHeight: '100vh', fontFamily: garamond.style.fontFamily }}>
-      <header style={{ background: C.primary, padding: '0 clamp(12px, 3vw, 24px)', height: 64, display: 'flex', alignItems: 'center', justifyContent: 'space-between', position: 'sticky', top: 0, zIndex: 100 }}>
+      <Header />
+      {false && <header style={{ background: C.primary, padding: '0 clamp(12px, 3vw, 24px)', height: 64, display: 'flex', alignItems: 'center', justifyContent: 'space-between', position: 'sticky', top: 0, zIndex: 100 }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
           <svg width="36" height="36" viewBox="0 0 64 64" fill="none">
             <ellipse cx="32" cy="37" rx="13" ry="11" fill="none" stroke="#C9A84C" strokeWidth="1.5"/>
@@ -360,7 +363,7 @@ export default function AnalizForm() {
         <button onClick={() => router.push('/')} style={{ background: 'rgba(255,255,255,0.1)', border: '1px solid rgba(255,255,255,0.2)', color: 'white', borderRadius: 8, padding: '7px 16px', fontSize: 13, cursor: 'pointer' }}>
           {"Ana Sayfa"}
         </button>
-      </header>
+      </header>}
 
       {/* TOAST */}
       {toast && (
@@ -1322,6 +1325,7 @@ export default function AnalizForm() {
           .analiz-step-nav { display: none !important; }
         }
       `}</style>
+      <Footer />
     </div>
   )
 }

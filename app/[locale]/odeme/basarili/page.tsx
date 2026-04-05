@@ -4,6 +4,8 @@ import { useEffect, useState, Suspense } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { Cinzel, EB_Garamond } from 'next/font/google'
 import { createClient } from '@/lib/supabase'
+import Header from '../../components/Header'
+import Footer from '../../components/Footer'
 
 const cinzel = Cinzel({ subsets: ['latin'], weight: ['400', '500', '600'] })
 const garamond = EB_Garamond({ subsets: ['latin'], weight: ['400', '500'], style: ['normal', 'italic'] })
@@ -54,11 +56,7 @@ function BasariliIcerik() {
 
   return (
     <div style={{ background: C.cream, minHeight: '100vh', fontFamily: garamond.style.fontFamily }}>
-      <header style={{ background: C.primary, padding: '0 24px', height: 60, display: 'flex', alignItems: 'center' }}>
-        <div style={{ fontFamily: cinzel.style.fontFamily, color: C.gold, fontSize: 14, fontWeight: 600, letterSpacing: 3, cursor: 'pointer' }} onClick={() => router.push('/')}>
-          IPEK YOLU SIFACISI
-        </div>
-      </header>
+      <Header />
 
       <div style={{ maxWidth: 600, margin: '0 auto', padding: '60px 20px' }}>
         {loading ? (
@@ -142,6 +140,7 @@ function BasariliIcerik() {
           </>
         )}
       </div>
+      <Footer />
     </div>
   )
 }

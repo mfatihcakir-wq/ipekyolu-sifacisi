@@ -3,6 +3,8 @@ import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { createClient } from '@/lib/supabase'
 import { Cinzel, EB_Garamond } from 'next/font/google'
+import Header from '../components/Header'
+import Footer from '../components/Footer'
 
 const cinzel = Cinzel({ subsets: ['latin'], weight: ['400', '600'] })
 const garamond = EB_Garamond({ subsets: ['latin'], weight: ['400'], style: ['normal'] })
@@ -29,6 +31,7 @@ export default function SifreGuncellePage() {
 
   return (
     <div style={{ background: C.cream, minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: garamond.style.fontFamily }}>
+      <Header />
       <div style={{ background: 'white', borderRadius: 16, padding: '40px 36px', maxWidth: 380, width: '100%', border: `1px solid ${C.border}` }}>
         <div style={{ textAlign: 'center', marginBottom: 28 }}>
           <div style={{ fontFamily: cinzel.style.fontFamily, fontSize: 18, color: C.primary, marginBottom: 6 }}>{"Yeni Şifre"}</div>
@@ -46,6 +49,7 @@ export default function SifreGuncellePage() {
           {yukleniyor ? 'Guncelleniyor...' : 'SIFREYI GUNCELLE'}
         </button>
       </div>
+      <Footer />
     </div>
   )
 }

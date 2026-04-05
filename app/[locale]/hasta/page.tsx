@@ -137,59 +137,105 @@ export default function HastaPage() {
             Hosgeldiniz, {ad}
           </h1>
           <p style={{ fontSize: 14, color: C.secondary, fontStyle: 'italic' }}>
-            &ldquo;Saglik, bedenin fitrî mizacina donmesidir.&rdquo; — Ibn Sina
+            &ldquo;Saglik, bedenin fitri mizacina donmesidir.&rdquo; — Ibn Sina
           </p>
         </div>
 
         {/* 3 metrik kart */}
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(180px, 1fr))', gap: 12, marginBottom: 24 }}>
-          <div style={{ background: C.white, borderRadius: 12, border: `1px solid ${C.border}`, padding: '20px' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(180px, 1fr))', gap: 12, marginBottom: 20 }}>
+          <div style={{ background: C.white, borderRadius: 12, border: `1px solid ${C.border}`, padding: '20px', borderTop: `3px solid ${C.primary}` }}>
             <div style={{ fontSize: 10, color: C.secondary, letterSpacing: 1, marginBottom: 6 }}>TOPLAM ANALIZ</div>
-            <div style={{ fontSize: 28, fontWeight: 600, color: C.primary }}>{toplamAnaliz}</div>
+            <div style={{ fontSize: 28, fontWeight: 600, color: C.primary, fontFamily: cinzel.style.fontFamily }}>{toplamAnaliz}</div>
           </div>
-          <div style={{ background: C.white, borderRadius: 12, border: `1px solid ${C.border}`, padding: '20px' }}>
+          <div style={{ background: C.white, borderRadius: 12, border: `1px solid ${C.border}`, padding: '20px', borderTop: `3px solid ${C.gold}` }}>
             <div style={{ fontSize: 10, color: C.secondary, letterSpacing: 1, marginBottom: 6 }}>BU HAFTA</div>
-            <div style={{ fontSize: 28, fontWeight: 600, color: C.gold }}>{buHafta}</div>
+            <div style={{ fontSize: 28, fontWeight: 600, color: C.gold, fontFamily: cinzel.style.fontFamily }}>{buHafta}</div>
+            <div style={{ fontSize: 10, color: '#999', marginTop: 2 }}>/ 1 hak</div>
           </div>
-          <div style={{ background: C.white, borderRadius: 12, border: `1px solid ${C.border}`, padding: '20px' }}>
+          <div style={{ background: C.white, borderRadius: 12, border: `1px solid ${C.border}`, padding: '20px', borderTop: `3px solid ${abonelik ? '#2E7D32' : '#C62828'}` }}>
             <div style={{ fontSize: 10, color: C.secondary, letterSpacing: 1, marginBottom: 6 }}>UYELIK</div>
             <div style={{ fontSize: 16, fontWeight: 600, color: abonelik ? '#2E7D32' : '#C62828' }}>
-              {abonelik ? `Aktif — ${abonelik.plan}` : 'Pasif'}
+              {abonelik ? `Aktif` : 'Pasif'}
             </div>
-            {abonelik && (
-              <div style={{ fontSize: 11, color: C.secondary, marginTop: 4 }}>
-                Bitis: {new Date(abonelik.bitis).toLocaleDateString('tr-TR')}
-              </div>
-            )}
+            {abonelik && <div style={{ fontSize: 11, color: C.secondary, marginTop: 2 }}>{abonelik.plan} · {new Date(abonelik.bitis).toLocaleDateString('tr-TR')}</div>}
           </div>
         </div>
 
-        {/* Son analizler */}
+        {/* Haftalik limit cubugu */}
+        {abonelik && (
+          <div style={{ background: C.white, borderRadius: 10, border: `1px solid ${C.border}`, padding: '14px 18px', marginBottom: 20 }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 6 }}>
+              <span style={{ fontSize: 11, color: C.secondary }}>Haftalik Analiz Hakki</span>
+              <span style={{ fontSize: 11, color: C.dark, fontWeight: 600 }}>{buHafta} / 1</span>
+            </div>
+            <div style={{ height: 6, background: C.surface, borderRadius: 3, overflow: 'hidden' }}>
+              <div style={{ height: '100%', width: `${Math.min(buHafta * 100, 100)}%`, background: buHafta >= 1 ? '#C62828' : C.primary, borderRadius: 3, transition: 'width .3s' }} />
+            </div>
+            {buHafta >= 1 && <div style={{ fontSize: 10, color: '#C62828', marginTop: 4 }}>Bu haftalik hakkiniz kullanildi. Sonraki hafta yenilenir.</div>}
+          </div>
+        )}
+
+        {/* Hizli erisim butonlari */}
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(140px, 1fr))', gap: 10, marginBottom: 24 }}>
+          {[
+            { label: 'Yeni Analiz', href: '/analiz', bg: C.primary, color: C.gold },
+            { label: 'Cilt Analizi', href: '/hasta/cilt', bg: C.gold, color: C.primary },
+            { label: 'Bitkiler', href: '/bitkiler', bg: C.white, color: C.primary },
+            { label: 'Takip', href: '/hasta/takip', bg: C.white, color: C.primary },
+          ].map(b => (
+            <button key={b.label} onClick={() => router.push(b.href)}
+              style={{ padding: '14px 12px', borderRadius: 10, border: b.bg === C.white ? `1px solid ${C.border}` : 'none', background: b.bg, color: b.color, fontFamily: cinzel.style.fontFamily, fontSize: 11, fontWeight: 600, cursor: 'pointer', letterSpacing: 1 }}>
+              {b.label}
+            </button>
+          ))}
+        </div>
+
+        {/* Son analiz detay karti */}
+        {analizler.length > 0 && analizler[0].durum === 'tamamlandi' && (
+          <div style={{ background: C.white, borderRadius: 14, border: `1px solid ${C.border}`, padding: '20px 24px', marginBottom: 20 }}>
+            <div style={{ fontFamily: cinzel.style.fontFamily, fontSize: 11, color: C.gold, letterSpacing: 2, marginBottom: 12 }}>SON ANALIZ SONUCU</div>
+            <div style={{ fontSize: 14, color: C.dark, fontWeight: 500, marginBottom: 8 }}>
+              {analizler[0].tum_form_verisi?.ad_soyad || 'Analiz'} — {new Date(analizler[0].created_at).toLocaleDateString('tr-TR')}
+            </div>
+            <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' as const, marginBottom: 8 }}>
+              {analizler[0].tum_form_verisi?.symptoms?.split(',').slice(0, 3).map((s: string, i: number) => (
+                <span key={i} style={{ fontSize: 10, background: C.surface, padding: '3px 8px', borderRadius: 10, color: C.secondary }}>{s.trim()}</span>
+              ))}
+            </div>
+            <div style={{ fontSize: 12, color: C.secondary, fontStyle: 'italic' }}>
+              Detay icin takip panelini ziyaret edin.
+            </div>
+          </div>
+        )}
+
+        {/* Son analizler listesi */}
         <div style={{ marginBottom: 24 }}>
-          <div style={{ fontFamily: cinzel.style.fontFamily, fontSize: 12, color: C.primary, letterSpacing: 2, marginBottom: 12 }}>SON ANALIZLER</div>
+          <div style={{ fontFamily: cinzel.style.fontFamily, fontSize: 12, color: C.primary, letterSpacing: 2, marginBottom: 12 }}>ANALIZLERIM</div>
           {analizler.length === 0 ? (
-            <div style={{ background: C.white, borderRadius: 12, border: `1px solid ${C.border}`, padding: '32px', textAlign: 'center' }}>
-              <p style={{ fontSize: 14, color: C.secondary }}>Henuz analiz yok.</p>
+            <div style={{ background: C.white, borderRadius: 12, border: `1px solid ${C.border}`, padding: '40px', textAlign: 'center' }}>
+              <div style={{ fontSize: 40, marginBottom: 12, opacity: 0.3 }}>{'\u2697'}</div>
+              <p style={{ fontSize: 15, color: C.dark, marginBottom: 6 }}>Henuz analiz yok</p>
+              <p style={{ fontSize: 13, color: C.secondary, marginBottom: 16 }}>Ilk mizac analizinizi yaparak klasik Islam tibbi yolculugunuza baslayin.</p>
               <button onClick={() => router.push('/analiz')}
-                style={{ marginTop: 12, padding: '10px 24px', background: C.primary, color: C.gold, border: 'none', borderRadius: 8, fontFamily: cinzel.style.fontFamily, fontSize: 12, cursor: 'pointer', letterSpacing: 1 }}>
+                style={{ padding: '12px 28px', background: C.primary, color: C.gold, border: 'none', borderRadius: 10, fontFamily: cinzel.style.fontFamily, fontSize: 12, cursor: 'pointer', letterSpacing: 1, fontWeight: 600 }}>
                 Ilk Analizini Yap
               </button>
             </div>
           ) : (
-            <div style={{ display: 'grid', gap: 10 }}>
+            <div style={{ display: 'grid', gap: 8 }}>
               {analizler.map(a => {
                 const form = a.tum_form_verisi || {}
                 const tarih = new Date(a.created_at).toLocaleDateString('tr-TR', { day: 'numeric', month: 'short', year: 'numeric' })
                 return (
-                  <div key={a.id} style={{ background: C.white, borderRadius: 12, border: `1px solid ${C.border}`, padding: '16px 20px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap' as const, gap: 8 }}>
+                  <div key={a.id} style={{ background: C.white, borderRadius: 12, border: `1px solid ${C.border}`, padding: '14px 18px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap' as const, gap: 8 }}>
                     <div>
                       <div style={{ fontSize: 14, color: C.dark, fontWeight: 500 }}>{form.ad_soyad || 'Analiz'}</div>
                       <div style={{ fontSize: 12, color: C.secondary, marginTop: 2 }}>
-                        {tarih} · {form.symptoms?.slice(0, 60) || 'Sikayet belirtilmemis'}{form.symptoms?.length > 60 ? '...' : ''}
+                        {tarih} · {form.symptoms?.slice(0, 50) || 'Sikayet belirtilmemis'}{form.symptoms?.length > 50 ? '...' : ''}
                       </div>
                     </div>
                     <div style={{
-                      padding: '4px 12px', borderRadius: 20, fontSize: 11, fontWeight: 600,
+                      padding: '4px 12px', borderRadius: 20, fontSize: 10, fontWeight: 600,
                       background: a.durum === 'tamamlandi' ? '#E8F5E9' : a.durum === 'bekliyor' ? '#FFF8E7' : C.surface,
                       color: a.durum === 'tamamlandi' ? '#2E7D32' : a.durum === 'bekliyor' ? '#E65100' : C.secondary,
                     }}>
@@ -202,16 +248,27 @@ export default function HastaPage() {
           )}
         </div>
 
-        {/* Uyelik durumu */}
+        {/* Uyelik durumu — pasif ise */}
         {!abonelik && (
-          <div style={{ background: C.white, borderRadius: 14, border: `1px solid ${C.border}`, padding: '24px', textAlign: 'center' }}>
-            <div style={{ fontSize: 14, color: C.secondary, marginBottom: 12 }}>Uyeliginiz aktif degil. Analiz sonuclarinizi gormek icin uye olun.</div>
+          <div style={{ background: `linear-gradient(135deg, ${C.primary}, #0F2D1C)`, borderRadius: 16, padding: '28px', textAlign: 'center' }}>
+            <div style={{ fontFamily: cinzel.style.fontFamily, fontSize: 16, color: C.gold, marginBottom: 8, letterSpacing: 1 }}>Uyeliginiz Aktif Degil</div>
+            <p style={{ fontSize: 13, color: 'rgba(255,255,255,0.7)', marginBottom: 20, lineHeight: 1.6 }}>
+              Analiz sonuclarinizi gormek, bitki protokolu almak ve danismaninizla iletisim kurmak icin uye olun.
+            </p>
             <button onClick={() => router.push('/odeme')}
-              style={{ padding: '12px 28px', background: C.gold, border: 'none', borderRadius: 8, fontFamily: cinzel.style.fontFamily, fontSize: 13, fontWeight: 600, color: C.primary, cursor: 'pointer', letterSpacing: 1 }}>
-              Uye Ol
+              style={{ padding: '14px 32px', background: C.gold, border: 'none', borderRadius: 10, fontFamily: cinzel.style.fontFamily, fontSize: 14, fontWeight: 600, color: C.primary, cursor: 'pointer', letterSpacing: 1 }}>
+              Uye Ol — 590{'\u20BA'}/ay
             </button>
           </div>
         )}
+
+        {/* Hikmet */}
+        <div style={{ marginTop: 24, background: C.surface, border: `1px solid ${C.border}`, borderRadius: 12, padding: '16px 20px', textAlign: 'center' }}>
+          <p style={{ fontSize: 13, color: C.secondary, fontStyle: 'italic', lineHeight: 1.6, margin: 0 }}>
+            &ldquo;Beden, ancak mizaci bilindiginde tedavi edilebilir.&rdquo;
+          </p>
+          <p style={{ fontSize: 10, color: '#999', marginTop: 4, marginBottom: 0 }}>el-Kanun fi&apos;t-Tib, Kitab 1</p>
+        </div>
       </main>
 
       <style>{`

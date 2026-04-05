@@ -4,6 +4,8 @@ import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { Cinzel, EB_Garamond } from 'next/font/google'
 import { createClient } from '@/lib/supabase'
+import Header from '../components/Header'
+import Footer from '../components/Footer'
 
 const cinzel = Cinzel({ subsets: ['latin'], weight: ['400', '500', '600'] })
 const garamond = EB_Garamond({ subsets: ['latin'], weight: ['400', '500'], style: ['normal', 'italic'] })
@@ -103,11 +105,7 @@ export default function SonucPage() {
 
   return (
     <div style={{ background: C.cream, minHeight: '100vh', fontFamily: garamond.style.fontFamily }}>
-      <header style={{ background: C.primary, padding: '0 24px', height: 64, display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
-          <div style={{ fontFamily: cinzel.style.fontFamily, color: C.gold, fontSize: 15, fontWeight: 600, letterSpacing: 3 }}>IPEK YOLU SIFACISI</div>
-        </div>
-      </header>
+      <Header />
 
       <div style={{ maxWidth: 600, margin: '0 auto', padding: '60px 20px' }}>
         {/* YUKLENIYOR */}
@@ -260,6 +258,7 @@ export default function SonucPage() {
           </div>
         )}
       </div>
+      <Footer />
     </div>
   )
 }

@@ -4,6 +4,8 @@ import { Suspense, useEffect, useState } from 'react'
 import { useSearchParams, useRouter } from 'next/navigation'
 import { Cinzel, EB_Garamond } from 'next/font/google'
 import { createClient } from '@/lib/supabase'
+import Header from '../components/Header'
+import Footer from '../components/Footer'
 
 const cinzel = Cinzel({ subsets: ['latin'], weight: ['400', '500', '600'] })
 const garamond = EB_Garamond({ subsets: ['latin'], weight: ['400', '500'], style: ['normal', 'italic'] })
@@ -93,12 +95,7 @@ function OdemeIcerik() {
 
   return (
     <div style={{ background: C.cream, minHeight: '100vh', fontFamily: garamond.style.fontFamily }}>
-      <header style={{ background: C.primary, padding: '0 24px', height: 60, display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-        <div style={{ fontFamily: cinzel.style.fontFamily, color: C.gold, fontSize: 14, fontWeight: 600, letterSpacing: 3, cursor: 'pointer' }} onClick={() => router.push('/')}>
-          IPEK YOLU SIFACISI
-        </div>
-        <div style={{ fontSize: 11, color: 'rgba(255,255,255,.5)' }}>Guvenli Odeme · SSL</div>
-      </header>
+      <Header />
 
       {/* TOAST */}
       {toast && (
@@ -244,6 +241,7 @@ function OdemeIcerik() {
           256-bit SSL sifreleme · iyzico guvencesi · KVKK uyumlu
         </div>
       </div>
+      <Footer />
     </div>
   )
 }
