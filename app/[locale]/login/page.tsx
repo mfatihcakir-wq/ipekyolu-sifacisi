@@ -49,7 +49,7 @@ export default function LoginPage() {
   return (
     <div style={{
       minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center',
-      backgroundColor: '#F5EFE6', fontFamily: garamond.style.fontFamily,
+      backgroundColor: '#FAF7F2', fontFamily: garamond.style.fontFamily,
     }}>
       <Header />
       <div style={{
@@ -76,12 +76,12 @@ export default function LoginPage() {
           }}>
             İpek Yolu Şifacısı
           </h1>
-          <p style={{ color: '#5C4A2A', fontSize: 14, margin: 0 }}>Hesabınıza giriş yapın</p>
+          <p style={{ color: '#6B5744', fontSize: 14, margin: 0 }}>Hesabınıza giriş yapın</p>
         </div>
 
         <form onSubmit={handleLogin}>
           <div style={{ marginBottom: 16 }}>
-            <label style={{ display: 'block', fontSize: 13, fontWeight: 500, color: '#5C4A2A', marginBottom: 6 }}>E-posta</label>
+            <label style={{ display: 'block', fontSize: 13, fontWeight: 500, color: '#6B5744', marginBottom: 6 }}>E-posta</label>
             <input
               type="email" value={email} onChange={(e) => setEmail(e.target.value)} required
               placeholder="ornek@email.com"
@@ -95,7 +95,7 @@ export default function LoginPage() {
           </div>
 
           <div style={{ marginBottom: 20 }}>
-            <label style={{ display: 'block', fontSize: 13, fontWeight: 500, color: '#5C4A2A', marginBottom: 6 }}>Şifre</label>
+            <label style={{ display: 'block', fontSize: 13, fontWeight: 500, color: '#6B5744', marginBottom: 6 }}>Şifre</label>
             <input
               type="password" value={password} onChange={(e) => setPassword(e.target.value)} required
               placeholder="••••••••"
@@ -132,17 +132,17 @@ export default function LoginPage() {
         {!sifreSifirla ? (
           <div style={{ textAlign: 'center', marginTop: 12 }}>
             <button onClick={() => setSifreSifirla(true)}
-              style={{ background: 'none', border: 'none', color: '#5C4A2A', fontSize: 12, cursor: 'pointer', textDecoration: 'underline' }}>
+              style={{ background: 'none', border: 'none', color: '#6B5744', fontSize: 12, cursor: 'pointer', textDecoration: 'underline' }}>
               {"Şifremi Unuttum"}
             </button>
           </div>
         ) : (
-          <div style={{ marginTop: 16, padding: '16px', background: '#FAF7F2', borderRadius: 10, border: '1px solid #E0D5C5' }}>
+          <div style={{ marginTop: 16, padding: '16px', background: '#FAF7F2', borderRadius: 10, border: '1px solid #E8DFD4' }}>
             <div style={{ fontSize: 13, color: '#1B4332', marginBottom: 10, fontWeight: 600 }}>{"Şifre Sıfırlama"}</div>
             <input
               type="email" value={sifirlaEmail} onChange={e => setSifirlaEmail(e.target.value)}
               placeholder="E-posta adresiniz"
-              style={{ width: '100%', padding: '10px 12px', border: '1px solid #E0D5C5', borderRadius: 8, fontSize: 13, marginBottom: 8, boxSizing: 'border-box' as const }}
+              style={{ width: '100%', padding: '10px 12px', border: '1px solid #E8DFD4', borderRadius: 8, fontSize: 13, marginBottom: 8, boxSizing: 'border-box' as const }}
             />
             {sifirlaMsg && (
               <div style={{ fontSize: 12, color: sifirlaMsg.startsWith('Hata') ? '#C62828' : '#2E7D32', marginBottom: 8 }}>
@@ -155,14 +155,14 @@ export default function LoginPage() {
                 {"Gönder"}
               </button>
               <button onClick={() => { setSifreSifirla(false); setSifirlaMsg('') }}
-                style={{ flex: 1, padding: '10px', background: 'transparent', border: '1px solid #E0D5C5', borderRadius: 8, color: '#5C4A2A', fontSize: 12, cursor: 'pointer' }}>
+                style={{ flex: 1, padding: '10px', background: 'transparent', border: '1px solid #E8DFD4', borderRadius: 8, color: '#6B5744', fontSize: 12, cursor: 'pointer' }}>
                 {"İptal"}
               </button>
             </div>
           </div>
         )}
 
-        <p style={{ textAlign: 'center', fontSize: 14, color: '#5C4A2A', marginTop: 24 }}>
+        <p style={{ textAlign: 'center', fontSize: 14, color: '#6B5744', marginTop: 24 }}>
           Hesabınız yok mu?{' '}
           <Link href="/register" style={{ color: '#1B4332', fontWeight: 600, textDecoration: 'underline' }}>
             Kayıt Ol

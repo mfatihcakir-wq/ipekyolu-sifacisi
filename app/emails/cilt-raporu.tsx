@@ -8,9 +8,9 @@ export function ciltRaporuHtml(data: {
   const { hasta_adi, kayit_no, sonuc } = data
   const primary = '#1B4332'
   const gold = '#8B6914'
-  const cream = '#F5EFE6'
+  const cream = '#FAF7F2'
   const dark = '#1C1C1C'
-  const border = '#E0D5C5'
+  const border = '#E8DFD4'
   const surface = '#FAF7F2'
 
   const urunlerHtml = (sonuc.urunler || []).map((u: {

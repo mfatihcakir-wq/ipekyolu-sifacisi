@@ -12,8 +12,8 @@ const naskh = Noto_Naskh_Arabic({ subsets: ['arabic'], weight: ['400', '500'] })
 
 const C = {
   primary: '#1B4332', primaryDark: '#0F2D1C', gold: '#8B6914',
-  cream: '#F5EFE6', dark: '#1C1C1C', secondary: '#5C4A2A',
-  border: '#E0D5C5', white: '#FFFFFF', surface: '#FAF7F2', muted: '#9C8B72',
+  cream: '#FAF7F2', dark: '#1C1C1C', secondary: '#6B5744',
+  border: '#E8DFD4', white: '#FFFFFF', surface: '#FAF7F2', muted: '#8A7968',
 }
 
 function AlembikSVG({ size = 160 }: { size?: number }) {
@@ -104,13 +104,13 @@ export default function LandingClient() {
         {/* Sag: Hero Panel */}
         <div style={{ position: 'relative' as const, width: 300, height: 300, margin: '0 auto' }} className="hero-panel">
           {/* Halkalar */}
-          <div style={{ position: 'absolute' as const, inset: 0, borderRadius: '50%', border: '1px solid rgba(201,168,76,0.12)' }} />
-          <div style={{ position: 'absolute' as const, top: 35, left: 35, right: 35, bottom: 35, borderRadius: '50%', border: '1px solid rgba(201,168,76,0.09)' }} />
-          <div style={{ position: 'absolute' as const, top: 70, left: 70, right: 70, bottom: 70, borderRadius: '50%', border: '1px solid rgba(201,168,76,0.15)' }} />
+          <div style={{ position: 'absolute' as const, inset: 0, borderRadius: '50%', border: '1px solid rgba(184,146,42,0.12)' }} />
+          <div style={{ position: 'absolute' as const, top: 35, left: 35, right: 35, bottom: 35, borderRadius: '50%', border: '1px solid rgba(184,146,42,0.09)' }} />
+          <div style={{ position: 'absolute' as const, top: 70, left: 70, right: 70, bottom: 70, borderRadius: '50%', border: '1px solid rgba(184,146,42,0.15)' }} />
           {/* Merkez */}
           <div style={{ position: 'absolute' as const, top: '50%', left: '50%', transform: 'translate(-50%, -50%)', textAlign: 'center' as const }}>
             <AlembikSVG size={80} />
-            <div style={{ fontFamily: cinzel.style.fontFamily, fontSize: 8, color: 'rgba(201,168,76,0.35)', letterSpacing: 3, marginTop: 8, whiteSpace: 'nowrap' as const }}>
+            <div style={{ fontFamily: cinzel.style.fontFamily, fontSize: 8, color: 'rgba(184,146,42,0.35)', letterSpacing: 3, marginTop: 8, whiteSpace: 'nowrap' as const }}>
               {"Dort Hilt . Dort Mevsim . Dort Mizac"}
             </div>
           </div>
@@ -146,7 +146,7 @@ export default function LandingClient() {
         <div style={{ maxWidth: 1200, margin: '0 auto' }}>
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 14 }}>
             <div style={{ width: 32, height: 1, background: C.gold, opacity: 0.3 }} />
-            <span style={{ fontFamily: cinzel.style.fontFamily, fontSize: 9, color: 'rgba(201,168,76,0.7)', letterSpacing: 3, textTransform: 'uppercase' as const }}>{"Klasik Islam Tibbi"}</span>
+            <span style={{ fontFamily: cinzel.style.fontFamily, fontSize: 9, color: 'rgba(184,146,42,0.7)', letterSpacing: 3, textTransform: 'uppercase' as const }}>{"Klasik Islam Tibbi"}</span>
             <div style={{ width: 32, height: 1, background: C.gold, opacity: 0.3 }} />
           </div>
           <p style={{ fontStyle: 'italic', fontSize: 22, color: 'rgba(255,255,255,0.75)', lineHeight: 1.9, maxWidth: 680, margin: '20px auto 0 auto' }}>
@@ -154,7 +154,7 @@ export default function LandingClient() {
           </p>
           <div style={{ marginTop: 32, display: 'flex', justifyContent: 'center', gap: 40, flexWrap: 'wrap' as const }}>
             {["el-Kanun fi't-Tib, Ibn Sina", "el-Havi fi't-Tib, er-Razi", "Tahbizu'l-Mathun, Tokadi"].map(k => (
-              <span key={k} style={{ fontFamily: cinzel.style.fontFamily, fontSize: 9, color: 'rgba(201,168,76,0.55)', letterSpacing: 2 }}>{k}</span>
+              <span key={k} style={{ fontFamily: cinzel.style.fontFamily, fontSize: 9, color: 'rgba(184,146,42,0.55)', letterSpacing: 2 }}>{k}</span>
             ))}
           </div>
         </div>
@@ -262,12 +262,12 @@ export default function LandingClient() {
       <section style={{ background: C.white, padding: '80px 56px' }} className="danisman-section">
         <div style={{ maxWidth: 1200, margin: '0 auto', display: 'grid', gridTemplateColumns: '320px 1fr', gap: 72, alignItems: 'center' }} className="danisman-grid">
           {/* Sol: Foto */}
-          <div style={{ position: 'relative' as const, width: 320, height: 380, borderRadius: 24, overflow: 'hidden', border: '1.5px solid rgba(201,168,76,0.18)' }}>
+          <div style={{ position: 'relative' as const, width: 320, height: 380, borderRadius: 24, overflow: 'hidden', border: '1.5px solid rgba(184,146,42,0.18)' }}>
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img src="/danisan.jpg" alt="M. Fatih Cakir" style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center top', filter: 'sepia(15%) contrast(1.05) brightness(0.96)' }}
               onError={(e) => { (e.target as HTMLImageElement).style.display = 'none' }} />
             <div style={{ position: 'absolute' as const, inset: 0, background: 'linear-gradient(to bottom, transparent 50%, rgba(27,67,50,0.55) 100%)' }} />
-            <div style={{ position: 'absolute' as const, bottom: 20, left: 20, background: 'rgba(201,168,76,0.92)', fontFamily: cinzel.style.fontFamily, fontSize: 10, fontWeight: 700, color: C.primary, padding: '6px 14px', borderRadius: 8 }}>
+            <div style={{ position: 'absolute' as const, bottom: 20, left: 20, background: 'rgba(184,146,42,0.92)', fontFamily: cinzel.style.fontFamily, fontSize: 10, fontWeight: 700, color: C.primary, padding: '6px 14px', borderRadius: 8 }}>
               {"M. FATIH CAKIR"}
             </div>
           </div>
@@ -302,7 +302,7 @@ export default function LandingClient() {
             {/* Tag chipler */}
             <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' as const, marginBottom: 24 }}>
               {['KLASIK ISLAM TIBBI', 'TIP TARIHI', 'ARAPCA, FARSCA, OSMANLICA'].map(t => (
-                <span key={t} style={{ fontFamily: cinzel.style.fontFamily, fontSize: 9, color: C.gold, border: `1px solid rgba(201,168,76,0.25)`, padding: '5px 12px', borderRadius: 8, letterSpacing: 1.5 }}>{t}</span>
+                <span key={t} style={{ fontFamily: cinzel.style.fontFamily, fontSize: 9, color: C.gold, border: `1px solid rgba(184,146,42,0.25)`, padding: '5px 12px', borderRadius: 8, letterSpacing: 1.5 }}>{t}</span>
               ))}
             </div>
 
@@ -424,7 +424,7 @@ export default function LandingClient() {
               <AlembikSVG size={34} />
               <div>
                 <div style={{ fontFamily: cinzel.style.fontFamily, fontSize: 13, fontWeight: 600, color: C.gold, letterSpacing: 3 }}>{"IPEK YOLU SIFACISI"}</div>
-                <div style={{ fontFamily: naskh.style.fontFamily, fontSize: 11, color: 'rgba(201,168,76,0.4)' }}>{"طريق الحرير الشافي"}</div>
+                <div style={{ fontFamily: naskh.style.fontFamily, fontSize: 11, color: 'rgba(184,146,42,0.4)' }}>{"طريق الحرير الشافي"}</div>
               </div>
             </div>
             <p style={{ fontSize: 14, color: 'rgba(255,255,255,0.38)', fontStyle: 'italic', lineHeight: 1.7, marginBottom: 20 }}>

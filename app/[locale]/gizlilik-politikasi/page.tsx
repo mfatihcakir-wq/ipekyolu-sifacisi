@@ -7,7 +7,7 @@ import Footer from '../components/Footer'
 const cinzel = Cinzel({ subsets: ['latin', 'latin-ext'], weight: ['400', '500', '600'] })
 const garamond = EB_Garamond({ subsets: ['latin', 'latin-ext'], weight: ['400', '500'], style: ['normal', 'italic'] })
 
-const C = { primary: '#1B4332', gold: '#8B6914', cream: '#F5EFE6', secondary: '#5C4A2A', border: '#E0D5C5', white: '#FFFFFF' }
+const C = { primary: '#1B4332', gold: '#8B6914', cream: '#FAF7F2', secondary: '#6B5744', border: '#E8DFD4', white: '#FFFFFF' }
 
 const BOLUMLER = [
   { baslik: '1. Genel Bilgi', icerik: 'Bu gizlilik politikasi, ipekyolusicifacisi.com adresinde sunulan hizmetlerin kullanicilarina ait kisisel verilerin nasil toplandigi, islendigi ve korundugunun aciklanmasi amaciyla hazirlanmistir.' },

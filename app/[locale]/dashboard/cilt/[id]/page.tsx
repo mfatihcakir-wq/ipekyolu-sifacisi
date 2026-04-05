@@ -9,8 +9,8 @@ const cinzel = Cinzel({ subsets: ['latin', 'latin-ext'], weight: ['400', '500', 
 const garamond = EB_Garamond({ subsets: ['latin', 'latin-ext'], weight: ['400', '500'], style: ['normal', 'italic'] })
 
 const C = {
-  primary: '#1B4332', gold: '#8B6914', cream: '#F5EFE6',
-  dark: '#1C1C1C', secondary: '#5C4A2A', border: '#E0D5C5',
+  primary: '#1B4332', gold: '#8B6914', cream: '#FAF7F2',
+  dark: '#1C1C1C', secondary: '#6B5744', border: '#E8DFD4',
   white: '#FFFFFF', surface: '#FAF7F2',
 }
 
@@ -18,7 +18,7 @@ const C = {
 type FormData = Record<string, any>
 
 const durumBanner = (d: string) => {
-  if (d === 'email_gonderildi') return { bg: '#1B4332', color: '#F5EFE6', text: 'Rapor Gonderildi' }
+  if (d === 'email_gonderildi') return { bg: '#1B4332', color: '#FAF7F2', text: 'Rapor Gonderildi' }
   if (d === 'onaylandi') return { bg: '#E8F5E9', color: '#2E7D32', text: 'Onaylandi' }
   if (d === 'analiz_edildi') return { bg: '#E3F2FD', color: '#1565C0', text: 'Analiz Edildi' }
   if (d === 'reddedildi') return { bg: '#fef2f2', color: '#dc2626', text: 'Reddedildi' }

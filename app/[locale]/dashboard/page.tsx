@@ -10,8 +10,8 @@ const cinzel = Cinzel({ subsets: ['latin', 'latin-ext'], weight: ['400', '500', 
 const garamond = EB_Garamond({ subsets: ['latin', 'latin-ext'], weight: ['400', '500'], style: ['normal', 'italic'] })
 
 const C = {
-  primary: '#1B4332', gold: '#8B6914', cream: '#F5EFE6',
-  dark: '#1C1C1C', secondary: '#5C4A2A', border: '#E0D5C5',
+  primary: '#1B4332', gold: '#8B6914', cream: '#FAF7F2',
+  dark: '#1C1C1C', secondary: '#6B5744', border: '#E8DFD4',
   white: '#FFFFFF', surface: '#FAF7F2',
 }
 
@@ -262,9 +262,9 @@ export default function DashboardPage() {
   .logo-ar { font-size: 14px; color: #8B6914; }
   .meta { text-align: right; font-size: 11px; color: #999; line-height: 1.8; }
   .hasta-baslik { background: #1B4332; color: #8B6914; font-family: 'Cinzel', serif; font-size: 22px; font-weight: 600; padding: 16px 24px; border-radius: 8px; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 2px; }
-  .hasta-alt { font-size: 12px; color: #5C4A2A; margin-bottom: 24px; }
+  .hasta-alt { font-size: 12px; color: #6B5744; margin-bottom: 24px; }
   .section { margin-bottom: 20px; page-break-inside: avoid; }
-  .section-title { font-family: 'Cinzel', serif; font-size: 11px; font-weight: 600; color: #8B6914; letter-spacing: 3px; text-transform: uppercase; margin-bottom: 10px; padding-bottom: 4px; border-bottom: 1px solid #E0D5C5; }
+  .section-title { font-family: 'Cinzel', serif; font-size: 11px; font-weight: 600; color: #8B6914; letter-spacing: 3px; text-transform: uppercase; margin-bottom: 10px; padding-bottom: 4px; border-bottom: 1px solid #E8DFD4; }
   .mizac-kart { background: #1B4332; color: white; border-radius: 8px; padding: 16px 20px; margin-bottom: 16px; }
   .mizac-buyuk { font-family: 'Cinzel', serif; font-size: 18px; color: #8B6914; margin-bottom: 12px; }
   .hilt-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 16px; }
@@ -278,8 +278,8 @@ export default function DashboardPage() {
   .bitki-kart { background: #FAF7F2; border-radius: 6px; padding: 12px; margin-bottom: 8px; border-left: 3px solid #1B4332; }
   .bitki-ad { font-family: 'Cinzel', serif; font-size: 14px; font-weight: 600; color: #1B4332; }
   .bitki-ar { font-size: 13px; color: #8B6914; margin-bottom: 6px; }
-  .bitki-detay { font-size: 11px; color: #5C4A2A; line-height: 1.6; }
-  .bitki-kaynak { font-size: 10px; color: #999; font-style: italic; margin-top: 4px; border-top: 1px solid #E0D5C5; padding-top: 4px; }
+  .bitki-detay { font-size: 11px; color: #6B5744; line-height: 1.6; }
+  .bitki-kaynak { font-size: 10px; color: #999; font-style: italic; margin-top: 4px; border-top: 1px solid #E8DFD4; padding-top: 4px; }
   .rutin-blok { border-radius: 6px; padding: 10px 14px; margin-bottom: 8px; }
   .sabah-blok { background: #FFF8E7; }
   .ogle-blok { background: #F0FDF4; }
@@ -299,8 +299,8 @@ export default function DashboardPage() {
   .hikmet-kaynak { font-size: 10px; color: rgba(255,255,255,0.4); margin-top: 8px; }
   .kaynaklar { display: flex; flex-wrap: wrap; gap: 6px; }
   .kaynak-pill { font-size: 10px; background: #E8F5E9; color: #1B4332; padding: 3px 10px; border-radius: 20px; font-style: italic; }
-  .footer { margin-top: 32px; padding-top: 16px; border-top: 1px solid #E0D5C5; text-align: center; font-size: 10px; color: #999; line-height: 1.8; }
-  .uyari { background: #FFF8E7; border: 1px solid #8B6914; border-radius: 6px; padding: 10px 14px; font-size: 11px; color: #5C4A2A; margin-bottom: 16px; }
+  .footer { margin-top: 32px; padding-top: 16px; border-top: 1px solid #E8DFD4; text-align: center; font-size: 10px; color: #999; line-height: 1.8; }
+  .uyari { background: #FFF8E7; border: 1px solid #8B6914; border-radius: 6px; padding: 10px 14px; font-size: 11px; color: #6B5744; margin-bottom: 16px; }
   .label-sm { font-size: 9px; color: #999; text-transform: uppercase; letter-spacing: 1px; }
   .val-sm { font-size: 12px; font-weight: 600; color: #1C1C1C; }
   .info-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-bottom: 16px; }
@@ -342,9 +342,9 @@ export default function DashboardPage() {
     <strong>Sikayetler:</strong> ${safeStr(f.symptoms)}
   </div>
 
-  ${analiz.mizac ? `<div class="section"><div class="mizac-kart"><div class="label-sm" style="color:rgba(255,255,255,.4);letter-spacing:2px;">TESPIT EDILEN MIZAC</div><div class="mizac-buyuk">${safeStr(analiz.mizac)}</div>${analiz.fitri_hali ? `<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;"><div style="background:rgba(255,255,255,.08);border-radius:6px;padding:8px;"><div class="label-sm" style="color:rgba(255,255,255,.4);">FITRI</div><div style="font-size:12px;color:white;margin-top:2px;">${safeStr(analiz.fitri_hali.fitri_mizac)}</div></div><div style="background:rgba(255,255,255,.08);border-radius:6px;padding:8px;"><div class="label-sm" style="color:rgba(255,255,255,.4);">HALI</div><div style="font-size:12px;color:white;margin-top:2px;">${safeStr(analiz.fitri_hali.hali_mizac)}</div></div></div>${analiz.fitri_hali.tedavi_hedefi ? `<div style="background:rgba(201,168,76,.15);border-radius:6px;padding:8px;margin-top:8px;"><div class="label-sm" style="color:#8B6914;">TEDAVI HEDEFI</div><div style="font-size:12px;color:rgba(255,255,255,.85);margin-top:2px;">${safeStr(analiz.fitri_hali.tedavi_hedefi)}</div></div>` : ''}` : ''}</div></div>` : ''}
+  ${analiz.mizac ? `<div class="section"><div class="mizac-kart"><div class="label-sm" style="color:rgba(255,255,255,.4);letter-spacing:2px;">TESPIT EDILEN MIZAC</div><div class="mizac-buyuk">${safeStr(analiz.mizac)}</div>${analiz.fitri_hali ? `<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;"><div style="background:rgba(255,255,255,.08);border-radius:6px;padding:8px;"><div class="label-sm" style="color:rgba(255,255,255,.4);">FITRI</div><div style="font-size:12px;color:white;margin-top:2px;">${safeStr(analiz.fitri_hali.fitri_mizac)}</div></div><div style="background:rgba(255,255,255,.08);border-radius:6px;padding:8px;"><div class="label-sm" style="color:rgba(255,255,255,.4);">HALI</div><div style="font-size:12px;color:white;margin-top:2px;">${safeStr(analiz.fitri_hali.hali_mizac)}</div></div></div>${analiz.fitri_hali.tedavi_hedefi ? `<div style="background:rgba(184,146,42,.15);border-radius:6px;padding:8px;margin-top:8px;"><div class="label-sm" style="color:#8B6914;">TEDAVI HEDEFI</div><div style="font-size:12px;color:rgba(255,255,255,.85);margin-top:2px;">${safeStr(analiz.fitri_hali.tedavi_hedefi)}</div></div>` : ''}` : ''}</div></div>` : ''}
 
-  ${analiz.hilt_dengesi ? `<div class="section"><div class="section-title">Hilt Dengesi</div><div class="hilt-grid">${analiz.hilt_dengesi.dem ? `<div class="hilt-kart hilt-dem"><div style="font-weight:600;font-size:12px;">Dem</div><div class="hilt-yuzde" style="color:#EF5350;">${analiz.hilt_dengesi.dem.yuzde}%</div><div style="font-size:10px;color:#5C4A2A;margin-top:4px;">${safeStr(analiz.hilt_dengesi.dem.yorum)}</div></div>` : ''}${analiz.hilt_dengesi.balgam ? `<div class="hilt-kart hilt-balgam"><div style="font-weight:600;font-size:12px;">Balgam</div><div class="hilt-yuzde" style="color:#42A5F5;">${analiz.hilt_dengesi.balgam.yuzde}%</div><div style="font-size:10px;color:#5C4A2A;margin-top:4px;">${safeStr(analiz.hilt_dengesi.balgam.yorum)}</div></div>` : ''}${analiz.hilt_dengesi.safra ? `<div class="hilt-kart hilt-safra"><div style="font-weight:600;font-size:12px;">Safra</div><div class="hilt-yuzde" style="color:#FFA726;">${analiz.hilt_dengesi.safra.yuzde}%</div><div style="font-size:10px;color:#5C4A2A;margin-top:4px;">${safeStr(analiz.hilt_dengesi.safra.yorum)}</div></div>` : ''}${analiz.hilt_dengesi.kara_safra ? `<div class="hilt-kart hilt-karasafra"><div style="font-weight:600;font-size:12px;">Kara Safra</div><div class="hilt-yuzde" style="color:#AB47BC;">${analiz.hilt_dengesi.kara_safra.yuzde}%</div><div style="font-size:10px;color:#5C4A2A;margin-top:4px;">${safeStr(analiz.hilt_dengesi.kara_safra.yorum)}</div></div>` : ''}</div></div>` : ''}
+  ${analiz.hilt_dengesi ? `<div class="section"><div class="section-title">Hilt Dengesi</div><div class="hilt-grid">${analiz.hilt_dengesi.dem ? `<div class="hilt-kart hilt-dem"><div style="font-weight:600;font-size:12px;">Dem</div><div class="hilt-yuzde" style="color:#EF5350;">${analiz.hilt_dengesi.dem.yuzde}%</div><div style="font-size:10px;color:#6B5744;margin-top:4px;">${safeStr(analiz.hilt_dengesi.dem.yorum)}</div></div>` : ''}${analiz.hilt_dengesi.balgam ? `<div class="hilt-kart hilt-balgam"><div style="font-weight:600;font-size:12px;">Balgam</div><div class="hilt-yuzde" style="color:#42A5F5;">${analiz.hilt_dengesi.balgam.yuzde}%</div><div style="font-size:10px;color:#6B5744;margin-top:4px;">${safeStr(analiz.hilt_dengesi.balgam.yorum)}</div></div>` : ''}${analiz.hilt_dengesi.safra ? `<div class="hilt-kart hilt-safra"><div style="font-weight:600;font-size:12px;">Safra</div><div class="hilt-yuzde" style="color:#FFA726;">${analiz.hilt_dengesi.safra.yuzde}%</div><div style="font-size:10px;color:#6B5744;margin-top:4px;">${safeStr(analiz.hilt_dengesi.safra.yorum)}</div></div>` : ''}${analiz.hilt_dengesi.kara_safra ? `<div class="hilt-kart hilt-karasafra"><div style="font-weight:600;font-size:12px;">Kara Safra</div><div class="hilt-yuzde" style="color:#AB47BC;">${analiz.hilt_dengesi.kara_safra.yuzde}%</div><div style="font-size:10px;color:#6B5744;margin-top:4px;">${safeStr(analiz.hilt_dengesi.kara_safra.yorum)}</div></div>` : ''}</div></div>` : ''}
 
   ${analiz.ozet ? `<div class="section"><div class="section-title">Genel Degerlendirme</div><div class="ozet-metin">${safeStr(analiz.ozet)}</div></div>` : ''}
 
@@ -473,7 +473,7 @@ export default function DashboardPage() {
         <div style={{ padding: '24px 20px', maxWidth: 1200, flex: 1, minWidth: 0 }}>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(160px, 1fr))', gap: 12, marginBottom: 24 }}>
           {[
-            { label: 'Toplam Hasta', val: istatistik.toplam, accent: '#5C4A2A' },
+            { label: 'Toplam Hasta', val: istatistik.toplam, accent: '#6B5744' },
             { label: 'Bekleyen', val: istatistik.bekleyen, accent: '#B8860B' },
             { label: 'Bu Hafta', val: forms.filter(f => (Date.now() - new Date(f.created_at).getTime()) / 86400000 <= 7).length, accent: C.gold },
             { label: 'Tamamlanan', val: istatistik.tamamlanan, accent: C.primary },
@@ -524,7 +524,7 @@ export default function DashboardPage() {
               <div style={{ textAlign: 'center', padding: '60px 20px' }}>
                 <div style={{ fontSize: 48, marginBottom: 12, opacity: 0.4 }}>{"🏛️"}</div>
                 <div style={{ fontFamily: cinzel.style.fontFamily, fontSize: 18, color: '#1B4332', marginBottom: 8 }}>{"Henüz analiz formu gelmedi"}</div>
-                <div style={{ fontSize: 14, color: '#5C4A2A' }}>{"Hastalar form doldurduğunda burada görünecek"}</div>
+                <div style={{ fontSize: 14, color: '#6B5744' }}>{"Hastalar form doldurduğunda burada görünecek"}</div>
               </div>
             ) : (
               <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
@@ -612,7 +612,7 @@ export default function DashboardPage() {
                 <div style={{ background: C.white, borderRadius: 14, border: `1px solid ${C.border}`, padding: '32px 24px', marginTop: 14, textAlign: 'center' as const }}>
                   <div style={{ marginBottom: 20 }}>
                     <svg width="40" height="40" viewBox="0 0 40 40" fill="none" style={{ animation: 'spin 1.5s linear infinite', display: 'block', margin: '0 auto' }}>
-                      <circle cx="20" cy="20" r="16" stroke="#E0D5C5" strokeWidth="3" fill="none"/>
+                      <circle cx="20" cy="20" r="16" stroke="#E8DFD4" strokeWidth="3" fill="none"/>
                       <path d="M20 4 A16 16 0 0 1 36 20" stroke="#1B4332" strokeWidth="3" strokeLinecap="round" fill="none"/>
                     </svg>
                     <style>{`@keyframes spin { to { transform: rotate(360deg) } }`}</style>
@@ -662,7 +662,7 @@ export default function DashboardPage() {
                           </div>
                         )}
                         {analiz.fitri_hali.tedavi_hedefi && (
-                          <div style={{ gridColumn: '1/-1', background: 'rgba(201,168,76,0.15)', borderRadius: 8, padding: '8px 10px' }}>
+                          <div style={{ gridColumn: '1/-1', background: 'rgba(184,146,42,0.15)', borderRadius: 8, padding: '8px 10px' }}>
                             <div style={{ fontSize: 9, color: C.gold, letterSpacing: 1 }}>TEDAVI HEDEFI</div>
                             <div style={{ fontSize: 12, color: 'rgba(255,255,255,0.85)', marginTop: 2 }}>{analiz.fitri_hali.tedavi_hedefi}</div>
                           </div>
@@ -766,7 +766,7 @@ export default function DashboardPage() {
                         <div style={{ marginBottom: 8 }}>
                           {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
                           {analiz.bilesik_formul.bilesenler.map((b: any, i: number) => (
-                            <div key={i} style={{ display: 'flex', gap: 8, fontSize: 12, padding: '3px 0', borderBottom: '1px solid rgba(201,168,76,0.2)' }}>
+                            <div key={i} style={{ display: 'flex', gap: 8, fontSize: 12, padding: '3px 0', borderBottom: '1px solid rgba(184,146,42,0.2)' }}>
                               <span style={{ fontWeight: 600, minWidth: 120, color: C.primary }}>{b.madde}</span>
                               <span style={{ color: C.gold, minWidth: 60 }}>{b.miktar}</span>
                               <span style={{ color: C.secondary }}>{b.etki}</span>

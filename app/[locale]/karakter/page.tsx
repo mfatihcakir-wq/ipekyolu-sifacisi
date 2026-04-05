@@ -11,8 +11,8 @@ const cinzel = Cinzel({ subsets: ['latin', 'latin-ext'], weight: ['400', '500', 
 const garamond = EB_Garamond({ subsets: ['latin', 'latin-ext'], weight: ['400', '500'], style: ['normal', 'italic'] })
 
 const C = {
-  primary: '#1B4332', gold: '#8B6914', cream: '#F5EFE6',
-  dark: '#1C1C1C', secondary: '#5C4A2A', border: '#E0D5C5',
+  primary: '#1B4332', gold: '#8B6914', cream: '#FAF7F2',
+  dark: '#1C1C1C', secondary: '#6B5744', border: '#E8DFD4',
   white: '#FFFFFF', surface: '#FAF7F2',
 }
 

@@ -13,10 +13,10 @@ const garamond = EB_Garamond({ subsets: ['latin', 'latin-ext'], weight: ['400', 
 const C = {
   primary: '#1B4332',
   gold: '#8B6914',
-  cream: '#F5EFE6',
+  cream: '#FAF7F2',
   dark: '#1C1C1C',
-  secondary: '#5C4A2A',
-  border: '#E0D5C5',
+  secondary: '#6B5744',
+  border: '#E8DFD4',
   white: '#FFFFFF',
   surface: '#FAF7F2',
 }
@@ -833,7 +833,7 @@ export default function AnalizClient() {
                   {/* Sinyal kalitesi */}
                   <div style={{ marginTop: 8, marginBottom: 4 }}>
                     <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 3 }}>
-                      <span style={{ fontFamily: cinzel.style.fontFamily, fontSize: 8, color: 'rgba(201,168,76,0.5)', letterSpacing: 1.5 }}>
+                      <span style={{ fontFamily: cinzel.style.fontFamily, fontSize: 8, color: 'rgba(184,146,42,0.5)', letterSpacing: 1.5 }}>
                         {"SINYAL KALITESI"}
                       </span>
                       <span style={{ fontFamily: cinzel.style.fontFamily, fontSize: 8, color: '#8B6914' }}>

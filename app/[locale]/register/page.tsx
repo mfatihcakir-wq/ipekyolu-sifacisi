@@ -50,7 +50,7 @@ export default function RegisterPage() {
   return (
     <div style={{
       minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center',
-      backgroundColor: '#F5EFE6', fontFamily: garamond.style.fontFamily,
+      backgroundColor: '#FAF7F2', fontFamily: garamond.style.fontFamily,
     }}>
       <Header />
       <div style={{
@@ -77,12 +77,12 @@ export default function RegisterPage() {
           }}>
             İpek Yolu Şifacısı
           </h1>
-          <p style={{ color: '#5C4A2A', fontSize: 14, margin: 0 }}>Yeni hesap oluşturun</p>
+          <p style={{ color: '#6B5744', fontSize: 14, margin: 0 }}>Yeni hesap oluşturun</p>
         </div>
 
         <form onSubmit={handleRegister}>
           <div style={{ marginBottom: 16 }}>
-            <label style={{ display: 'block', fontSize: 13, fontWeight: 500, color: '#5C4A2A', marginBottom: 6 }}>Ad Soyad</label>
+            <label style={{ display: 'block', fontSize: 13, fontWeight: 500, color: '#6B5744', marginBottom: 6 }}>Ad Soyad</label>
             <input
               type="text" value={name} onChange={(e) => setName(e.target.value)} required
               placeholder="Adınız Soyadınız" style={inputStyle}
@@ -92,7 +92,7 @@ export default function RegisterPage() {
           </div>
 
           <div style={{ marginBottom: 16 }}>
-            <label style={{ display: 'block', fontSize: 13, fontWeight: 500, color: '#5C4A2A', marginBottom: 6 }}>E-posta</label>
+            <label style={{ display: 'block', fontSize: 13, fontWeight: 500, color: '#6B5744', marginBottom: 6 }}>E-posta</label>
             <input
               type="email" value={email} onChange={(e) => setEmail(e.target.value)} required
               placeholder="ornek@email.com" style={inputStyle}
@@ -102,7 +102,7 @@ export default function RegisterPage() {
           </div>
 
           <div style={{ marginBottom: 20 }}>
-            <label style={{ display: 'block', fontSize: 13, fontWeight: 500, color: '#5C4A2A', marginBottom: 6 }}>Şifre</label>
+            <label style={{ display: 'block', fontSize: 13, fontWeight: 500, color: '#6B5744', marginBottom: 6 }}>Şifre</label>
             <input
               type="password" value={password} onChange={(e) => setPassword(e.target.value)} required
               minLength={6} placeholder="En az 6 karakter" style={inputStyle}
@@ -132,7 +132,7 @@ export default function RegisterPage() {
           </button>
         </form>
 
-        <p style={{ textAlign: 'center', fontSize: 14, color: '#5C4A2A', marginTop: 24 }}>
+        <p style={{ textAlign: 'center', fontSize: 14, color: '#6B5744', marginTop: 24 }}>
           Zaten hesabınız var mı?{' '}
           <Link href="/login" style={{ color: '#1B4332', fontWeight: 600, textDecoration: 'underline' }}>
             Giriş Yap

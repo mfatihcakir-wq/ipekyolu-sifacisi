@@ -9,8 +9,8 @@ const cinzel = Cinzel({ subsets: ['latin', 'latin-ext'], weight: ['400', '500', 
 const garamond = EB_Garamond({ subsets: ['latin', 'latin-ext'], weight: ['400', '500'], style: ['normal', 'italic'] })
 
 const C = {
-  primary: '#1B4332', gold: '#C9A84C', cream: '#F5EFE6',
-  dark: '#1C1C1C', secondary: '#5C4A2A', border: '#E0D5C5',
+  primary: '#1B4332', gold: '#B8922A', cream: '#FAF7F2',
+  dark: '#1C1C1C', secondary: '#6B5744', border: '#E8DFD4',
   white: '#FFFFFF', surface: '#FAF7F2', darkBg: '#0F2D1C',
 }
 
@@ -103,7 +103,7 @@ export default function HastaPage() {
             <button key={item.label} onClick={() => router.push(item.href)}
               style={{
                 display: 'flex', alignItems: 'center', gap: 12, width: '100%',
-                padding: '12px 20px', background: item.active ? 'rgba(201,168,76,0.15)' : 'transparent',
+                padding: '12px 20px', background: item.active ? 'rgba(184,146,42,0.15)' : 'transparent',
                 border: 'none', borderLeft: item.active ? `3px solid ${C.gold}` : '3px solid transparent',
                 color: item.active ? C.gold : 'rgba(255,255,255,0.6)',
                 fontSize: 13, cursor: 'pointer', textAlign: 'left',
