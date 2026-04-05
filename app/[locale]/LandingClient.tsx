@@ -174,6 +174,12 @@ export default function LandingClient() {
                 desc: 'el-Havi, Tahbizul-Mathun, el-Samil ve 35 eser daha; her analizde sikayetinize en uygun metinler bulunup getirilir.',
                 href: '/hakkimizda',
               },
+              {
+                icon: <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke={C.primary} strokeWidth="1.5"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>,
+                title: 'Karakter Analizi',
+                desc: 'Klasik Islam dusuncesi cercevesinde beden ve ruh butunlugu degerlendirmesi. 4 cephe, 40 soru, kisisel recete.',
+                href: '/karakter',
+              },
             ].map(f => (
               <div key={f.title} style={{ border: `1px solid ${C.border}`, borderRadius: 20, padding: '34px 30px' }}>
                 <div style={{ width: 48, height: 48, background: C.cream, borderRadius: 12, display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: 16 }}>

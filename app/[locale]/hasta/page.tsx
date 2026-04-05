@@ -27,6 +27,7 @@ const SIDEBAR_ITEMS = [
   { label: 'Bitkiler', href: '/bitkiler', icon: 'M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2z' },
   { label: 'Profilim', href: '/hasta', icon: 'M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2' },
   { label: 'Takip', href: '/hasta/takip', icon: 'M22 12h-4l-3 9L9 3l-3 9H2' },
+  { label: 'Karakter', href: '/karakter', icon: 'M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5' },
 ]
 
 export default function HastaPage() {

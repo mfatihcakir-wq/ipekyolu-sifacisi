@@ -18,6 +18,7 @@ const NAV_LINKS = [
   { href: '/', label: 'Ana Sayfa' },
   { href: '/analiz', label: 'Analiz Baslat', vurgulu: true },
   { href: '/bitkiler', label: 'Bitki Ansiklopedisi' },
+  { href: '/karakter', label: 'Karakter Analizi' },
   { href: '/hakkimizda', label: 'Hakkimizda' },
   { href: '/sss', label: 'SSS' },
 ]
