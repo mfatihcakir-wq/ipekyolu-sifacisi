@@ -386,11 +386,11 @@ export default function LandingPage() {
             </p>
             <div style={{ display: 'flex', gap: 12 }}>
               {[
-                { label: 'Instagram', href: '#' },
-                { label: 'YouTube', href: '#' },
+                { label: 'Instagram', href: 'https://www.instagram.com/ipekyolusicfacisi' },
+                { label: 'YouTube', href: 'https://www.youtube.com/@ipekyolusicfacisi' },
                 { label: 'WhatsApp', href: 'https://wa.me/905331687226' },
               ].map(s => (
-                <a key={s.label} href={s.href} target="_blank" style={{ fontSize: 11, color: 'rgba(255,255,255,0.3)', textDecoration: 'none', padding: '6px 12px', border: '1px solid rgba(255,255,255,0.1)', borderRadius: 8 }}>{s.label}</a>
+                <a key={s.label} href={s.href} target="_blank" rel="noopener noreferrer" style={{ fontSize: 11, color: 'rgba(255,255,255,0.3)', textDecoration: 'none', padding: '6px 12px', border: '1px solid rgba(255,255,255,0.1)', borderRadius: 8 }}>{s.label}</a>
               ))}
             </div>
           </div>
