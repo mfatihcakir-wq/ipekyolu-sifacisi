@@ -1,9 +1,25 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { useRouter } from 'next/navigation'
 import Image from 'next/image'
 import { createClient } from '@/lib/supabase'
+
+function useCountUp(target: number, duration: number = 1800, active: boolean = false) {
+  const [count, setCount] = useState(0)
+  useEffect(() => {
+    if (!active) return
+    let start = 0
+    const increment = target / (duration / 16)
+    const timer = setInterval(() => {
+      start += increment
+      if (start >= target) { setCount(target); clearInterval(timer) }
+      else setCount(Math.floor(start))
+    }, 16)
+    return () => clearInterval(timer)
+  }, [active, target, duration])
+  return count
+}
 
 function FeatCard({ icon, title, desc, link, hot }: { icon: React.ReactNode; title: string; desc: string; link: string; hot?: boolean }) {
   return (
@@ -23,6 +39,23 @@ export default function LandingClient() {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [yorumlar, setYorumlar] = useState<any[]>([])
   const kayitSayisi = '46.000+'
+
+  // Stats count-up
+  const [statsVisible, setStatsVisible] = useState(false)
+  const statsRef = useRef<HTMLDivElement>(null)
+  const count38 = useCountUp(38, 1200, statsVisible)
+  const count46 = useCountUp(46000, 2000, statsVisible)
+  const count1180 = useCountUp(1180, 1600, statsVisible)
+  const count9 = useCountUp(9, 800, statsVisible)
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => { if (entry.isIntersecting) { setStatsVisible(true); observer.disconnect() } },
+      { threshold: 0.3 }
+    )
+    if (statsRef.current) observer.observe(statsRef.current)
+    return () => observer.disconnect()
+  }, [])
 
   useEffect(() => {
     const supabase = createClient()
@@ -144,12 +177,12 @@ export default function LandingClient() {
       </div>
 
       {/* STATS */}
-      <section style={{ background: '#F5EFE0', display: 'grid', gridTemplateColumns: 'repeat(4,1fr)', borderBottom: '1px solid #DEB887' }} className="stats-grid">
+      <section ref={statsRef} style={{ background: '#F5EFE0', display: 'grid', gridTemplateColumns: 'repeat(4,1fr)', borderBottom: '1px solid #DEB887' }} className="stats-grid">
         {[
-          { n: '38', l: 'KLASİK ESER', s: 'el-Hâvî, el-Kânûn, el-Şâmil' },
-          { n: kayitSayisi, l: 'METİN KAYDI', s: 'İndekslenmiş parça' },
-          { n: '1.180', l: 'BİTKİ & MADDE', s: 'İbn Beytâr kaynağı' },
-          { n: '9', l: 'NABIZ SIFATI', s: 'İbn Sînâ metodolojisi' },
+          { n: statsVisible ? count38 : 0, l: 'KLASİK ESER', s: 'el-Hâvî, el-Kânûn, el-Şâmil' },
+          { n: statsVisible ? (count46 >= 46000 ? '46.000+' : count46.toLocaleString('tr-TR')) : '0', l: 'METİN KAYDI', s: 'İndekslenmiş parça' },
+          { n: statsVisible ? (count1180 >= 1180 ? '1.180' : count1180.toLocaleString('tr-TR')) : '0', l: 'BİTKİ & MADDE', s: 'İbn Beytâr kaynağı' },
+          { n: statsVisible ? count9 : 0, l: 'NABIZ SIFATI', s: 'İbn Sînâ metodolojisi' },
         ].map(({ n, l, s }, i, arr) => (
           <div key={l} style={{ textAlign: 'center' as const, padding: '40px 20px', borderRight: i < arr.length - 1 ? '1px solid #DEB887' : 'none' }}>
             <div style={{ fontFamily: 'Cinzel,serif', fontSize: 42, fontWeight: 700, color: '#1C3A26', lineHeight: 1, marginBottom: 8 }}>{n}</div>
