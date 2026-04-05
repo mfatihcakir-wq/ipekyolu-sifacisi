@@ -67,7 +67,7 @@ export default function LandingPage() {
               {"ANALIZIMI BASLAT"}
             </button>
             <button onClick={() => router.push('/bitkiler')}
-              style={{ fontFamily: cinzel.style.fontFamily, fontSize: 12, color: 'rgba(255,255,255,0.68)', background: 'transparent', border: '1.5px solid rgba(255,255,255,0.18)', borderRadius: 12, padding: '17px 28px', cursor: 'pointer', letterSpacing: 1.5, textTransform: 'uppercase' as const }}>
+              style={{ fontFamily: cinzel.style.fontFamily, fontSize: 11, color: 'rgba(255,255,255,0.45)', background: 'transparent', border: '1px solid rgba(255,255,255,0.12)', borderRadius: 12, padding: '15px 22px', cursor: 'pointer', letterSpacing: 1, textTransform: 'uppercase' as const }}>
               {"BITKI ANSIKLOPEDISI"}
             </button>
           </div>
