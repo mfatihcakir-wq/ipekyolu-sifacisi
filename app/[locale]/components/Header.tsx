@@ -8,7 +8,7 @@ import { createClient } from '@/lib/supabase'
 const cinzel = Cinzel({ subsets: ['latin', 'latin-ext'], weight: ['400', '500', '600'] })
 
 const C = {
-  primary: '#1B4332', gold: '#8B6914', cream: '#FAF7F2',
+  primary: '#1C3A26', gold: '#8B6914', cream: '#FAF7F2',
   secondary: '#6B5744', border: '#E8DFD4', white: '#FFFFFF',
 }
 
@@ -172,7 +172,7 @@ export default function Header() {
           style={{ position: 'fixed', inset: 0, zIndex: 99 }} />
       )}
 
-      <style jsx global>{`
+      <style>{`
         @media (max-width: 768px) {
           .header-desktop-nav { display: none !important; }
           .header-hamburger { display: block !important; }
