@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useRef, useCallback, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import { Cinzel, EB_Garamond } from 'next/font/google'
 import Header from '../components/Header'
@@ -74,7 +74,412 @@ export default function AnalizClient() {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const set = (key: string, val: any) => setForm(f => ({ ...f, [key]: val }))
 
-  // PPG + Dil/Yuz modulleri kaldirildi
+  // Nabiz PPG state
+  const [nabizMod, setNabizMod] = useState<'kamera' | 'manuel'>('kamera')
+  const [ppgAktif, setPpgAktif] = useState(false)
+  const [ppgBpm, setPpgBpm] = useState<number | null>(null)
+  const [ppgKalite, setPpgKalite] = useState(0)
+  const [ppgCountdown, setPpgCountdown] = useState(30)
+  const [ppgTamamlandi, setPpgTamamlandi] = useState(false)
+  const [ppgHiltler, setPpgHiltler] = useState({ dem: 0, balgam: 0, sari_safra: 0, kara_safra: 0 })
+  const ppgVideoRef = useRef<HTMLVideoElement>(null)
+  const ppgCanvasRef = useRef<HTMLCanvasElement>(null)
+  const ppgStreamRef = useRef<MediaStream | null>(null)
+  const ppgAnimRef = useRef<number | null>(null)
+  const ppgCountdownRef = useRef<ReturnType<typeof setInterval> | null>(null)
+  const ppgDataRef = useRef<{ v: number; t: number }[]>([])
+  const ppgLPRef = useRef({ y1: 0 })
+  const ppgHPRef = useRef({ y1: 0, x1: 0 })
+
+  // Dil/Yuz state
+  const [dyMod, setDyMod] = useState<'kamera' | 'manuel'>('kamera')
+  const [dyFotolar, setDyFotolar] = useState<{ dil: string | null; yuz: string | null }>({ dil: null, yuz: null })
+  const [dyAnalizing, setDyAnalizing] = useState(false)
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const [dyAnalizSonucu, setDyAnalizSonucu] = useState<any>(null)
+  const dilVideoRef = useRef<HTMLVideoElement>(null)
+  const yuzVideoRef = useRef<HTMLVideoElement>(null)
+  const dilCanvasRef = useRef<HTMLCanvasElement>(null)
+  const yuzCanvasRef = useRef<HTMLCanvasElement>(null)
+  const dyStreamsRef = useRef<{ dil: MediaStream | null; yuz: MediaStream | null }>({ dil: null, yuz: null })
+
+  // --- PPG Functions ---
+  const ppgBandpass = useCallback((x: number): number => {
+    const alphaLP = 0.45
+    const lpOut = alphaLP * x + (1 - alphaLP) * ppgLPRef.current.y1
+    ppgLPRef.current.y1 = lpOut
+    const alphaHP = 0.97
+    const hpOut = alphaHP * ppgHPRef.current.y1 + alphaHP * (lpOut - ppgHPRef.current.x1)
+    ppgHPRef.current.y1 = hpOut
+    ppgHPRef.current.x1 = lpOut
+    return hpOut
+  }, [])
+
+  const ppgBpmHesapla = useCallback((data: { v: number; t: number }[]): number => {
+    if (data.length < 10) return 0
+    const vals = data.map(d => d.v)
+    const mean = vals.reduce((a, b) => a + b, 0) / vals.length
+    const std = Math.sqrt(vals.reduce((a, b) => a + (b - mean) ** 2, 0) / vals.length)
+    const threshold = mean + std * 0.4
+    const peaks: number[] = []
+    const refractoryMs = 250
+    for (let i = 2; i < data.length - 2; i++) {
+      if (data[i].v > threshold && data[i].v > data[i - 1].v && data[i].v > data[i + 1].v) {
+        if (peaks.length === 0 || (data[i].t - data[peaks[peaks.length - 1]].t) > refractoryMs) {
+          peaks.push(i)
+        }
+      }
+    }
+    if (peaks.length < 2) return 0
+    const rrIntervals: number[] = []
+    for (let i = 1; i < peaks.length; i++) {
+      rrIntervals.push(data[peaks[i]].t - data[peaks[i - 1]].t)
+    }
+    const avgRR = rrIntervals.reduce((a, b) => a + b, 0) / rrIntervals.length
+    return avgRR > 0 ? Math.round(60000 / avgRR) : 0
+  }, [])
+
+  const ppgSifatHesapla = useCallback((data: { v: number; t: number }[]): Record<string, string> => {
+    const result: Record<string, string> = {}
+    if (data.length < 20) return result
+    const vals = data.map(d => d.v)
+    const mean = vals.reduce((a, b) => a + b, 0) / vals.length
+    const std = Math.sqrt(vals.reduce((a, b) => a + (b - mean) ** 2, 0) / vals.length)
+    const maxV = Math.max(...vals.map(v => Math.abs(v)))
+    const normAmp = maxV > 0 ? std / maxV : 0
+
+    result.buyukluk = normAmp > 0.15 ? 'buyuk' : normAmp < 0.05 ? 'kucuk' : 'orta'
+
+    const noise = vals.slice(-10).reduce((a, b) => a + Math.abs(b - mean), 0) / 10
+    const snr = noise > 0 ? std / noise : 0
+    result.kuvvet = snr > 4.5 ? 'kuvvetli' : snr < 3.0 ? 'zayif' : 'orta'
+
+    const aboveMean = vals.filter(v => v > mean).length
+    const widthRatio = aboveMean / vals.length
+    result.dolgunluk = widthRatio > 0.45 ? 'dolu' : widthRatio < 0.28 ? 'bos' : 'orta'
+
+    let maxSlope = 0
+    for (let i = 1; i < vals.length; i++) {
+      const dt = data[i].t - data[i - 1].t
+      if (dt > 0) {
+        const slope = (vals[i] - vals[i - 1]) / dt
+        if (slope > maxSlope) maxSlope = slope
+      }
+    }
+    result.sertlik = maxSlope > 0.8 ? 'sert' : maxSlope < 0.2 ? 'yumusak' : 'orta'
+
+    const threshold2 = mean + std * 0.4
+    const peaks: number[] = []
+    for (let i = 2; i < data.length - 2; i++) {
+      if (data[i].v > threshold2 && data[i].v > data[i - 1].v && data[i].v > data[i + 1].v) {
+        if (peaks.length === 0 || (data[i].t - data[peaks[peaks.length - 1]].t) > 250) {
+          peaks.push(i)
+        }
+      }
+    }
+    if (peaks.length > 2) {
+      const rr: number[] = []
+      for (let i = 1; i < peaks.length; i++) rr.push(data[peaks[i]].t - data[peaks[i - 1]].t)
+      const rrMean = rr.reduce((a, b) => a + b, 0) / rr.length
+      const sdnn = Math.sqrt(rr.reduce((a, b) => a + (b - rrMean) ** 2, 0) / rr.length)
+      result.ritim = sdnn > 80 ? 'duzensiz' : sdnn > 40 ? 'hafif_duzensiz' : 'muntazam'
+
+      const peakAmps = peaks.map(i => Math.abs(data[i].v))
+      const ampMean = peakAmps.reduce((a, b) => a + b, 0) / peakAmps.length
+      const ampStd = Math.sqrt(peakAmps.reduce((a, b) => a + (b - ampMean) ** 2, 0) / peakAmps.length)
+      const cv = ampMean > 0 ? ampStd / ampMean : 0
+      result.esitlik = cv > 0.25 ? 'esitsiz' : cv > 0.12 ? 'hafif_esitsiz' : 'esit'
+
+      const avgGap = rr.reduce((a, b) => a + b, 0) / rr.length
+      const maxGap = Math.max(...rr)
+      const gapRatio = avgGap > 0 ? maxGap / avgGap : 1
+      result.sureklitik = gapRatio > 2.5 ? 'kesik' : gapRatio > 1.7 ? 'hafif_kesik' : 'surekli'
+    } else {
+      result.ritim = 'muntazam'
+      result.esitlik = 'esit'
+      result.sureklitik = 'surekli'
+    }
+    return result
+  }, [])
+
+  const NABIZ_HILT_MATRIX: Record<string, Record<string, { dem: number; balgam: number; sari_safra: number; kara_safra: number }>> = {
+    buyukluk: {
+      buyuk: { dem: 3, balgam: 1, sari_safra: 2, kara_safra: 0 },
+      orta: { dem: 1, balgam: 1, sari_safra: 1, kara_safra: 1 },
+      kucuk: { dem: 0, balgam: 2, sari_safra: 0, kara_safra: 3 },
+    },
+    kuvvet: {
+      kuvvetli: { dem: 3, balgam: 0, sari_safra: 2, kara_safra: 0 },
+      orta: { dem: 1, balgam: 1, sari_safra: 1, kara_safra: 1 },
+      zayif: { dem: 0, balgam: 2, sari_safra: 0, kara_safra: 3 },
+    },
+    hiz: {
+      hizli: { dem: 2, balgam: 0, sari_safra: 3, kara_safra: 0 },
+      orta: { dem: 1, balgam: 1, sari_safra: 1, kara_safra: 1 },
+      yavas: { dem: 0, balgam: 3, sari_safra: 0, kara_safra: 2 },
+    },
+    dolgunluk: {
+      dolu: { dem: 3, balgam: 1, sari_safra: 1, kara_safra: 0 },
+      orta: { dem: 1, balgam: 1, sari_safra: 1, kara_safra: 1 },
+      bos: { dem: 0, balgam: 1, sari_safra: 0, kara_safra: 3 },
+    },
+    sertlik: {
+      sert: { dem: 1, balgam: 0, sari_safra: 3, kara_safra: 1 },
+      orta: { dem: 1, balgam: 1, sari_safra: 1, kara_safra: 1 },
+      yumusak: { dem: 2, balgam: 3, sari_safra: 0, kara_safra: 0 },
+    },
+    ritim: {
+      muntazam: { dem: 2, balgam: 2, sari_safra: 1, kara_safra: 1 },
+      hafif_duzensiz: { dem: 1, balgam: 1, sari_safra: 1, kara_safra: 2 },
+      duzensiz: { dem: 0, balgam: 0, sari_safra: 2, kara_safra: 3 },
+    },
+    esitlik: {
+      esit: { dem: 2, balgam: 2, sari_safra: 1, kara_safra: 1 },
+      hafif_esitsiz: { dem: 1, balgam: 1, sari_safra: 1, kara_safra: 2 },
+      esitsiz: { dem: 0, balgam: 0, sari_safra: 2, kara_safra: 3 },
+    },
+    sureklitik: {
+      surekli: { dem: 2, balgam: 2, sari_safra: 1, kara_safra: 0 },
+      hafif_kesik: { dem: 1, balgam: 1, sari_safra: 1, kara_safra: 2 },
+      kesik: { dem: 0, balgam: 0, sari_safra: 1, kara_safra: 3 },
+    },
+  }
+
+  const nabizHiltHesapla = useCallback(() => {
+    const sifatlar: Record<string, string> = {
+      buyukluk: form.nb_buyukluk || 'orta',
+      kuvvet: form.nb_kuvvet || 'orta',
+      hiz: form.nb_hiz_sinif || 'orta',
+      dolgunluk: form.nb_dolgunluk || 'orta',
+      sertlik: form.nb_sertlik || 'orta',
+      ritim: form.nb_ritim || 'muntazam',
+      esitlik: form.nb_esitlik || 'esit',
+      sureklitik: form.nb_sureklitik || 'surekli',
+    }
+    const totals = { dem: 0, balgam: 0, sari_safra: 0, kara_safra: 0 }
+    for (const [cat, val] of Object.entries(sifatlar)) {
+      const entry = NABIZ_HILT_MATRIX[cat]?.[val]
+      if (entry) {
+        totals.dem += entry.dem
+        totals.balgam += entry.balgam
+        totals.sari_safra += entry.sari_safra
+        totals.kara_safra += entry.kara_safra
+      }
+    }
+    const sum = totals.dem + totals.balgam + totals.sari_safra + totals.kara_safra
+    if (sum > 0) {
+      totals.dem = Math.round((totals.dem / sum) * 100)
+      totals.balgam = Math.round((totals.balgam / sum) * 100)
+      totals.sari_safra = Math.round((totals.sari_safra / sum) * 100)
+      totals.kara_safra = Math.round((totals.kara_safra / sum) * 100)
+    }
+    setPpgHiltler(totals)
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [form.nb_buyukluk, form.nb_kuvvet, form.nb_hiz_sinif, form.nb_dolgunluk, form.nb_sertlik, form.nb_ritim, form.nb_esitlik, form.nb_sureklitik])
+
+  const ppgDurdur = useCallback(() => {
+    if (ppgAnimRef.current) { cancelAnimationFrame(ppgAnimRef.current); ppgAnimRef.current = null }
+    if (ppgCountdownRef.current) { clearInterval(ppgCountdownRef.current); ppgCountdownRef.current = null }
+    if (ppgStreamRef.current) { ppgStreamRef.current.getTracks().forEach(t => t.stop()); ppgStreamRef.current = null }
+    setPpgAktif(false)
+
+    const data = ppgDataRef.current
+    if (data.length > 30) {
+      const bpm = ppgBpmHesapla(data)
+      if (bpm > 40 && bpm < 200) {
+        setPpgBpm(bpm)
+        set('ppg_bpm', String(bpm))
+        const hizSinif = bpm > 90 ? 'hizli' : bpm < 65 ? 'yavas' : 'orta'
+        set('nb_hiz_sinif', hizSinif)
+      }
+      const sifatlar = ppgSifatHesapla(data)
+      if (sifatlar.buyukluk) set('nb_buyukluk', sifatlar.buyukluk)
+      if (sifatlar.kuvvet) set('nb_kuvvet', sifatlar.kuvvet)
+      if (sifatlar.dolgunluk) set('nb_dolgunluk', sifatlar.dolgunluk)
+      if (sifatlar.sertlik) set('nb_sertlik', sifatlar.sertlik)
+      if (sifatlar.ritim) set('nb_ritim', sifatlar.ritim)
+      if (sifatlar.esitlik) set('nb_esitlik', sifatlar.esitlik)
+      if (sifatlar.sureklitik) set('nb_sureklitik', sifatlar.sureklitik)
+      setPpgTamamlandi(true)
+      setNabizMod('manuel')
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [ppgBpmHesapla, ppgSifatHesapla])
+
+  const ppgBaslat = useCallback(async () => {
+    try {
+      const stream = await navigator.mediaDevices.getUserMedia({
+        video: { facingMode: 'environment', width: { ideal: 320 }, height: { ideal: 240 } }
+      })
+      ppgStreamRef.current = stream
+      if (ppgVideoRef.current) {
+        ppgVideoRef.current.srcObject = stream
+        ppgVideoRef.current.play()
+      }
+      ppgDataRef.current = []
+      ppgLPRef.current = { y1: 0 }
+      ppgHPRef.current = { y1: 0, x1: 0 }
+      setPpgAktif(true)
+      setPpgBpm(null)
+      setPpgKalite(0)
+      setPpgCountdown(30)
+      setPpgTamamlandi(false)
+
+      ppgCountdownRef.current = setInterval(() => {
+        setPpgCountdown(prev => {
+          if (prev <= 1) {
+            ppgDurdur()
+            return 0
+          }
+          return prev - 1
+        })
+      }, 1000)
+
+      const canvas = ppgCanvasRef.current
+      const ctx = canvas?.getContext('2d', { willReadFrequently: true })
+      const video = ppgVideoRef.current
+
+      const loop = () => {
+        if (!video || !ctx || !canvas) return
+        if (video.readyState >= 2) {
+          canvas.width = 64
+          canvas.height = 48
+          ctx.drawImage(video, 0, 0, 64, 48)
+          const frame = ctx.getImageData(0, 0, 64, 48)
+          let rSum = 0
+          let count = 0
+          for (let i = 0; i < frame.data.length; i += 4) {
+            rSum += frame.data[i]
+            count++
+          }
+          const avgR = rSum / count
+          const filtered = ppgBandpass(avgR)
+          const now = performance.now()
+          ppgDataRef.current.push({ v: filtered, t: now })
+          const cutoff = now - 10000
+          ppgDataRef.current = ppgDataRef.current.filter(d => d.t > cutoff)
+
+          if (ppgDataRef.current.length > 30) {
+            const bpm = ppgBpmHesapla(ppgDataRef.current)
+            if (bpm > 40 && bpm < 200) {
+              setPpgBpm(bpm)
+              const q = Math.min(100, Math.round((ppgDataRef.current.length / 300) * 100))
+              setPpgKalite(q)
+            }
+          }
+        }
+        ppgAnimRef.current = requestAnimationFrame(loop)
+      }
+      ppgAnimRef.current = requestAnimationFrame(loop)
+    } catch {
+      gosterToast('Kamera erisimi reddedildi veya desteklenmiyor.')
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [ppgBandpass, ppgBpmHesapla, ppgDurdur])
+
+  // Dil/Yuz functions
+  const dyKameraAc = useCallback(async (tip: 'dil' | 'yuz') => {
+    try {
+      const facingMode = tip === 'dil' ? 'environment' : 'user'
+      const stream = await navigator.mediaDevices.getUserMedia({
+        video: { facingMode, width: { ideal: 640 }, height: { ideal: 480 } }
+      })
+      dyStreamsRef.current[tip] = stream
+      const videoEl = tip === 'dil' ? dilVideoRef.current : yuzVideoRef.current
+      if (videoEl) {
+        videoEl.srcObject = stream
+        videoEl.play()
+      }
+    } catch {
+      gosterToast('Kamera erisimi saglanamadi.')
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
+  const dyFotoCek = useCallback((tip: 'dil' | 'yuz') => {
+    const videoEl = tip === 'dil' ? dilVideoRef.current : yuzVideoRef.current
+    const canvasEl = tip === 'dil' ? dilCanvasRef.current : yuzCanvasRef.current
+    if (!videoEl || !canvasEl) return
+    canvasEl.width = videoEl.videoWidth || 640
+    canvasEl.height = videoEl.videoHeight || 480
+    const ctx = canvasEl.getContext('2d')
+    if (!ctx) return
+    ctx.drawImage(videoEl, 0, 0)
+    const dataUrl = canvasEl.toDataURL('image/jpeg', 0.85)
+    setDyFotolar(prev => ({ ...prev, [tip]: dataUrl }))
+    set(tip === 'dil' ? 'dil_foto' : 'yuz_foto', dataUrl)
+    if (dyStreamsRef.current[tip]) {
+      dyStreamsRef.current[tip]!.getTracks().forEach(t => t.stop())
+      dyStreamsRef.current[tip] = null
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
+  const dyAnalizEt = useCallback(async () => {
+    if (!dyFotolar.dil && !dyFotolar.yuz) { gosterToast('En az bir fotograf cekin.'); return }
+    setDyAnalizing(true)
+    setDyAnalizSonucu(null)
+    try {
+      const content: Array<{ type: string; source?: { type: string; media_type: string; data: string }; text?: string }> = []
+      if (dyFotolar.dil) {
+        content.push({
+          type: 'image',
+          source: { type: 'base64', media_type: 'image/jpeg', data: dyFotolar.dil.split(',')[1] }
+        })
+        content.push({ type: 'text', text: 'Bu dil fotografidir.' })
+      }
+      if (dyFotolar.yuz) {
+        content.push({
+          type: 'image',
+          source: { type: 'base64', media_type: 'image/jpeg', data: dyFotolar.yuz.split(',')[1] }
+        })
+        content.push({ type: 'text', text: 'Bu yuz fotografidir.' })
+      }
+      content.push({
+        type: 'text',
+        text: 'el-Kanun fi\'t-Tibb cercevesinde degerlendir. JSON dondur: {"dil_renk":"","dil_kaplama":"","dil_nem":"","dil_sekil":"","yuz_ten":"","yuz_sekil":"","yuz_cilt":"","yuz_gozalti":"","yorum":""}'
+      })
+
+      const res = await fetch('/api/vision', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ messages: [{ role: 'user', content }] })
+      })
+      const data = await res.json()
+      if (data.content?.[0]?.text) {
+        const txt = data.content[0].text
+        const jsonMatch = txt.match(/\{[\s\S]*\}/)
+        if (jsonMatch) {
+          const parsed = JSON.parse(jsonMatch[0])
+          setDyAnalizSonucu(parsed)
+          if (parsed.dil_renk) set('dil_renk', parsed.dil_renk)
+          if (parsed.dil_kaplama) set('dil_kaplama', parsed.dil_kaplama)
+          if (parsed.dil_nem) set('dil_nem', parsed.dil_nem)
+          if (parsed.dil_sekil) set('dil_sekil', parsed.dil_sekil)
+          if (parsed.yuz_ten) set('yuz_ten', parsed.yuz_ten)
+          if (parsed.yuz_sekil) set('yuz_sekil', parsed.yuz_sekil)
+          if (parsed.yuz_cilt) set('yuz_cilt', parsed.yuz_cilt)
+          if (parsed.yuz_gozalti) set('yuz_gozalti', parsed.yuz_gozalti)
+        }
+      }
+    } catch {
+      gosterToast('Analiz sirasinda hata olustu.')
+    } finally {
+      setDyAnalizing(false)
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [dyFotolar])
+
+  // Cleanup effect
+  useEffect(() => {
+    return () => {
+      if (ppgAnimRef.current) cancelAnimationFrame(ppgAnimRef.current)
+      if (ppgCountdownRef.current) clearInterval(ppgCountdownRef.current)
+      if (ppgStreamRef.current) ppgStreamRef.current.getTracks().forEach(t => t.stop())
+      if (dyStreamsRef.current.dil) dyStreamsRef.current.dil.getTracks().forEach(t => t.stop())
+      if (dyStreamsRef.current.yuz) dyStreamsRef.current.yuz.getTracks().forEach(t => t.stop())
+    }
+  }, [])
 
   const handleSubmit = () => {
     if (!form.ad_soyad?.trim()) { gosterToast('Ad Soyad alani zorunludur.'); setAdim(1); return }
@@ -330,10 +735,297 @@ export default function AnalizClient() {
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
             {"Nabiz Gozlemi"}
           </div>
-          <div style={{ ...s.card, textAlign: 'center' as const, padding: '48px 24px' }}>
-            <div style={{ fontFamily: cinzel.style.fontFamily, fontSize: 16, color: C.primary, marginBottom: 8 }}>{"NABIZ MODULU YAKINDA"}</div>
-            <div style={{ fontSize: 13, color: C.secondary }}>{"PPG kamera ve 9 sifat modulu yeniden yaziliyor."}</div>
+          <div style={s.tip}>{"el-Kanun fi't-Tibb: Nabiz, kalbin ve damarlarin halini gosteren en onemli belirtidir. 8 sifati ile mizac ve hilt dengesi hakkinda bilgi verir."}</div>
+
+          {/* Toggle: Kamera / Manuel */}
+          <div style={{ display: 'flex', gap: 8, marginBottom: 16 }}>
+            <button
+              onClick={() => setNabizMod('kamera')}
+              style={{
+                flex: 1, padding: '10px 0', borderRadius: 8, border: `1.5px solid ${nabizMod === 'kamera' ? C.gold : C.border}`,
+                background: nabizMod === 'kamera' ? C.gold : C.white, color: nabizMod === 'kamera' ? C.primary : C.secondary,
+                fontWeight: nabizMod === 'kamera' ? 600 : 400, cursor: 'pointer', fontSize: 13, fontFamily: cinzel.style.fontFamily,
+              }}
+            >{"Kamera PPG"}</button>
+            <button
+              onClick={() => setNabizMod('manuel')}
+              style={{
+                flex: 1, padding: '10px 0', borderRadius: 8, border: `1.5px solid ${nabizMod === 'manuel' ? C.gold : C.border}`,
+                background: nabizMod === 'manuel' ? C.gold : C.white, color: nabizMod === 'manuel' ? C.primary : C.secondary,
+                fontWeight: nabizMod === 'manuel' ? 600 : 400, cursor: 'pointer', fontSize: 13, fontFamily: cinzel.style.fontFamily,
+              }}
+            >{"Manuel Gir"}</button>
           </div>
+
+          {/* Kamera PPG Mode */}
+          {nabizMod === 'kamera' && !ppgTamamlandi && (
+            <div style={{ ...s.card, background: '#1a1a2e', borderRadius: 16, padding: 24, textAlign: 'center' as const }}>
+              <div style={{ position: 'relative' as const, width: 180, height: 180, margin: '0 auto 16px', borderRadius: '50%', overflow: 'hidden', border: `3px solid ${ppgAktif ? '#EF5350' : C.gold}` }}>
+                <video ref={ppgVideoRef} style={{ width: '100%', height: '100%', objectFit: 'cover' }} playsInline muted />
+                <canvas ref={ppgCanvasRef} style={{ display: 'none' }} />
+                {!ppgAktif && (
+                  <div style={{ position: 'absolute' as const, inset: 0, display: 'flex', flexDirection: 'column' as const, alignItems: 'center', justifyContent: 'center', background: 'rgba(0,0,0,0.6)' }}>
+                    <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#C9A84C" strokeWidth="1.5"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+                    <div style={{ color: C.gold, fontSize: 11, marginTop: 8 }}>{"Parmagini lens uzerine koy"}</div>
+                  </div>
+                )}
+              </div>
+
+              {ppgAktif && (
+                <div style={{ marginBottom: 16 }}>
+                  <div style={{ fontSize: 48, fontWeight: 700, color: '#EF5350', fontFamily: cinzel.style.fontFamily }}>
+                    {ppgBpm ? ppgBpm : '--'}
+                    <span style={{ fontSize: 16, color: 'rgba(255,255,255,0.5)', marginLeft: 4 }}>{"BPM"}</span>
+                  </div>
+                  <div style={{ display: 'flex', justifyContent: 'center', gap: 24, marginTop: 8 }}>
+                    <div style={{ fontSize: 12, color: 'rgba(255,255,255,0.6)' }}>
+                      {"Kalite: "}{ppgKalite}{"%"}
+                    </div>
+                    <div style={{ fontSize: 12, color: 'rgba(255,255,255,0.6)' }}>
+                      {"Kalan: "}{ppgCountdown}{"s"}
+                    </div>
+                  </div>
+                  <div style={{ height: 4, background: 'rgba(255,255,255,0.1)', borderRadius: 2, marginTop: 8 }}>
+                    <div style={{ height: 4, background: '#EF5350', borderRadius: 2, width: `${((30 - ppgCountdown) / 30) * 100}%`, transition: 'width 1s linear' }} />
+                  </div>
+                </div>
+              )}
+
+              <button
+                onClick={ppgAktif ? ppgDurdur : ppgBaslat}
+                style={{
+                  padding: '12px 32px', borderRadius: 10, border: 'none', cursor: 'pointer', fontSize: 14, fontWeight: 600,
+                  background: ppgAktif ? '#EF5350' : C.gold, color: ppgAktif ? C.white : C.primary, fontFamily: cinzel.style.fontFamily,
+                }}
+              >{ppgAktif ? "Durdur" : "Olcumu Baslat"}</button>
+            </div>
+          )}
+
+          {/* PPG Completed Card */}
+          {ppgTamamlandi && (
+            <div style={{ ...s.card, border: `2px solid ${C.primary}` }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 12 }}>
+                <div style={{ background: '#EAF3DE', color: '#3B6D11', padding: '3px 10px', borderRadius: 12, fontSize: 11, fontWeight: 600 }}>{"Tamamlandi"}</div>
+                <div style={{ fontSize: 20, fontWeight: 700, color: '#EF5350', fontFamily: cinzel.style.fontFamily }}>{ppgBpm} {"BPM"}</div>
+                <div style={{ fontSize: 11, color: C.secondary, marginLeft: 'auto' }}>{"8/8 sifat dolduruldu"}</div>
+              </div>
+              {/* Hilt bar chart */}
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 8, marginBottom: 12 }}>
+                {[
+                  { key: 'dem', label: 'Dem (Kan)', color: '#EF5350' },
+                  { key: 'balgam', label: 'Balgam', color: '#42A5F5' },
+                  { key: 'sari_safra', label: 'Sari Safra', color: '#FFB74D' },
+                  { key: 'kara_safra', label: 'Kara Safra', color: '#78909C' },
+                ].map(h => (
+                  <div key={h.key} style={{ background: C.surface, borderRadius: 8, padding: '6px 10px' }}>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 11, marginBottom: 4 }}>
+                      <span style={{ color: C.secondary }}>{h.label}</span>
+                      <span style={{ fontWeight: 600, color: h.color }}>{ppgHiltler[h.key as keyof typeof ppgHiltler]}{"%"}</span>
+                    </div>
+                    <div style={{ height: 6, background: C.border, borderRadius: 3 }}>
+                      <div style={{ height: 6, background: h.color, borderRadius: 3, width: `${ppgHiltler[h.key as keyof typeof ppgHiltler]}%`, transition: 'width 0.5s ease' }} />
+                    </div>
+                  </div>
+                ))}
+              </div>
+              <button
+                onClick={() => { setPpgTamamlandi(false); setNabizMod('kamera'); setPpgBpm(null) }}
+                style={{ fontSize: 12, color: C.secondary, background: 'none', border: `1px solid ${C.border}`, borderRadius: 6, padding: '5px 12px', cursor: 'pointer' }}
+              >{"Yeniden Olc"}</button>
+            </div>
+          )}
+
+          {/* Isi sifati - always visible after PPG or in manual */}
+          {(ppgTamamlandi || nabizMod === 'manuel') && (
+            <div style={{ ...s.card, marginTop: 12 }}>
+              <label style={s.label}>{"ISI SIFATI"}</label>
+              <span style={s.labelAr}>{"حرارة النبض"}</span>
+              <div style={{ fontSize: 11, color: '#999', marginBottom: 8 }}>{"PPG ile olculemez, elle belirleyin."}</div>
+              <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap' as const }}>
+                {[
+                  { v: 'sicak', l: 'Sicak' }, { v: 'ilik', l: 'Ilik' }, { v: 'soguk', l: 'Soguk' }
+                ].map(opt => (
+                  <button key={opt.v} onClick={() => set('nb_isi', opt.v)}
+                    style={{
+                      padding: '8px 18px', borderRadius: 8, fontSize: 13, cursor: 'pointer', fontWeight: form.nb_isi === opt.v ? 600 : 400,
+                      border: `1.5px solid ${form.nb_isi === opt.v ? C.gold : C.border}`,
+                      background: form.nb_isi === opt.v ? C.gold : C.white,
+                      color: form.nb_isi === opt.v ? C.primary : C.secondary,
+                    }}
+                  >{opt.l}</button>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* Manuel Mode: 8 sifat cards */}
+          {nabizMod === 'manuel' && (
+            <>
+              <div style={{ ...s.tip, marginTop: 12 }}>{"Asagidaki 8 nabiz sifatini el ile secin. Her sifatin Arapca adi ve ipucu bilgisi verilmistir."}</div>
+              <div style={s.grid2}>
+                {/* Buyukluk */}
+                <div style={s.card}>
+                  <label style={s.label}>{"BUYUKLUK"}</label>
+                  <span style={s.labelAr}>{"عِظَم النبض"}</span>
+                  <div style={{ fontSize: 11, color: '#999', marginBottom: 8 }}>{"Parmak altinda nabzin genisligi; damar ne kadar sisiyor?"}</div>
+                  <div style={{ display: 'flex', gap: 6 }}>
+                    {[{ v: 'buyuk', l: 'Buyuk' }, { v: 'orta', l: 'Orta' }, { v: 'kucuk', l: 'Kucuk' }].map(opt => (
+                      <button key={opt.v} onClick={() => { set('nb_buyukluk', opt.v); nabizHiltHesapla() }}
+                        style={{
+                          flex: 1, padding: '8px 4px', borderRadius: 8, fontSize: 12, cursor: 'pointer',
+                          border: `1.5px solid ${form.nb_buyukluk === opt.v ? C.gold : C.border}`,
+                          background: form.nb_buyukluk === opt.v ? C.gold : C.white,
+                          color: form.nb_buyukluk === opt.v ? C.primary : C.secondary,
+                          fontWeight: form.nb_buyukluk === opt.v ? 600 : 400,
+                        }}
+                      >{opt.l}</button>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Kuvvet */}
+                <div style={s.card}>
+                  <label style={s.label}>{"KUVVET"}</label>
+                  <span style={s.labelAr}>{"قوة النبض"}</span>
+                  <div style={{ fontSize: 11, color: '#999', marginBottom: 8 }}>{"Nabzi bastirmak icin ne kadar guc gerekiyor?"}</div>
+                  <div style={{ display: 'flex', gap: 6 }}>
+                    {[{ v: 'kuvvetli', l: 'Kuvvetli' }, { v: 'orta', l: 'Orta' }, { v: 'zayif', l: 'Zayif' }].map(opt => (
+                      <button key={opt.v} onClick={() => { set('nb_kuvvet', opt.v); nabizHiltHesapla() }}
+                        style={{
+                          flex: 1, padding: '8px 4px', borderRadius: 8, fontSize: 12, cursor: 'pointer',
+                          border: `1.5px solid ${form.nb_kuvvet === opt.v ? C.gold : C.border}`,
+                          background: form.nb_kuvvet === opt.v ? C.gold : C.white,
+                          color: form.nb_kuvvet === opt.v ? C.primary : C.secondary,
+                          fontWeight: form.nb_kuvvet === opt.v ? 600 : 400,
+                        }}
+                      >{opt.l}</button>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Hiz */}
+                <div style={s.card}>
+                  <label style={s.label}>{"HIZ"}</label>
+                  <span style={s.labelAr}>{"سرعة النبض"}</span>
+                  <div style={{ fontSize: 11, color: '#999', marginBottom: 8 }}>{"Iki vurus arasi sure; hizli mi yavas mi?"}</div>
+                  <div style={{ display: 'flex', gap: 6 }}>
+                    {[{ v: 'hizli', l: 'Hizli' }, { v: 'orta', l: 'Orta' }, { v: 'yavas', l: 'Yavas' }].map(opt => (
+                      <button key={opt.v} onClick={() => { set('nb_hiz_sinif', opt.v); nabizHiltHesapla() }}
+                        style={{
+                          flex: 1, padding: '8px 4px', borderRadius: 8, fontSize: 12, cursor: 'pointer',
+                          border: `1.5px solid ${form.nb_hiz_sinif === opt.v ? C.gold : C.border}`,
+                          background: form.nb_hiz_sinif === opt.v ? C.gold : C.white,
+                          color: form.nb_hiz_sinif === opt.v ? C.primary : C.secondary,
+                          fontWeight: form.nb_hiz_sinif === opt.v ? 600 : 400,
+                        }}
+                      >{opt.l}</button>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Dolgunluk */}
+                <div style={s.card}>
+                  <label style={s.label}>{"DOLGUNLUK"}</label>
+                  <span style={s.labelAr}>{"امتلاء النبض"}</span>
+                  <div style={{ fontSize: 11, color: '#999', marginBottom: 8 }}>{"Damar ne kadar dolu hissediliyor?"}</div>
+                  <div style={{ display: 'flex', gap: 6 }}>
+                    {[{ v: 'dolu', l: 'Dolu' }, { v: 'orta', l: 'Orta' }, { v: 'bos', l: 'Bos' }].map(opt => (
+                      <button key={opt.v} onClick={() => { set('nb_dolgunluk', opt.v); nabizHiltHesapla() }}
+                        style={{
+                          flex: 1, padding: '8px 4px', borderRadius: 8, fontSize: 12, cursor: 'pointer',
+                          border: `1.5px solid ${form.nb_dolgunluk === opt.v ? C.gold : C.border}`,
+                          background: form.nb_dolgunluk === opt.v ? C.gold : C.white,
+                          color: form.nb_dolgunluk === opt.v ? C.primary : C.secondary,
+                          fontWeight: form.nb_dolgunluk === opt.v ? 600 : 400,
+                        }}
+                      >{opt.l}</button>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Sertlik */}
+                <div style={s.card}>
+                  <label style={s.label}>{"SERTLIK"}</label>
+                  <span style={s.labelAr}>{"صلابة النبض"}</span>
+                  <div style={{ fontSize: 11, color: '#999', marginBottom: 8 }}>{"Damar duvari sert mi yumusak mi?"}</div>
+                  <div style={{ display: 'flex', gap: 6 }}>
+                    {[{ v: 'sert', l: 'Sert' }, { v: 'orta', l: 'Orta' }, { v: 'yumusak', l: 'Yumusak' }].map(opt => (
+                      <button key={opt.v} onClick={() => { set('nb_sertlik', opt.v); nabizHiltHesapla() }}
+                        style={{
+                          flex: 1, padding: '8px 4px', borderRadius: 8, fontSize: 12, cursor: 'pointer',
+                          border: `1.5px solid ${form.nb_sertlik === opt.v ? C.gold : C.border}`,
+                          background: form.nb_sertlik === opt.v ? C.gold : C.white,
+                          color: form.nb_sertlik === opt.v ? C.primary : C.secondary,
+                          fontWeight: form.nb_sertlik === opt.v ? 600 : 400,
+                        }}
+                      >{opt.l}</button>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Ritim */}
+                <div style={s.card}>
+                  <label style={s.label}>{"RITIM"}</label>
+                  <span style={s.labelAr}>{"إيقاع النبض"}</span>
+                  <div style={{ fontSize: 11, color: '#999', marginBottom: 8 }}>{"Vuruslar arasi zaman esit mi?"}</div>
+                  <div style={{ display: 'flex', gap: 6 }}>
+                    {[{ v: 'muntazam', l: 'Muntazam' }, { v: 'hafif_duzensiz', l: 'Hafif' }, { v: 'duzensiz', l: 'Duzensiz' }].map(opt => (
+                      <button key={opt.v} onClick={() => { set('nb_ritim', opt.v); nabizHiltHesapla() }}
+                        style={{
+                          flex: 1, padding: '8px 4px', borderRadius: 8, fontSize: 12, cursor: 'pointer',
+                          border: `1.5px solid ${form.nb_ritim === opt.v ? C.gold : C.border}`,
+                          background: form.nb_ritim === opt.v ? C.gold : C.white,
+                          color: form.nb_ritim === opt.v ? C.primary : C.secondary,
+                          fontWeight: form.nb_ritim === opt.v ? 600 : 400,
+                        }}
+                      >{opt.l}</button>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Esitlik */}
+                <div style={s.card}>
+                  <label style={s.label}>{"ESITLIK"}</label>
+                  <span style={s.labelAr}>{"تساوي النبض"}</span>
+                  <div style={{ fontSize: 11, color: '#999', marginBottom: 8 }}>{"Her vurusun gucu esit mi?"}</div>
+                  <div style={{ display: 'flex', gap: 6 }}>
+                    {[{ v: 'esit', l: 'Esit' }, { v: 'hafif_esitsiz', l: 'Hafif' }, { v: 'esitsiz', l: 'Esitsiz' }].map(opt => (
+                      <button key={opt.v} onClick={() => { set('nb_esitlik', opt.v); nabizHiltHesapla() }}
+                        style={{
+                          flex: 1, padding: '8px 4px', borderRadius: 8, fontSize: 12, cursor: 'pointer',
+                          border: `1.5px solid ${form.nb_esitlik === opt.v ? C.gold : C.border}`,
+                          background: form.nb_esitlik === opt.v ? C.gold : C.white,
+                          color: form.nb_esitlik === opt.v ? C.primary : C.secondary,
+                          fontWeight: form.nb_esitlik === opt.v ? 600 : 400,
+                        }}
+                      >{opt.l}</button>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Sureklitik */}
+                <div style={s.card}>
+                  <label style={s.label}>{"SUREKLITIK"}</label>
+                  <span style={s.labelAr}>{"دوام النبض"}</span>
+                  <div style={{ fontSize: 11, color: '#999', marginBottom: 8 }}>{"Nabiz surekliligi; duraksamalar var mi?"}</div>
+                  <div style={{ display: 'flex', gap: 6 }}>
+                    {[{ v: 'surekli', l: 'Surekli' }, { v: 'hafif_kesik', l: 'Hafif' }, { v: 'kesik', l: 'Kesik' }].map(opt => (
+                      <button key={opt.v} onClick={() => { set('nb_sureklitik', opt.v); nabizHiltHesapla() }}
+                        style={{
+                          flex: 1, padding: '8px 4px', borderRadius: 8, fontSize: 12, cursor: 'pointer',
+                          border: `1.5px solid ${form.nb_sureklitik === opt.v ? C.gold : C.border}`,
+                          background: form.nb_sureklitik === opt.v ? C.gold : C.white,
+                          color: form.nb_sureklitik === opt.v ? C.primary : C.secondary,
+                          fontWeight: form.nb_sureklitik === opt.v ? 600 : 400,
+                        }}
+                      >{opt.l}</button>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </>
+          )}
+
           <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: 24 }}>
             <button onClick={() => setAdim(2)} style={{ padding: '10px 24px', border: `1px solid ${C.border}`, borderRadius: 8, background: C.white, color: C.secondary, cursor: 'pointer', fontSize: 13 }}>{"\u2190 Geri"}</button>
             <button onClick={() => setAdim(4)} style={{ padding: '10px 28px', background: C.primary, border: 'none', borderRadius: 8, color: C.gold, cursor: 'pointer', fontSize: 13, fontWeight: 600, fontFamily: cinzel.style.fontFamily }}>{"Ileri \u2192"}</button>
@@ -346,10 +1038,281 @@ export default function AnalizClient() {
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="3"/></svg>
             {"Dil ve Yuz Gozlemi"}
           </div>
-          <div style={{ ...s.card, textAlign: 'center' as const, padding: '48px 24px' }}>
-            <div style={{ fontFamily: cinzel.style.fontFamily, fontSize: 16, color: C.primary, marginBottom: 8 }}>{"DIL YUZ MODULU YAKINDA"}</div>
-            <div style={{ fontSize: 13, color: C.secondary }}>{"Kamera analizi ve Claude Vision modulu yeniden yaziliyor."}</div>
+          <div style={s.tip}>{"el-Kanun fi't-Tibb: Dil rengi, kaplamasi ve yuz gorunumu mizac ve hilt dengesinin onemli belirtileridir."}</div>
+
+          {/* Toggle: Kamera / Manuel */}
+          <div style={{ display: 'flex', gap: 8, marginBottom: 16 }}>
+            <button
+              onClick={() => setDyMod('kamera')}
+              style={{
+                flex: 1, padding: '10px 0', borderRadius: 8, border: `1.5px solid ${dyMod === 'kamera' ? C.gold : C.border}`,
+                background: dyMod === 'kamera' ? C.gold : C.white, color: dyMod === 'kamera' ? C.primary : C.secondary,
+                fontWeight: dyMod === 'kamera' ? 600 : 400, cursor: 'pointer', fontSize: 13, fontFamily: cinzel.style.fontFamily,
+              }}
+            >{"Kamera ile Cek"}</button>
+            <button
+              onClick={() => setDyMod('manuel')}
+              style={{
+                flex: 1, padding: '10px 0', borderRadius: 8, border: `1.5px solid ${dyMod === 'manuel' ? C.gold : C.border}`,
+                background: dyMod === 'manuel' ? C.gold : C.white, color: dyMod === 'manuel' ? C.primary : C.secondary,
+                fontWeight: dyMod === 'manuel' ? 600 : 400, cursor: 'pointer', fontSize: 13, fontFamily: cinzel.style.fontFamily,
+              }}
+            >{"Manuel Gir"}</button>
           </div>
+
+          {/* Kamera Mode */}
+          {dyMod === 'kamera' && (
+            <>
+              <div style={s.grid2}>
+                {/* Dil Photo */}
+                <div style={s.card}>
+                  <label style={s.label}>{"DIL FOTOGRAFI"}</label>
+                  <div style={{ position: 'relative' as const, width: '100%', aspectRatio: '4/3', background: '#1a1a2e', borderRadius: 10, overflow: 'hidden', marginBottom: 8 }}>
+                    {dyFotolar.dil ? (
+                      <>
+                        {/* eslint-disable-next-line @next/next/no-img-element */}
+                        <img src={dyFotolar.dil} alt="Dil" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                      </>
+                    ) : (
+                      <video ref={dilVideoRef} style={{ width: '100%', height: '100%', objectFit: 'cover' }} playsInline muted />
+                    )}
+                    <canvas ref={dilCanvasRef} style={{ display: 'none' }} />
+                  </div>
+                  <div style={{ display: 'flex', gap: 6 }}>
+                    {!dyFotolar.dil ? (
+                      <>
+                        <button onClick={() => dyKameraAc('dil')} style={{ flex: 1, padding: '8px 0', borderRadius: 8, border: `1px solid ${C.border}`, background: C.white, color: C.secondary, cursor: 'pointer', fontSize: 12 }}>{"Kamerayi Ac"}</button>
+                        <button onClick={() => dyFotoCek('dil')} style={{ flex: 1, padding: '8px 0', borderRadius: 8, border: 'none', background: C.gold, color: C.primary, cursor: 'pointer', fontSize: 12, fontWeight: 600 }}>{"Cek"}</button>
+                      </>
+                    ) : (
+                      <button onClick={() => setDyFotolar(p => ({ ...p, dil: null }))} style={{ flex: 1, padding: '8px 0', borderRadius: 8, border: `1px solid ${C.border}`, background: C.white, color: C.secondary, cursor: 'pointer', fontSize: 12 }}>{"Yeniden Cek"}</button>
+                    )}
+                  </div>
+                </div>
+
+                {/* Yuz Photo */}
+                <div style={s.card}>
+                  <label style={s.label}>{"YUZ FOTOGRAFI"}</label>
+                  <div style={{ position: 'relative' as const, width: '100%', aspectRatio: '4/3', background: '#1a1a2e', borderRadius: 10, overflow: 'hidden', marginBottom: 8 }}>
+                    {dyFotolar.yuz ? (
+                      <>
+                        {/* eslint-disable-next-line @next/next/no-img-element */}
+                        <img src={dyFotolar.yuz} alt="Yuz" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                      </>
+                    ) : (
+                      <video ref={yuzVideoRef} style={{ width: '100%', height: '100%', objectFit: 'cover' }} playsInline muted />
+                    )}
+                    <canvas ref={yuzCanvasRef} style={{ display: 'none' }} />
+                  </div>
+                  <div style={{ display: 'flex', gap: 6 }}>
+                    {!dyFotolar.yuz ? (
+                      <>
+                        <button onClick={() => dyKameraAc('yuz')} style={{ flex: 1, padding: '8px 0', borderRadius: 8, border: `1px solid ${C.border}`, background: C.white, color: C.secondary, cursor: 'pointer', fontSize: 12 }}>{"Kamerayi Ac"}</button>
+                        <button onClick={() => dyFotoCek('yuz')} style={{ flex: 1, padding: '8px 0', borderRadius: 8, border: 'none', background: C.gold, color: C.primary, cursor: 'pointer', fontSize: 12, fontWeight: 600 }}>{"Cek"}</button>
+                      </>
+                    ) : (
+                      <button onClick={() => setDyFotolar(p => ({ ...p, yuz: null }))} style={{ flex: 1, padding: '8px 0', borderRadius: 8, border: `1px solid ${C.border}`, background: C.white, color: C.secondary, cursor: 'pointer', fontSize: 12 }}>{"Yeniden Cek"}</button>
+                    )}
+                  </div>
+                </div>
+              </div>
+
+              {/* Analyze button */}
+              {(dyFotolar.dil || dyFotolar.yuz) && (
+                <button
+                  onClick={dyAnalizEt}
+                  disabled={dyAnalizing}
+                  style={{
+                    width: '100%', padding: '14px 0', borderRadius: 10, border: 'none', cursor: dyAnalizing ? 'wait' : 'pointer',
+                    background: C.primary, color: C.gold, fontSize: 14, fontWeight: 600, fontFamily: cinzel.style.fontFamily, marginTop: 12,
+                    opacity: dyAnalizing ? 0.7 : 1,
+                  }}
+                >{dyAnalizing ? "Analiz ediliyor..." : "el-Kanun ile Analiz Et"}</button>
+              )}
+
+              {/* Analysis result */}
+              {dyAnalizSonucu && (
+                <div style={{ ...s.card, marginTop: 12, border: `2px solid ${C.primary}` }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 12 }}>
+                    <div style={{ background: '#EAF3DE', color: '#3B6D11', padding: '3px 10px', borderRadius: 12, fontSize: 11, fontWeight: 600 }}>{"Analiz Tamamlandi"}</div>
+                  </div>
+                  {dyAnalizSonucu.yorum && (
+                    <div style={{ fontSize: 13, color: C.secondary, lineHeight: 1.6, marginBottom: 12, fontStyle: 'italic' }}>{dyAnalizSonucu.yorum}</div>
+                  )}
+                  <div style={s.grid2}>
+                    {dyAnalizSonucu.dil_renk && <div style={{ fontSize: 12 }}><strong>{"Dil Renk: "}</strong>{dyAnalizSonucu.dil_renk}</div>}
+                    {dyAnalizSonucu.dil_kaplama && <div style={{ fontSize: 12 }}><strong>{"Dil Kaplama: "}</strong>{dyAnalizSonucu.dil_kaplama}</div>}
+                    {dyAnalizSonucu.dil_nem && <div style={{ fontSize: 12 }}><strong>{"Dil Nem: "}</strong>{dyAnalizSonucu.dil_nem}</div>}
+                    {dyAnalizSonucu.dil_sekil && <div style={{ fontSize: 12 }}><strong>{"Dil Sekil: "}</strong>{dyAnalizSonucu.dil_sekil}</div>}
+                    {dyAnalizSonucu.yuz_ten && <div style={{ fontSize: 12 }}><strong>{"Yuz Ten: "}</strong>{dyAnalizSonucu.yuz_ten}</div>}
+                    {dyAnalizSonucu.yuz_sekil && <div style={{ fontSize: 12 }}><strong>{"Yuz Sekil: "}</strong>{dyAnalizSonucu.yuz_sekil}</div>}
+                    {dyAnalizSonucu.yuz_cilt && <div style={{ fontSize: 12 }}><strong>{"Yuz Cilt: "}</strong>{dyAnalizSonucu.yuz_cilt}</div>}
+                    {dyAnalizSonucu.yuz_gozalti && <div style={{ fontSize: 12 }}><strong>{"Goz Alti: "}</strong>{dyAnalizSonucu.yuz_gozalti}</div>}
+                  </div>
+                </div>
+              )}
+            </>
+          )}
+
+          {/* Manuel Mode */}
+          {dyMod === 'manuel' && (
+            <>
+              <div style={{ ...s.tip, marginTop: 4 }}>{"Dil ve yuz ozelliklerini asagidan secin."}</div>
+
+              {/* Dil Fields */}
+              <div style={s.sectionTitle}>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M12 22c5.52 0 10-4.48 10-10S17.52 2 12 2 2 6.48 2 12s4.48 10 10 10z"/></svg>
+                {"Dil Gozlemi"}
+              </div>
+              <div style={s.grid2}>
+                <div style={s.card}>
+                  <label style={s.label}>{"DIL RENGI"}</label>
+                  <div style={{ fontSize: 11, color: '#999', marginBottom: 8 }}>{"Dilin genel renk tonu"}</div>
+                  <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap' as const }}>
+                    {['acik_pembe', 'pembe', 'kirmizi', 'koyu_kirmizi', 'morumsu', 'soluk'].map(v => (
+                      <button key={v} onClick={() => set('dil_renk', v)}
+                        style={{
+                          padding: '6px 12px', borderRadius: 6, fontSize: 11, cursor: 'pointer',
+                          border: `1.5px solid ${form.dil_renk === v ? C.gold : C.border}`,
+                          background: form.dil_renk === v ? C.gold : C.white,
+                          color: form.dil_renk === v ? C.primary : C.secondary,
+                          fontWeight: form.dil_renk === v ? 600 : 400,
+                        }}
+                      >{v.replace('_', ' ')}</button>
+                    ))}
+                  </div>
+                </div>
+                <div style={s.card}>
+                  <label style={s.label}>{"DIL KAPLAMASI"}</label>
+                  <div style={{ fontSize: 11, color: '#999', marginBottom: 8 }}>{"Dil uzerindeki tabaka"}</div>
+                  <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap' as const }}>
+                    {['yok', 'ince_beyaz', 'kalin_beyaz', 'sari', 'gri', 'siyah'].map(v => (
+                      <button key={v} onClick={() => set('dil_kaplama', v)}
+                        style={{
+                          padding: '6px 12px', borderRadius: 6, fontSize: 11, cursor: 'pointer',
+                          border: `1.5px solid ${form.dil_kaplama === v ? C.gold : C.border}`,
+                          background: form.dil_kaplama === v ? C.gold : C.white,
+                          color: form.dil_kaplama === v ? C.primary : C.secondary,
+                          fontWeight: form.dil_kaplama === v ? 600 : 400,
+                        }}
+                      >{v.replace('_', ' ')}</button>
+                    ))}
+                  </div>
+                </div>
+                <div style={s.card}>
+                  <label style={s.label}>{"DIL NEMI"}</label>
+                  <div style={{ fontSize: 11, color: '#999', marginBottom: 8 }}>{"Dilin nemlilik durumu"}</div>
+                  <div style={{ display: 'flex', gap: 6 }}>
+                    {['kuru', 'normal', 'nemli', 'cok_nemli'].map(v => (
+                      <button key={v} onClick={() => set('dil_nem', v)}
+                        style={{
+                          padding: '6px 12px', borderRadius: 6, fontSize: 11, cursor: 'pointer',
+                          border: `1.5px solid ${form.dil_nem === v ? C.gold : C.border}`,
+                          background: form.dil_nem === v ? C.gold : C.white,
+                          color: form.dil_nem === v ? C.primary : C.secondary,
+                          fontWeight: form.dil_nem === v ? 600 : 400,
+                        }}
+                      >{v.replace('_', ' ')}</button>
+                    ))}
+                  </div>
+                </div>
+                <div style={s.card}>
+                  <label style={s.label}>{"DIL SEKLI"}</label>
+                  <div style={{ fontSize: 11, color: '#999', marginBottom: 8 }}>{"Dilin genel formu"}</div>
+                  <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap' as const }}>
+                    {['normal', 'siskin', 'ince', 'dis_izli', 'catlaklı'].map(v => (
+                      <button key={v} onClick={() => set('dil_sekil', v)}
+                        style={{
+                          padding: '6px 12px', borderRadius: 6, fontSize: 11, cursor: 'pointer',
+                          border: `1.5px solid ${form.dil_sekil === v ? C.gold : C.border}`,
+                          background: form.dil_sekil === v ? C.gold : C.white,
+                          color: form.dil_sekil === v ? C.primary : C.secondary,
+                          fontWeight: form.dil_sekil === v ? 600 : 400,
+                        }}
+                      >{v.replace('_', ' ')}</button>
+                    ))}
+                  </div>
+                </div>
+              </div>
+
+              {/* Yuz Fields */}
+              <div style={s.sectionTitle}>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="8" r="5"/><path d="M20 21a8 8 0 10-16 0"/></svg>
+                {"Yuz Gozlemi"}
+              </div>
+              <div style={s.grid2}>
+                <div style={s.card}>
+                  <label style={s.label}>{"TEN RENGI"}</label>
+                  <div style={{ fontSize: 11, color: '#999', marginBottom: 8 }}>{"Yuzun genel renk tonu"}</div>
+                  <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap' as const }}>
+                    {['soluk', 'acik', 'normal', 'kizarik', 'sarimsi', 'esmer'].map(v => (
+                      <button key={v} onClick={() => set('yuz_ten', v)}
+                        style={{
+                          padding: '6px 12px', borderRadius: 6, fontSize: 11, cursor: 'pointer',
+                          border: `1.5px solid ${form.yuz_ten === v ? C.gold : C.border}`,
+                          background: form.yuz_ten === v ? C.gold : C.white,
+                          color: form.yuz_ten === v ? C.primary : C.secondary,
+                          fontWeight: form.yuz_ten === v ? 600 : 400,
+                        }}
+                      >{v}</button>
+                    ))}
+                  </div>
+                </div>
+                <div style={s.card}>
+                  <label style={s.label}>{"YUZ SEKLI"}</label>
+                  <div style={{ fontSize: 11, color: '#999', marginBottom: 8 }}>{"Yuzun genel formu"}</div>
+                  <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap' as const }}>
+                    {['yuvarlak', 'oval', 'uzun', 'kare', 'ucgen'].map(v => (
+                      <button key={v} onClick={() => set('yuz_sekil', v)}
+                        style={{
+                          padding: '6px 12px', borderRadius: 6, fontSize: 11, cursor: 'pointer',
+                          border: `1.5px solid ${form.yuz_sekil === v ? C.gold : C.border}`,
+                          background: form.yuz_sekil === v ? C.gold : C.white,
+                          color: form.yuz_sekil === v ? C.primary : C.secondary,
+                          fontWeight: form.yuz_sekil === v ? 600 : 400,
+                        }}
+                      >{v}</button>
+                    ))}
+                  </div>
+                </div>
+                <div style={s.card}>
+                  <label style={s.label}>{"CILT DURUMU"}</label>
+                  <div style={{ fontSize: 11, color: '#999', marginBottom: 8 }}>{"Yuz cildinin durumu"}</div>
+                  <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap' as const }}>
+                    {['kuru', 'normal', 'yagly', 'karisik', 'hassas'].map(v => (
+                      <button key={v} onClick={() => set('yuz_cilt', v)}
+                        style={{
+                          padding: '6px 12px', borderRadius: 6, fontSize: 11, cursor: 'pointer',
+                          border: `1.5px solid ${form.yuz_cilt === v ? C.gold : C.border}`,
+                          background: form.yuz_cilt === v ? C.gold : C.white,
+                          color: form.yuz_cilt === v ? C.primary : C.secondary,
+                          fontWeight: form.yuz_cilt === v ? 600 : 400,
+                        }}
+                      >{v}</button>
+                    ))}
+                  </div>
+                </div>
+                <div style={s.card}>
+                  <label style={s.label}>{"GOZ ALTI"}</label>
+                  <div style={{ fontSize: 11, color: '#999', marginBottom: 8 }}>{"Goz alti gorunumu"}</div>
+                  <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap' as const }}>
+                    {['normal', 'morumsu', 'siskin', 'cokuk', 'koyu_halka'].map(v => (
+                      <button key={v} onClick={() => set('yuz_gozalti', v)}
+                        style={{
+                          padding: '6px 12px', borderRadius: 6, fontSize: 11, cursor: 'pointer',
+                          border: `1.5px solid ${form.yuz_gozalti === v ? C.gold : C.border}`,
+                          background: form.yuz_gozalti === v ? C.gold : C.white,
+                          color: form.yuz_gozalti === v ? C.primary : C.secondary,
+                          fontWeight: form.yuz_gozalti === v ? 600 : 400,
+                        }}
+                      >{v.replace('_', ' ')}</button>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </>
+          )}
+
           <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: 24 }}>
             <button onClick={() => setAdim(3)} style={{ padding: '10px 24px', border: `1px solid ${C.border}`, borderRadius: 8, background: C.white, color: C.secondary, cursor: 'pointer', fontSize: 13 }}>{"\u2190 Geri"}</button>
             <button onClick={() => setAdim(5)} style={{ padding: '10px 28px', background: C.primary, border: 'none', borderRadius: 8, color: C.gold, cursor: 'pointer', fontSize: 13, fontWeight: 600, fontFamily: cinzel.style.fontFamily }}>{"Ileri \u2192"}</button>
