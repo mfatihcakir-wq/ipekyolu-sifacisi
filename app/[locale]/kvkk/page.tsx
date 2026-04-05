@@ -7,7 +7,7 @@ import Footer from '../components/Footer'
 const cinzel = Cinzel({ display: 'swap', preload: false, subsets: ['latin', 'latin-ext'], weight: ['400', '500', '600'] })
 const garamond = EB_Garamond({ display: 'swap', preload: false, subsets: ['latin', 'latin-ext'], weight: ['400', '500'], style: ['normal', 'italic'] })
 
-const C = { primary: '#1C3A26', gold: '#8B6914', cream: '#FAF7F2', secondary: '#6B5744', border: '#E8DFD4', white: '#FFFFFF' }
+const C = { primary: '#1C3A26', gold: '#B8860B', cream: '#FAF6EF', secondary: '#6B5744', border: '#DEB887', white: '#FFFFFF' }
 
 export default function KVKKPage() {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars

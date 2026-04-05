@@ -12,13 +12,13 @@ const garamond = EB_Garamond({ display: 'swap', preload: false, subsets: ['latin
 
 const C = {
   primary: '#1C3A26',
-  gold: '#8B6914',
-  cream: '#FAF7F2',
+  gold: '#B8860B',
+  cream: '#FAF6EF',
   dark: '#1C1C1C',
   secondary: '#6B5744',
-  border: '#E8DFD4',
+  border: '#DEB887',
   white: '#FFFFFF',
-  surface: '#FAF7F2',
+  surface: '#FAF6EF',
 }
 
 const s = {
@@ -550,10 +550,10 @@ export default function AnalizClient() {
       {false && <header style={{ background: C.primary, padding: '0 clamp(12px, 3vw, 24px)', height: 64, display: 'flex', alignItems: 'center', justifyContent: 'space-between', position: 'sticky', top: 0, zIndex: 100 }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
           <svg width="36" height="36" viewBox="0 0 64 64" fill="none">
-            <ellipse cx="32" cy="37" rx="13" ry="11" fill="none" stroke="#8B6914" strokeWidth="1.5"/>
-            <path d="M22 37 Q22 25 32 23 Q42 25 42 37" fill="none" stroke="#8B6914" strokeWidth="1.5"/>
-            <rect x="28" y="21" width="8" height="4" rx="1.5" fill="none" stroke="#8B6914" strokeWidth="1.5"/>
-            <path d="M32 14 Q36 10 40 12 Q38 18 32 20 Q26 18 24 12 Q28 10 32 14Z" fill="#8B6914"/>
+            <ellipse cx="32" cy="37" rx="13" ry="11" fill="none" stroke="#B8860B" strokeWidth="1.5"/>
+            <path d="M22 37 Q22 25 32 23 Q42 25 42 37" fill="none" stroke="#B8860B" strokeWidth="1.5"/>
+            <rect x="28" y="21" width="8" height="4" rx="1.5" fill="none" stroke="#B8860B" strokeWidth="1.5"/>
+            <path d="M32 14 Q36 10 40 12 Q38 18 32 20 Q26 18 24 12 Q28 10 32 14Z" fill="#B8860B"/>
             <circle cx="32" cy="32" r="2.8" fill="#EF5350"/>
             <circle cx="26.5" cy="34" r="2" fill="#FF7043"/>
             <circle cx="37.5" cy="34" r="2" fill="#42A5F5"/>
@@ -818,7 +818,7 @@ export default function AnalizClient() {
                 <canvas ref={ppgCanvasRef} style={{ display: 'none' }} />
                 {!ppgAktif && (
                   <div style={{ position: 'absolute' as const, inset: 0, display: 'flex', flexDirection: 'column' as const, alignItems: 'center', justifyContent: 'center', background: 'rgba(0,0,0,0.6)' }}>
-                    <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#8B6914" strokeWidth="1.5"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+                    <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#B8860B" strokeWidth="1.5"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
                     <div style={{ color: C.gold, fontSize: 11, marginTop: 8 }}>{"Parmagini lens uzerine koy"}</div>
                   </div>
                 )}
@@ -836,7 +836,7 @@ export default function AnalizClient() {
                       <span style={{ fontFamily: cinzel.style.fontFamily, fontSize: 8, color: 'rgba(184,146,42,0.5)', letterSpacing: 1.5 }}>
                         {"SINYAL KALITESI"}
                       </span>
-                      <span style={{ fontFamily: cinzel.style.fontFamily, fontSize: 8, color: '#8B6914' }}>
+                      <span style={{ fontFamily: cinzel.style.fontFamily, fontSize: 8, color: '#B8860B' }}>
                         {ppgKalite}{"%"}
                       </span>
                     </div>

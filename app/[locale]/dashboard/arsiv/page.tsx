@@ -9,9 +9,9 @@ const cinzel = Cinzel({ display: 'swap', preload: false, subsets: ['latin', 'lat
 const garamond = EB_Garamond({ display: 'swap', preload: false, subsets: ['latin', 'latin-ext'], weight: ['400', '500'], style: ['normal', 'italic'] })
 
 const C = {
-  primary: '#1C3A26', gold: '#8B6914', cream: '#FAF7F2',
-  dark: '#1C1C1C', secondary: '#6B5744', border: '#E8DFD4',
-  white: '#FFFFFF', surface: '#FAF7F2',
+  primary: '#1C3A26', gold: '#B8860B', cream: '#FAF6EF',
+  dark: '#1C1C1C', secondary: '#6B5744', border: '#DEB887',
+  white: '#FFFFFF', surface: '#FAF6EF',
 }
 
 const HEKIM_PROFILLER = [

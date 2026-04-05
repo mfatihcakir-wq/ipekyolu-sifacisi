@@ -49,7 +49,7 @@ export default function LoginPage() {
   return (
     <div style={{
       minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center',
-      backgroundColor: '#FAF7F2', fontFamily: garamond.style.fontFamily,
+      backgroundColor: '#FAF6EF', fontFamily: garamond.style.fontFamily,
     }}>
       <Header />
       <div style={{
@@ -60,11 +60,11 @@ export default function LoginPage() {
         {/* Logo */}
         <div style={{ textAlign: 'center', marginBottom: 32 }}>
           <svg width="48" height="48" viewBox="0 0 64 64" fill="none" style={{ margin: '0 auto 12px auto', display: 'block' }}>
-            <ellipse cx="32" cy="37" rx="13" ry="11" fill="none" stroke="#8B6914" strokeWidth="1.5"/>
-            <path d="M22 37 Q22 25 32 23 Q42 25 42 37" fill="none" stroke="#8B6914" strokeWidth="1.5"/>
-            <rect x="28" y="21" width="8" height="4" rx="1.5" fill="none" stroke="#8B6914" strokeWidth="1.5"/>
-            <path d="M32 14 Q36 10 40 12 Q38 18 32 20 Q26 18 24 12 Q28 10 32 14Z" fill="#8B6914"/>
-            <path d="M32 38 Q28.5 42 32 45.5 Q35.5 42 32 38Z" fill="#8B6914" opacity="0.8"/>
+            <ellipse cx="32" cy="37" rx="13" ry="11" fill="none" stroke="#B8860B" strokeWidth="1.5"/>
+            <path d="M22 37 Q22 25 32 23 Q42 25 42 37" fill="none" stroke="#B8860B" strokeWidth="1.5"/>
+            <rect x="28" y="21" width="8" height="4" rx="1.5" fill="none" stroke="#B8860B" strokeWidth="1.5"/>
+            <path d="M32 14 Q36 10 40 12 Q38 18 32 20 Q26 18 24 12 Q28 10 32 14Z" fill="#B8860B"/>
+            <path d="M32 38 Q28.5 42 32 45.5 Q35.5 42 32 38Z" fill="#B8860B" opacity="0.8"/>
             <circle cx="32" cy="32" r="2.8" fill="#EF5350"/>
             <circle cx="26.5" cy="34" r="2" fill="#FF7043"/>
             <circle cx="37.5" cy="34" r="2" fill="#42A5F5"/>
@@ -137,12 +137,12 @@ export default function LoginPage() {
             </button>
           </div>
         ) : (
-          <div style={{ marginTop: 16, padding: '16px', background: '#FAF7F2', borderRadius: 10, border: '1px solid #E8DFD4' }}>
+          <div style={{ marginTop: 16, padding: '16px', background: '#FAF6EF', borderRadius: 10, border: '1px solid #DEB887' }}>
             <div style={{ fontSize: 13, color: '#1C3A26', marginBottom: 10, fontWeight: 600 }}>{"Şifre Sıfırlama"}</div>
             <input
               type="email" value={sifirlaEmail} onChange={e => setSifirlaEmail(e.target.value)}
               placeholder="E-posta adresiniz"
-              style={{ width: '100%', padding: '10px 12px', border: '1px solid #E8DFD4', borderRadius: 8, fontSize: 13, marginBottom: 8, boxSizing: 'border-box' as const }}
+              style={{ width: '100%', padding: '10px 12px', border: '1px solid #DEB887', borderRadius: 8, fontSize: 13, marginBottom: 8, boxSizing: 'border-box' as const }}
             />
             {sifirlaMsg && (
               <div style={{ fontSize: 12, color: sifirlaMsg.startsWith('Hata') ? '#C62828' : '#2E7D32', marginBottom: 8 }}>
@@ -151,11 +151,11 @@ export default function LoginPage() {
             )}
             <div style={{ display: 'flex', gap: 8 }}>
               <button onClick={handleSifreSifirla}
-                style={{ flex: 1, padding: '10px', background: '#1C3A26', border: 'none', borderRadius: 8, color: '#8B6914', fontSize: 12, fontWeight: 600, cursor: 'pointer' }}>
+                style={{ flex: 1, padding: '10px', background: '#1C3A26', border: 'none', borderRadius: 8, color: '#B8860B', fontSize: 12, fontWeight: 600, cursor: 'pointer' }}>
                 {"Gönder"}
               </button>
               <button onClick={() => { setSifreSifirla(false); setSifirlaMsg('') }}
-                style={{ flex: 1, padding: '10px', background: 'transparent', border: '1px solid #E8DFD4', borderRadius: 8, color: '#6B5744', fontSize: 12, cursor: 'pointer' }}>
+                style={{ flex: 1, padding: '10px', background: 'transparent', border: '1px solid #DEB887', borderRadius: 8, color: '#6B5744', fontSize: 12, cursor: 'pointer' }}>
                 {"İptal"}
               </button>
             </div>

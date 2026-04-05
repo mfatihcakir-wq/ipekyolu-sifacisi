@@ -9,9 +9,9 @@ const cinzel = Cinzel({ display: 'swap', preload: false, subsets: ['latin', 'lat
 const garamond = EB_Garamond({ display: 'swap', preload: false, subsets: ['latin', 'latin-ext'], weight: ['400', '500'], style: ['normal', 'italic'] })
 
 const C = {
-  primary: '#1C3A26', gold: '#B8922A', cream: '#FAF7F2',
-  dark: '#1C1C1C', secondary: '#6B5744', border: '#E8DFD4',
-  white: '#FFFFFF', surface: '#FAF7F2', darkBg: '#122B1C',
+  primary: '#1C3A26', gold: '#B8922A', cream: '#FAF6EF',
+  dark: '#1C1C1C', secondary: '#6B5744', border: '#DEB887',
+  white: '#FFFFFF', surface: '#FAF6EF', darkBg: '#122B1C',
 }
 
 interface Analiz {
@@ -150,7 +150,7 @@ export default function HastaPage() {
           </div>
           <div style={{ background: C.white, borderRadius: 12, border: `1px solid ${C.border}`, padding: '20px', borderTop: `3px solid ${C.gold}` }}>
             <div style={{ fontSize: 10, color: C.secondary, letterSpacing: 1, marginBottom: 6 }}>BU HAFTA</div>
-            <div style={{ fontSize: 28, fontWeight: 600, color: '#8B6914', fontFamily: cinzel.style.fontFamily }}>{buHafta}</div>
+            <div style={{ fontSize: 28, fontWeight: 600, color: '#B8860B', fontFamily: cinzel.style.fontFamily }}>{buHafta}</div>
             <div style={{ fontSize: 10, color: '#999', marginTop: 2 }}>/ 1 hak</div>
           </div>
           <div style={{ background: C.white, borderRadius: 12, border: `1px solid ${C.border}`, padding: '20px', borderTop: `3px solid ${abonelik ? '#2E7D32' : '#C62828'}` }}>

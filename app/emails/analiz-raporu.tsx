@@ -7,11 +7,11 @@ export function analizRaporuHtml(data: {
 }): string {
   const { hasta_adi, kayit_no, sonuc } = data
   const primary = '#1C3A26'
-  const gold = '#8B6914'
-  const cream = '#FAF7F2'
+  const gold = '#B8860B'
+  const cream = '#FAF6EF'
   const dark = '#1C1C1C'
-  const border = '#E8DFD4'
-  const surface = '#FAF7F2'
+  const border = '#DEB887'
+  const surface = '#FAF6EF'
 
   const bitkilerHtml = (sonuc.bitki_recetesi || []).map((b: { bitki: string; ar?: string; doz?: string; sure?: string; endikasyon?: string; kaynak?: string }) => `
     <tr><td style="padding:8px 0;border-bottom:1px solid ${border};">

@@ -7,11 +7,11 @@ export function ciltRaporuHtml(data: {
 }): string {
   const { hasta_adi, kayit_no, sonuc } = data
   const primary = '#1C3A26'
-  const gold = '#8B6914'
-  const cream = '#FAF7F2'
+  const gold = '#B8860B'
+  const cream = '#FAF6EF'
   const dark = '#1C1C1C'
-  const border = '#E8DFD4'
-  const surface = '#FAF7F2'
+  const border = '#DEB887'
+  const surface = '#FAF6EF'
 
   const urunlerHtml = (sonuc.urunler || []).map((u: {
     isim: string; tur: string; bilesenler: string[]; hazirlanis: string; uygulama: string; sure?: string; kaynak?: string

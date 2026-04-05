@@ -13,19 +13,19 @@ const garamond = EB_Garamond({ display: 'swap', preload: false, subsets: ['latin
 const naskh = Noto_Naskh_Arabic({ display: 'swap', preload: false, subsets: ['arabic'], weight: ['400', '500'] })
 
 const C = {
-  primary: '#1C3A26', primaryDark: '#122B1C', gold: '#8B6914',
-  cream: '#FAF7F2', dark: '#1C1C1C', secondary: '#6B5744',
-  border: '#E8DFD4', white: '#FFFFFF', surface: '#FAF7F2', muted: '#8A7968',
+  primary: '#1C3A26', primaryDark: '#122B1C', gold: '#B8860B',
+  cream: '#FAF6EF', dark: '#1C1C1C', secondary: '#6B5744',
+  border: '#DEB887', white: '#FFFFFF', surface: '#FAF6EF', muted: '#8A7968',
 }
 
 function AlembikSVG({ size = 160 }: { size?: number }) {
   return (
     <svg width={size} height={size} viewBox="0 0 64 64" fill="none">
-      <ellipse cx="32" cy="37" rx="12" ry="10" stroke="#8B6914" strokeWidth="1.5" opacity={0.8} />
-      <path d="M22 37 Q22 25 32 23 Q42 25 42 37" stroke="#8B6914" strokeWidth="1.5" opacity={0.8} />
-      <rect x="29" y="21" width="6" height="3.5" rx="1" stroke="#8B6914" strokeWidth="1.5" opacity={0.8} />
-      <path d="M32 15 Q36 11 40 13 Q38 18 32 20 Q26 18 24 13 Q28 11 32 15Z" fill="#8B6914" />
-      <path d="M32 38 Q28.5 42 32 45.5 Q35.5 42 32 38Z" fill="#8B6914" opacity={0.5} />
+      <ellipse cx="32" cy="37" rx="12" ry="10" stroke="#B8860B" strokeWidth="1.5" opacity={0.8} />
+      <path d="M22 37 Q22 25 32 23 Q42 25 42 37" stroke="#B8860B" strokeWidth="1.5" opacity={0.8} />
+      <rect x="29" y="21" width="6" height="3.5" rx="1" stroke="#B8860B" strokeWidth="1.5" opacity={0.8} />
+      <path d="M32 15 Q36 11 40 13 Q38 18 32 20 Q26 18 24 13 Q28 11 32 15Z" fill="#B8860B" />
+      <path d="M32 38 Q28.5 42 32 45.5 Q35.5 42 32 38Z" fill="#B8860B" opacity={0.5} />
       <circle cx="32" cy="32" r="2.8" fill="#EF5350" />
       <circle cx="26.5" cy="34" r="2" fill="#FF7043" />
       <circle cx="37.5" cy="34" r="2" fill="#42A5F5" />
@@ -79,7 +79,7 @@ export default function LandingClient() {
             </span>
           </div>
 
-          <h1 style={{ fontFamily: cinzel.style.fontFamily, fontSize: 54, fontWeight: 600, color: C.white, lineHeight: 1.08, margin: '0 0 20px 0' }}>
+          <h1 style={{ fontFamily: cinzel.style.fontFamily, fontSize: 'clamp(38px, 5vw, 60px)', fontWeight: 600, color: C.white, lineHeight: 1.08, margin: '0 0 20px 0' }}>
             {"Bedeninizi"}
             <span style={{ display: 'block', color: C.gold }}>{"Anl\u0131yoruz."}</span>
           </h1>
@@ -94,7 +94,7 @@ export default function LandingClient() {
               {"ANALİZİMİ BAŞLAT"}
             </button>
             <button onClick={() => router.push('/bitkiler')}
-              style={{ fontFamily: cinzel.style.fontFamily, fontSize: 11, color: 'rgba(255,255,255,0.45)', background: 'transparent', border: '1px solid rgba(255,255,255,0.12)', borderRadius: 12, padding: '15px 22px', cursor: 'pointer', letterSpacing: 1, textTransform: 'uppercase' as const }}>
+              style={{ fontFamily: cinzel.style.fontFamily, fontSize: 11, color: 'white', background: 'transparent', border: '2px solid rgba(255,255,255,0.3)', borderRadius: 12, padding: '15px 22px', cursor: 'pointer', letterSpacing: 1, textTransform: 'uppercase' as const }}>
               {"BİTKİ ANSİKLOPEDİSİ"}
             </button>
           </div>
@@ -106,13 +106,13 @@ export default function LandingClient() {
         {/* Sag: Hero Panel */}
         <div style={{ position: 'relative' as const, width: 300, height: 300, margin: '0 auto' }} className="hero-panel">
           {/* Halkalar */}
-          <div style={{ position: 'absolute' as const, inset: 0, borderRadius: '50%', border: '1px solid rgba(184,146,42,0.12)' }} />
-          <div style={{ position: 'absolute' as const, top: 35, left: 35, right: 35, bottom: 35, borderRadius: '50%', border: '1px solid rgba(184,146,42,0.09)' }} />
-          <div style={{ position: 'absolute' as const, top: 70, left: 70, right: 70, bottom: 70, borderRadius: '50%', border: '1px solid rgba(184,146,42,0.15)' }} />
+          <div style={{ position: 'absolute' as const, inset: 0, borderRadius: '50%', border: '1px solid rgba(184,134,11,0.12)' }} />
+          <div style={{ position: 'absolute' as const, top: 35, left: 35, right: 35, bottom: 35, borderRadius: '50%', border: '1px solid rgba(184,134,11,0.09)' }} />
+          <div style={{ position: 'absolute' as const, top: 70, left: 70, right: 70, bottom: 70, borderRadius: '50%', border: '1px solid rgba(184,134,11,0.15)' }} />
           {/* Merkez */}
           <div style={{ position: 'absolute' as const, top: '50%', left: '50%', transform: 'translate(-50%, -50%)', textAlign: 'center' as const }}>
             <AlembikSVG size={80} />
-            <div style={{ fontFamily: cinzel.style.fontFamily, fontSize: 8, color: 'rgba(184,146,42,0.35)', letterSpacing: 3, marginTop: 8, whiteSpace: 'nowrap' as const }}>
+            <div style={{ fontFamily: cinzel.style.fontFamily, fontSize: 8, color: 'rgba(184,134,11,0.35)', letterSpacing: 3, marginTop: 8, whiteSpace: 'nowrap' as const }}>
               {"Dört Hılt . Dört Mevsim . Dört Mizaç"}
             </div>
           </div>
@@ -148,7 +148,7 @@ export default function LandingClient() {
         <div style={{ maxWidth: 1200, margin: '0 auto' }}>
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 14 }}>
             <div style={{ width: 32, height: 1, background: C.gold, opacity: 0.3 }} />
-            <span style={{ fontFamily: cinzel.style.fontFamily, fontSize: 9, color: 'rgba(184,146,42,0.7)', letterSpacing: 3, textTransform: 'uppercase' as const }}>{"Klasik Islam Tibbi"}</span>
+            <span style={{ fontFamily: cinzel.style.fontFamily, fontSize: 9, color: 'rgba(184,134,11,0.7)', letterSpacing: 3, textTransform: 'uppercase' as const }}>{"Klasik Islam Tibbi"}</span>
             <div style={{ width: 32, height: 1, background: C.gold, opacity: 0.3 }} />
           </div>
           <p style={{ fontStyle: 'italic', fontSize: 22, color: 'rgba(255,255,255,0.75)', lineHeight: 1.9, maxWidth: 680, margin: '20px auto 0 auto' }}>
@@ -156,7 +156,7 @@ export default function LandingClient() {
           </p>
           <div style={{ marginTop: 32, display: 'flex', justifyContent: 'center', gap: 40, flexWrap: 'wrap' as const }}>
             {["el-Kânûn fi't-Tib, İbn Sînâ", "el-Havi fi't-Tib, er-Râzî", "Tahbizu'l-Mathun, Tokadi"].map(k => (
-              <span key={k} style={{ fontFamily: cinzel.style.fontFamily, fontSize: 9, color: 'rgba(184,146,42,0.55)', letterSpacing: 2 }}>{k}</span>
+              <span key={k} style={{ fontFamily: cinzel.style.fontFamily, fontSize: 9, color: 'rgba(184,134,11,0.55)', letterSpacing: 2 }}>{k}</span>
             ))}
           </div>
         </div>
@@ -171,7 +171,7 @@ export default function LandingClient() {
             <span style={{ fontFamily: cinzel.style.fontFamily, fontSize: 9, color: C.gold, letterSpacing: 3, textTransform: 'uppercase' as const }}>{"Neden Farkliyiz"}</span>
             <div style={{ width: 32, height: 1, background: C.gold, opacity: 0.4 }} />
           </div>
-          <h2 style={{ fontFamily: cinzel.style.fontFamily, fontSize: 33, fontWeight: 600, color: C.primary, textAlign: 'center' as const, marginBottom: 12 }}>
+          <h2 style={{ fontFamily: cinzel.style.fontFamily, fontSize: 'clamp(26px, 3.5vw, 42px)', fontWeight: 600, color: C.primary, textAlign: 'center' as const, marginBottom: 12 }}>
             {"Beden Bir Butundur"}
           </h2>
           <p style={{ textAlign: 'center' as const, fontStyle: 'italic', fontSize: 18, color: C.secondary, lineHeight: 1.7, maxWidth: 520, margin: '0 auto 48px auto' }}>
@@ -216,7 +216,7 @@ export default function LandingClient() {
                   {f.icon}
                 </div>
                 <h3 style={{ fontFamily: cinzel.style.fontFamily, fontSize: 17, fontWeight: 500, color: C.primary, marginBottom: 10 }}>{f.title}</h3>
-                <p style={{ fontSize: 16, color: C.secondary, lineHeight: 1.8, marginBottom: 14 }}>{f.desc}</p>
+                <p style={{ fontSize: 18, color: C.secondary, lineHeight: 1.8, marginBottom: 14 }}>{f.desc}</p>
                 <a href={f.href} style={{ fontFamily: cinzel.style.fontFamily, fontSize: 9, color: C.gold, letterSpacing: 2, cursor: 'pointer', textDecoration: 'none' }}>{"DETAYLI INCELE \u2192"}</a>
               </div>
             ))}
@@ -232,10 +232,10 @@ export default function LandingClient() {
             <span style={{ fontFamily: cinzel.style.fontFamily, fontSize: 9, color: C.gold, letterSpacing: 3, textTransform: 'uppercase' as const }}>{"Surec"}</span>
             <div style={{ width: 32, height: 1, background: C.gold, opacity: 0.4 }} />
           </div>
-          <h2 style={{ fontFamily: cinzel.style.fontFamily, fontSize: 33, fontWeight: 600, color: C.primary, textAlign: 'center' as const, marginBottom: 12 }}>
+          <h2 style={{ fontFamily: cinzel.style.fontFamily, fontSize: 'clamp(26px, 3.5vw, 42px)', fontWeight: 600, color: C.primary, textAlign: 'center' as const, marginBottom: 12 }}>
             {"Nasıl Çalışır?"}
           </h2>
-          <p style={{ textAlign: 'center' as const, fontStyle: 'italic', fontSize: 16, color: C.secondary, marginBottom: 52 }}>
+          <p style={{ textAlign: 'center' as const, fontStyle: 'italic', fontSize: 18, color: C.secondary, marginBottom: 52 }}>
             {"Uc adimda kisisel saglik protokolunuze kavusun."}
           </p>
 
@@ -252,8 +252,8 @@ export default function LandingClient() {
                     <span style={{ fontFamily: cinzel.style.fontFamily, fontSize: 22, fontWeight: 700, color: C.gold }}>{s.num}</span>
                   </div>
                 </div>
-                <h3 style={{ fontFamily: cinzel.style.fontFamily, fontSize: 16, color: C.primary, marginBottom: 10 }}>{s.title}</h3>
-                <p style={{ fontSize: 15, color: C.secondary, lineHeight: 1.8, fontStyle: 'italic' }}>{s.desc}</p>
+                <h3 style={{ fontFamily: cinzel.style.fontFamily, fontSize: 18, color: C.primary, marginBottom: 10 }}>{s.title}</h3>
+                <p style={{ fontSize: 17, color: C.secondary, lineHeight: 1.8, fontStyle: 'italic' }}>{s.desc}</p>
               </div>
             ))}
           </div>
@@ -264,11 +264,11 @@ export default function LandingClient() {
       <section style={{ background: C.white, padding: '80px 56px' }} className="danisman-section">
         <div style={{ maxWidth: 1200, margin: '0 auto', display: 'grid', gridTemplateColumns: '320px 1fr', gap: 72, alignItems: 'center' }} className="danisman-grid">
           {/* Sol: Foto */}
-          <div style={{ position: 'relative' as const, width: 320, height: 380, borderRadius: 24, overflow: 'hidden', border: '1.5px solid rgba(184,146,42,0.18)' }}>
+          <div style={{ position: 'relative' as const, width: 320, height: 380, borderRadius: 24, overflow: 'hidden', border: '1.5px solid rgba(184,134,11,0.18)' }}>
             <Image src="/danisan.jpg" alt="M. Fatih Cakir" width={320} height={380}
               style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center top', filter: 'sepia(15%) contrast(1.05) brightness(0.96)' }} />
             <div style={{ position: 'absolute' as const, inset: 0, background: 'linear-gradient(to bottom, transparent 50%, rgba(27,67,50,0.55) 100%)' }} />
-            <div style={{ position: 'absolute' as const, bottom: 20, left: 20, background: 'rgba(184,146,42,0.92)', fontFamily: cinzel.style.fontFamily, fontSize: 10, fontWeight: 700, color: C.primary, padding: '6px 14px', borderRadius: 8 }}>
+            <div style={{ position: 'absolute' as const, bottom: 20, left: 20, background: 'rgba(184,134,11,0.92)', fontFamily: cinzel.style.fontFamily, fontSize: 10, fontWeight: 700, color: C.primary, padding: '6px 14px', borderRadius: 8 }}>
               {"M. FATIH CAKIR"}
             </div>
           </div>
@@ -280,8 +280,8 @@ export default function LandingClient() {
               <span style={{ fontFamily: cinzel.style.fontFamily, fontSize: 9, color: C.gold, letterSpacing: 3, textTransform: 'uppercase' as const }}>{"Danismaniniz"}</span>
             </div>
             <div style={{ fontFamily: cinzel.style.fontFamily, fontSize: 26, fontWeight: 600, color: C.primary, marginBottom: 8 }}>{"M. Fatih Cakir"}</div>
-            <div style={{ fontSize: 16, color: C.gold, fontStyle: 'italic', marginBottom: 20 }}>{"Klasik Islam Tibbi Arastirmacisi, Tıp Tarihi Yüksek Lisans"}</div>
-            <p style={{ fontSize: 16, color: C.secondary, lineHeight: 1.88, marginBottom: 24 }}>
+            <div style={{ fontSize: 18, color: C.gold, fontStyle: 'italic', marginBottom: 20 }}>{"Klasik Islam Tibbi Arastirmacisi, Tıp Tarihi Yüksek Lisans"}</div>
+            <p style={{ fontSize: 18, color: C.secondary, lineHeight: 1.88, marginBottom: 24 }}>
               {"FSM Vakif Universitesi Fuat Sezgin Islam Bilim Tarihi Enstitusu doktora adayi. Hekim Ahmet el-Hayati'nin Seceretut-Tib adli eserini ilk kez akademik duzeyde inceleyen arastirmaci. İbn Sînâ el-Kânûn ve Tahbizul-Mathun cevirileri uzerine calismalar yurutmektedir."}
             </p>
 
@@ -303,7 +303,7 @@ export default function LandingClient() {
             {/* Tag chipler */}
             <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' as const, marginBottom: 24 }}>
               {['KLASİK İSLAM TIBBI', 'TIP TARİHİ', 'ARAPÇA, FARSÇA, OSMANLICA'].map(t => (
-                <span key={t} style={{ fontFamily: cinzel.style.fontFamily, fontSize: 9, color: C.gold, border: `1px solid rgba(184,146,42,0.25)`, padding: '5px 12px', borderRadius: 8, letterSpacing: 1.5 }}>{t}</span>
+                <span key={t} style={{ fontFamily: cinzel.style.fontFamily, fontSize: 9, color: C.gold, border: `1px solid rgba(184,134,11,0.25)`, padding: '5px 12px', borderRadius: 8, letterSpacing: 1.5 }}>{t}</span>
               ))}
             </div>
 
@@ -330,7 +330,7 @@ export default function LandingClient() {
             <span style={{ fontFamily: cinzel.style.fontFamily, fontSize: 9, color: C.gold, letterSpacing: 3, textTransform: 'uppercase' as const }}>{"Deneyimler"}</span>
             <div style={{ width: 32, height: 1, background: C.gold, opacity: 0.4 }} />
           </div>
-          <h2 style={{ fontFamily: cinzel.style.fontFamily, fontSize: 33, fontWeight: 600, color: C.primary, textAlign: 'center' as const, marginBottom: 48 }}>
+          <h2 style={{ fontFamily: cinzel.style.fontFamily, fontSize: 'clamp(26px, 3.5vw, 42px)', fontWeight: 600, color: C.primary, textAlign: 'center' as const, marginBottom: 48 }}>
             {"Ilk Analizden Sonra"}
           </h2>
 
@@ -344,8 +344,8 @@ export default function LandingClient() {
                 ]
             ).map(t => (
               <div key={t.isim} style={{ background: C.cream, border: `1px solid ${C.border}`, borderRadius: 20, padding: '28px 26px', position: 'relative' as const }}>
-                <div style={{ fontSize: 14, color: C.gold, marginBottom: 14 }}>{"\u2605".repeat(t.puan)}</div>
-                <p style={{ fontStyle: 'italic', fontSize: 16, color: C.secondary, lineHeight: 1.8, margin: 0 }}>{t.yorum}</p>
+                <div style={{ fontSize: 17, color: C.gold, marginBottom: 14 }}>{"\u2605".repeat(t.puan)}</div>
+                <p style={{ fontStyle: 'italic', fontSize: 18, color: C.secondary, lineHeight: 1.8, margin: 0 }}>{t.yorum}</p>
                 <div style={{ marginTop: 20, borderTop: `1px solid ${C.border}`, paddingTop: 16 }}>
                   <div style={{ fontFamily: cinzel.style.fontFamily, fontSize: 11, fontWeight: 600, color: C.primary, letterSpacing: 1 }}>{t.isim}</div>
                   <div style={{ fontSize: 13, color: C.muted, fontStyle: 'italic', marginTop: 2 }}>{t.detay}</div>
@@ -354,7 +354,7 @@ export default function LandingClient() {
             ))}
           </div>
           <div style={{ textAlign: 'center', marginTop: 24 }}>
-            <a href="/yorum-yaz" style={{ fontFamily: cinzel.style.fontFamily, fontSize: 11, color: '#8B6914', letterSpacing: 2, textDecoration: 'none' }}>
+            <a href="/yorum-yaz" style={{ fontFamily: cinzel.style.fontFamily, fontSize: 11, color: '#B8860B', letterSpacing: 2, textDecoration: 'none' }}>
               {"Siz de Deneyiminizi Paylasin \u2192"}
             </a>
           </div>
@@ -369,10 +369,10 @@ export default function LandingClient() {
             <span style={{ fontFamily: cinzel.style.fontFamily, fontSize: 9, color: C.gold, letterSpacing: 3, textTransform: 'uppercase' as const }}>{"Üyelik"}</span>
             <div style={{ width: 32, height: 1, background: C.gold, opacity: 0.4 }} />
           </div>
-          <h2 style={{ fontFamily: cinzel.style.fontFamily, fontSize: 33, fontWeight: 600, color: C.primary, textAlign: 'center' as const, marginBottom: 12 }}>
+          <h2 style={{ fontFamily: cinzel.style.fontFamily, fontSize: 'clamp(26px, 3.5vw, 42px)', fontWeight: 600, color: C.primary, textAlign: 'center' as const, marginBottom: 12 }}>
             {"Size Uygun Plani Secin"}
           </h2>
-          <p style={{ textAlign: 'center' as const, fontStyle: 'italic', fontSize: 16, color: C.secondary, marginBottom: 52 }}>
+          <p style={{ textAlign: 'center' as const, fontStyle: 'italic', fontSize: 18, color: C.secondary, marginBottom: 52 }}>
             {"İlk analizden sonra fark yaşarsınız. Yıllık planda aylık 590\u20BA ile sınırsız takip."}
           </p>
 
@@ -394,12 +394,12 @@ export default function LandingClient() {
                 )}
                 <div style={{ fontFamily: cinzel.style.fontFamily, fontSize: 9, color: C.muted, letterSpacing: 3, marginBottom: 16, textTransform: 'uppercase' as const }}>{plan.name}</div>
                 <div style={{ fontFamily: cinzel.style.fontFamily, fontSize: 46, fontWeight: 700, color: C.primary }}>{plan.price}</div>
-                {plan.period && <div style={{ fontSize: 14, color: C.muted }}>{plan.period}</div>}
+                {plan.period && <div style={{ fontSize: 17, color: C.muted }}>{plan.period}</div>}
                 <div style={{ fontSize: 13, color: C.gold, fontStyle: 'italic', marginTop: 4, marginBottom: 24 }}>{plan.sub}</div>
 
                 <div style={{ textAlign: 'left' as const, marginBottom: 24 }}>
                   {plan.features.map(f => (
-                    <div key={f} style={{ fontSize: 14, color: C.secondary, padding: '8px 0', borderBottom: `1px solid ${C.cream}`, display: 'flex', alignItems: 'center', gap: 10 }}>
+                    <div key={f} style={{ fontSize: 17, color: C.secondary, padding: '8px 0', borderBottom: `1px solid ${C.cream}`, display: 'flex', alignItems: 'center', gap: 10 }}>
                       <div style={{ width: 5, height: 5, borderRadius: '50%', background: C.gold, flexShrink: 0 }} />
                       {f}
                     </div>
@@ -425,10 +425,10 @@ export default function LandingClient() {
               <AlembikSVG size={34} />
               <div>
                 <div style={{ fontFamily: cinzel.style.fontFamily, fontSize: 13, fontWeight: 600, color: C.gold, letterSpacing: 3 }}>{"İPEK YOLU ŞİFACISI"}</div>
-                <div style={{ fontFamily: naskh.style.fontFamily, fontSize: 11, color: 'rgba(184,146,42,0.4)' }}>{"طريق الحرير الشافي"}</div>
+                <div style={{ fontFamily: naskh.style.fontFamily, fontSize: 11, color: 'rgba(184,134,11,0.4)' }}>{"طريق الحرير الشافي"}</div>
               </div>
             </div>
-            <p style={{ fontSize: 14, color: 'rgba(255,255,255,0.38)', fontStyle: 'italic', lineHeight: 1.7, marginBottom: 20 }}>
+            <p style={{ fontSize: 17, color: 'rgba(255,255,255,0.38)', fontStyle: 'italic', lineHeight: 1.7, marginBottom: 20 }}>
               {"Bin yillik sifa gelenegi, modern danışmanlık."}
             </p>
             <div style={{ display: 'flex', gap: 12 }}>
@@ -451,7 +451,7 @@ export default function LandingClient() {
             <div key={col.title}>
               <div style={{ fontFamily: cinzel.style.fontFamily, fontSize: 9, color: C.gold, letterSpacing: 2.5, marginBottom: 20, opacity: 0.7 }}>{col.title}</div>
               {col.links.map(([label, href]) => (
-                <a key={label} href={href} style={{ display: 'block', fontSize: 14, color: 'rgba(255,255,255,0.45)', textDecoration: 'none', padding: '6px 0', transition: 'color 0.2s' }}>{label}</a>
+                <a key={label} href={href} style={{ display: 'block', fontSize: 17, color: 'rgba(255,255,255,0.45)', textDecoration: 'none', padding: '6px 0', transition: 'color 0.2s' }}>{label}</a>
               ))}
             </div>
           ))}

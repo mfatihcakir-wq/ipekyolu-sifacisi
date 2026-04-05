@@ -10,9 +10,9 @@ const cinzel = Cinzel({ display: 'swap', preload: false, subsets: ['latin', 'lat
 const garamond = EB_Garamond({ display: 'swap', preload: false, subsets: ['latin', 'latin-ext'], weight: ['400', '500'], style: ['normal', 'italic'] })
 
 const C = {
-  primary: '#1C3A26', gold: '#8B6914', cream: '#FAF7F2',
-  dark: '#1C1C1C', secondary: '#6B5744', border: '#E8DFD4',
-  white: '#FFFFFF', surface: '#FAF7F2',
+  primary: '#1C3A26', gold: '#B8860B', cream: '#FAF6EF',
+  dark: '#1C1C1C', secondary: '#6B5744', border: '#DEB887',
+  white: '#FFFFFF', surface: '#FAF6EF',
 }
 
 interface DetailedForm {
@@ -259,14 +259,14 @@ export default function DashboardPage() {
   .header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 32px; padding-bottom: 20px; border-bottom: 2px solid #1C3A26; }
   .logo-area { display: flex; flex-direction: column; gap: 4px; }
   .logo-title { font-family: 'Cinzel', serif; font-size: 18px; font-weight: 600; color: #1C3A26; letter-spacing: 3px; }
-  .logo-ar { font-size: 14px; color: #8B6914; }
+  .logo-ar { font-size: 14px; color: #B8860B; }
   .meta { text-align: right; font-size: 11px; color: #999; line-height: 1.8; }
-  .hasta-baslik { background: #1C3A26; color: #8B6914; font-family: 'Cinzel', serif; font-size: 22px; font-weight: 600; padding: 16px 24px; border-radius: 8px; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 2px; }
+  .hasta-baslik { background: #1C3A26; color: #B8860B; font-family: 'Cinzel', serif; font-size: 22px; font-weight: 600; padding: 16px 24px; border-radius: 8px; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 2px; }
   .hasta-alt { font-size: 12px; color: #6B5744; margin-bottom: 24px; }
   .section { margin-bottom: 20px; page-break-inside: avoid; }
-  .section-title { font-family: 'Cinzel', serif; font-size: 11px; font-weight: 600; color: #8B6914; letter-spacing: 3px; text-transform: uppercase; margin-bottom: 10px; padding-bottom: 4px; border-bottom: 1px solid #E8DFD4; }
+  .section-title { font-family: 'Cinzel', serif; font-size: 11px; font-weight: 600; color: #B8860B; letter-spacing: 3px; text-transform: uppercase; margin-bottom: 10px; padding-bottom: 4px; border-bottom: 1px solid #DEB887; }
   .mizac-kart { background: #1C3A26; color: white; border-radius: 8px; padding: 16px 20px; margin-bottom: 16px; }
-  .mizac-buyuk { font-family: 'Cinzel', serif; font-size: 18px; color: #8B6914; margin-bottom: 12px; }
+  .mizac-buyuk { font-family: 'Cinzel', serif; font-size: 18px; color: #B8860B; margin-bottom: 12px; }
   .hilt-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 16px; }
   .hilt-kart { border-radius: 6px; padding: 8px 12px; border-left: 3px solid; }
   .hilt-dem { border-color: #EF5350; background: #FFF8F8; }
@@ -274,12 +274,12 @@ export default function DashboardPage() {
   .hilt-safra { border-color: #FFA726; background: #FFFAF0; }
   .hilt-karasafra { border-color: #AB47BC; background: #F8F0FF; }
   .hilt-yuzde { font-size: 18px; font-weight: 600; float: right; }
-  .ozet-metin { font-size: 13px; line-height: 1.8; color: #2C1A00; background: #FAF7F2; border-radius: 6px; padding: 14px; margin-bottom: 16px; }
-  .bitki-kart { background: #FAF7F2; border-radius: 6px; padding: 12px; margin-bottom: 8px; border-left: 3px solid #1C3A26; }
+  .ozet-metin { font-size: 13px; line-height: 1.8; color: #2C1A00; background: #FAF6EF; border-radius: 6px; padding: 14px; margin-bottom: 16px; }
+  .bitki-kart { background: #FAF6EF; border-radius: 6px; padding: 12px; margin-bottom: 8px; border-left: 3px solid #1C3A26; }
   .bitki-ad { font-family: 'Cinzel', serif; font-size: 14px; font-weight: 600; color: #1C3A26; }
-  .bitki-ar { font-size: 13px; color: #8B6914; margin-bottom: 6px; }
+  .bitki-ar { font-size: 13px; color: #B8860B; margin-bottom: 6px; }
   .bitki-detay { font-size: 11px; color: #6B5744; line-height: 1.6; }
-  .bitki-kaynak { font-size: 10px; color: #999; font-style: italic; margin-top: 4px; border-top: 1px solid #E8DFD4; padding-top: 4px; }
+  .bitki-kaynak { font-size: 10px; color: #999; font-style: italic; margin-top: 4px; border-top: 1px solid #DEB887; padding-top: 4px; }
   .rutin-blok { border-radius: 6px; padding: 10px 14px; margin-bottom: 8px; }
   .sabah-blok { background: #FFF8E7; }
   .ogle-blok { background: #F0FDF4; }
@@ -294,17 +294,17 @@ export default function DashboardPage() {
   .kacin-baslik { color: #E65100; }
   .liste-item { font-size: 11px; color: #2C1A00; padding: 1px 0; }
   .hikmet-kart { background: #1C3A26; color: white; border-radius: 8px; padding: 20px; text-align: center; margin-bottom: 16px; }
-  .hikmet-ar { font-size: 20px; color: #8B6914; line-height: 1.8; margin-bottom: 8px; }
+  .hikmet-ar { font-size: 20px; color: #B8860B; line-height: 1.8; margin-bottom: 8px; }
   .hikmet-tr { font-size: 13px; color: rgba(255,255,255,0.7); font-style: italic; }
   .hikmet-kaynak { font-size: 10px; color: rgba(255,255,255,0.4); margin-top: 8px; }
   .kaynaklar { display: flex; flex-wrap: wrap; gap: 6px; }
   .kaynak-pill { font-size: 10px; background: #E8F5E9; color: #1C3A26; padding: 3px 10px; border-radius: 20px; font-style: italic; }
-  .footer { margin-top: 32px; padding-top: 16px; border-top: 1px solid #E8DFD4; text-align: center; font-size: 10px; color: #999; line-height: 1.8; }
-  .uyari { background: #FFF8E7; border: 1px solid #8B6914; border-radius: 6px; padding: 10px 14px; font-size: 11px; color: #6B5744; margin-bottom: 16px; }
+  .footer { margin-top: 32px; padding-top: 16px; border-top: 1px solid #DEB887; text-align: center; font-size: 10px; color: #999; line-height: 1.8; }
+  .uyari { background: #FFF8E7; border: 1px solid #B8860B; border-radius: 6px; padding: 10px 14px; font-size: 11px; color: #6B5744; margin-bottom: 16px; }
   .label-sm { font-size: 9px; color: #999; text-transform: uppercase; letter-spacing: 1px; }
   .val-sm { font-size: 12px; font-weight: 600; color: #1C1C1C; }
   .info-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-bottom: 16px; }
-  .info-kart { background: #FAF7F2; border-radius: 6px; padding: 8px 10px; }
+  .info-kart { background: #FAF6EF; border-radius: 6px; padding: 8px 10px; }
   @media print {
     body { print-color-adjust: exact; -webkit-print-color-adjust: exact; }
     .page { padding: 20px; }
@@ -338,11 +338,11 @@ export default function DashboardPage() {
     <div class="info-kart"><div class="label-sm">Dil Renk</div><div class="val-sm">${safeStr(f.dil_renk)}</div></div>
   </div>
 
-  <div style="background:#FAF7F2;border-radius:6px;padding:10px 14px;margin-bottom:16px;font-size:12px;color:#2C1A00;line-height:1.6;">
+  <div style="background:#FAF6EF;border-radius:6px;padding:10px 14px;margin-bottom:16px;font-size:12px;color:#2C1A00;line-height:1.6;">
     <strong>Sikayetler:</strong> ${safeStr(f.symptoms)}
   </div>
 
-  ${analiz.mizac ? `<div class="section"><div class="mizac-kart"><div class="label-sm" style="color:rgba(255,255,255,.4);letter-spacing:2px;">TESPIT EDILEN MIZAC</div><div class="mizac-buyuk">${safeStr(analiz.mizac)}</div>${analiz.fitri_hali ? `<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;"><div style="background:rgba(255,255,255,.08);border-radius:6px;padding:8px;"><div class="label-sm" style="color:rgba(255,255,255,.4);">FITRI</div><div style="font-size:12px;color:white;margin-top:2px;">${safeStr(analiz.fitri_hali.fitri_mizac)}</div></div><div style="background:rgba(255,255,255,.08);border-radius:6px;padding:8px;"><div class="label-sm" style="color:rgba(255,255,255,.4);">HALI</div><div style="font-size:12px;color:white;margin-top:2px;">${safeStr(analiz.fitri_hali.hali_mizac)}</div></div></div>${analiz.fitri_hali.tedavi_hedefi ? `<div style="background:rgba(184,146,42,.15);border-radius:6px;padding:8px;margin-top:8px;"><div class="label-sm" style="color:#8B6914;">TEDAVI HEDEFI</div><div style="font-size:12px;color:rgba(255,255,255,.85);margin-top:2px;">${safeStr(analiz.fitri_hali.tedavi_hedefi)}</div></div>` : ''}` : ''}</div></div>` : ''}
+  ${analiz.mizac ? `<div class="section"><div class="mizac-kart"><div class="label-sm" style="color:rgba(255,255,255,.4);letter-spacing:2px;">TESPIT EDILEN MIZAC</div><div class="mizac-buyuk">${safeStr(analiz.mizac)}</div>${analiz.fitri_hali ? `<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;"><div style="background:rgba(255,255,255,.08);border-radius:6px;padding:8px;"><div class="label-sm" style="color:rgba(255,255,255,.4);">FITRI</div><div style="font-size:12px;color:white;margin-top:2px;">${safeStr(analiz.fitri_hali.fitri_mizac)}</div></div><div style="background:rgba(255,255,255,.08);border-radius:6px;padding:8px;"><div class="label-sm" style="color:rgba(255,255,255,.4);">HALI</div><div style="font-size:12px;color:white;margin-top:2px;">${safeStr(analiz.fitri_hali.hali_mizac)}</div></div></div>${analiz.fitri_hali.tedavi_hedefi ? `<div style="background:rgba(184,146,42,.15);border-radius:6px;padding:8px;margin-top:8px;"><div class="label-sm" style="color:#B8860B;">TEDAVI HEDEFI</div><div style="font-size:12px;color:rgba(255,255,255,.85);margin-top:2px;">${safeStr(analiz.fitri_hali.tedavi_hedefi)}</div></div>` : ''}` : ''}</div></div>` : ''}
 
   ${analiz.hilt_dengesi ? `<div class="section"><div class="section-title">Hilt Dengesi</div><div class="hilt-grid">${analiz.hilt_dengesi.dem ? `<div class="hilt-kart hilt-dem"><div style="font-weight:600;font-size:12px;">Dem</div><div class="hilt-yuzde" style="color:#EF5350;">${analiz.hilt_dengesi.dem.yuzde}%</div><div style="font-size:10px;color:#6B5744;margin-top:4px;">${safeStr(analiz.hilt_dengesi.dem.yorum)}</div></div>` : ''}${analiz.hilt_dengesi.balgam ? `<div class="hilt-kart hilt-balgam"><div style="font-weight:600;font-size:12px;">Balgam</div><div class="hilt-yuzde" style="color:#42A5F5;">${analiz.hilt_dengesi.balgam.yuzde}%</div><div style="font-size:10px;color:#6B5744;margin-top:4px;">${safeStr(analiz.hilt_dengesi.balgam.yorum)}</div></div>` : ''}${analiz.hilt_dengesi.safra ? `<div class="hilt-kart hilt-safra"><div style="font-weight:600;font-size:12px;">Safra</div><div class="hilt-yuzde" style="color:#FFA726;">${analiz.hilt_dengesi.safra.yuzde}%</div><div style="font-size:10px;color:#6B5744;margin-top:4px;">${safeStr(analiz.hilt_dengesi.safra.yorum)}</div></div>` : ''}${analiz.hilt_dengesi.kara_safra ? `<div class="hilt-kart hilt-karasafra"><div style="font-weight:600;font-size:12px;">Kara Safra</div><div class="hilt-yuzde" style="color:#AB47BC;">${analiz.hilt_dengesi.kara_safra.yuzde}%</div><div style="font-size:10px;color:#6B5744;margin-top:4px;">${safeStr(analiz.hilt_dengesi.kara_safra.yorum)}</div></div>` : ''}</div></div>` : ''}
 
@@ -384,10 +384,10 @@ export default function DashboardPage() {
       <header style={{ background: C.primary, padding: '0 24px', height: 64, display: 'flex', alignItems: 'center', justifyContent: 'space-between', position: 'sticky', top: 0, zIndex: 100 }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
           <svg width="36" height="36" viewBox="0 0 64 64" fill="none">
-            <ellipse cx="32" cy="37" rx="13" ry="11" fill="none" stroke="#8B6914" strokeWidth="1.5"/>
-            <path d="M22 37 Q22 25 32 23 Q42 25 42 37" fill="none" stroke="#8B6914" strokeWidth="1.5"/>
-            <rect x="28" y="21" width="8" height="4" rx="1.5" fill="none" stroke="#8B6914" strokeWidth="1.5"/>
-            <path d="M32 14 Q36 10 40 12 Q38 18 32 20 Q26 18 24 12 Q28 10 32 14Z" fill="#8B6914"/>
+            <ellipse cx="32" cy="37" rx="13" ry="11" fill="none" stroke="#B8860B" strokeWidth="1.5"/>
+            <path d="M22 37 Q22 25 32 23 Q42 25 42 37" fill="none" stroke="#B8860B" strokeWidth="1.5"/>
+            <rect x="28" y="21" width="8" height="4" rx="1.5" fill="none" stroke="#B8860B" strokeWidth="1.5"/>
+            <path d="M32 14 Q36 10 40 12 Q38 18 32 20 Q26 18 24 12 Q28 10 32 14Z" fill="#B8860B"/>
             <circle cx="32" cy="32" r="2.8" fill="#EF5350"/>
             <circle cx="26.5" cy="34" r="2" fill="#FF7043"/>
             <circle cx="37.5" cy="34" r="2" fill="#42A5F5"/>
@@ -612,7 +612,7 @@ export default function DashboardPage() {
                 <div style={{ background: C.white, borderRadius: 14, border: `1px solid ${C.border}`, padding: '32px 24px', marginTop: 14, textAlign: 'center' as const }}>
                   <div style={{ marginBottom: 20 }}>
                     <svg width="40" height="40" viewBox="0 0 40 40" fill="none" style={{ animation: 'spin 1.5s linear infinite', display: 'block', margin: '0 auto' }}>
-                      <circle cx="20" cy="20" r="16" stroke="#E8DFD4" strokeWidth="3" fill="none"/>
+                      <circle cx="20" cy="20" r="16" stroke="#DEB887" strokeWidth="3" fill="none"/>
                       <path d="M20 4 A16 16 0 0 1 36 20" stroke="#1C3A26" strokeWidth="3" strokeLinecap="round" fill="none"/>
                     </svg>
                     <style>{`@keyframes spin { to { transform: rotate(360deg) } }`}</style>

@@ -8,8 +8,8 @@ import { createClient } from '@/lib/supabase'
 const cinzel = Cinzel({ display: 'swap', preload: false, subsets: ['latin', 'latin-ext'], weight: ['400', '500', '600'] })
 
 const C = {
-  primary: '#1C3A26', gold: '#8B6914', cream: '#FAF7F2',
-  secondary: '#6B5744', border: '#E8DFD4', white: '#FFFFFF',
+  primary: '#1C3A26', gold: '#B8860B', cream: '#FAF6EF',
+  secondary: '#6B5744', border: '#DEB887', white: '#FFFFFF',
 }
 
 const DANISМАН_EMAIL = 'm.fatih.cakir@gmail.com'
@@ -61,10 +61,10 @@ export default function Header() {
           {/* SOL: Logo */}
           <div style={{ display: 'flex', alignItems: 'center', gap: 10, cursor: 'pointer', flexShrink: 0 }} onClick={() => router.push('/')}>
             <svg width="32" height="32" viewBox="0 0 64 64" fill="none">
-              <ellipse cx="32" cy="37" rx="13" ry="11" fill="none" stroke="#8B6914" strokeWidth="1.5"/>
-              <path d="M22 37 Q22 25 32 23 Q42 25 42 37" fill="none" stroke="#8B6914" strokeWidth="1.5"/>
-              <rect x="28" y="21" width="8" height="4" rx="1.5" fill="none" stroke="#8B6914" strokeWidth="1.5"/>
-              <path d="M32 14 Q36 10 40 12 Q38 18 32 20 Q26 18 24 12 Q28 10 32 14Z" fill="#8B6914"/>
+              <ellipse cx="32" cy="37" rx="13" ry="11" fill="none" stroke="#B8860B" strokeWidth="1.5"/>
+              <path d="M22 37 Q22 25 32 23 Q42 25 42 37" fill="none" stroke="#B8860B" strokeWidth="1.5"/>
+              <rect x="28" y="21" width="8" height="4" rx="1.5" fill="none" stroke="#B8860B" strokeWidth="1.5"/>
+              <path d="M32 14 Q36 10 40 12 Q38 18 32 20 Q26 18 24 12 Q28 10 32 14Z" fill="#B8860B"/>
               <circle cx="32" cy="32" r="2.8" fill="#EF5350"/>
               <circle cx="26.5" cy="34" r="2" fill="#FF7043"/>
               <circle cx="37.5" cy="34" r="2" fill="#42A5F5"/>

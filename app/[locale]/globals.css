@@ -6,11 +6,11 @@
   --p-koyu:     #1C3A26;
   --p-koyu2:    #122B1C;
   --p-orta:     #2A5C3F;
-  --p-amber:    #C47D0E;
-  --p-amber-ac: #F5E9C8;
-  --p-krem:     #FDFAF5;
-  --p-krem2:    #FDF6E8;
-  --p-sinir:    #EDD9A3;
+  --p-amber:    #B8860B;
+  --p-amber-ac: #F5EFE0;
+  --p-krem:     #FAF6EF;
+  --p-krem2:    #F5EFE0;
+  --p-sinir:    #DEB887;
   --p-metin1:   #1A1208;
   --p-metin2:   #5C4A2A;
   --p-metin3:   #9B8060;
@@ -22,14 +22,14 @@
   /* Eski isimlendirme uyumluluğu */
   --renk-koyu:        #1C3A26;
   --renk-orta:        #2A5C3F;
-  --renk-altin:       #C47D0E;
-  --renk-altin-acik:  #F5E9C8;
-  --renk-krem:        #FDFAF5;
+  --renk-altin:       #B8860B;
+  --renk-altin-acik:  #F5EFE0;
+  --renk-krem:        #FAF6EF;
   --renk-beyaz:       #FDFCFA;
   --renk-metin-ana:   #1A1208;
   --renk-metin-ikincil: #5C4A2A;
   --renk-metin-soluk: #9B8060;
-  --renk-sinir:       #EDD9A3;
+  --renk-sinir:       #DEB887;
   --renk-dem:         #C0392B;
   --renk-balgam:      #1E6BB8;
   --renk-safra:       #D4821A;
@@ -49,7 +49,7 @@
   --lh-base:  1.8;
   --lh-tight: 1.15;
 
-  --background: #FDFAF5;
+  --background: #FAF6EF;
   --foreground: #1A1208;
 }
 
@@ -58,7 +58,7 @@ body {
   font-size: var(--fs-base);
   line-height: var(--lh-base);
   color: #1A1208;
-  background: #FDFAF5;
+  background: #FAF6EF;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -95,7 +95,7 @@ p {
 }
 
 ::selection {
-  background: #F5E9C8;
+  background: #F5EFE0;
   color: #1C3A26;
 }
 
