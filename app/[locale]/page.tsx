@@ -156,9 +156,9 @@ const STEPS = [
 ]
 
 const PLANS = [
-  { id: 'monthly', name: 'Aylık', price: '690₺', period: '/ay', sub: 'günde 23₺', badge: null },
-  { id: 'yearly', name: 'Yıllık', price: '390₺', period: '/ay', sub: '%43 indirim · günde 13₺', badge: 'EN AVANTAJLI' },
-  { id: 'one_time', name: 'Tek Seferlik', price: '990₺', period: '', sub: '1 analiz + sonuç', badge: null },
+  { id: 'monthly', name: 'Aylık', price: '890₺', period: '/ay', sub: 'günde 30₺', badge: null },
+  { id: 'yearly', name: 'Yıllık', price: '590₺', period: '/ay', sub: '%34 indirim · günde 20₺', badge: 'EN AVANTAJLI' },
+  { id: 'one_time', name: 'Tek Seferlik', price: '1.290₺', period: '', sub: '1 analiz + sonuç', badge: null },
 ]
 
 export default function LandingPage() {
@@ -301,112 +301,126 @@ export default function LandingPage() {
 
       {/* ===== HERO ===== */}
       <section style={{
-        backgroundColor: COLORS.cream,
-        padding: '80px 24px',
-        textAlign: 'center',
+        background: 'linear-gradient(135deg, #0F2D1C 0%, #1B4332 100%)',
+        padding: 'clamp(48px, 8vw, 100px) clamp(16px, 5vw, 52px)',
         minHeight: '70vh',
-        display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',
+        display: 'flex', alignItems: 'center', justifyContent: 'center',
       }}>
-        {/* Badge */}
-        <div style={{
-          display: 'inline-block',
-          backgroundColor: 'rgba(27,67,50,0.08)',
-          border: '1px solid rgba(27,67,50,0.15)',
-          borderRadius: 24,
-          padding: '8px 20px',
-          marginBottom: 32,
-          fontSize: 13,
-          color: COLORS.secondary,
-          letterSpacing: 1,
-        }}>
-          {"İbn Sînâ · el-Kânûn fi't-Tıbb · Tahbîzü'l-Mathûn · İbn Beytâr"}
-        </div>
+        <div style={{ maxWidth: 1200, width: '100%', display: 'flex', gap: 'clamp(24px, 4vw, 60px)', alignItems: 'center', flexWrap: 'wrap' as const }}>
+          {/* Sol: Metin */}
+          <div style={{ flex: '1 1 500px', minWidth: 280 }}>
+            {/* Eyebrow Pill */}
+            <div style={{
+              display: 'inline-block',
+              backgroundColor: 'rgba(201,168,76,0.12)',
+              border: '1px solid rgba(201,168,76,0.25)',
+              borderRadius: 24,
+              padding: '8px 20px',
+              marginBottom: 24,
+              fontSize: 12,
+              color: COLORS.gold,
+              letterSpacing: 1,
+            }}>
+              {"İbn Sînâ · el-Kânûn fi't-Tıb · Tahbîzü'l-Mathûn · İbn Beytâr"}
+            </div>
 
-        {/* Main Title */}
-        <h1 style={{
-          fontFamily: cinzel.style.fontFamily,
-          fontSize: 'clamp(36px, 6vw, 64px)',
-          fontWeight: 600,
-          color: COLORS.primary,
-          margin: '0 0 20px 0',
-          lineHeight: 1.1,
-          letterSpacing: 2,
-        }}>
-          {"Vücudunuzun Dilini Anlıyoruz."}
-        </h1>
-
-        {/* Subtitle */}
-        <p style={{
-          fontFamily: garamond.style.fontFamily,
-          fontStyle: 'italic',
-          fontSize: 'clamp(18px, 2.5vw, 24px)',
-          color: COLORS.secondary,
-          maxWidth: 640,
-          margin: '0 auto 16px auto',
-          lineHeight: 1.6,
-        }}>
-          {"Bin yıllık İslam ve Osmanlı tıbbının birikimi ile hazırlanmış, sizin mizacınıza özel sağlık danışmanlığı."}
-        </p>
-
-        {/* Arabic Text */}
-        <p style={{
-          fontFamily: naskh.style.fontFamily,
-          fontSize: 'clamp(20px, 3vw, 28px)',
-          color: COLORS.gold,
-          margin: '0 0 40px 0',
-          direction: 'rtl',
-        }}>
-          طريق الحرير الشافي
-        </p>
-
-        {/* CTA Buttons */}
-        <div style={{ display: 'flex', gap: 16, justifyContent: 'center', flexWrap: 'wrap' }}>
-          <button
-            onClick={() => router.push('/analiz')}
-            style={{
-              backgroundColor: COLORS.primary,
-              color: '#fff',
-              border: 'none',
-              borderRadius: 12,
-              padding: '16px 36px',
+            <h1 style={{
               fontFamily: cinzel.style.fontFamily,
+              fontSize: 'clamp(32px, 5vw, 56px)',
               fontWeight: 600,
-              fontSize: 16,
-              cursor: 'pointer',
-              letterSpacing: 1,
-              transition: 'transform 0.2s',
-            }}
-            onMouseOver={(e) => (e.currentTarget.style.transform = 'translateY(-2px)')}
-            onMouseOut={(e) => (e.currentTarget.style.transform = 'translateY(0)')}
-          >
-            {"Analizimi Baslat"}
-          </button>
-          <button
-            onClick={() => router.push('/bitkiler')}
-            style={{
-              backgroundColor: 'transparent',
-              color: COLORS.primary,
-              border: `2px solid ${COLORS.primary}`,
-              borderRadius: 12,
-              padding: '14px 36px',
-              fontFamily: cinzel.style.fontFamily,
-              fontWeight: 500,
-              fontSize: 16,
-              cursor: 'pointer',
-              letterSpacing: 1,
-            }}
-          >
-            {"Bitki Ansiklopedisi"}
-          </button>
+              color: COLORS.gold,
+              margin: '0 0 16px 0',
+              lineHeight: 1.1,
+              letterSpacing: 2,
+            }}>
+              {"Vücudunuzun Dilini Anlıyoruz."}
+            </h1>
+
+            <p style={{
+              fontFamily: garamond.style.fontFamily,
+              fontStyle: 'italic',
+              fontSize: 'clamp(16px, 2vw, 20px)',
+              color: 'rgba(245,239,230,0.7)',
+              maxWidth: 560,
+              margin: '0 0 12px 0',
+              lineHeight: 1.7,
+            }}>
+              {"Bin yıllık İslam ve Osmanlı tıbbının birikimi ile hazırlanmış, sizin mizacınıza özel sağlık danışmanlığı."}
+            </p>
+
+            <p style={{
+              fontFamily: naskh.style.fontFamily,
+              fontSize: 'clamp(18px, 2.5vw, 24px)',
+              color: COLORS.gold,
+              margin: '0 0 32px 0',
+              direction: 'rtl' as const,
+              opacity: 0.7,
+            }}>
+              طريق الحرير الشافي
+            </p>
+
+            <div style={{ display: 'flex', gap: 14, flexWrap: 'wrap' as const }}>
+              <button onClick={() => router.push('/analiz')}
+                style={{ backgroundColor: COLORS.gold, color: '#1B4332', border: 'none', borderRadius: 28, padding: '16px 36px', fontFamily: cinzel.style.fontFamily, fontWeight: 600, fontSize: 15, cursor: 'pointer', letterSpacing: 1, boxShadow: '0 4px 16px rgba(201,168,76,0.35)' }}>
+                {"Analizimi Başlat"}
+              </button>
+              <button onClick={() => router.push('/bitkiler')}
+                style={{ backgroundColor: 'transparent', color: 'rgba(255,255,255,0.8)', border: '1.5px solid rgba(255,255,255,0.3)', borderRadius: 28, padding: '14px 32px', fontFamily: cinzel.style.fontFamily, fontWeight: 500, fontSize: 15, cursor: 'pointer', letterSpacing: 1 }}>
+                {"Bitki Ansiklopedisi"}
+              </button>
+            </div>
+          </div>
+
+          {/* Sağ: Danışman Kartı */}
+          <div style={{ flex: '0 1 340px', background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(201,168,76,0.2)', borderRadius: 20, padding: 'clamp(20px, 3vw, 28px)', backdropFilter: 'blur(10px)' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 14, marginBottom: 16 }}>
+              <div style={{ width: 52, height: 52, borderRadius: '50%', background: COLORS.gold, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+                <span style={{ fontFamily: cinzel.style.fontFamily, fontSize: 20, color: '#1B4332', fontWeight: 600 }}>M</span>
+              </div>
+              <div>
+                <div style={{ fontFamily: cinzel.style.fontFamily, fontSize: 15, color: COLORS.gold, fontWeight: 600 }}>{"M. Fatih Çakır"}</div>
+                <div style={{ fontSize: 12, color: 'rgba(255,255,255,0.5)' }}>{"Klasik İslam Tıbbı Danışmanı"}</div>
+              </div>
+            </div>
+            <div style={{ fontSize: 12, color: 'rgba(255,255,255,0.45)', marginBottom: 14, lineHeight: 1.6 }}>
+              {"FSM Vakıf Üniversitesi · Fuat Sezgin İslam Bilim Tarihi Enstitüsü · Doktora"}
+            </div>
+            <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap' as const, marginBottom: 16 }}>
+              {['38 Klasik Eser', '1.180 Bitki', '5 Hekim'].map(c => (
+                <span key={c} style={{ fontSize: 10, background: 'rgba(201,168,76,0.15)', color: COLORS.gold, padding: '4px 10px', borderRadius: 12, fontWeight: 600 }}>{c}</span>
+              ))}
+            </div>
+            <a href="https://wa.me/905331687226" target="_blank"
+              style={{ display: 'block', textAlign: 'center' as const, background: '#25D366', color: 'white', borderRadius: 10, padding: '10px', fontSize: 13, fontWeight: 600, textDecoration: 'none' }}>
+              {"💬 Danışmana Sor"}
+            </a>
+          </div>
+        </div>
+      </section>
+
+      {/* ===== STATS BANDI ===== */}
+      <section style={{ background: '#0F2D1C', padding: 'clamp(20px, 4vw, 40px) clamp(16px, 5vw, 52px)' }}>
+        <div style={{ maxWidth: 1200, margin: '0 auto', display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(140px, 1fr))', gap: 'clamp(12px, 2vw, 24px)', textAlign: 'center' as const }}>
+          {[
+            { num: '31.400+', label: 'Klasik Kayıt' },
+            { num: '38', label: 'Klasik Eser' },
+            { num: '1.180', label: 'Bitki' },
+            { num: '5', label: 'Hekim Profili' },
+          ].map(s => (
+            <div key={s.label}>
+              <div style={{ fontFamily: cinzel.style.fontFamily, fontSize: 'clamp(24px, 4vw, 36px)', color: COLORS.gold, fontWeight: 600 }}>{s.num}</div>
+              <div style={{ fontSize: 12, color: 'rgba(255,255,255,0.45)', letterSpacing: 1 }}>{s.label}</div>
+            </div>
+          ))}
         </div>
       </section>
 
       {/* ===== ÖZELLİKLER ===== */}
       <section style={{
         backgroundColor: COLORS.white,
-        padding: '80px 24px',
+        padding: 'clamp(48px, 8vw, 80px) clamp(16px, 5vw, 52px)',
       }}>
-        <div style={{ maxWidth: 1100, margin: '0 auto' }}>
+        <div style={{ maxWidth: 1200, margin: '0 auto' }}>
           <h2 style={{
             fontFamily: cinzel.style.fontFamily,
             fontSize: 'clamp(24px, 4vw, 36px)',
@@ -474,7 +488,7 @@ export default function LandingPage() {
 
       {/* ===== GÜVEN SİNYALLERİ ===== */}
       <div style={{ background: COLORS.primary, padding: '32px 24px' }}>
-        <div style={{ maxWidth: 1000, margin: '0 auto', display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: 24 }}>
+        <div style={{ maxWidth: 1200, margin: '0 auto', display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: 24 }}>
           {[
             { sayi: '18', label: 'Klasik Eser', detail: "el-Havi \u00b7 el-Kanun \u00b7 el-Samil" },
             { sayi: '25.000+', label: 'Kayit', detail: "Indekslenmis metin parcasi" },
@@ -495,7 +509,7 @@ export default function LandingPage() {
         backgroundColor: COLORS.cream,
         padding: '80px 24px',
       }}>
-        <div style={{ maxWidth: 900, margin: '0 auto' }}>
+        <div style={{ maxWidth: 1200, margin: '0 auto' }}>
           <h2 style={{
             fontFamily: cinzel.style.fontFamily,
             fontSize: 'clamp(24px, 4vw, 36px)',
@@ -546,7 +560,7 @@ export default function LandingPage() {
       </section>
 
       {/* ===== DANIŞMAN PROFİL ===== */}
-      <div style={{ maxWidth: 900, margin: '0 auto', padding: '48px 24px 0' }}>
+      <div style={{ maxWidth: 1200, margin: '0 auto', padding: '48px 24px 0' }}>
         <div style={{ background: COLORS.white, borderRadius: 16, border: '1px solid #E0D5C5', padding: '32px 40px', display: 'flex', gap: 32, alignItems: 'center', flexWrap: 'wrap' as const }}>
           <div style={{ width: 80, height: 80, borderRadius: '50%', background: COLORS.primary, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
             <span style={{ fontFamily: cinzel.style.fontFamily, fontSize: 28, color: COLORS.gold }}>MF</span>
@@ -570,7 +584,7 @@ export default function LandingPage() {
         backgroundColor: COLORS.white,
         padding: '80px 24px',
       }}>
-        <div style={{ maxWidth: 1000, margin: '0 auto' }}>
+        <div style={{ maxWidth: 1200, margin: '0 auto' }}>
           <h2 style={{
             fontFamily: cinzel.style.fontFamily,
             fontSize: 'clamp(24px, 4vw, 36px)',
@@ -588,7 +602,7 @@ export default function LandingPage() {
             marginBottom: 48,
             fontStyle: 'italic',
           }}>
-            {"İlk analizden sonra fark yaşarsınız. Yıllık planda aylık 390₺ ile sınırsız takip."}
+            {"İlk analizden sonra fark yaşarsınız. Yıllık planda aylık 590₺ ile sınırsız takip."}
           </p>
 
           <div style={{
@@ -699,6 +713,25 @@ export default function LandingPage() {
         </div>
       </div>
 
+      {/* ===== HİKMET BANDI ===== */}
+      <section style={{ background: '#1B4332', padding: 'clamp(40px, 6vw, 80px) clamp(16px, 5vw, 52px)', textAlign: 'center' as const }}>
+        <div style={{ maxWidth: 700, margin: '0 auto' }}>
+          <p style={{ fontFamily: naskh.style.fontFamily, fontSize: 'clamp(20px, 3vw, 28px)', color: COLORS.gold, direction: 'rtl' as const, marginBottom: 16 }}>
+            الجسم لا يُعالَج إلا بمعرفة مزاجه
+          </p>
+          <p style={{ fontSize: 'clamp(14px, 2vw, 18px)', color: 'rgba(245,239,230,0.7)', fontStyle: 'italic', marginBottom: 8 }}>
+            {"Beden, ancak mizacı bilindiğinde tedavi edilebilir."}
+          </p>
+          <p style={{ fontSize: 12, color: 'rgba(255,255,255,0.35)', marginBottom: 32 }}>
+            {"el-Kânûn fi't-Tıb, Kitab 1 — İbn Sînâ"}
+          </p>
+          <button onClick={() => router.push('/analiz')}
+            style={{ backgroundColor: COLORS.gold, color: '#1B4332', border: 'none', borderRadius: 28, padding: '14px 36px', fontFamily: cinzel.style.fontFamily, fontWeight: 600, fontSize: 14, cursor: 'pointer', letterSpacing: 1, boxShadow: '0 4px 16px rgba(201,168,76,0.3)' }}>
+            {"Analizimi Başlat"}
+          </button>
+        </div>
+      </section>
+
       <Footer />
 
       {/* ===== ESKİ FOOTER KALDIRILDI ===== */}
@@ -708,7 +741,7 @@ export default function LandingPage() {
         color: 'rgba(255,255,255,0.7)',
       }}>
         <div style={{
-          maxWidth: 1100, margin: '0 auto',
+          maxWidth: 1200, margin: '0 auto',
           display: 'flex', flexWrap: 'wrap', justifyContent: 'space-between', alignItems: 'flex-start', gap: 32,
         }}>
           {/* Logo + desc */}
