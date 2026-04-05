@@ -23,9 +23,9 @@ const inputStyle: React.CSSProperties = {
 }
 
 const PLANLAR = [
-  { id: 'monthly', ad: 'Aylik Plan', fiyat: 890, birim: '/ay', gun: 'Haftada 1 analiz', aciklama: 'WhatsApp danışmanlık · Aylik protokol guncellemesi', indirim: '' },
-  { id: 'yearly', ad: 'Yillik Plan', fiyat: 590, birim: '/ay', gun: 'Haftada 1 analiz', aciklama: 'WhatsApp danışmanlık · Oncelikli hizmet · PDF rapor', indirim: '%34 indirim', popular: true },
-  { id: 'one_time', ad: 'Tek Seferlik', fiyat: 1290, birim: '', gun: '1 tam analiz', aciklama: 'WhatsApp protokol · PDF sonuc' },
+  { id: 'monthly', ad: 'Aylik Plan', fiyat: 890, birim: '/ay', gun: 'Haftada 1 analiz', aciklama: 'WhatsApp danışmanlık · Aylik protokol guncellemesi', indirim: '', shopierUrl: 'https://shopier.com/ipekyolusifacisi/45901561' },
+  { id: 'yearly', ad: 'Yillik Plan', fiyat: 590, birim: '/ay', gun: 'Haftada 1 analiz', aciklama: 'WhatsApp danışmanlık · Oncelikli hizmet · PDF rapor', indirim: '%34 indirim', popular: true, shopierUrl: 'https://shopier.com/ipekyolusifacisi/45901595' },
+  { id: 'one_time', ad: 'Tek Seferlik', fiyat: 1290, birim: '', gun: '1 tam analiz', aciklama: 'WhatsApp protokol · PDF sonuc', shopierUrl: 'https://shopier.com/ipekyolusifacisi/45901613' },
 ]
 
 const PROGRESS = [
@@ -37,23 +37,9 @@ const PROGRESS = [
 
 function OdemeIcerik() {
   const searchParams = useSearchParams()
-  const router = useRouter()
-  const supabase = createClient()
   const [seciliPlan, setSeciliPlan] = useState('yearly')
-  const [yukleniyor, setYukleniyor] = useState(false)
-  const [ad, setAd] = useState('')
-  const [telefon, setTelefon] = useState('')
-  const [email, setEmail] = useState('')
-  const [kartNo, setKartNo] = useState('')
-  const [kartSkt, setKartSkt] = useState('')
-  const [kartCvv, setKartCvv] = useState('')
-  const [kartIsim, setKartIsim] = useState('')
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [toast, setToast] = useState<{mesaj: string, tip: 'hata' | 'basari'} | null>(null)
-
-  function gosterToast(mesaj: string, tip: 'hata' | 'basari' = 'hata') {
-    setToast({ mesaj, tip })
-    setTimeout(() => setToast(null), 4000)
-  }
 
   useEffect(() => {
     const plan = searchParams.get('plan')
@@ -62,35 +48,11 @@ function OdemeIcerik() {
 
   const plan = PLANLAR.find(p => p.id === seciliPlan) || PLANLAR[1]
 
-  async function odemeBaslat() {
-    if (!ad || !email) { gosterToast('Ad ve e-posta zorunludur.'); return }
-    if (!kartNo || !kartSkt || !kartCvv) { gosterToast('Kart bilgilerini doldurun.'); return }
-    setYukleniyor(true)
-
-    try {
-      const { data: { user } } = await supabase.auth.getUser()
-      if (!user) { router.push('/giris'); return }
-
-      const now = new Date()
-      const bitis = new Date(now)
-      if (seciliPlan === 'monthly') bitis.setMonth(bitis.getMonth() + 1)
-      else if (seciliPlan === 'yearly') bitis.setFullYear(bitis.getFullYear() + 1)
-      else bitis.setMonth(bitis.getMonth() + 1)
-
-      await supabase.from('abonelikler').insert({
-        kullanici_id: user.id,
-        plan: seciliPlan,
-        durum: 'aktif',
-        baslangic: now.toISOString(),
-        bitis: bitis.toISOString(),
-        fiyat: plan.fiyat,
-      })
-
-      router.push('/odeme/basarili')
-    } catch {
-      gosterToast('Bir hata olustu. Lutfen tekrar deneyin.')
+  function odemeBaslat() {
+    const selectedPlan = PLANLAR.find(p => p.id === seciliPlan) || PLANLAR[1]
+    if (selectedPlan.shopierUrl) {
+      window.open(selectedPlan.shopierUrl, '_blank')
     }
-    setYukleniyor(false)
   }
 
   return (

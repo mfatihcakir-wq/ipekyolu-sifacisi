@@ -268,10 +268,10 @@ export default function LandingClient() {
         </div>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: 20, maxWidth: 920, margin: '0 auto' }} className="pricing-grid">
           {[
-            { plan: 'AYLIK', n: '890\u20ba', per: '/ay', day: 'g\u00fcnde 29\u20ba', features: ['S\u0131n\u0131rs\u0131z analiz', 'WhatsApp dan\u0131\u015fmanl\u0131k', 'Bitki protokol\u00fc', 'PDF re\u00e7ete'], hot: false, badge: '' },
-            { plan: 'YILLIK', n: '590\u20ba', per: '/ay', day: '%34 indirim \u00b7 g\u00fcnde 19\u20ba', features: ['S\u0131n\u0131rs\u0131z analiz', 'WhatsApp dan\u0131\u015fmanl\u0131k', 'Bitki protokol\u00fc', '\u00d6ncelikli destek'], hot: true, badge: 'EN AVANTAJLI' },
-            { plan: 'TEK SEFER', n: '1.290\u20ba', per: 'tek \u00f6deme', day: '1 analiz + sonu\u00e7', features: ['Tek analiz hakk\u0131', 'WhatsApp protokol', 'Bitki protokol\u00fc', 'PDF rapor'], hot: false, badge: '' },
-          ].map(({ plan, n, per, day, features, hot, badge }) => (
+            { plan: 'AYLIK', n: '890\u20ba', per: '/ay', day: 'g\u00fcnde 29\u20ba', features: ['S\u0131n\u0131rs\u0131z analiz', 'WhatsApp dan\u0131\u015fmanl\u0131k', 'Bitki protokol\u00fc', 'PDF re\u00e7ete'], hot: false, badge: '', url: 'https://shopier.com/ipekyolusifacisi/45901561' },
+            { plan: 'YILLIK', n: '590\u20ba', per: '/ay', day: '%34 indirim \u00b7 g\u00fcnde 19\u20ba', features: ['S\u0131n\u0131rs\u0131z analiz', 'WhatsApp dan\u0131\u015fmanl\u0131k', 'Bitki protokol\u00fc', '\u00d6ncelikli destek'], hot: true, badge: 'EN AVANTAJLI', url: 'https://shopier.com/ipekyolusifacisi/45901595' },
+            { plan: 'TEK SEFER', n: '1.290\u20ba', per: 'tek \u00f6deme', day: '1 analiz + sonu\u00e7', features: ['Tek analiz hakk\u0131', 'WhatsApp protokol', 'Bitki protokol\u00fc', 'PDF rapor'], hot: false, badge: '', url: 'https://shopier.com/ipekyolusifacisi/45901613' },
+          ].map(({ plan, n, per, day, features, hot, badge, url }) => (
             <div key={plan} style={{ background: hot ? '#1C3A26' : 'white', border: `1px solid ${hot ? '#1C3A26' : '#DEB887'}`, borderRadius: 18, padding: '36px 28px', textAlign: 'center' as const }}>
               {badge && <div style={{ fontFamily: 'Cinzel,serif', fontSize: 8, background: '#B8860B', color: '#1C3A26', padding: '4px 14px', borderRadius: 20, letterSpacing: 1.5, display: 'inline-block', marginBottom: 16, fontWeight: 700 }}>{badge}</div>}
               <div style={{ fontFamily: 'Cinzel,serif', fontSize: 10, color: hot ? 'rgba(245,237,224,0.4)' : '#9B8060', letterSpacing: 2.5, marginBottom: 12 }}>{plan}</div>
@@ -282,7 +282,7 @@ export default function LandingClient() {
               {features.map((f: string) => (
                 <div key={f} style={{ fontSize: 14, color: hot ? 'rgba(245,237,224,0.6)' : '#5C4A2A', padding: '5px 0', borderBottom: `1px solid ${hot ? 'rgba(245,237,224,0.07)' : '#F5EFE0'}` }}>{f}</div>
               ))}
-              <button onClick={() => router.push('/kayit')} style={{ width: '100%', marginTop: 22, padding: 14, fontFamily: 'Cinzel,serif', fontSize: 10, fontWeight: 700, letterSpacing: 2, borderRadius: 10, border: 'none', cursor: 'pointer', background: hot ? '#B8860B' : '#1C3A26', color: hot ? '#1C3A26' : '#F5EDE0' }}>{"BA\u015eLA"}</button>
+              <button onClick={() => window.open(url, '_blank')} style={{ width: '100%', marginTop: 22, padding: 14, fontFamily: 'Cinzel,serif', fontSize: 10, fontWeight: 700, letterSpacing: 2, borderRadius: 10, border: 'none', cursor: 'pointer', background: hot ? '#B8860B' : '#1C3A26', color: hot ? '#1C3A26' : '#F5EDE0' }}>{"BA\u015eLA"}</button>
             </div>
           ))}
         </div>
