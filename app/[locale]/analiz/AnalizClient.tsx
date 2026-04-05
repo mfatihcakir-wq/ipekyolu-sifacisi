@@ -1,16 +1,11 @@
 'use client'
 
-import { useState, useRef, useCallback, useEffect } from 'react'
+import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { Cinzel, EB_Garamond } from 'next/font/google'
-import dynamic from 'next/dynamic'
 import Header from '../components/Header'
 import Footer from '../components/Footer'
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-const PPGNabiz = dynamic(() => import('@/components/analiz/PPGNabiz'), { ssr: false })
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-const DilYuzKamera = dynamic(() => import('@/components/analiz/DilYuzKamera'), { ssr: false })
 
 const cinzel = Cinzel({ subsets: ['latin', 'latin-ext'], weight: ['400', '500', '600'] })
 const garamond = EB_Garamond({ subsets: ['latin', 'latin-ext'], weight: ['400', '500'], style: ['normal', 'italic'] })
@@ -48,9 +43,6 @@ export default function AnalizClient() {
     setTimeout(() => setToast(null), 4000)
   }
 
-  const [nabizModu, setNabizModu] = useState<'kamera' | 'manuel'>('kamera')
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [dyModu, setDyModu] = useState<'kamera' | 'manuel'>('kamera')
 
   const [form, setForm] = useState({
     ad_soyad: '', telefon: '', age_group: '', gender: '', pregnancy: 'hayir',
@@ -82,232 +74,7 @@ export default function AnalizClient() {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const set = (key: string, val: any) => setForm(f => ({ ...f, [key]: val }))
 
-  // === PPG Camera State ===
-  const [ppgAktif, setPpgAktif] = useState(false)
-  const [ppgBpm, setPpgBpm] = useState<number | null>(null)
-  const [ppgSinyal, setPpgSinyal] = useState<number[]>([])
-  const [ppgKalite, setPpgKalite] = useState(0)
-  const [kameralar, setKameralar] = useState<MediaDeviceInfo[]>([])
-  const [seciliKamera, setSeciliKamera] = useState('')
-  const [ppgStatus, setPpgStatus] = useState('Kamerayı başlatın, parmak ucunuzu kameraya tutun')
-
-  const ppgVideoRef = useRef<HTMLVideoElement | null>(null)
-  const ppgStreamRef = useRef<MediaStream | null>(null)
-  const ppgCanvasRef = useRef<HTMLCanvasElement | null>(null)
-  const ppgRafRef = useRef<number | null>(null)
-  const ppgDataRef = useRef<{ timestamps: number[], values: number[], filtered: number[] }>({ timestamps: [], values: [], filtered: [] })
-  const ppgLowRef = useRef(0)
-  const ppgHighRef = useRef(0)
-  const ppgLastPeakRef = useRef(0)
-  const ppgIntervalsRef = useRef<number[]>([])
-
-  // === Dil/Yuz Photo State ===
-  const [dilFoto, setDilFoto] = useState<string | null>(null)
-  const [yuzFoto, setYuzFoto] = useState<string | null>(null)
-  const [fotoTab, setFotoTab] = useState<'dil' | 'yuz'>('dil')
-  const fotoStreamRef = useRef<MediaStream | null>(null)
-
-  // Kamera listele
-  const kameralariListele = useCallback(async () => {
-    try {
-      await navigator.mediaDevices.getUserMedia({ video: true })
-      const devices = await navigator.mediaDevices.enumerateDevices()
-      const videoDevices = devices.filter(d => d.kind === 'videoinput')
-      setKameralar(videoDevices)
-      // Detect iPhone continuity camera
-      const iphoneCam = videoDevices.find(d => d.label.toLowerCase().includes('iphone') || d.label.toLowerCase().includes('continuity'))
-      if (iphoneCam) {
-        setSeciliKamera(iphoneCam.deviceId)
-      }
-    } catch {
-      setPpgStatus('Kamera erişimi reddedildi.')
-    }
-  }, [])
-
-  // PPG Stop
-  const ppgDurdur = useCallback(() => {
-    if (ppgRafRef.current) { cancelAnimationFrame(ppgRafRef.current); ppgRafRef.current = null }
-    if (ppgStreamRef.current) { ppgStreamRef.current.getTracks().forEach(t => t.stop()); ppgStreamRef.current = null }
-    setPpgAktif(false)
-  }, [])
-
-  // PPG Start
-  const ppgBaslat = useCallback(async () => {
-    try {
-      ppgDurdur()
-      setPpgStatus('Kamera açılıyor...')
-      setPpgBpm(null)
-      setPpgSinyal([])
-      setPpgKalite(0)
-      ppgDataRef.current = { timestamps: [], values: [], filtered: [] }
-      ppgLowRef.current = 0
-      ppgHighRef.current = 0
-      ppgLastPeakRef.current = 0
-      ppgIntervalsRef.current = []
-
-      const constraints: MediaStreamConstraints = {
-        video: seciliKamera
-          ? { deviceId: { exact: seciliKamera } }
-          : { facingMode: 'environment' }
-      }
-      const stream = await navigator.mediaDevices.getUserMedia(constraints)
-      ppgStreamRef.current = stream
-      const video = ppgVideoRef.current
-      if (!video) return
-      video.srcObject = stream
-      await video.play()
-      setPpgAktif(true)
-      setPpgStatus('Parmak ucunuzu kameraya tutun... Ölçüm başlıyor')
-
-      const canvas = ppgCanvasRef.current
-      if (!canvas) return
-      const ctx = canvas.getContext('2d')
-      if (!ctx) return
-      canvas.width = 64
-      canvas.height = 64
-
-      const isMac = typeof navigator !== 'undefined' && navigator.platform.toLowerCase().includes('mac')
-      const alphaLow = 0.45
-      const alphaHigh = 0.97
-
-      const processFrame = () => {
-        if (!ppgStreamRef.current) return
-        ctx.drawImage(video, 0, 0, 64, 64)
-        const frame = ctx.getImageData(0, 0, 64, 64)
-        let sum = 0
-        const channelIndex = isMac ? 1 : 0 // green on Mac, red on others
-        for (let i = 0; i < frame.data.length; i += 4) sum += frame.data[i + channelIndex]
-        const avg = sum / (frame.data.length / 4)
-        const now = performance.now()
-
-        const data = ppgDataRef.current
-        data.timestamps.push(now)
-        data.values.push(avg)
-
-        // Bandpass filter
-        const lowFiltered = alphaLow * ppgLowRef.current + (1 - alphaLow) * avg
-        ppgLowRef.current = lowFiltered
-        const highFiltered = alphaHigh * ppgHighRef.current + alphaHigh * (lowFiltered - (ppgHighRef.current > 0 ? ppgHighRef.current : lowFiltered))
-        ppgHighRef.current = highFiltered > 0 ? highFiltered : lowFiltered
-        const filtered = lowFiltered - ppgHighRef.current
-        data.filtered.push(filtered)
-
-        // Keep last 300 samples for display
-        if (data.filtered.length > 300) {
-          data.filtered.shift()
-          data.timestamps.shift()
-          data.values.shift()
-        }
-
-        // Update signal for waveform display
-        setPpgSinyal([...data.filtered.slice(-100)])
-
-        // Peak detection with adaptive threshold
-        const recent = data.filtered.slice(-60)
-        if (recent.length > 10) {
-          const mean = recent.reduce((a, b) => a + b, 0) / recent.length
-          const std = Math.sqrt(recent.reduce((a, b) => a + (b - mean) ** 2, 0) / recent.length)
-          const threshold = mean + std * 0.4
-          const currentVal = data.filtered[data.filtered.length - 1]
-          const prevVal = data.filtered.length > 1 ? data.filtered[data.filtered.length - 2] : 0
-          const prevPrevVal = data.filtered.length > 2 ? data.filtered[data.filtered.length - 3] : 0
-
-          // Refractory period 250ms
-          if (currentVal > threshold && currentVal > prevVal && prevVal > prevPrevVal && (now - ppgLastPeakRef.current) > 250) {
-            const interval = now - ppgLastPeakRef.current
-            ppgLastPeakRef.current = now
-
-            // Physiological check 30-220 BPM
-            if (interval > 272 && interval < 2000) {
-              ppgIntervalsRef.current.push(interval)
-              if (ppgIntervalsRef.current.length > 20) ppgIntervalsRef.current.shift()
-            }
-          }
-
-          // Calculate BPM with IQR outlier rejection
-          const intervals = ppgIntervalsRef.current
-          if (intervals.length >= 5) {
-            const sorted = [...intervals].sort((a, b) => a - b)
-            const q1 = sorted[Math.floor(sorted.length * 0.25)]
-            const q3 = sorted[Math.floor(sorted.length * 0.75)]
-            const iqr = q3 - q1
-            const validIntervals = sorted.filter(v => v >= q1 - 1.5 * iqr && v <= q3 + 1.5 * iqr)
-            if (validIntervals.length >= 3) {
-              const avgInterval = validIntervals.reduce((a, b) => a + b, 0) / validIntervals.length
-              const bpm = Math.round(60000 / avgInterval)
-              if (bpm >= 30 && bpm <= 220) {
-                setPpgBpm(bpm)
-                set('ppg_bpm', String(bpm))
-                // SNR quality score
-                const snr = std > 0 ? (Math.abs(mean) / std) : 0
-                const quality = Math.min(100, Math.round(snr * 20))
-                setPpgKalite(quality)
-                // Auto-set speed
-                if (bpm > 90) set('nb_hiz_sinif', 'hizli')
-                else if (bpm < 60) set('nb_hiz_sinif', 'yavas')
-                else set('nb_hiz_sinif', 'orta')
-              }
-            }
-          }
-        }
-
-        const elapsed = (now - data.timestamps[0]) / 1000
-        if (ppgBpm === null && elapsed < 30) {
-          setPpgStatus(`Ölçülüyor... ${Math.round(elapsed)}s`)
-        } else if (ppgBpm !== null) {
-          setPpgStatus(`Canlı ölçüm: ~${ppgBpm} BPM`)
-        }
-
-        ppgRafRef.current = requestAnimationFrame(processFrame)
-      }
-
-      ppgRafRef.current = requestAnimationFrame(processFrame)
-    } catch {
-      setPpgStatus('Kamera erişimi reddedildi. Tarayıcı ayarlarını kontrol edin.')
-    }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [ppgDurdur, seciliKamera])
-
-  // Cleanup on unmount
-  useEffect(() => {
-    return () => {
-      if (ppgRafRef.current) cancelAnimationFrame(ppgRafRef.current)
-      if (ppgStreamRef.current) ppgStreamRef.current.getTracks().forEach(t => t.stop())
-      if (fotoStreamRef.current) fotoStreamRef.current.getTracks().forEach(t => t.stop())
-    }
-  }, [])
-
-  // Photo capture
-  const fotoCek = useCallback(async (tip: 'dil' | 'yuz') => {
-    try {
-      if (fotoStreamRef.current) {
-        fotoStreamRef.current.getTracks().forEach(t => t.stop())
-        fotoStreamRef.current = null
-      }
-      const stream = await navigator.mediaDevices.getUserMedia({
-        video: { facingMode: tip === 'yuz' ? 'user' : 'environment' }
-      })
-      fotoStreamRef.current = stream
-      const video = document.createElement('video')
-      video.srcObject = stream
-      video.setAttribute('playsinline', 'true')
-      await video.play()
-      await new Promise(r => setTimeout(r, 500))
-      const canvas = document.createElement('canvas')
-      canvas.width = video.videoWidth
-      canvas.height = video.videoHeight
-      const ctx = canvas.getContext('2d')
-      if (ctx) ctx.drawImage(video, 0, 0)
-      stream.getTracks().forEach(t => t.stop())
-      fotoStreamRef.current = null
-      const dataUrl = canvas.toDataURL('image/jpeg', 0.7)
-      if (tip === 'dil') { setDilFoto(dataUrl); set('dil_foto', dataUrl) }
-      else { setYuzFoto(dataUrl); set('yuz_foto', dataUrl) }
-    } catch {
-      gosterToast('Kamera erişimi sağlanamadı.')
-    }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  // PPG + Dil/Yuz modulleri kaldirildi
 
   const handleSubmit = () => {
     if (!form.ad_soyad?.trim()) { gosterToast('Ad Soyad alani zorunludur.'); setAdim(1); return }
@@ -317,31 +84,6 @@ export default function AnalizClient() {
     localStorage.setItem('ipekyolu_analiz_form', JSON.stringify(form))
     localStorage.setItem('ipekyolu_secili_plan', 'yearly')
     router.push('/sonuc')
-  }
-
-  // Nabiz sifat button renderer
-  const renderNabizButon = (key: string, value: string, label: string) => {
-    const active = (form as Record<string, string | boolean>)[key] === value
-    return (
-      <button
-        key={value}
-        type="button"
-        onClick={() => set(key, value)}
-        style={{
-          padding: '6px 10px',
-          borderRadius: 6,
-          border: `1.5px solid ${active ? C.gold : C.border}`,
-          background: active ? C.gold : C.white,
-          color: active ? C.primary : C.secondary,
-          fontSize: 12,
-          fontWeight: active ? 600 : 400,
-          cursor: 'pointer',
-          transition: 'all 0.2s',
-        }}
-      >
-        {label}
-      </button>
-    )
   }
 
   return (
@@ -584,363 +326,34 @@ export default function AnalizClient() {
 
         {/* === ADIM 3: NABIZ === */}
         <div style={{ display: adim === 3 ? 'block' : 'none' }}>
-        <div style={s.sectionTitle}>
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
-          {"Nabız Gözlemi — el-Kânûn (9 Sıfat)"}
-        </div>
-
-        {/* Nabiz Toggle */}
-        <div style={{ display: 'flex', gap: 0, marginBottom: 16, borderRadius: 10, overflow: 'hidden', border: `1px solid ${C.primary}` }}>
-          <button onClick={() => setNabizModu('kamera')}
-            style={{ flex: 1, padding: '10px 16px', border: 'none', fontFamily: cinzel.style.fontFamily, fontSize: 11, fontWeight: 600, letterSpacing: 1, cursor: 'pointer', background: nabizModu === 'kamera' ? C.primary : C.white, color: nabizModu === 'kamera' ? C.gold : C.primary }}>
-            {"Kamera PPG"}
-          </button>
-          <button onClick={() => setNabizModu('manuel')}
-            style={{ flex: 1, padding: '10px 16px', border: 'none', borderLeft: `1px solid ${C.primary}`, fontFamily: cinzel.style.fontFamily, fontSize: 11, fontWeight: 600, letterSpacing: 1, cursor: 'pointer', background: nabizModu === 'manuel' ? C.primary : C.white, color: nabizModu === 'manuel' ? C.gold : C.primary }}>
-            {"Manuel Gir"}
-          </button>
-        </div>
-
-        {/* PPG Nabiz Olcumu */}
-        {nabizModu === 'kamera' && (
-          <div style={{ marginBottom: 16 }}>
-            <PPGNabiz onSonuc={(sonuc) => {
-              set('nb_hiz_sinif', sonuc.sifatlar.hiz)
-              set('nb_buyukluk', sonuc.sifatlar.buyukluk)
-              set('nb_kuvvet', sonuc.sifatlar.kuvvet)
-              set('nb_dolgunluk', sonuc.sifatlar.dolgunluk)
-              set('nb_sertlik', sonuc.sifatlar.sertlik)
-              set('nb_ritim', sonuc.sifatlar.ritim)
-              set('nb_esitlik', sonuc.sifatlar.esitlik)
-              set('nb_sureklitik', sonuc.sifatlar.sureklitik)
-              set('ppg_bpm', String(sonuc.bpm))
-              gosterToast(`${sonuc.bpm} BPM — 8/8 sifat otomatik dolduruldu. Isi sifatini manuel girin.`, 'basari')
-              setNabizModu('manuel')
-            }} />
+          <div style={s.sectionTitle}>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+            {"Nabiz Gozlemi"}
           </div>
-        )}
-
-        {nabizModu === 'kamera' && <>
-        {/* Kamera Tipi Secimi */}
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(min(160px, 100%), 1fr))', gap: 10, marginBottom: 16 }}>
-          {[
-            { value: 'bilgisayar', label: 'Bilgisayar Kamerası', icon: '\uD83D\uDCBB' },
-            { value: 'telefon', label: 'Telefon Kamerası', icon: '\uD83D\uDCF1' },
-            { value: 'iphone_sureklitik', label: 'iPhone Süreklilik', icon: '\uD83D\uDD17' },
-          ].map(opt => {
-            const active = form.kamera_tipi === opt.value
-            return (
-              <button
-                key={opt.value}
-                type="button"
-                onClick={() => {
-                  set('kamera_tipi', opt.value)
-                  if (opt.value === 'iphone_sureklitik') kameralariListele()
-                }}
-                style={{
-                  padding: '14px 12px',
-                  borderRadius: 10,
-                  border: `2px solid ${active ? C.gold : C.border}`,
-                  background: active ? '#FFF8E7' : C.white,
-                  cursor: 'pointer',
-                  textAlign: 'center',
-                  transition: 'all 0.2s',
-                }}
-              >
-                <div style={{ fontSize: 24, marginBottom: 4 }}>{opt.icon}</div>
-                <div style={{ fontSize: 11, fontWeight: active ? 600 : 400, color: active ? C.primary : C.secondary }}>{opt.label}</div>
-              </button>
-            )
-          })}
-        </div>
-
-        {/* Kamera secim listesi */}
-        {kameralar.length > 0 && form.kamera_tipi === 'iphone_sureklitik' && (
-          <div style={{ background: C.white, border: `1px solid ${C.border}`, borderRadius: 8, padding: 10, marginBottom: 12 }}>
-            <div style={{ fontSize: 11, color: C.secondary, marginBottom: 6 }}>{"Kamera seçin:"}</div>
-            {kameralar.map((d, i) => (
-              <button key={d.deviceId} onClick={() => setSeciliKamera(d.deviceId)}
-                style={{ display: 'block', width: '100%', textAlign: 'left', padding: '8px 12px', border: seciliKamera === d.deviceId ? `1px solid ${C.gold}` : 'none', background: seciliKamera === d.deviceId ? '#FFF8E7' : i % 2 === 0 ? C.surface : C.white, cursor: 'pointer', fontSize: 12, color: C.dark, borderRadius: 4, marginBottom: 2 }}>
-                {d.label || `Kamera ${i + 1}`}
-              </button>
-            ))}
+          <div style={{ ...s.card, textAlign: 'center' as const, padding: '48px 24px' }}>
+            <div style={{ fontFamily: cinzel.style.fontFamily, fontSize: 16, color: C.primary, marginBottom: 8 }}>{"NABIZ MODULU YAKINDA"}</div>
+            <div style={{ fontSize: 13, color: C.secondary }}>{"PPG kamera ve 9 sifat modulu yeniden yaziliyor."}</div>
           </div>
-        )}
-
-        {/* PPG Video Alani */}
-        <div style={{ background: '#111', borderRadius: 14, padding: 20, marginBottom: 20, textAlign: 'center', position: 'relative' }}>
-          <div style={{ fontFamily: cinzel.style.fontFamily, fontSize: 10, color: C.gold, letterSpacing: 2, marginBottom: 12 }}>
-            {"KAMERA İLE NABIZ ÖLÇÜMÜ (PPG)"}
-          </div>
-
-          {/* Video + parmak rehber */}
-          <div style={{ position: 'relative', display: 'inline-block', marginBottom: 12 }}>
-            <video ref={ppgVideoRef} playsInline style={{ width: '100%', maxWidth: 280, borderRadius: 10, display: ppgAktif ? 'block' : 'none' }} />
-            <canvas ref={ppgCanvasRef} style={{ display: 'none' }} />
-            {!ppgAktif && (
-              <div style={{ width: 120, height: 120, margin: '0 auto', position: 'relative' }}>
-                {/* Double ring guide */}
-                <div style={{ width: 120, height: 120, borderRadius: '50%', border: `3px solid ${C.gold}`, position: 'absolute', top: 0, left: 0 }} />
-                <div style={{ width: 90, height: 90, borderRadius: '50%', border: `2px dashed rgba(201,168,76,0.5)`, position: 'absolute', top: 15, left: 15 }} />
-                <div style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%,-50%)', fontSize: 11, color: 'rgba(255,255,255,0.6)', textAlign: 'center', lineHeight: 1.3 }}>
-                  {"Parmağınızı buraya tutun"}
-                </div>
-              </div>
-            )}
-          </div>
-
-          {/* BPM display */}
-          {ppgBpm !== null && (
-            <div style={{ fontSize: 36, fontWeight: 700, color: '#EF5350', fontFamily: cinzel.style.fontFamily, marginBottom: 4 }}>
-              {ppgBpm} <span style={{ fontSize: 14, color: 'rgba(255,255,255,0.6)' }}>BPM</span>
-            </div>
-          )}
-
-          {/* Waveform SVG */}
-          {ppgSinyal.length > 5 && (
-            <svg viewBox="0 0 200 60" style={{ width: '100%', maxWidth: 300, height: 50, margin: '8px auto', display: 'block' }}>
-              <polyline
-                fill="none"
-                stroke={C.gold}
-                strokeWidth="1.5"
-                points={ppgSinyal.map((v, i) => {
-                  const x = (i / ppgSinyal.length) * 200
-                  const minV = Math.min(...ppgSinyal)
-                  const maxV = Math.max(...ppgSinyal)
-                  const range = maxV - minV || 1
-                  const y = 55 - ((v - minV) / range) * 50
-                  return `${x},${y}`
-                }).join(' ')}
-              />
-            </svg>
-          )}
-
-          {/* Signal quality bar */}
-          {ppgAktif && (
-            <div style={{ margin: '8px auto', maxWidth: 200 }}>
-              <div style={{ fontSize: 10, color: 'rgba(255,255,255,0.5)', marginBottom: 3 }}>{"Sinyal Kalitesi"}</div>
-              <div style={{ height: 6, background: 'rgba(255,255,255,0.1)', borderRadius: 3 }}>
-                <div style={{ height: 6, borderRadius: 3, width: `${ppgKalite}%`, background: ppgKalite > 60 ? '#4CAF50' : ppgKalite > 30 ? '#FFC107' : '#F44336', transition: 'width 0.3s' }} />
-              </div>
-            </div>
-          )}
-
-          {/* Status */}
-          <div style={{ fontSize: 12, color: 'rgba(255,255,255,0.7)', marginTop: 8, marginBottom: 12 }}>{ppgStatus}</div>
-
-          {/* Buttons */}
-          <div style={{ display: 'flex', gap: 8, justifyContent: 'center', flexWrap: 'wrap' as const }}>
-            {!ppgAktif ? (
-              <button onClick={ppgBaslat}
-                style={{ background: C.gold, color: C.primary, border: 'none', borderRadius: 8, padding: '10px 20px', fontFamily: cinzel.style.fontFamily, fontSize: 11, letterSpacing: 1, cursor: 'pointer', fontWeight: 600 }}>
-                {"Kamerayı Başlat"}
-              </button>
-            ) : (
-              <button onClick={ppgDurdur}
-                style={{ background: '#C62828', color: 'white', border: 'none', borderRadius: 8, padding: '10px 20px', fontFamily: cinzel.style.fontFamily, fontSize: 11, letterSpacing: 1, cursor: 'pointer' }}>
-                {"Durdur"}
-              </button>
-            )}
-            {!ppgAktif && (
-              <button onClick={kameralariListele}
-                style={{ background: 'transparent', color: 'rgba(255,255,255,0.7)', border: '1px solid rgba(255,255,255,0.3)', borderRadius: 8, padding: '10px 16px', fontFamily: cinzel.style.fontFamily, fontSize: 11, letterSpacing: 1, cursor: 'pointer' }}>
-                {"Kamera Seç"}
-              </button>
-            )}
+          <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: 24 }}>
+            <button onClick={() => setAdim(2)} style={{ padding: '10px 24px', border: `1px solid ${C.border}`, borderRadius: 8, background: C.white, color: C.secondary, cursor: 'pointer', fontSize: 13 }}>{"\u2190 Geri"}</button>
+            <button onClick={() => setAdim(4)} style={{ padding: '10px 28px', background: C.primary, border: 'none', borderRadius: 8, color: C.gold, cursor: 'pointer', fontSize: 13, fontWeight: 600, fontFamily: cinzel.style.fontFamily }}>{"Ileri \u2192"}</button>
           </div>
         </div>
 
-        </>}
-
-        <div style={s.tip}>{"İbn Sînâ el-Kânûn: Nabız mizacın doğrudan aynasıdır. 9 sıfatın tümü değerlendirilmelidir."}</div>
-
-        {/* 9 Sifat Cards */}
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(min(140px, 100%), 1fr))', gap: 10 }}>
-          {[
-            { key: 'nb_buyukluk', label: 'Büyüklük', ar: '\u0627\u0644\u0643\u0628\u0631 \u0648\u0627\u0644\u0635\u063A\u0631', note: 'Büyük\u2192kan fazlası; Küçük\u2192balgam', opts: [['orta','Orta'],['buyuk','Büyük'],['kucuk','Küçük']] },
-            { key: 'nb_kuvvet', label: 'Kuvvet', ar: '\u0627\u0644\u0642\u0648\u0629 \u0648\u0627\u0644\u0636\u0639\u0641', note: 'Kuvvetli\u2192güçlü ruh; Zayıf\u2192yorgunluk', opts: [['orta','Orta'],['kuvvetli','Kuvvetli'],['zayif','Zayıf']] },
-            { key: 'nb_hiz_sinif', label: 'Hız', ar: '\u0627\u0644\u0633\u0631\u0639\u0629 \u0648\u0627\u0644\u0628\u0637\u0621', note: 'Hızlı >90; Yavaş <60', opts: [['orta','Orta'],['hizli','Hızlı'],['yavas','Yavaş']] },
-            { key: 'nb_dolgunluk', label: 'Dolgunluk', ar: '\u0627\u0644\u0627\u0645\u062A\u0644\u0627\u0621 \u0648\u0627\u0644\u062E\u0648\u0627\u0621', note: 'Dolu\u2192dem fazlası; Boş\u2192kansızlık', opts: [['orta','Orta'],['dolu','Dolu'],['bos','Boş']] },
-            { key: 'nb_sertlik', label: 'Sertlik', ar: '\u0627\u0644\u0635\u0644\u0627\u0628\u0629 \u0648\u0627\u0644\u0644\u064A\u0646', note: 'Sert\u2192ateş; Yumuşak\u2192balgam', opts: [['orta','Orta'],['sert','Sert'],['yumusak','Yumuşak']] },
-            { key: 'nb_isi', label: 'Isı', ar: '\u0627\u0644\u062D\u0631\u0627\u0631\u0629 \u0648\u0627\u0644\u0628\u0631\u0648\u062F\u0629', note: 'Sıcak\u2192safravî; Soğuk\u2192balgamî', opts: [['ilik','Ilık'],['sicak','Sıcak'],['soguk','Soğuk']] },
-            { key: 'nb_ritim', label: 'Ritim', ar: '\u0627\u0644\u0627\u0646\u062A\u0638\u0627\u0645', note: 'Düzensiz\u2192kalp güçsüzlüğü', opts: [['muntazam','Muntazam'],['hafif_duzensiz','Hafif düzensiz'],['duzensiz','Düzensiz']] },
-            { key: 'nb_esitlik', label: 'Eşitlik', ar: '\u0627\u0644\u062A\u0633\u0627\u0648\u064A', note: 'Eşitsiz\u2192mizaç bozukluğu', opts: [['esit','Eşit'],['hafif_esitsiz','Hafif eşitsiz'],['esitsiz','Eşitsiz']] },
-            { key: 'nb_sureklitik', label: 'Süreklilik', ar: '\u0627\u0644\u0627\u062A\u0635\u0627\u0644 \u0648\u0627\u0644\u0627\u0646\u0642\u0637\u0627\u0639', note: 'Kesik\u2192kuvvet tükenmesi', opts: [['surekli','Sürekli'],['hafif_kesik','Hafif kesik'],['kesik','Kesik']] },
-          ].map(f => (
-            <div key={f.key} style={{ background: C.white, border: `1px solid ${C.border}`, borderRadius: 10, padding: '10px 12px' }}>
-              <div style={{ fontSize: 11, fontWeight: 600, color: C.primary, marginBottom: 2 }}>{f.label}</div>
-              <div style={{ fontSize: 11, color: '#999', fontFamily: 'serif', marginBottom: 4 }}>{f.ar}</div>
-              <div style={{ fontSize: 10, color: C.secondary, fontStyle: 'italic', marginBottom: 8, lineHeight: 1.3 }}>{"İbn Sînâ: "}{f.note}</div>
-              <div style={{ display: 'flex', gap: 4, flexWrap: 'wrap' as const }}>
-                {f.opts.map(([v, l]) => renderNabizButon(f.key, v, l))}
-              </div>
-            </div>
-          ))}
-        </div>
-
-        <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: 24 }}>
-          <button onClick={() => setAdim(2)} style={{ padding: '10px 24px', border: `1px solid ${C.border}`, borderRadius: 8, background: C.white, color: C.secondary, cursor: 'pointer', fontSize: 13 }}>{"\u2190 Geri"}</button>
-          <button onClick={() => setAdim(4)} style={{ padding: '10px 28px', background: C.primary, border: 'none', borderRadius: 8, color: C.gold, cursor: 'pointer', fontSize: 13, fontWeight: 600, fontFamily: cinzel.style.fontFamily }}>{"İleri \u2192"}</button>
-        </div>
-        </div>
-
-        {/* === ADIM 4: DİL/YÜZ === */}
+        {/* === ADIM 4: DIL/YUZ === */}
         <div style={{ display: adim === 4 ? 'block' : 'none' }}>
-        <div style={s.sectionTitle}>
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="3"/></svg>
-          {"Dil ve Yüz Gözlemi"}
-        </div>
-
-        {/* DY Toggle */}
-        <div style={{ display: 'flex', gap: 0, marginBottom: 16, borderRadius: 10, overflow: 'hidden', border: `1px solid ${C.primary}` }}>
-          <button onClick={() => setDyModu('kamera')}
-            style={{ flex: 1, padding: '10px 16px', border: 'none', fontFamily: cinzel.style.fontFamily, fontSize: 11, fontWeight: 600, letterSpacing: 1, cursor: 'pointer', background: dyModu === 'kamera' ? C.primary : C.white, color: dyModu === 'kamera' ? C.gold : C.primary }}>
-            {"Kamera ile Cek"}
-          </button>
-          <button onClick={() => setDyModu('manuel')}
-            style={{ flex: 1, padding: '10px 16px', border: 'none', borderLeft: `1px solid ${C.primary}`, fontFamily: cinzel.style.fontFamily, fontSize: 11, fontWeight: 600, letterSpacing: 1, cursor: 'pointer', background: dyModu === 'manuel' ? C.primary : C.white, color: dyModu === 'manuel' ? C.gold : C.primary }}>
-            {"Manuel Gir"}
-          </button>
-        </div>
-
-        {/* Dil/Yuz Kamera Analizi */}
-        {dyModu === 'kamera' && (
-          <div style={{ marginBottom: 16 }}>
-            <DilYuzKamera onSonuc={(sonuc) => {
-              if (sonuc.dil) {
-                if (sonuc.dil.renk) set('dil_renk', sonuc.dil.renk)
-                if (sonuc.dil.kaplama) set('dil_kaplama', sonuc.dil.kaplama)
-                if (sonuc.dil.nem) set('dil_nem', sonuc.dil.nem)
-                if (sonuc.dil.sekil) set('dil_sekil', sonuc.dil.sekil)
-              }
-              if (sonuc.yuz) {
-                if (sonuc.yuz.ten) set('yuz_ten', sonuc.yuz.ten)
-                if (sonuc.yuz.sekil) set('yuz_sekil', sonuc.yuz.sekil)
-                if (sonuc.yuz.cilt) set('yuz_cilt', sonuc.yuz.cilt)
-                if (sonuc.yuz.gozalti) set('yuz_gozalti', sonuc.yuz.gozalti)
-              }
-              gosterToast('Dil/Yuz analizi tamamlandi — form alanlari dolduruldu', 'basari')
-              setDyModu('manuel')
-            }} />
+          <div style={s.sectionTitle}>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="3"/></svg>
+            {"Dil ve Yuz Gozlemi"}
           </div>
-        )}
-
-        <div style={s.tip}>{"İbn Sînâ: Dil ve yüz rengi, mizacın görünür aynasıdır."}</div>
-
-        {/* Tab system */}
-        <div style={{ display: 'flex', gap: 0, marginBottom: 0 }}>
-          {(['dil', 'yuz'] as const).map(tab => {
-            const active = fotoTab === tab
-            return (
-              <button
-                key={tab}
-                type="button"
-                onClick={() => setFotoTab(tab)}
-                style={{
-                  flex: 1,
-                  padding: '10px 0',
-                  background: active ? '#111' : C.surface,
-                  color: active ? C.gold : C.secondary,
-                  border: `1px solid ${active ? '#111' : C.border}`,
-                  borderBottom: active ? 'none' : `1px solid ${C.border}`,
-                  borderRadius: active ? '10px 10px 0 0' : '10px 10px 0 0',
-                  cursor: 'pointer',
-                  fontFamily: cinzel.style.fontFamily,
-                  fontSize: 11,
-                  letterSpacing: 1,
-                  fontWeight: active ? 600 : 400,
-                }}
-              >
-                {tab === 'dil' ? 'Dil Fotoğrafı' : 'Yüz Fotoğrafı'}
-              </button>
-            )
-          })}
-        </div>
-
-        {/* Camera preview area */}
-        <div style={{ background: '#111', borderRadius: '0 0 14px 14px', padding: 20, marginBottom: 16, textAlign: 'center' }}>
-          {/* Oval guide */}
-          <div style={{ position: 'relative', width: fotoTab === 'dil' ? 200 : 140, height: fotoTab === 'dil' ? 120 : 180, margin: '0 auto 12px', border: `2px dashed ${C.gold}`, borderRadius: '50%' }}>
-            <div style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%,-50%)', fontSize: 11, color: 'rgba(255,255,255,0.5)', textAlign: 'center' }}>
-              {fotoTab === 'dil' ? 'Dilinizi gösterin' : 'Yüzünüzü çerçeveye alın'}
-            </div>
+          <div style={{ ...s.card, textAlign: 'center' as const, padding: '48px 24px' }}>
+            <div style={{ fontFamily: cinzel.style.fontFamily, fontSize: 16, color: C.primary, marginBottom: 8 }}>{"DIL YUZ MODULU YAKINDA"}</div>
+            <div style={{ fontSize: 13, color: C.secondary }}>{"Kamera analizi ve Claude Vision modulu yeniden yaziliyor."}</div>
           </div>
-
-          {/* Foto preview */}
-          {fotoTab === 'dil' && dilFoto && (
-            <div style={{ marginBottom: 12 }}>
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src={dilFoto} alt="Dil" style={{ width: 120, height: 90, objectFit: 'cover', borderRadius: 8, border: `2px solid ${C.gold}` }} />
-              <div style={{ fontSize: 10, color: 'rgba(255,255,255,0.5)', marginTop: 4 }}>{"Dil fotoğrafı alındı"}</div>
-            </div>
-          )}
-          {fotoTab === 'yuz' && yuzFoto && (
-            <div style={{ marginBottom: 12 }}>
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src={yuzFoto} alt="Yüz" style={{ width: 100, height: 120, objectFit: 'cover', borderRadius: 8, border: `2px solid ${C.gold}` }} />
-              <div style={{ fontSize: 10, color: 'rgba(255,255,255,0.5)', marginTop: 4 }}>{"Yüz fotoğrafı alındı"}</div>
-            </div>
-          )}
-
-          <button
-            onClick={() => fotoCek(fotoTab)}
-            style={{ background: C.gold, color: C.primary, border: 'none', borderRadius: 8, padding: '10px 24px', fontFamily: cinzel.style.fontFamily, fontSize: 11, letterSpacing: 1, cursor: 'pointer', fontWeight: 600 }}
-          >
-            {"Fotoğraf Çek"}
-          </button>
-        </div>
-
-        <div style={s.tip}>{"İbn Sînâ: Dil ve yüz rengi mizacın görünür aynasıdır."}</div>
-
-        {/* Ayırıcı */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 16 }}>
-          <div style={{ flex: 1, height: 1, background: C.border }} />
-          <span style={{ fontSize: 11, color: '#999', fontStyle: 'italic' }}>{"veya manuel olarak girin"}</span>
-          <div style={{ flex: 1, height: 1, background: C.border }} />
-        </div>
-
-        <div style={s.card}>
-          <div style={{ fontSize: 12, fontWeight: 600, color: C.primary, marginBottom: 10, letterSpacing: 1 }}>{"DİL MUAYENESİ"}</div>
-          <div className="analiz-grid2" style={s.grid2}>
-            {[
-              { key: 'dil_renk', label: 'Renk', note: 'Kırmızı\u2192safra; Soluk\u2192balgam', opts: [['','Seçin'],['kirmizi','Kırmızı/Koyu pembe'],['pembe_normal','Pembe (normal)'],['soluk_beyaz','Soluk/Beyaz'],['sari','Sarı/Sarımsı'],['mor_koyu','Mor/Koyu']] },
-              { key: 'dil_kaplama', label: 'Kaplama', note: 'Kalın beyaz\u2192balgam; Sarı\u2192safra', opts: [['','Seçin'],['ince_seffaf','İnce/Şeffaf'],['kalin_beyaz','Kalın Beyaz'],['sari_yesil','Sarı-Yeşil'],['gri_koyu','Gri/Koyu'],['kaplama_yok','Kaplama yok']] },
-              { key: 'dil_nem', label: 'Nem Durumu', note: 'Kuru\u2192sıcak mizaç; Islak\u2192soğuk', opts: [['','Seçin'],['islak_nemli','Islak/Nemli'],['normal','Normal'],['kuru','Kuru'],['catlak_kuru','Çatlak/Çok kuru']] },
-              { key: 'dil_sekil', label: 'Büyüklük/Şekil', note: 'Şişkin\u2192nem fazlası; İnce\u2192kuruluk', opts: [['','Seçin'],['siskin_kalin','Şişkin/Kalın'],['normal','Normal'],['ince_kucuk','İnce/Küçük'],['kenar_iz','Kenar dişi izi']] },
-            ].map(f => (
-              <div key={f.key}>
-                <label style={s.label}>{f.label}</label>
-                <div style={{ fontSize: 10, color: '#999', fontStyle: 'italic', marginBottom: 4 }}>{f.note}</div>
-                <select style={s.select} value={(form as Record<string, string | boolean>)[f.key] as string} onChange={e => set(f.key, e.target.value)}>
-                  {f.opts.map(([v,l]) => <option key={v} value={v}>{l}</option>)}
-                </select>
-              </div>
-            ))}
+          <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: 24 }}>
+            <button onClick={() => setAdim(3)} style={{ padding: '10px 24px', border: `1px solid ${C.border}`, borderRadius: 8, background: C.white, color: C.secondary, cursor: 'pointer', fontSize: 13 }}>{"\u2190 Geri"}</button>
+            <button onClick={() => setAdim(5)} style={{ padding: '10px 28px', background: C.primary, border: 'none', borderRadius: 8, color: C.gold, cursor: 'pointer', fontSize: 13, fontWeight: 600, fontFamily: cinzel.style.fontFamily }}>{"Ileri \u2192"}</button>
           </div>
-
-          <div style={{ fontSize: 12, fontWeight: 600, color: C.primary, margin: '16px 0 10px', letterSpacing: 1 }}>{"YÜZ MUAYENESİ"}</div>
-          <div className="analiz-grid2" style={s.grid2}>
-            {[
-              { key: 'yuz_ten', label: 'Ten Rengi', note: 'Kırmızı\u2192demevî; Soluk\u2192balgamî', opts: [['','Seçin'],['kirmizi_pembe','Kırmızı/Pembe'],['normal_bugday','Normal/Buğday'],['soluk_beyaz','Soluk/Beyaz'],['sari_zeytin','Sarı/Zeytin'],['esmer_koyu','Esmer/Koyu']] },
-              { key: 'yuz_sekil', label: 'Yüz Şekli', note: 'Yuvarlak\u2192demevî/balgamî; Uzun\u2192sevdavî', opts: [['','Seçin'],['yuvarlak_dolgun','Yuvarlak/Dolgun'],['oval_orta','Oval/Orta'],['uzun_koseli','Uzun/Köşeli'],['kucuk_sivri','Küçük/Sivri']] },
-              { key: 'yuz_cilt', label: 'Cilt Durumu', note: 'Yağlı\u2192sıcak; Kuru\u2192soğuk', opts: [['','Seçin'],['yagly_parlak','Yağlı/Parlak'],['normal','Normal'],['kuru_mat','Kuru/Mat'],['kuru_pul','Kuru/Pullu']] },
-              { key: 'yuz_gozalti', label: 'Göz Altı', note: 'Mor\u2192kan eksikliği; Şiş\u2192nem', opts: [['','Seçin'],['normal','Normal'],['mor_halka','Mor/Koyu halka'],['sislik_torba','Şişlik/Torba'],['kizarik','Kızarık']] },
-            ].map(f => (
-              <div key={f.key}>
-                <label style={s.label}>{f.label}</label>
-                <div style={{ fontSize: 10, color: '#999', fontStyle: 'italic', marginBottom: 4 }}>{f.note}</div>
-                <select style={s.select} value={(form as Record<string, string | boolean>)[f.key] as string} onChange={e => set(f.key, e.target.value)}>
-                  {f.opts.map(([v,l]) => <option key={v} value={v}>{l}</option>)}
-                </select>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: 24 }}>
-          <button onClick={() => setAdim(3)} style={{ padding: '10px 24px', border: `1px solid ${C.border}`, borderRadius: 8, background: C.white, color: C.secondary, cursor: 'pointer', fontSize: 13 }}>{"\u2190 Geri"}</button>
-          <button onClick={() => setAdim(5)} style={{ padding: '10px 28px', background: C.primary, border: 'none', borderRadius: 8, color: C.gold, cursor: 'pointer', fontSize: 13, fontWeight: 600, fontFamily: cinzel.style.fontFamily }}>{"İleri \u2192"}</button>
-        </div>
         </div>
 
         {/* === ADIM 5: VÜCUT === */}
