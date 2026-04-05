@@ -143,7 +143,7 @@ function OdemeIcerik() {
             <div style={{ display: 'grid', gap: 12 }}>
               <div>
                 <label style={{ fontSize: 11, color: C.secondary, display: 'block', marginBottom: 4 }}>Ad Soyad *</label>
-                <input value={ad} onChange={e => setAd(e.target.value)} placeholder="Adiniz Soyadiniz" style={inputStyle} />
+                <input value={ad} onChange={e => setAd(e.target.value)} placeholder="Ad\u0131n\u0131z Soyad\u0131n\u0131z" style={inputStyle} />
               </div>
               <div>
                 <label style={{ fontSize: 11, color: C.secondary, display: 'block', marginBottom: 4 }}>Telefon</label>

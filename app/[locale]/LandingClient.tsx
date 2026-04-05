@@ -63,7 +63,7 @@ export default function LandingClient() {
           {/* Danisman karti — mobil */}
           <div className="hero-card-mobile" style={{ display: 'none', alignItems: 'center', gap: 12, padding: '16px 0 32px', borderTop: '1px solid rgba(184,134,11,0.1)', marginTop: 24 }}>
             <div style={{ width: 52, height: 52, borderRadius: '50%', overflow: 'hidden', flexShrink: 0, border: '1.5px solid rgba(184,134,11,0.25)' }}>
-              <img src="/danisan.jpg" alt="M. Fatih Çakır" style={{ width: 52, height: 52, objectFit: 'cover', objectPosition: 'top' }} />
+              <Image src="/danisan.jpg" alt="M. Fatih Çakır" width={52} height={52} style={{ width: 52, height: 52, objectFit: 'cover', objectPosition: 'top' }} />
             </div>
             <div>
               <div style={{ fontFamily: 'Cinzel,serif', fontSize: 12, fontWeight: 600, color: '#F5EDE0', marginBottom: 2 }}>{"M. Fatih Çakır"}</div>
