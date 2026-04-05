@@ -52,23 +52,31 @@ export default function BitkilerPage() {
   useEffect(() => {
     async function yukle() {
       setLoading(true)
-      const { data } = await supabase
-        .from('bitkiler')
-        .select('*')
-        .order('ad_tr', { ascending: true })
-      setBitkiler(data || [])
+      try {
+        const { data, error } = await supabase
+          .from('bitkiler')
+          .select('*')
+          .order('ad_tr', { ascending: true })
+          .range(0, 1999)
+        if (error) console.error('bitkiler fetch error:', error)
+        setBitkiler(data || [])
+      } catch (e) {
+        console.error('bitkiler exception:', e)
+      }
       setLoading(false)
     }
     async function aboneKontrol() {
-      const { data: { user } } = await supabase.auth.getUser()
-      if (!user) return
-      const { data: ab } = await supabase
-        .from('abonelikler')
-        .select('durum')
-        .eq('kullanici_id', user.id)
-        .eq('durum', 'aktif')
-        .single()
-      setIsAbone(!!ab)
+      try {
+        const { data: { user } } = await supabase.auth.getUser()
+        if (!user) return
+        const { data: ab } = await supabase
+          .from('abonelikler')
+          .select('durum')
+          .eq('kullanici_id', user.id)
+          .eq('durum', 'aktif')
+          .single()
+        setIsAbone(!!ab)
+      } catch { /* abonelik tablosu yoksa sessizce gec */ }
     }
     yukle()
     aboneKontrol()
