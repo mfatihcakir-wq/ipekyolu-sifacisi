@@ -10,7 +10,7 @@ const cinzel = Cinzel({ subsets: ['latin', 'latin-ext'], weight: ['400', '500', 
 const garamond = EB_Garamond({ subsets: ['latin', 'latin-ext'], weight: ['400', '500'], style: ['normal', 'italic'] })
 
 const C = {
-  primary: '#1B4332', gold: '#8B6914', cream: '#FAF7F2',
+  primary: '#1C3A26', gold: '#8B6914', cream: '#FAF7F2',
   dark: '#1C1C1C', secondary: '#6B5744', border: '#E8DFD4',
   white: '#FFFFFF', surface: '#FAF7F2',
 }
@@ -256,16 +256,16 @@ export default function DashboardPage() {
   * { box-sizing: border-box; margin: 0; padding: 0; }
   body { font-family: 'EB Garamond', serif; font-size: 13px; color: #1C1C1C; background: white; }
   .page { max-width: 800px; margin: 0 auto; padding: 40px; }
-  .header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 32px; padding-bottom: 20px; border-bottom: 2px solid #1B4332; }
+  .header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 32px; padding-bottom: 20px; border-bottom: 2px solid #1C3A26; }
   .logo-area { display: flex; flex-direction: column; gap: 4px; }
-  .logo-title { font-family: 'Cinzel', serif; font-size: 18px; font-weight: 600; color: #1B4332; letter-spacing: 3px; }
+  .logo-title { font-family: 'Cinzel', serif; font-size: 18px; font-weight: 600; color: #1C3A26; letter-spacing: 3px; }
   .logo-ar { font-size: 14px; color: #8B6914; }
   .meta { text-align: right; font-size: 11px; color: #999; line-height: 1.8; }
-  .hasta-baslik { background: #1B4332; color: #8B6914; font-family: 'Cinzel', serif; font-size: 22px; font-weight: 600; padding: 16px 24px; border-radius: 8px; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 2px; }
+  .hasta-baslik { background: #1C3A26; color: #8B6914; font-family: 'Cinzel', serif; font-size: 22px; font-weight: 600; padding: 16px 24px; border-radius: 8px; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 2px; }
   .hasta-alt { font-size: 12px; color: #6B5744; margin-bottom: 24px; }
   .section { margin-bottom: 20px; page-break-inside: avoid; }
   .section-title { font-family: 'Cinzel', serif; font-size: 11px; font-weight: 600; color: #8B6914; letter-spacing: 3px; text-transform: uppercase; margin-bottom: 10px; padding-bottom: 4px; border-bottom: 1px solid #E8DFD4; }
-  .mizac-kart { background: #1B4332; color: white; border-radius: 8px; padding: 16px 20px; margin-bottom: 16px; }
+  .mizac-kart { background: #1C3A26; color: white; border-radius: 8px; padding: 16px 20px; margin-bottom: 16px; }
   .mizac-buyuk { font-family: 'Cinzel', serif; font-size: 18px; color: #8B6914; margin-bottom: 12px; }
   .hilt-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 16px; }
   .hilt-kart { border-radius: 6px; padding: 8px 12px; border-left: 3px solid; }
@@ -275,8 +275,8 @@ export default function DashboardPage() {
   .hilt-karasafra { border-color: #AB47BC; background: #F8F0FF; }
   .hilt-yuzde { font-size: 18px; font-weight: 600; float: right; }
   .ozet-metin { font-size: 13px; line-height: 1.8; color: #2C1A00; background: #FAF7F2; border-radius: 6px; padding: 14px; margin-bottom: 16px; }
-  .bitki-kart { background: #FAF7F2; border-radius: 6px; padding: 12px; margin-bottom: 8px; border-left: 3px solid #1B4332; }
-  .bitki-ad { font-family: 'Cinzel', serif; font-size: 14px; font-weight: 600; color: #1B4332; }
+  .bitki-kart { background: #FAF7F2; border-radius: 6px; padding: 12px; margin-bottom: 8px; border-left: 3px solid #1C3A26; }
+  .bitki-ad { font-family: 'Cinzel', serif; font-size: 14px; font-weight: 600; color: #1C3A26; }
   .bitki-ar { font-size: 13px; color: #8B6914; margin-bottom: 6px; }
   .bitki-detay { font-size: 11px; color: #6B5744; line-height: 1.6; }
   .bitki-kaynak { font-size: 10px; color: #999; font-style: italic; margin-top: 4px; border-top: 1px solid #E8DFD4; padding-top: 4px; }
@@ -284,7 +284,7 @@ export default function DashboardPage() {
   .sabah-blok { background: #FFF8E7; }
   .ogle-blok { background: #F0FDF4; }
   .aksam-blok { background: #EDE7F6; }
-  .rutin-baslik { font-family: 'Cinzel', serif; font-size: 11px; font-weight: 600; color: #1B4332; margin-bottom: 6px; }
+  .rutin-baslik { font-family: 'Cinzel', serif; font-size: 11px; font-weight: 600; color: #1C3A26; margin-bottom: 6px; }
   .rutin-item { font-size: 11px; color: #2C1A00; padding: 2px 0; border-bottom: 1px solid rgba(0,0,0,0.05); }
   .beslenme-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
   .beslenme-oneri { background: #F0FDF4; border-radius: 6px; padding: 10px; }
@@ -293,12 +293,12 @@ export default function DashboardPage() {
   .oneri-baslik { color: #1B5E20; }
   .kacin-baslik { color: #E65100; }
   .liste-item { font-size: 11px; color: #2C1A00; padding: 1px 0; }
-  .hikmet-kart { background: #1B4332; color: white; border-radius: 8px; padding: 20px; text-align: center; margin-bottom: 16px; }
+  .hikmet-kart { background: #1C3A26; color: white; border-radius: 8px; padding: 20px; text-align: center; margin-bottom: 16px; }
   .hikmet-ar { font-size: 20px; color: #8B6914; line-height: 1.8; margin-bottom: 8px; }
   .hikmet-tr { font-size: 13px; color: rgba(255,255,255,0.7); font-style: italic; }
   .hikmet-kaynak { font-size: 10px; color: rgba(255,255,255,0.4); margin-top: 8px; }
   .kaynaklar { display: flex; flex-wrap: wrap; gap: 6px; }
-  .kaynak-pill { font-size: 10px; background: #E8F5E9; color: #1B4332; padding: 3px 10px; border-radius: 20px; font-style: italic; }
+  .kaynak-pill { font-size: 10px; background: #E8F5E9; color: #1C3A26; padding: 3px 10px; border-radius: 20px; font-style: italic; }
   .footer { margin-top: 32px; padding-top: 16px; border-top: 1px solid #E8DFD4; text-align: center; font-size: 10px; color: #999; line-height: 1.8; }
   .uyari { background: #FFF8E7; border: 1px solid #8B6914; border-radius: 6px; padding: 10px 14px; font-size: 11px; color: #6B5744; margin-bottom: 16px; }
   .label-sm { font-size: 9px; color: #999; text-transform: uppercase; letter-spacing: 1px; }
@@ -320,7 +320,7 @@ export default function DashboardPage() {
       <div style="font-size:10px;color:#999;margin-top:4px;">Klasik Islam Tibbi Danismanligi</div>
     </div>
     <div class="meta">
-      <div style="font-family:'Cinzel',serif;font-size:13px;font-weight:600;color:#1B4332;">KISISEL MIZAC RECETESI</div>
+      <div style="font-family:'Cinzel',serif;font-size:13px;font-weight:600;color:#1C3A26;">KISISEL MIZAC RECETESI</div>
       <div>${new Date().toLocaleDateString('tr-TR', { day: '2-digit', month: 'long', year: 'numeric' })}</div>
       <div>MZ-${Date.now().toString().slice(-8)}</div>
     </div>
@@ -352,7 +352,7 @@ export default function DashboardPage() {
 
   ${analiz.gunluk_rutin ? `<div class="section"><div class="section-title">Gunluk Rutin</div>${analiz.gunluk_rutin.sabah?.length ? `<div class="rutin-blok sabah-blok"><div class="rutin-baslik">Sabah</div>${analiz.gunluk_rutin.sabah.map((i: string) => `<div class="rutin-item">${safeStr(i)}</div>`).join('')}</div>` : ''}${analiz.gunluk_rutin.ogle?.length ? `<div class="rutin-blok ogle-blok"><div class="rutin-baslik">Ogle</div>${analiz.gunluk_rutin.ogle.map((i: string) => `<div class="rutin-item">${safeStr(i)}</div>`).join('')}</div>` : ''}${analiz.gunluk_rutin.aksam?.length ? `<div class="rutin-blok aksam-blok"><div class="rutin-baslik">Aksam</div>${analiz.gunluk_rutin.aksam.map((i: string) => `<div class="rutin-item">${safeStr(i)}</div>`).join('')}</div>` : ''}</div>` : ''}
 
-  ${analiz.beslenme_onerileri ? `<div class="section"><div class="section-title">Beslenme</div>${typeof analiz.beslenme_onerileri === 'string' ? `<div class="ozet-metin">${safeStr(analiz.beslenme_onerileri)}</div>` : `${analiz.beslenme_onerileri.temel_ilke ? `<div style="font-style:italic;color:#1B4332;font-weight:500;margin-bottom:10px;">${safeStr(analiz.beslenme_onerileri.temel_ilke)}</div>` : ''}<div class="beslenme-grid">${analiz.beslenme_onerileri.onerililer?.length ? `<div class="beslenme-oneri"><div class="beslenme-baslik oneri-baslik">Onerilen</div>${analiz.beslenme_onerileri.onerililer.map((g: string) => `<div class="liste-item">${safeStr(g)}</div>`).join('')}</div>` : ''}${analiz.beslenme_onerileri.kacinilacaklar?.length ? `<div class="beslenme-kacin"><div class="beslenme-baslik kacin-baslik">Kacinilacak</div>${analiz.beslenme_onerileri.kacinilacaklar.map((g: string) => `<div class="liste-item">${safeStr(g)}</div>`).join('')}</div>` : ''}</div>`}</div>` : ''}
+  ${analiz.beslenme_onerileri ? `<div class="section"><div class="section-title">Beslenme</div>${typeof analiz.beslenme_onerileri === 'string' ? `<div class="ozet-metin">${safeStr(analiz.beslenme_onerileri)}</div>` : `${analiz.beslenme_onerileri.temel_ilke ? `<div style="font-style:italic;color:#1C3A26;font-weight:500;margin-bottom:10px;">${safeStr(analiz.beslenme_onerileri.temel_ilke)}</div>` : ''}<div class="beslenme-grid">${analiz.beslenme_onerileri.onerililer?.length ? `<div class="beslenme-oneri"><div class="beslenme-baslik oneri-baslik">Onerilen</div>${analiz.beslenme_onerileri.onerililer.map((g: string) => `<div class="liste-item">${safeStr(g)}</div>`).join('')}</div>` : ''}${analiz.beslenme_onerileri.kacinilacaklar?.length ? `<div class="beslenme-kacin"><div class="beslenme-baslik kacin-baslik">Kacinilacak</div>${analiz.beslenme_onerileri.kacinilacaklar.map((g: string) => `<div class="liste-item">${safeStr(g)}</div>`).join('')}</div>` : ''}</div>`}</div>` : ''}
 
   ${analiz.hikmet ? `<div class="section"><div class="hikmet-kart"><div class="label-sm" style="color:rgba(255,255,255,.4);letter-spacing:2px;margin-bottom:10px;">HIKMET</div>${analiz.hikmet.arapca ? `<div class="hikmet-ar">${safeStr(analiz.hikmet.arapca)}</div>` : ''}${analiz.hikmet.turkce ? `<div class="hikmet-tr">${safeStr(analiz.hikmet.turkce)}</div>` : ''}${analiz.hikmet.kaynak ? `<div class="hikmet-kaynak">- ${safeStr(analiz.hikmet.kaynak)}</div>` : ''}</div></div>` : ''}
 
@@ -523,7 +523,7 @@ export default function DashboardPage() {
             ) : forms.length === 0 ? (
               <div style={{ textAlign: 'center', padding: '60px 20px' }}>
                 <div style={{ fontSize: 48, marginBottom: 12, opacity: 0.4 }}>{"🏛️"}</div>
-                <div style={{ fontFamily: cinzel.style.fontFamily, fontSize: 18, color: '#1B4332', marginBottom: 8 }}>{"Henüz analiz formu gelmedi"}</div>
+                <div style={{ fontFamily: cinzel.style.fontFamily, fontSize: 18, color: '#1C3A26', marginBottom: 8 }}>{"Henüz analiz formu gelmedi"}</div>
                 <div style={{ fontSize: 14, color: '#6B5744' }}>{"Hastalar form doldurduğunda burada görünecek"}</div>
               </div>
             ) : (
@@ -613,7 +613,7 @@ export default function DashboardPage() {
                   <div style={{ marginBottom: 20 }}>
                     <svg width="40" height="40" viewBox="0 0 40 40" fill="none" style={{ animation: 'spin 1.5s linear infinite', display: 'block', margin: '0 auto' }}>
                       <circle cx="20" cy="20" r="16" stroke="#E8DFD4" strokeWidth="3" fill="none"/>
-                      <path d="M20 4 A16 16 0 0 1 36 20" stroke="#1B4332" strokeWidth="3" strokeLinecap="round" fill="none"/>
+                      <path d="M20 4 A16 16 0 0 1 36 20" stroke="#1C3A26" strokeWidth="3" strokeLinecap="round" fill="none"/>
                     </svg>
                     <style>{`@keyframes spin { to { transform: rotate(360deg) } }`}</style>
                   </div>

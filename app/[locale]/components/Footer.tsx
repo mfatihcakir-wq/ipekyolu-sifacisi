@@ -5,13 +5,13 @@ import { Cinzel, EB_Garamond } from 'next/font/google'
 const cinzel = Cinzel({ subsets: ['latin', 'latin-ext'], weight: ['400', '600'] })
 const garamond = EB_Garamond({ subsets: ['latin', 'latin-ext'], weight: ['400'], style: ['normal'] })
 
-const C = { primary: '#1B4332', gold: '#8B6914' }
+const C = { primary: '#1C3A26', gold: '#8B6914' }
 
 export default function Footer() {
   return (
     <>
     {/* Footer CTA */}
-    <div style={{ background: '#0F2D1C', padding: '48px 24px', textAlign: 'center' as const }}>
+    <div style={{ background: '#122B1C', padding: '48px 24px', textAlign: 'center' as const }}>
       <div style={{ maxWidth: 560, margin: '0 auto' }}>
         <div style={{ fontFamily: cinzel.style.fontFamily, fontSize: 22, color: 'white', fontWeight: 600, marginBottom: 8 }}>{"Bedeninizi Tanimaya Hazir misiniz?"}</div>
         <div style={{ fontSize: 15, color: 'rgba(255,255,255,0.5)', fontStyle: 'italic', marginBottom: 24 }}>{"Ucretsiz analizinizi simdi baslatin."}</div>

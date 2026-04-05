@@ -9,9 +9,9 @@ const cinzel = Cinzel({ subsets: ['latin', 'latin-ext'], weight: ['400', '500', 
 const garamond = EB_Garamond({ subsets: ['latin', 'latin-ext'], weight: ['400', '500'], style: ['normal', 'italic'] })
 
 const C = {
-  primary: '#1B4332', gold: '#B8922A', cream: '#FAF7F2',
+  primary: '#1C3A26', gold: '#B8922A', cream: '#FAF7F2',
   dark: '#1C1C1C', secondary: '#6B5744', border: '#E8DFD4',
-  white: '#FFFFFF', surface: '#FAF7F2', darkBg: '#0F2D1C',
+  white: '#FFFFFF', surface: '#FAF7F2', darkBg: '#122B1C',
 }
 
 interface Analiz {
@@ -251,7 +251,7 @@ export default function HastaPage() {
 
         {/* Uyelik durumu — pasif ise */}
         {!abonelik && (
-          <div style={{ background: `linear-gradient(135deg, ${C.primary}, #0F2D1C)`, borderRadius: 16, padding: '28px', textAlign: 'center' }}>
+          <div style={{ background: `linear-gradient(135deg, ${C.primary}, #122B1C)`, borderRadius: 16, padding: '28px', textAlign: 'center' }}>
             <div style={{ fontFamily: cinzel.style.fontFamily, fontSize: 16, color: C.gold, marginBottom: 8, letterSpacing: 1 }}>Uyeliginiz Aktif Degil</div>
             <p style={{ fontSize: 13, color: 'rgba(255,255,255,0.7)', marginBottom: 20, lineHeight: 1.6 }}>
               Analiz sonuclarinizi gormek, bitki protokolu almak ve danismaninizla iletisim kurmak icin uye olun.

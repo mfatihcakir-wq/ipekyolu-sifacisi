@@ -72,7 +72,7 @@ export default function LoginPage() {
           </svg>
           <h1 style={{
             fontFamily: cinzel.style.fontFamily, fontSize: 22, fontWeight: 600,
-            color: '#1B4332', margin: '0 0 4px 0', letterSpacing: 2,
+            color: '#1C3A26', margin: '0 0 4px 0', letterSpacing: 2,
           }}>
             İpek Yolu Şifacısı
           </h1>
@@ -89,7 +89,7 @@ export default function LoginPage() {
                 width: '100%', padding: '12px 16px', border: '1px solid #ddd', borderRadius: 10,
                 fontSize: 15, outline: 'none', boxSizing: 'border-box',
               }}
-              onFocus={(e) => (e.currentTarget.style.borderColor = '#1B4332')}
+              onFocus={(e) => (e.currentTarget.style.borderColor = '#1C3A26')}
               onBlur={(e) => (e.currentTarget.style.borderColor = '#ddd')}
             />
           </div>
@@ -103,7 +103,7 @@ export default function LoginPage() {
                 width: '100%', padding: '12px 16px', border: '1px solid #ddd', borderRadius: 10,
                 fontSize: 15, outline: 'none', boxSizing: 'border-box',
               }}
-              onFocus={(e) => (e.currentTarget.style.borderColor = '#1B4332')}
+              onFocus={(e) => (e.currentTarget.style.borderColor = '#1C3A26')}
               onBlur={(e) => (e.currentTarget.style.borderColor = '#ddd')}
             />
           </div>
@@ -119,7 +119,7 @@ export default function LoginPage() {
             type="submit" disabled={loading}
             style={{
               width: '100%', padding: '14px 0', borderRadius: 10,
-              backgroundColor: '#1B4332', color: '#fff', border: 'none',
+              backgroundColor: '#1C3A26', color: '#fff', border: 'none',
               fontFamily: cinzel.style.fontFamily, fontWeight: 600, fontSize: 15,
               cursor: loading ? 'not-allowed' : 'pointer', opacity: loading ? 0.6 : 1,
               letterSpacing: 1,
@@ -138,7 +138,7 @@ export default function LoginPage() {
           </div>
         ) : (
           <div style={{ marginTop: 16, padding: '16px', background: '#FAF7F2', borderRadius: 10, border: '1px solid #E8DFD4' }}>
-            <div style={{ fontSize: 13, color: '#1B4332', marginBottom: 10, fontWeight: 600 }}>{"Şifre Sıfırlama"}</div>
+            <div style={{ fontSize: 13, color: '#1C3A26', marginBottom: 10, fontWeight: 600 }}>{"Şifre Sıfırlama"}</div>
             <input
               type="email" value={sifirlaEmail} onChange={e => setSifirlaEmail(e.target.value)}
               placeholder="E-posta adresiniz"
@@ -151,7 +151,7 @@ export default function LoginPage() {
             )}
             <div style={{ display: 'flex', gap: 8 }}>
               <button onClick={handleSifreSifirla}
-                style={{ flex: 1, padding: '10px', background: '#1B4332', border: 'none', borderRadius: 8, color: '#8B6914', fontSize: 12, fontWeight: 600, cursor: 'pointer' }}>
+                style={{ flex: 1, padding: '10px', background: '#1C3A26', border: 'none', borderRadius: 8, color: '#8B6914', fontSize: 12, fontWeight: 600, cursor: 'pointer' }}>
                 {"Gönder"}
               </button>
               <button onClick={() => { setSifreSifirla(false); setSifirlaMsg('') }}
@@ -164,7 +164,7 @@ export default function LoginPage() {
 
         <p style={{ textAlign: 'center', fontSize: 14, color: '#6B5744', marginTop: 24 }}>
           Hesabınız yok mu?{' '}
-          <Link href="/register" style={{ color: '#1B4332', fontWeight: 600, textDecoration: 'underline' }}>
+          <Link href="/register" style={{ color: '#1C3A26', fontWeight: 600, textDecoration: 'underline' }}>
             Kayıt Ol
           </Link>
         </p>

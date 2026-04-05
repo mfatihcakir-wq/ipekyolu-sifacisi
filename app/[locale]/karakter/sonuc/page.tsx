@@ -9,7 +9,7 @@ import Footer from '../../components/Footer'
 const cinzel = Cinzel({ subsets: ['latin', 'latin-ext'], weight: ['400', '500', '600'] })
 const garamond = EB_Garamond({ subsets: ['latin', 'latin-ext'], weight: ['400', '500'], style: ['normal', 'italic'] })
 
-const C = { primary: '#1B4332', gold: '#8B6914', cream: '#FAF7F2', dark: '#1C1C1C', secondary: '#6B5744', border: '#E8DFD4', white: '#FFFFFF', surface: '#FAF7F2' }
+const C = { primary: '#1C3A26', gold: '#8B6914', cream: '#FAF7F2', dark: '#1C1C1C', secondary: '#6B5744', border: '#E8DFD4', white: '#FFFFFF', surface: '#FAF7F2' }
 const CR: Record<string, string> = { dunya: '#378ADD', heva: '#EF9F27', nefs: '#E24B4A', seytan: '#7F77DD' }
 const CN: Record<string, string> = { dunya: 'Dunya', heva: 'Heva', nefs: 'Nefs', seytan: 'Seytan' }
 const CY: Record<string, string> = { dunya: 'Onden', heva: 'Sagdan', nefs: 'Soldan', seytan: 'Enseden' }

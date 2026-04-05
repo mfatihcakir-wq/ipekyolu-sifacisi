@@ -6,7 +6,7 @@ export function analizRaporuHtml(data: {
   sonuc: any
 }): string {
   const { hasta_adi, kayit_no, sonuc } = data
-  const primary = '#1B4332'
+  const primary = '#1C3A26'
   const gold = '#8B6914'
   const cream = '#FAF7F2'
   const dark = '#1C1C1C'

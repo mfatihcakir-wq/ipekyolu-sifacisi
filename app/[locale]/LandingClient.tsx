@@ -11,7 +11,7 @@ const garamond = EB_Garamond({ subsets: ['latin', 'latin-ext'], weight: ['400', 
 const naskh = Noto_Naskh_Arabic({ subsets: ['arabic'], weight: ['400', '500'] })
 
 const C = {
-  primary: '#1B4332', primaryDark: '#0F2D1C', gold: '#8B6914',
+  primary: '#1C3A26', primaryDark: '#122B1C', gold: '#8B6914',
   cream: '#FAF7F2', dark: '#1C1C1C', secondary: '#6B5744',
   border: '#E8DFD4', white: '#FFFFFF', surface: '#FAF7F2', muted: '#8A7968',
 }

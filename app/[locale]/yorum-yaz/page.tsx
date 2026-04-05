@@ -7,7 +7,7 @@ import Footer from '../components/Footer'
 const cinzel = Cinzel({ subsets: ['latin', 'latin-ext'], weight: ['400', '500', '600'] })
 const garamond = EB_Garamond({ subsets: ['latin', 'latin-ext'], weight: ['400', '500'], style: ['normal', 'italic'] })
 
-const C = { primary: '#1B4332', gold: '#8B6914', cream: '#FAF7F2', secondary: '#6B5744', border: '#E8DFD4', white: '#FFFFFF' }
+const C = { primary: '#1C3A26', gold: '#8B6914', cream: '#FAF7F2', secondary: '#6B5744', border: '#E8DFD4', white: '#FFFFFF' }
 
 export default function YorumYazPage() {
   const [puan, setPuan] = useState(5)

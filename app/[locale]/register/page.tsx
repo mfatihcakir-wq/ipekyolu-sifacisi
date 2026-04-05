@@ -73,7 +73,7 @@ export default function RegisterPage() {
           </svg>
           <h1 style={{
             fontFamily: cinzel.style.fontFamily, fontSize: 22, fontWeight: 600,
-            color: '#1B4332', margin: '0 0 4px 0', letterSpacing: 2,
+            color: '#1C3A26', margin: '0 0 4px 0', letterSpacing: 2,
           }}>
             İpek Yolu Şifacısı
           </h1>
@@ -86,7 +86,7 @@ export default function RegisterPage() {
             <input
               type="text" value={name} onChange={(e) => setName(e.target.value)} required
               placeholder="Adınız Soyadınız" style={inputStyle}
-              onFocus={(e) => (e.currentTarget.style.borderColor = '#1B4332')}
+              onFocus={(e) => (e.currentTarget.style.borderColor = '#1C3A26')}
               onBlur={(e) => (e.currentTarget.style.borderColor = '#ddd')}
             />
           </div>
@@ -96,7 +96,7 @@ export default function RegisterPage() {
             <input
               type="email" value={email} onChange={(e) => setEmail(e.target.value)} required
               placeholder="ornek@email.com" style={inputStyle}
-              onFocus={(e) => (e.currentTarget.style.borderColor = '#1B4332')}
+              onFocus={(e) => (e.currentTarget.style.borderColor = '#1C3A26')}
               onBlur={(e) => (e.currentTarget.style.borderColor = '#ddd')}
             />
           </div>
@@ -106,7 +106,7 @@ export default function RegisterPage() {
             <input
               type="password" value={password} onChange={(e) => setPassword(e.target.value)} required
               minLength={6} placeholder="En az 6 karakter" style={inputStyle}
-              onFocus={(e) => (e.currentTarget.style.borderColor = '#1B4332')}
+              onFocus={(e) => (e.currentTarget.style.borderColor = '#1C3A26')}
               onBlur={(e) => (e.currentTarget.style.borderColor = '#ddd')}
             />
           </div>
@@ -122,7 +122,7 @@ export default function RegisterPage() {
             type="submit" disabled={loading}
             style={{
               width: '100%', padding: '14px 0', borderRadius: 10,
-              backgroundColor: '#1B4332', color: '#fff', border: 'none',
+              backgroundColor: '#1C3A26', color: '#fff', border: 'none',
               fontFamily: cinzel.style.fontFamily, fontWeight: 600, fontSize: 15,
               cursor: loading ? 'not-allowed' : 'pointer', opacity: loading ? 0.6 : 1,
               letterSpacing: 1,
@@ -134,7 +134,7 @@ export default function RegisterPage() {
 
         <p style={{ textAlign: 'center', fontSize: 14, color: '#6B5744', marginTop: 24 }}>
           Zaten hesabınız var mı?{' '}
-          <Link href="/login" style={{ color: '#1B4332', fontWeight: 600, textDecoration: 'underline' }}>
+          <Link href="/login" style={{ color: '#1C3A26', fontWeight: 600, textDecoration: 'underline' }}>
             Giriş Yap
           </Link>
         </p>

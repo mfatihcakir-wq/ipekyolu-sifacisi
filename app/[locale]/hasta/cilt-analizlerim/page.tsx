@@ -9,7 +9,7 @@ const cinzel = Cinzel({ subsets: ['latin', 'latin-ext'], weight: ['400', '500', 
 const garamond = EB_Garamond({ subsets: ['latin', 'latin-ext'], weight: ['400', '500'], style: ['normal', 'italic'] })
 
 const C = {
-  primary: '#1B4332', gold: '#8B6914', cream: '#FAF7F2',
+  primary: '#1C3A26', gold: '#8B6914', cream: '#FAF7F2',
   dark: '#1C1C1C', secondary: '#6B5744', border: '#E8DFD4',
   white: '#FFFFFF', surface: '#FAF7F2',
 }
@@ -25,7 +25,7 @@ interface CiltForm {
 }
 
 const durumBadge = (d: string) => {
-  if (d === 'email_gonderildi') return { bg: '#1B4332', color: '#FAF7F2', text: 'Gonderildi' }
+  if (d === 'email_gonderildi') return { bg: '#1C3A26', color: '#FAF7F2', text: 'Gonderildi' }
   if (d === 'onaylandi' || d === 'analiz_edildi') return { bg: '#E8F5E9', color: '#2E7D32', text: 'Recete Hazir' }
   if (d === 'reddedildi') return { bg: '#fef2f2', color: '#dc2626', text: 'Reddedildi' }
   return { bg: '#FFF8E7', color: '#E65100', text: 'Bekliyor' }
