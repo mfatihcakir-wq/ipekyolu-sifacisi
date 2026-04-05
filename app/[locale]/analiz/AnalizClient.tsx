@@ -48,6 +48,9 @@ export default function AnalizClient() {
     setTimeout(() => setToast(null), 4000)
   }
 
+  const [nabizModu, setNabizModu] = useState<'kamera' | 'manuel'>('kamera')
+  const [dyModu, setDyModu] = useState<'kamera' | 'manuel'>('kamera')
+
   const [form, setForm] = useState({
     ad_soyad: '', telefon: '', age_group: '', gender: '', pregnancy: 'hayir',
     sikayet_suresi: '', chronic: 'yok', season: '', climate: '', temp_feel: '', location: '',
@@ -585,24 +588,38 @@ export default function AnalizClient() {
           {"Nabız Gözlemi — el-Kânûn (9 Sıfat)"}
         </div>
 
-        {/* PPG Nabiz Olcumu */}
-        <div style={{ marginBottom: 16 }}>
-          <PPGNabiz onSonuc={(sonuc) => {
-            set('nb_hiz_sinif', sonuc.sifatlar.hiz)
-            set('nb_buyukluk', sonuc.sifatlar.buyukluk)
-            set('nb_kuvvet', sonuc.sifatlar.kuvvet)
-            set('nb_dolgunluk', sonuc.sifatlar.dolgunluk)
-            set('nb_sertlik', sonuc.sifatlar.sertlik)
-            set('nb_ritim', sonuc.sifatlar.ritim)
-            set('nb_esitlik', sonuc.sifatlar.esitlik)
-            set('nb_sureklitik', sonuc.sifatlar.sureklitik)
-            gosterToast(`${sonuc.bpm} BPM — 8/8 sifat otomatik dolduruldu`, 'basari')
-          }} />
-          <div style={{ fontSize: 11, color: '#999', textAlign: 'center', marginTop: 8, fontStyle: 'italic' }}>
-            {"veya asagidan manuel olarak secin"}
-          </div>
+        {/* Nabiz Toggle */}
+        <div style={{ display: 'flex', gap: 0, marginBottom: 16, borderRadius: 10, overflow: 'hidden', border: `1px solid ${C.primary}` }}>
+          <button onClick={() => setNabizModu('kamera')}
+            style={{ flex: 1, padding: '10px 16px', border: 'none', fontFamily: cinzel.style.fontFamily, fontSize: 11, fontWeight: 600, letterSpacing: 1, cursor: 'pointer', background: nabizModu === 'kamera' ? C.primary : C.white, color: nabizModu === 'kamera' ? C.gold : C.primary }}>
+            {"Kamera PPG"}
+          </button>
+          <button onClick={() => setNabizModu('manuel')}
+            style={{ flex: 1, padding: '10px 16px', border: 'none', borderLeft: `1px solid ${C.primary}`, fontFamily: cinzel.style.fontFamily, fontSize: 11, fontWeight: 600, letterSpacing: 1, cursor: 'pointer', background: nabizModu === 'manuel' ? C.primary : C.white, color: nabizModu === 'manuel' ? C.gold : C.primary }}>
+            {"Manuel Gir"}
+          </button>
         </div>
 
+        {/* PPG Nabiz Olcumu */}
+        {nabizModu === 'kamera' && (
+          <div style={{ marginBottom: 16 }}>
+            <PPGNabiz onSonuc={(sonuc) => {
+              set('nb_hiz_sinif', sonuc.sifatlar.hiz)
+              set('nb_buyukluk', sonuc.sifatlar.buyukluk)
+              set('nb_kuvvet', sonuc.sifatlar.kuvvet)
+              set('nb_dolgunluk', sonuc.sifatlar.dolgunluk)
+              set('nb_sertlik', sonuc.sifatlar.sertlik)
+              set('nb_ritim', sonuc.sifatlar.ritim)
+              set('nb_esitlik', sonuc.sifatlar.esitlik)
+              set('nb_sureklitik', sonuc.sifatlar.sureklitik)
+              set('ppg_bpm', String(sonuc.bpm))
+              gosterToast(`${sonuc.bpm} BPM — 8/8 sifat otomatik dolduruldu. Isi sifatini manuel girin.`, 'basari')
+              setNabizModu('manuel')
+            }} />
+          </div>
+        )}
+
+        {nabizModu === 'kamera' && <>
         {/* Kamera Tipi Secimi */}
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(min(160px, 100%), 1fr))', gap: 10, marginBottom: 16 }}>
           {[
@@ -732,14 +749,9 @@ export default function AnalizClient() {
           </div>
         </div>
 
-        <div style={s.tip}>{"İbn Sînâ el-Kânûn: Nabız mizacın doğrudan aynasıdır. 9 sıfatın tümü değerlendirilmelidir."}</div>
+        </>}
 
-        {/* Ayırıcı */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 16 }}>
-          <div style={{ flex: 1, height: 1, background: C.border }} />
-          <span style={{ fontSize: 11, color: '#999', fontStyle: 'italic' }}>{"veya manuel olarak girin"}</span>
-          <div style={{ flex: 1, height: 1, background: C.border }} />
-        </div>
+        <div style={s.tip}>{"İbn Sînâ el-Kânûn: Nabız mizacın doğrudan aynasıdır. 9 sıfatın tümü değerlendirilmelidir."}</div>
 
         {/* 9 Sifat Cards */}
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(min(140px, 100%), 1fr))', gap: 10 }}>
@@ -778,27 +790,41 @@ export default function AnalizClient() {
           {"Dil ve Yüz Gözlemi"}
         </div>
 
-        {/* Dil/Yuz Kamera Analizi */}
-        <div style={{ marginBottom: 16 }}>
-          <DilYuzKamera onSonuc={(sonuc) => {
-            if (sonuc.dil) {
-              if (sonuc.dil.renk) set('dil_renk', sonuc.dil.renk)
-              if (sonuc.dil.kaplama) set('dil_kaplama', sonuc.dil.kaplama)
-              if (sonuc.dil.nem) set('dil_nem', sonuc.dil.nem)
-              if (sonuc.dil.sekil) set('dil_sekil', sonuc.dil.sekil)
-            }
-            if (sonuc.yuz) {
-              if (sonuc.yuz.ten) set('yuz_ten', sonuc.yuz.ten)
-              if (sonuc.yuz.sekil) set('yuz_sekil', sonuc.yuz.sekil)
-              if (sonuc.yuz.cilt) set('yuz_cilt', sonuc.yuz.cilt)
-              if (sonuc.yuz.gozalti) set('yuz_gozalti', sonuc.yuz.gozalti)
-            }
-            gosterToast('Dil/Yuz analizi tamamlandi — form alanlari dolduruldu', 'basari')
-          }} />
-          <div style={{ fontSize: 11, color: '#999', textAlign: 'center', marginTop: 8, fontStyle: 'italic' }}>
-            {"veya asagidan manuel olarak secin"}
-          </div>
+        {/* DY Toggle */}
+        <div style={{ display: 'flex', gap: 0, marginBottom: 16, borderRadius: 10, overflow: 'hidden', border: `1px solid ${C.primary}` }}>
+          <button onClick={() => setDyModu('kamera')}
+            style={{ flex: 1, padding: '10px 16px', border: 'none', fontFamily: cinzel.style.fontFamily, fontSize: 11, fontWeight: 600, letterSpacing: 1, cursor: 'pointer', background: dyModu === 'kamera' ? C.primary : C.white, color: dyModu === 'kamera' ? C.gold : C.primary }}>
+            {"Kamera ile Cek"}
+          </button>
+          <button onClick={() => setDyModu('manuel')}
+            style={{ flex: 1, padding: '10px 16px', border: 'none', borderLeft: `1px solid ${C.primary}`, fontFamily: cinzel.style.fontFamily, fontSize: 11, fontWeight: 600, letterSpacing: 1, cursor: 'pointer', background: dyModu === 'manuel' ? C.primary : C.white, color: dyModu === 'manuel' ? C.gold : C.primary }}>
+            {"Manuel Gir"}
+          </button>
         </div>
+
+        {/* Dil/Yuz Kamera Analizi */}
+        {dyModu === 'kamera' && (
+          <div style={{ marginBottom: 16 }}>
+            <DilYuzKamera onSonuc={(sonuc) => {
+              if (sonuc.dil) {
+                if (sonuc.dil.renk) set('dil_renk', sonuc.dil.renk)
+                if (sonuc.dil.kaplama) set('dil_kaplama', sonuc.dil.kaplama)
+                if (sonuc.dil.nem) set('dil_nem', sonuc.dil.nem)
+                if (sonuc.dil.sekil) set('dil_sekil', sonuc.dil.sekil)
+              }
+              if (sonuc.yuz) {
+                if (sonuc.yuz.ten) set('yuz_ten', sonuc.yuz.ten)
+                if (sonuc.yuz.sekil) set('yuz_sekil', sonuc.yuz.sekil)
+                if (sonuc.yuz.cilt) set('yuz_cilt', sonuc.yuz.cilt)
+                if (sonuc.yuz.gozalti) set('yuz_gozalti', sonuc.yuz.gozalti)
+              }
+              gosterToast('Dil/Yuz analizi tamamlandi — form alanlari dolduruldu', 'basari')
+              setDyModu('manuel')
+            }} />
+          </div>
+        )}
+
+        <div style={s.tip}>{"İbn Sînâ: Dil ve yüz rengi, mizacın görünür aynasıdır."}</div>
 
         {/* Tab system */}
         <div style={{ display: 'flex', gap: 0, marginBottom: 0 }}>

@@ -302,12 +302,17 @@ ${klasikBaglam ? `---\nKLASIK KAYNAKLARDAN ILGILI METINLER:\n${klasikBaglam}\n--
       _kaynak_sayisi: klasikBaglam ? (klasikBaglam.match(/\[AHL-|IHY-/g) || []).length : 0
     })
   } catch (err) {
+    console.error('=== KARAKTER API HATA DETAY ===')
+    console.error('Hata tipi:', typeof err)
+    console.error('Hata:', err)
+    if (err instanceof Error) {
+      console.error('Mesaj:', err.message)
+      console.error('Stack:', err.stack)
+    }
     if (err instanceof SyntaxError) {
-      console.error('JSON parse SyntaxError:', err.message)
-      return NextResponse.json({ error: 'Analiz yaniti formatlanamadi.' }, { status: 500 })
+      return NextResponse.json({ error: 'Analiz yaniti formatlanamadi. Tekrar deneyin.', _debug: err.message }, { status: 500 })
     }
     const errorMessage = err instanceof Error ? err.message : 'Karakter analizi sirasinda hata olustu'
-    console.error('Karakter API error:', errorMessage)
-    return NextResponse.json({ error: errorMessage }, { status: 500 })
+    return NextResponse.json({ error: errorMessage, _debug: String(err) }, { status: 500 })
   }
 }
