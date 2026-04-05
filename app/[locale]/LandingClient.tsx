@@ -154,21 +154,25 @@ export default function LandingClient() {
                 icon: <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke={C.primary} strokeWidth="1.5"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>,
                 title: 'Mizac Tespiti',
                 desc: 'Demevi, Safravi, Balgami veya Sevdavi; nabiz, dil, yuz ve lab degerleri birlikte okunarak vucudunuzun derin tabiati belirlenir.',
+                href: '/analiz',
               },
               {
                 icon: <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke={C.primary} strokeWidth="1.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>,
                 title: 'Kisisel Bitki Protokolu',
                 desc: '1180 bitki ve tibbi madde iceren Ibn Beytar kaynakli veritabanindan, sizin mizaciniza ve sikayetinize ozel protokol hazirlanir.',
+                href: '/bitkiler',
               },
               {
                 icon: <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke={C.primary} strokeWidth="1.5"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>,
                 title: 'Uzman Danismanlik',
                 desc: 'Formunuzu bizzat inceleyen, 24 ile 48 saat icinde WhatsApp uzerinden ulasan uzman danisman. Protokolunuz takip edilir, sorulariniz yanitlanir.',
+                href: '/hakkimizda',
               },
               {
                 icon: <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke={C.primary} strokeWidth="1.5"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>,
                 title: '38 Klasik Kaynak',
                 desc: 'el-Havi, Tahbizul-Mathun, el-Samil ve 35 eser daha; her analizde sikayetinize en uygun metinler bulunup getirilir.',
+                href: '/hakkimizda',
               },
             ].map(f => (
               <div key={f.title} style={{ border: `1px solid ${C.border}`, borderRadius: 20, padding: '34px 30px' }}>
@@ -177,7 +181,7 @@ export default function LandingClient() {
                 </div>
                 <h3 style={{ fontFamily: cinzel.style.fontFamily, fontSize: 17, fontWeight: 500, color: C.primary, marginBottom: 10 }}>{f.title}</h3>
                 <p style={{ fontSize: 16, color: C.secondary, lineHeight: 1.8, marginBottom: 14 }}>{f.desc}</p>
-                <span style={{ fontFamily: cinzel.style.fontFamily, fontSize: 9, color: C.gold, letterSpacing: 2, cursor: 'pointer' }}>{"DETAYLI INCELE \u2192"}</span>
+                <a href={f.href} style={{ fontFamily: cinzel.style.fontFamily, fontSize: 9, color: C.gold, letterSpacing: 2, cursor: 'pointer', textDecoration: 'none' }}>{"DETAYLI INCELE \u2192"}</a>
               </div>
             ))}
           </div>
