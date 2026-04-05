@@ -440,6 +440,7 @@ export default function DashboardPage() {
               { label: 'Bekleyen Analizler', href: '/dashboard', icon: '\u23F3' },
               { label: 'Cilt Analizleri', href: '/dashboard/cilt', icon: '\uD83C\uDF38' },
               { label: 'Klinik Arsiv', href: '/dashboard/arsiv', icon: '\uD83D\uDCCB' },
+              { label: 'Yorumlar', href: '/dashboard/yorumlar', icon: '\uD83D\uDCAC' },
               { label: 'Bitkiler', href: '/bitkiler', icon: '\uD83C\uDF3F' },
               { label: 'Ayarlar', href: '/dashboard', icon: '\u2699' },
             ].map(item => {
