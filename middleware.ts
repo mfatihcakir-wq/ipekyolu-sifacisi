@@ -9,6 +9,14 @@ const intlMiddleware = createMiddleware(routing)
 export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl
 
+  // Duplicate URL redirect
+  if (pathname === '/login') {
+    return NextResponse.redirect(new URL('/giris', request.url), 301)
+  }
+  if (pathname === '/register') {
+    return NextResponse.redirect(new URL('/kayit', request.url), 301)
+  }
+
   // Dashboard auth kontrolü
   const isDashboard = pathname.includes('/dashboard')
   if (isDashboard) {
@@ -30,7 +38,7 @@ export async function middleware(request: NextRequest) {
     )
     const { data: { user } } = await supabase.auth.getUser()
     if (!user) {
-      return NextResponse.redirect(new URL('/login', request.url))
+      return NextResponse.redirect(new URL('/giris', request.url))
     }
     return response
   }
