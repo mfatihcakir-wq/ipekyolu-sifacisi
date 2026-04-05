@@ -37,6 +37,15 @@ const PROGRESS = [
 function OdemeIcerik() {
   const searchParams = useSearchParams()
   const [seciliPlan, setSeciliPlan] = useState('yearly')
+  const [ad, setAd] = useState('')
+  const [telefon, setTelefon] = useState('')
+  const [email, setEmail] = useState('')
+  const [kartNo, setKartNo] = useState('')
+  const [kartSkt, setKartSkt] = useState('')
+  const [kartCvv, setKartCvv] = useState('')
+  const [kartIsim, setKartIsim] = useState('')
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [yukleniyor, setYukleniyor] = useState(false)
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [toast, setToast] = useState<{mesaj: string, tip: 'hata' | 'basari'} | null>(null)
 
