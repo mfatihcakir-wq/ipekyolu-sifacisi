@@ -3,21 +3,81 @@
 @tailwind utilities;
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+  /* Renk paleti */
+  --renk-koyu:        #1B4332;
+  --renk-orta:        #2D6A4F;
+  --renk-altin:       #B8922A;
+  --renk-altin-acik:  #F0E6C8;
+  --renk-krem:        #FAF7F2;
+  --renk-beyaz:       #FDFCFA;
+  --renk-metin-ana:   #1A1A1A;
+  --renk-metin-ikincil: #6B5744;
+  --renk-metin-soluk: #8A7968;
+  --renk-sinir:       #E8DFD4;
+  --renk-dem:         #C0392B;
+  --renk-balgam:      #1E6BB8;
+  --renk-safra:       #D4821A;
+  --renk-sevda:       #6B3FA0;
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  /* Tipografi */
+  --font-baslik:      'Cinzel', Georgia, serif;
+  --font-govde:       'EB Garamond', Georgia, serif;
+  --font-arapca:      'Noto Naskh Arabic', serif;
+  --fs-xs:    11px;
+  --fs-sm:    13px;
+  --fs-base:  18px;
+  --fs-md:    20px;
+  --fs-lg:    24px;
+  --fs-xl:    32px;
+  --fs-2xl:   42px;
+  --fs-3xl:   56px;
+  --lh-base:  1.8;
+  --lh-tight: 1.15;
+
+  --background: #FAF7F2;
+  --foreground: #1A1A1A;
 }
 
 body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-govde);
+  font-size: var(--fs-base);
+  line-height: var(--lh-base);
+  color: var(--renk-metin-ana);
+  background: var(--renk-krem);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+input, select, textarea {
+  font-size: 16px !important;
+}
+
+h1 {
+  font-family: var(--font-baslik);
+  font-size: clamp(32px, 5vw, var(--fs-3xl));
+  line-height: var(--lh-tight);
+  font-weight: 600;
+  letter-spacing: 0.3px;
+}
+h2 {
+  font-family: var(--font-baslik);
+  font-size: clamp(24px, 3.5vw, var(--fs-2xl));
+  line-height: var(--lh-tight);
+  font-weight: 600;
+}
+h3 {
+  font-family: var(--font-baslik);
+  font-size: clamp(18px, 2.5vw, var(--fs-xl));
+  font-weight: 500;
+}
+p {
+  font-size: var(--fs-base);
+  line-height: var(--lh-base);
+}
+
+::selection {
+  background: var(--renk-altin-acik);
+  color: var(--renk-koyu);
 }
 
 @layer utilities {

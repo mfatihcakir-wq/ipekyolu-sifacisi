@@ -96,6 +96,9 @@ export default function LandingClient() {
               {"BITKI ANSIKLOPEDISI"}
             </button>
           </div>
+          <div style={{ fontSize: 12, color: 'rgba(255,255,255,0.35)', marginTop: 16, fontStyle: 'italic' }}>
+            {"Simdiye kadar 400+ kisi analizini tamamladi"}
+          </div>
         </div>
 
         {/* Sag: Hero Panel */}
@@ -220,7 +223,7 @@ export default function LandingClient() {
       </section>
 
       {/* ═══════ 5. STEPS ═══════ */}
-      <section style={{ background: C.cream, padding: '80px 56px' }} className="steps-section">
+      <section id="nasil-calisir" style={{ background: C.cream, padding: '80px 56px' }} className="steps-section">
         <div style={{ maxWidth: 1200, margin: '0 auto' }}>
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 14, marginBottom: 16 }}>
             <div style={{ width: 32, height: 1, background: C.gold, opacity: 0.4 }} />
@@ -358,7 +361,7 @@ export default function LandingClient() {
       </section>
 
       {/* ═══════ 7. PRICING ═══════ */}
-      <section style={{ background: C.cream, padding: '80px 56px' }} className="pricing-section">
+      <section id="fiyatlandirma" style={{ background: C.cream, padding: '80px 56px' }} className="pricing-section">
         <div style={{ maxWidth: 1200, margin: '0 auto' }}>
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 14, marginBottom: 16 }}>
             <div style={{ width: 32, height: 1, background: C.gold, opacity: 0.4 }} />

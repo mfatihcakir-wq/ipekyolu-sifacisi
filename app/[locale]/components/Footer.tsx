@@ -9,6 +9,17 @@ const C = { primary: '#1B4332', gold: '#8B6914' }
 
 export default function Footer() {
   return (
+    <>
+    {/* Footer CTA */}
+    <div style={{ background: '#0F2D1C', padding: '48px 24px', textAlign: 'center' as const }}>
+      <div style={{ maxWidth: 560, margin: '0 auto' }}>
+        <div style={{ fontFamily: cinzel.style.fontFamily, fontSize: 22, color: 'white', fontWeight: 600, marginBottom: 8 }}>{"Bedeninizi Tanimaya Hazir misiniz?"}</div>
+        <div style={{ fontSize: 15, color: 'rgba(255,255,255,0.5)', fontStyle: 'italic', marginBottom: 24 }}>{"Ucretsiz analizinizi simdi baslatin."}</div>
+        <a href="/analiz" style={{ display: 'inline-block', background: '#059669', color: 'white', borderRadius: 10, padding: '14px 32px', fontFamily: cinzel.style.fontFamily, fontSize: 13, fontWeight: 600, textDecoration: 'none', letterSpacing: 1 }}>
+          {"Ucretsiz Analizi Baslat \u2192"}
+        </a>
+      </div>
+    </div>
     <footer style={{ background: C.primary, padding: '48px 24px 24px', color: 'rgba(255,255,255,0.6)', fontFamily: garamond.style.fontFamily }}>
       <div style={{ maxWidth: 1100, margin: '0 auto', display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: 32, marginBottom: 32 }}>
 
@@ -67,5 +78,6 @@ export default function Footer() {
         </a>
       </div>
     </footer>
+    </>
   )
 }

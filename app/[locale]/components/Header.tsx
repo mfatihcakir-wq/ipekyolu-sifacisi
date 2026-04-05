@@ -15,12 +15,10 @@ const C = {
 const DANISМАН_EMAIL = 'm.fatih.cakir@gmail.com'
 
 const NAV_LINKS = [
-  { href: '/', label: 'Ana Sayfa' },
-  { href: '/analiz', label: 'Analiz Baslat', vurgulu: true },
-  { href: '/bitkiler', label: 'Bitki Ansiklopedisi' },
-  { href: '/karakter', label: 'Karakter Analizi' },
+  { href: '/#nasil-calisir', label: 'Nasil Calisir' },
+  { href: '/bitkiler', label: 'Bitkiler' },
+  { href: '/#fiyatlandirma', label: 'Fiyatlar' },
   { href: '/hakkimizda', label: 'Hakkimizda' },
-  { href: '/sss', label: 'SSS' },
 ]
 
 // Dil secici kaldirildi — sadece TR
@@ -78,15 +76,15 @@ export default function Header() {
           </div>
 
           {/* ORTA: Desktop Nav */}
-          <nav style={{ display: 'flex', gap: 4, alignItems: 'center' }}>
+          <nav className="header-desktop-nav" style={{ display: 'flex', gap: 4, alignItems: 'center' }}>
             {NAV_LINKS.map(link => (
               <button
                 key={link.href}
                 onClick={() => router.push(link.href)}
                 style={{
-                  background: link.vurgulu && !isActive(link.href) ? 'rgba(201,168,76,0.15)' : 'none',
+                  background: 'none',
                   border: 'none',
-                  color: isActive(link.href) ? C.gold : link.vurgulu ? C.gold : 'rgba(255,255,255,0.7)',
+                  color: isActive(link.href) ? C.gold : 'rgba(255,255,255,0.7)',
                   fontFamily: cinzel.style.fontFamily,
                   fontSize: 11,
                   fontWeight: isActive(link.href) ? 600 : 400,
@@ -112,9 +110,9 @@ export default function Header() {
                   style={{ background: 'rgba(255,255,255,0.1)', border: '1px solid rgba(255,255,255,0.2)', color: 'white', borderRadius: 6, padding: '6px 14px', fontSize: 11, cursor: 'pointer', fontFamily: cinzel.style.fontFamily, letterSpacing: 1 }}>
                   {"Giris"}
                 </button>
-                <button onClick={() => router.push('/odeme')}
-                  style={{ background: C.gold, border: 'none', color: C.primary, borderRadius: 6, padding: '6px 14px', fontSize: 11, cursor: 'pointer', fontFamily: cinzel.style.fontFamily, fontWeight: 600, letterSpacing: 1 }}>
-                  {"Uye Ol"}
+                <button onClick={() => router.push('/analiz')}
+                  style={{ background: '#059669', border: 'none', color: 'white', borderRadius: 6, padding: '7px 16px', fontSize: 11, cursor: 'pointer', fontFamily: cinzel.style.fontFamily, fontWeight: 600, letterSpacing: 1 }}>
+                  {"Ucretsiz Basla \u2192"}
                 </button>
               </div>
             ) : isDanisман ? (
@@ -144,8 +142,8 @@ export default function Header() {
             )}
 
             {/* Hamburger (mobil) */}
-            <button onClick={() => setMenuAcik(!menuAcik)}
-              style={{ display: 'none', background: 'none', border: 'none', color: 'white', fontSize: 22, cursor: 'pointer', padding: '4px' }}>
+            <button onClick={() => setMenuAcik(!menuAcik)} className="header-hamburger"
+              style={{ background: 'none', border: 'none', color: 'white', fontSize: 22, cursor: 'pointer', padding: '4px', display: 'none' }}>
               {menuAcik ? '\u2715' : '\u2630'}
             </button>
           </div>
@@ -160,6 +158,10 @@ export default function Header() {
                 {link.label}
               </button>
             ))}
+            <button onClick={() => { setMenuAcik(false); router.push('/analiz') }}
+              style={{ display: 'block', width: '100%', padding: '12px 0', marginTop: 8, border: 'none', background: '#059669', color: 'white', borderRadius: 8, fontSize: 13, cursor: 'pointer', fontFamily: cinzel.style.fontFamily, fontWeight: 600, letterSpacing: 1 }}>
+              {"Ucretsiz Basla \u2192"}
+            </button>
           </div>
         )}
       </header>
@@ -169,6 +171,13 @@ export default function Header() {
         <div onClick={() => { setProfilAcik(false) }}
           style={{ position: 'fixed', inset: 0, zIndex: 99 }} />
       )}
+
+      <style jsx global>{`
+        @media (max-width: 768px) {
+          .header-desktop-nav { display: none !important; }
+          .header-hamburger { display: block !important; }
+        }
+      `}</style>
     </>
   )
 }
