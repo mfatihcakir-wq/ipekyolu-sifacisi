@@ -264,6 +264,37 @@ export default function LandingPage() {
         </div>
       </section>
 
+      {/* ═══════ KULLANICI YORUMLARI ═══════ */}
+      <section style={{ background: C.white, padding: '80px 56px' }} className="testimonials-section">
+        <div style={{ maxWidth: 1200, margin: '0 auto' }}>
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 14, marginBottom: 16 }}>
+            <div style={{ width: 32, height: 1, background: C.gold, opacity: 0.4 }} />
+            <span style={{ fontFamily: cinzel.style.fontFamily, fontSize: 9, color: C.gold, letterSpacing: 3, textTransform: 'uppercase' as const }}>{"Deneyimler"}</span>
+            <div style={{ width: 32, height: 1, background: C.gold, opacity: 0.4 }} />
+          </div>
+          <h2 style={{ fontFamily: cinzel.style.fontFamily, fontSize: 33, fontWeight: 600, color: C.primary, textAlign: 'center' as const, marginBottom: 48 }}>
+            {"Ilk Analizden Sonra"}
+          </h2>
+
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 20 }} className="testimonials-grid">
+            {[
+              { yorum: 'Yillardir cozemedigim yorgunluk sikayetim icin ilk kez koklu bir yaklasim gordum. Nabiz ve dil analizi bolumleri gercekten farkli.', isim: 'E. Yilmaz', detay: 'Istanbul, Beta Kullanicisi' },
+              { yorum: 'Klasik kaynaklara dayali bir sistem oldugunu bilmiyordum. Recete bolumundeki her bitkinin kaynagi ayrica belirtilmis, bu guven verdi.', isim: 'M. Arslan', detay: 'Ankara, Beta Kullanicisi' },
+              { yorum: 'Analiz formunu doldurmak basli basina ogretici. Hangi sorulara odaklanmam gerektigini anladim.', isim: 'S. Demir', detay: 'Izmir, Beta Kullanicisi' },
+            ].map(t => (
+              <div key={t.isim} style={{ background: C.cream, border: `1px solid ${C.border}`, borderRadius: 20, padding: '28px 26px', position: 'relative' as const }}>
+                <div style={{ fontSize: 14, color: C.gold, marginBottom: 14 }}>{"\u2605\u2605\u2605\u2605\u2605"}</div>
+                <p style={{ fontStyle: 'italic', fontSize: 16, color: C.secondary, lineHeight: 1.8, margin: 0 }}>{t.yorum}</p>
+                <div style={{ marginTop: 20, borderTop: `1px solid ${C.border}`, paddingTop: 16 }}>
+                  <div style={{ fontFamily: cinzel.style.fontFamily, fontSize: 11, fontWeight: 600, color: C.primary, letterSpacing: 1 }}>{t.isim}</div>
+                  <div style={{ fontSize: 13, color: C.muted, fontStyle: 'italic', marginTop: 2 }}>{t.detay}</div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* ═══════ 7. PRICING ═══════ */}
       <section style={{ background: C.cream, padding: '80px 56px' }} className="pricing-section">
         <div style={{ maxWidth: 1200, margin: '0 auto' }}>
@@ -378,6 +409,7 @@ export default function LandingPage() {
           .danisman-grid { grid-template-columns: 1fr !important; gap: 32px !important; }
           .danisman-grid > div:first-child { width: 100% !important; height: 280px !important; }
           .pricing-grid { grid-template-columns: 1fr !important; }
+          .testimonials-grid { grid-template-columns: 1fr !important; }
           .footer-grid { grid-template-columns: 1fr 1fr !important; gap: 32px !important; }
           .akademik-grid { grid-template-columns: 1fr !important; }
         }
