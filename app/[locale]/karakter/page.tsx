@@ -92,9 +92,12 @@ export default function KarakterAnaliziPage() {
   const [cevaplar, setCevaplar] = useState<Record<string, number>>({})
   const [fizikselMizac, setFizikselMizac] = useState('')
   const [yukleniyor, setYukleniyor] = useState(false)
-  const [gorunum, setGorunum] = useState<'harita' | 'form' | 'sonuc'>('harita')
+  const [gorunum, setGorunum] = useState<'harita' | 'form' | 'sonuc' | 'paywall'>('harita')
   const [toast, setToast] = useState<{ mesaj: string, tip: 'hata' | 'basari' } | null>(null)
   const formRef = useRef<HTMLDivElement>(null)
+  const [isLoggedIn, setIsLoggedIn] = useState(false)
+  const [isAbone, setIsAbone] = useState(false)
+  const [authModal, setAuthModal] = useState(false)
 
   function gosterToast(mesaj: string, tip: 'hata' | 'basari' = 'hata') {
     setToast({ mesaj, tip }); setTimeout(() => setToast(null), 4000)
@@ -103,8 +106,13 @@ export default function KarakterAnaliziPage() {
   useEffect(() => {
     supabase.auth.getUser().then(async ({ data: { user } }) => {
       if (!user) return
+      setIsLoggedIn(true)
+      // Fiziksel mizac
       const { data } = await supabase.from('analyses').select('sonuc_json').order('created_at', { ascending: false }).limit(1).single()
       if (data?.sonuc_json?.mizac_tipi || data?.sonuc_json?.mizac) setFizikselMizac(data.sonuc_json.mizac_tipi || data.sonuc_json.mizac || '')
+      // Abonelik kontrol
+      const { data: ab } = await supabase.from('abonelikler').select('durum').eq('kullanici_id', user.id).eq('durum', 'aktif').single()
+      setIsAbone(!!ab)
     })
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
@@ -120,7 +128,7 @@ export default function KarakterAnaliziPage() {
     if (soruIndex < toplamSoru - 1) {
       setTimeout(() => { setSoruIndex(soruIndex + 1); formRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' }) }, 300)
     } else {
-      setGorunum('sonuc')
+      setGorunum(isAbone ? 'sonuc' : 'paywall')
     }
   }
 
@@ -184,7 +192,7 @@ export default function KarakterAnaliziPage() {
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gridTemplateRows: 'auto auto auto', gap: 12, maxWidth: 480, margin: '0 auto' }}>
               {/* Ust orta: Dunya */}
               <div />
-              <button onClick={() => { setGorunum('form'); setSoruIndex(0) }} style={{ background: `${CEPHE_RENK.dunya}10`, border: `1.5px solid ${CEPHE_RENK.dunya}`, borderRadius: 12, padding: '14px 10px', cursor: 'pointer', textAlign: 'center' }}>
+              <button onClick={() => { if (!isLoggedIn) { setAuthModal(true); return } setGorunum('form'); setSoruIndex(0) }} style={{ background: `${CEPHE_RENK.dunya}10`, border: `1.5px solid ${CEPHE_RENK.dunya}`, borderRadius: 12, padding: '14px 10px', cursor: 'pointer', textAlign: 'center' }}>
                 <div style={{ fontSize: 9, color: CEPHE_RENK.dunya, letterSpacing: 2 }}>ONDEN</div>
                 <div style={{ fontFamily: cinzel.style.fontFamily, fontSize: 14, color: C.primary, marginTop: 4 }}>Dunya</div>
                 <div style={{ fontSize: 13, color: C.gold, fontFamily: 'serif' }}>{CEPHELER[0].ad_ar}</div>
@@ -193,7 +201,7 @@ export default function KarakterAnaliziPage() {
               <div />
 
               {/* Orta: Nefs — Kalp — Heva */}
-              <button onClick={() => { setGorunum('form'); setSoruIndex(20) }} style={{ background: `${CEPHE_RENK.nefs}10`, border: `1.5px solid ${CEPHE_RENK.nefs}`, borderRadius: 12, padding: '14px 10px', cursor: 'pointer', textAlign: 'center' }}>
+              <button onClick={() => { if (!isLoggedIn) { setAuthModal(true); return } setGorunum('form'); setSoruIndex(20) }} style={{ background: `${CEPHE_RENK.nefs}10`, border: `1.5px solid ${CEPHE_RENK.nefs}`, borderRadius: 12, padding: '14px 10px', cursor: 'pointer', textAlign: 'center' }}>
                 <div style={{ fontSize: 9, color: CEPHE_RENK.nefs, letterSpacing: 2 }}>SOLDAN</div>
                 <div style={{ fontFamily: cinzel.style.fontFamily, fontSize: 14, color: C.primary, marginTop: 4 }}>Nefs</div>
                 <div style={{ fontSize: 13, color: C.gold, fontFamily: 'serif' }}>{CEPHELER[2].ad_ar}</div>
@@ -205,7 +213,7 @@ export default function KarakterAnaliziPage() {
                   <span style={{ fontFamily: cinzel.style.fontFamily, fontSize: 10, color: C.gold, letterSpacing: 2 }}>KALP</span>
                 </div>
               </div>
-              <button onClick={() => { setGorunum('form'); setSoruIndex(10) }} style={{ background: `${CEPHE_RENK.heva}10`, border: `1.5px solid ${CEPHE_RENK.heva}`, borderRadius: 12, padding: '14px 10px', cursor: 'pointer', textAlign: 'center' }}>
+              <button onClick={() => { if (!isLoggedIn) { setAuthModal(true); return } setGorunum('form'); setSoruIndex(10) }} style={{ background: `${CEPHE_RENK.heva}10`, border: `1.5px solid ${CEPHE_RENK.heva}`, borderRadius: 12, padding: '14px 10px', cursor: 'pointer', textAlign: 'center' }}>
                 <div style={{ fontSize: 9, color: CEPHE_RENK.heva, letterSpacing: 2 }}>SAGDAN</div>
                 <div style={{ fontFamily: cinzel.style.fontFamily, fontSize: 14, color: C.primary, marginTop: 4 }}>Heva</div>
                 <div style={{ fontSize: 13, color: C.gold, fontFamily: 'serif' }}>{CEPHELER[1].ad_ar}</div>
@@ -214,7 +222,7 @@ export default function KarakterAnaliziPage() {
 
               {/* Alt orta: Seytan */}
               <div />
-              <button onClick={() => { setGorunum('form'); setSoruIndex(30) }} style={{ background: `${CEPHE_RENK.seytan}10`, border: `1.5px solid ${CEPHE_RENK.seytan}`, borderRadius: 12, padding: '14px 10px', cursor: 'pointer', textAlign: 'center' }}>
+              <button onClick={() => { if (!isLoggedIn) { setAuthModal(true); return } setGorunum('form'); setSoruIndex(30) }} style={{ background: `${CEPHE_RENK.seytan}10`, border: `1.5px solid ${CEPHE_RENK.seytan}`, borderRadius: 12, padding: '14px 10px', cursor: 'pointer', textAlign: 'center' }}>
                 <div style={{ fontSize: 9, color: CEPHE_RENK.seytan, letterSpacing: 2 }}>ENSEDEN</div>
                 <div style={{ fontFamily: cinzel.style.fontFamily, fontSize: 14, color: C.primary, marginTop: 4 }}>Seytan</div>
                 <div style={{ fontSize: 13, color: C.gold, fontFamily: 'serif' }}>{CEPHELER[3].ad_ar}</div>
@@ -223,7 +231,7 @@ export default function KarakterAnaliziPage() {
               <div />
             </div>
             <div style={{ textAlign: 'center', marginTop: 24 }}>
-              <button onClick={() => { setGorunum('form'); setSoruIndex(0) }}
+              <button onClick={() => { if (!isLoggedIn) { setAuthModal(true); return } setGorunum('form'); setSoruIndex(0) }}
                 style={{ padding: '14px 36px', background: C.primary, border: 'none', borderRadius: 12, color: C.gold, fontFamily: cinzel.style.fontFamily, fontSize: 14, fontWeight: 600, cursor: 'pointer', letterSpacing: 2 }}>
                 {"BASLAT"}
               </button>
@@ -353,7 +361,69 @@ export default function KarakterAnaliziPage() {
             </button>
           </div>
         )}
+        {/* PAYWALL — giris yapmis ama abone degil */}
+        {gorunum === 'paywall' && (
+          <div style={{ textAlign: 'center' }}>
+            <div style={{ background: C.white, borderRadius: 16, border: `1px solid ${C.border}`, padding: '40px 32px', marginBottom: 20 }}>
+              {/* Bulanik onizleme */}
+              <div style={{ filter: 'blur(6px)', pointerEvents: 'none', userSelect: 'none', marginBottom: 20 }}>
+                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12 }}>
+                  {CEPHELER.map(c => (
+                    <div key={c.id} style={{ background: C.surface, borderRadius: 10, padding: 16 }}>
+                      <div style={{ fontSize: 13, color: C.primary, fontWeight: 600 }}>{c.ad}</div>
+                      <div style={{ fontSize: 24, color: CEPHE_RENK[c.id], fontWeight: 600, marginTop: 4 }}>{cepheSkoru(c.id)}%</div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+              <div style={{ position: 'relative', marginTop: -60, paddingTop: 20, background: 'rgba(255,255,255,0.85)', borderRadius: 12 }}>
+                <div style={{ fontSize: 36, marginBottom: 12 }}>{'\uD83D\uDD12'}</div>
+                <div style={{ fontFamily: cinzel.style.fontFamily, fontSize: 20, color: C.primary, marginBottom: 8 }}>Sonuclari Gormek Icin Plan Secin</div>
+                <p style={{ fontSize: 14, color: C.secondary, lineHeight: 1.6, marginBottom: 24, maxWidth: 400, margin: '0 auto 24px' }}>
+                  Sorulari tamamladiniz. Detayli karakter analizi sonuclarinizi ve kisisel tavsiyeleri gormek icin uyelik plani secin.
+                </p>
+                <div style={{ display: 'flex', gap: 10, justifyContent: 'center', flexWrap: 'wrap' as const }}>
+                  <button onClick={() => router.push('/odeme')}
+                    style={{ padding: '14px 32px', background: C.gold, border: 'none', borderRadius: 10, fontFamily: cinzel.style.fontFamily, fontSize: 14, fontWeight: 600, color: C.primary, cursor: 'pointer', letterSpacing: 1 }}>
+                    Plan Sec — 590{'\u20BA'}/ay
+                  </button>
+                </div>
+              </div>
+            </div>
+            <button onClick={() => { setGorunum('form'); setSoruIndex(0) }}
+              style={{ padding: '10px 20px', background: 'transparent', border: `1px solid ${C.border}`, borderRadius: 8, fontSize: 12, color: C.secondary, cursor: 'pointer' }}>
+              Cevaplari Duzenle
+            </button>
+          </div>
+        )}
       </div>
+
+      {/* AUTH MODAL — giris yapmamis */}
+      {authModal && (
+        <div onClick={() => setAuthModal(false)} style={{ position: 'fixed', inset: 0, zIndex: 1000, background: 'rgba(0,0,0,0.6)', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 20 }}>
+          <div onClick={e => e.stopPropagation()} style={{ background: C.white, borderRadius: 20, maxWidth: 420, width: '100%', padding: '40px 36px', textAlign: 'center' }}>
+            <div style={{ fontSize: 48, marginBottom: 16 }}>{'\uD83D\uDD12'}</div>
+            <div style={{ fontFamily: cinzel.style.fontFamily, fontSize: 20, color: C.primary, marginBottom: 8 }}>Bu Ozellik Uyelere Ozeldir</div>
+            <p style={{ fontSize: 14, color: C.secondary, lineHeight: 1.6, marginBottom: 24 }}>
+              Kalp Sehri karakter analizini kullanmak icin giris yapin veya uye olun.
+            </p>
+            <div style={{ display: 'flex', gap: 12, justifyContent: 'center' }}>
+              <button onClick={() => router.push('/giris')}
+                style={{ padding: '12px 28px', borderRadius: 10, background: C.primary, color: C.gold, fontFamily: cinzel.style.fontFamily, fontSize: 14, fontWeight: 600, letterSpacing: 1, border: 'none', cursor: 'pointer' }}>
+                Giris Yap
+              </button>
+              <button onClick={() => router.push('/kayit')}
+                style={{ padding: '12px 28px', borderRadius: 10, background: C.gold, color: C.primary, fontFamily: cinzel.style.fontFamily, fontSize: 14, fontWeight: 600, letterSpacing: 1, border: 'none', cursor: 'pointer' }}>
+                Uye Ol
+              </button>
+            </div>
+            <button onClick={() => setAuthModal(false)}
+              style={{ marginTop: 16, background: 'none', border: 'none', color: '#999', fontSize: 13, cursor: 'pointer' }}>
+              Kapat
+            </button>
+          </div>
+        </div>
+      )}
 
       <Footer />
     </div>

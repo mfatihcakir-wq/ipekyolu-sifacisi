@@ -1,8 +1,10 @@
 'use client'
 
+import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import { Cinzel, EB_Garamond, Noto_Naskh_Arabic } from 'next/font/google'
 import Header from './components/Header'
+import { createClient } from '@/lib/supabase'
 
 const cinzel = Cinzel({ subsets: ['latin', 'latin-ext'], weight: ['400', '500', '600', '700'] })
 const garamond = EB_Garamond({ subsets: ['latin', 'latin-ext'], weight: ['400', '500'], style: ['normal', 'italic'] })
@@ -32,6 +34,29 @@ function AlembikSVG({ size = 160 }: { size?: number }) {
 
 export default function LandingClient() {
   const router = useRouter()
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const [yorumlar, setYorumlar] = useState<any[]>([])
+  const [kayitSayisi, setKayitSayisi] = useState('31.400+')
+
+  useEffect(() => {
+    const supabase = createClient()
+
+    // Dinamik kayit sayisi
+    Promise.all([
+      supabase.from('klasik_kaynaklar').select('*', { count: 'exact', head: true }),
+      supabase.from('karakter_kaynaklar').select('*', { count: 'exact', head: true }),
+    ]).then(([k1, k2]) => {
+      const toplam = (k1.count || 0) + (k2.count || 0)
+      if (toplam > 0) setKayitSayisi(toplam.toLocaleString('tr-TR') + '+')
+    }).catch(() => {})
+
+    supabase.from('yorumlar')
+      .select('*')
+      .eq('onaylandi', true)
+      .order('onay_tarihi', { ascending: false })
+      .limit(6)
+      .then(({ data }) => { if (data && data.length > 0) setYorumlar(data) })
+  }, [])
 
   return (
     <div style={{ fontFamily: garamond.style.fontFamily, color: C.dark, margin: 0 }}>
@@ -54,11 +79,11 @@ export default function LandingClient() {
 
           <h1 style={{ fontFamily: cinzel.style.fontFamily, fontSize: 54, fontWeight: 600, color: C.white, lineHeight: 1.08, margin: '0 0 20px 0' }}>
             {"Bedeninizi"}
-            <span style={{ display: 'block', color: C.gold }}>{"Anliyoruz."}</span>
+            <span style={{ display: 'block', color: C.gold }}>{"Anl\u0131yoruz."}</span>
           </h1>
 
           <p style={{ fontFamily: garamond.style.fontFamily, fontStyle: 'italic', fontSize: 20, color: 'rgba(255,255,255,0.55)', lineHeight: 1.8, maxWidth: 480, margin: '0 0 36px 0' }}>
-            {"Nabzinizdan mizaciniza, dilinizden hilt dengenize; bin yillik birikimle hazirlanmis, size ozel danismanlik."}
+            {"Nab\u0131z\u0131n\u0131zdan mizac\u0131n\u0131za, dilinizden hilt dengenize; bin y\u0131ll\u0131k birikimle haz\u0131rlanm\u0131\u015f, size \u00f6zel dan\u0131\u015fmanl\u0131k."}
           </p>
 
           <div style={{ display: 'flex', gap: 14, flexWrap: 'wrap' as const }}>
@@ -99,7 +124,7 @@ export default function LandingClient() {
         <div style={{ maxWidth: 1200, margin: '0 auto', display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 18 }} className="stats-grid">
           {[
             { n: '38', l: 'KLASIK ESER', s: 'el-Havi, el-Kanun, el-Samil, 35 eser daha' },
-            { n: '31.400+', l: 'METIN KAYDI', s: 'Indekslenmis klasik metin parcasi' },
+            { n: kayitSayisi, l: 'METIN KAYDI', s: 'Indekslenmis klasik metin parcasi' },
             { n: '9', l: 'NABIZ SIFATI', s: 'Ibn Sina metodolojisi' },
             { n: '4', l: 'MIZAC TIPI', s: 'Demevi, Safravi, Balgami, Sevdavi' },
           ].map(st => (
@@ -306,13 +331,16 @@ export default function LandingClient() {
           </h2>
 
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 20 }} className="testimonials-grid">
-            {[
-              { yorum: 'Yillardir cozemedigim yorgunluk sikayetim icin ilk kez koklu bir yaklasim gordum. Nabiz ve dil analizi bolumleri gercekten farkli.', isim: 'E. Yilmaz', detay: 'Istanbul, Beta Kullanicisi' },
-              { yorum: 'Klasik kaynaklara dayali bir sistem oldugunu bilmiyordum. Recete bolumundeki her bitkinin kaynagi ayrica belirtilmis, bu guven verdi.', isim: 'M. Arslan', detay: 'Ankara, Beta Kullanicisi' },
-              { yorum: 'Analiz formunu doldurmak basli basina ogretici. Hangi sorulara odaklanmam gerektigini anladim.', isim: 'S. Demir', detay: 'Izmir, Beta Kullanicisi' },
-            ].map(t => (
+            {(yorumlar.length > 0
+              ? yorumlar.map(y => ({ yorum: y.yorum, isim: y.ad_soyad, detay: y.sehir || '', puan: y.puan || 5 }))
+              : [
+                  { yorum: 'Yillardir cozemedigim yorgunluk sikayetim icin ilk kez koklu bir yaklasim gordum. Nabiz ve dil analizi bolumleri gercekten farkli.', isim: 'E. Yilmaz', detay: 'Istanbul, Beta Kullanicisi', puan: 5 },
+                  { yorum: 'Klasik kaynaklara dayali bir sistem oldugunu bilmiyordum. Recete bolumundeki her bitkinin kaynagi ayrica belirtilmis, bu guven verdi.', isim: 'M. Arslan', detay: 'Ankara, Beta Kullanicisi', puan: 5 },
+                  { yorum: 'Analiz formunu doldurmak basli basina ogretici. Hangi sorulara odaklanmam gerektigini anladim.', isim: 'S. Demir', detay: 'Izmir, Beta Kullanicisi', puan: 5 },
+                ]
+            ).map(t => (
               <div key={t.isim} style={{ background: C.cream, border: `1px solid ${C.border}`, borderRadius: 20, padding: '28px 26px', position: 'relative' as const }}>
-                <div style={{ fontSize: 14, color: C.gold, marginBottom: 14 }}>{"\u2605\u2605\u2605\u2605\u2605"}</div>
+                <div style={{ fontSize: 14, color: C.gold, marginBottom: 14 }}>{"\u2605".repeat(t.puan)}</div>
                 <p style={{ fontStyle: 'italic', fontSize: 16, color: C.secondary, lineHeight: 1.8, margin: 0 }}>{t.yorum}</p>
                 <div style={{ marginTop: 20, borderTop: `1px solid ${C.border}`, paddingTop: 16 }}>
                   <div style={{ fontFamily: cinzel.style.fontFamily, fontSize: 11, fontWeight: 600, color: C.primary, letterSpacing: 1 }}>{t.isim}</div>
@@ -320,6 +348,11 @@ export default function LandingClient() {
                 </div>
               </div>
             ))}
+          </div>
+          <div style={{ textAlign: 'center', marginTop: 24 }}>
+            <a href="/yorum-yaz" style={{ fontFamily: cinzel.style.fontFamily, fontSize: 11, color: '#8B6914', letterSpacing: 2, textDecoration: 'none' }}>
+              {"Siz de Deneyiminizi Paylasin \u2192"}
+            </a>
           </div>
         </div>
       </section>
