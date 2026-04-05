@@ -98,8 +98,8 @@ export default function LandingPage() {
       <section style={{ background: C.cream, padding: '48px 56px' }} className="stats-section">
         <div style={{ maxWidth: 1200, margin: '0 auto', display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 18 }} className="stats-grid">
           {[
-            { n: '18', l: 'KLASIK ESER', s: 'el-Havi, el-Kanun, el-Samil' },
-            { n: '25K+', l: 'METIN KAYDI', s: 'Indekslenmis parca' },
+            { n: '38', l: 'KLASIK ESER', s: 'el-Havi, el-Kanun, el-Samil, 35 eser daha' },
+            { n: '31.400+', l: 'METIN KAYDI', s: 'Indekslenmis klasik metin parcasi' },
             { n: '9', l: 'NABIZ SIFATI', s: 'Ibn Sina metodolojisi' },
             { n: '4', l: 'MIZAC TIPI', s: 'Demevi, Safravi, Balgami, Sevdavi' },
           ].map(st => (
