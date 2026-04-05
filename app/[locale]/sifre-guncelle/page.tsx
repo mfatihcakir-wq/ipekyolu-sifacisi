@@ -9,7 +9,7 @@ import Footer from '../components/Footer'
 const cinzel = Cinzel({ subsets: ['latin', 'latin-ext'], weight: ['400', '600'] })
 const garamond = EB_Garamond({ subsets: ['latin', 'latin-ext'], weight: ['400'], style: ['normal'] })
 
-const C = { primary: '#1B4332', gold: '#C9A84C', cream: '#F5EFE6', border: '#E0D5C5' }
+const C = { primary: '#1B4332', gold: '#8B6914', cream: '#F5EFE6', border: '#E0D5C5' }
 
 export default function SifreGuncellePage() {
   const [sifre, setSifre] = useState('')

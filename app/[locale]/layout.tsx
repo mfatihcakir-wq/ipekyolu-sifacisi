@@ -38,7 +38,6 @@ const ebGaramond = EB_Garamond({
 export const viewport = {
   width: 'device-width',
   initialScale: 1,
-  maximumScale: 1,
 }
 
 export const metadata: Metadata = {
@@ -86,7 +85,7 @@ export default async function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} ${cinzel.variable} ${ebGaramond.variable} antialiased`}
       >
         <NextIntlClientProvider messages={messages}>
-          {children}
+          <main>{children}</main>
         </NextIntlClientProvider>
         <Analytics />
       </body>

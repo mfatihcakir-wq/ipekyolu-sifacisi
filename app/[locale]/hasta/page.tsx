@@ -150,7 +150,7 @@ export default function HastaPage() {
           </div>
           <div style={{ background: C.white, borderRadius: 12, border: `1px solid ${C.border}`, padding: '20px', borderTop: `3px solid ${C.gold}` }}>
             <div style={{ fontSize: 10, color: C.secondary, letterSpacing: 1, marginBottom: 6 }}>BU HAFTA</div>
-            <div style={{ fontSize: 28, fontWeight: 600, color: C.gold, fontFamily: cinzel.style.fontFamily }}>{buHafta}</div>
+            <div style={{ fontSize: 28, fontWeight: 600, color: '#8B6914', fontFamily: cinzel.style.fontFamily }}>{buHafta}</div>
             <div style={{ fontSize: 10, color: '#999', marginTop: 2 }}>/ 1 hak</div>
           </div>
           <div style={{ background: C.white, borderRadius: 12, border: `1px solid ${C.border}`, padding: '20px', borderTop: `3px solid ${abonelik ? '#2E7D32' : '#C62828'}` }}>
@@ -194,7 +194,7 @@ export default function HastaPage() {
         {/* Son analiz detay karti */}
         {analizler.length > 0 && analizler[0].durum === 'tamamlandi' && (
           <div style={{ background: C.white, borderRadius: 14, border: `1px solid ${C.border}`, padding: '20px 24px', marginBottom: 20 }}>
-            <div style={{ fontFamily: cinzel.style.fontFamily, fontSize: 11, color: C.gold, letterSpacing: 2, marginBottom: 12 }}>SON ANALIZ SONUCU</div>
+            <div style={{ fontFamily: cinzel.style.fontFamily, fontSize: 11, color: C.primary, letterSpacing: 2, marginBottom: 12 }}>SON ANALIZ SONUCU</div>
             <div style={{ fontSize: 14, color: C.dark, fontWeight: 500, marginBottom: 8 }}>
               {analizler[0].tum_form_verisi?.ad_soyad || 'Analiz'} — {new Date(analizler[0].created_at).toLocaleDateString('tr-TR')}
             </div>

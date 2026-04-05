@@ -15,7 +15,7 @@ serve(async (req) => {
     const html = `
       <div style="font-family:sans-serif;max-width:600px;margin:0 auto">
         <div style="background:#1B4332;padding:20px;text-align:center">
-          <h1 style="color:#C9A84C;margin:0;font-size:20px">İpek Yolu Şifacısı</h1>
+          <h1 style="color:#8B6914;margin:0;font-size:20px">İpek Yolu Şifacısı</h1>
           <p style="color:rgba(255,255,255,.6);margin:4px 0 0;font-size:12px">Yeni Danışmanlık Formu</p>
         </div>
         <div style="padding:24px;background:#F5EFE6">
@@ -31,7 +31,7 @@ serve(async (req) => {
             <div style="font-size:11px;color:#999;text-transform:uppercase;letter-spacing:1px;margin-bottom:8px">Şikayetler</div>
             <div style="color:#1B4332">${fv.symptoms || 'Belirtilmemiş'}</div>
           </div>
-          <a href="https://ipekyolu-sifacisi.vercel.app/dashboard" style="display:block;background:#1B4332;color:#C9A84C;text-align:center;padding:14px;border-radius:8px;text-decoration:none;font-weight:600">Panelde İncele →</a>
+          <a href="https://ipekyolu-sifacisi.vercel.app/dashboard" style="display:block;background:#1B4332;color:#8B6914;text-align:center;padding:14px;border-radius:8px;text-decoration:none;font-weight:600">Panelde İncele →</a>
         </div>
       </div>
     `

@@ -9,7 +9,7 @@ const garamond = EB_Garamond({ subsets: ['latin', 'latin-ext'], weight: ['400', 
 const naskh = Noto_Naskh_Arabic({ subsets: ['arabic'], weight: ['400', '500'] })
 
 const C = {
-  primary: '#1B4332', primaryDark: '#0F2D1C', gold: '#C9A84C',
+  primary: '#1B4332', primaryDark: '#0F2D1C', gold: '#8B6914',
   cream: '#F5EFE6', dark: '#1C1C1C', secondary: '#5C4A2A',
   border: '#E0D5C5', white: '#FFFFFF', surface: '#FAF7F2', muted: '#9C8B72',
 }
@@ -17,11 +17,11 @@ const C = {
 function AlembikSVG({ size = 160 }: { size?: number }) {
   return (
     <svg width={size} height={size} viewBox="0 0 64 64" fill="none">
-      <ellipse cx="32" cy="37" rx="12" ry="10" stroke="#C9A84C" strokeWidth="1.5" opacity={0.8} />
-      <path d="M22 37 Q22 25 32 23 Q42 25 42 37" stroke="#C9A84C" strokeWidth="1.5" opacity={0.8} />
-      <rect x="29" y="21" width="6" height="3.5" rx="1" stroke="#C9A84C" strokeWidth="1.5" opacity={0.8} />
-      <path d="M32 15 Q36 11 40 13 Q38 18 32 20 Q26 18 24 13 Q28 11 32 15Z" fill="#C9A84C" />
-      <path d="M32 38 Q28.5 42 32 45.5 Q35.5 42 32 38Z" fill="#C9A84C" opacity={0.5} />
+      <ellipse cx="32" cy="37" rx="12" ry="10" stroke="#8B6914" strokeWidth="1.5" opacity={0.8} />
+      <path d="M22 37 Q22 25 32 23 Q42 25 42 37" stroke="#8B6914" strokeWidth="1.5" opacity={0.8} />
+      <rect x="29" y="21" width="6" height="3.5" rx="1" stroke="#8B6914" strokeWidth="1.5" opacity={0.8} />
+      <path d="M32 15 Q36 11 40 13 Q38 18 32 20 Q26 18 24 13 Q28 11 32 15Z" fill="#8B6914" />
+      <path d="M32 38 Q28.5 42 32 45.5 Q35.5 42 32 38Z" fill="#8B6914" opacity={0.5} />
       <circle cx="32" cy="32" r="2.8" fill="#EF5350" />
       <circle cx="26.5" cy="34" r="2" fill="#FF7043" />
       <circle cx="37.5" cy="34" r="2" fill="#42A5F5" />

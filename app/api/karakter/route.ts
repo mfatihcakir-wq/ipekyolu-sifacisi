@@ -47,41 +47,37 @@ JSON CIKTI FORMATI:
   "kriz_mesaji": null,
   "cephe_skorlari": {"dunya": 0-100, "heva": 0-100, "nefs": 0-100, "seytan": 0-100},
   "baskin_cephe": "heva",
+  "baskin_cephe_ar": "Arapca cephe adi",
   "ikincil_cephe": "nefs",
-  "aktif_askerler": ["hased", "ucub"],
+  "aktif_askerler": [{"ad": "hased", "ad_ar": "Arapca", "cephe_id": "heva"}],
   "cephe_yuzde": {"dunya": 20, "heva": 45, "nefs": 25, "seytan": 10},
   "fiziksel_mizac": "Demevi",
   "mizac_cephe_kesisim": "Aciklama",
   "sebep_analizi": {
-    "badi_sebep": "Yakin sebep",
-    "muid_sebepler": ["Uzak sebep 1"],
-    "beden_ruh_baglantisi": "Aciklama"
+    "badi": {"baslik": "Yakin sebep", "sade": "Sade aciklama", "akademik": "Kaynakli aciklama"},
+    "muid": {"baslik": "Uzak sebepler", "sade": "Sade aciklama", "akademik": "Kaynakli aciklama"}
   },
-  "ozet": {"sade": "Kullaniciya hitap", "akademik": "Kaynakli degerlendirme"},
+  "ozet": {"sade": "Kullaniciya hitap", "akademik": "Kaynakli degerlendirme", "kaynak": "Ihya — Cilt X"},
   "receteler": {
     "ruhsal": {
       "erdem_ordusu": "Akil ordusu",
-      "on_adim": "murakabe",
       "pratik_program": [{"zaman": "Sabah", "eylem": "Aciklama", "kaynak": "Ihya Cilt 7"}],
-      "vird_zikir": [{"adet": "33", "zikir": "Aciklama", "amac": "Hangi askere karsi"}],
-      "sade": "Gunluk program ozeti",
-      "akademik": "Kaynakli program gerekcesi"
+      "vird_zikir": [{"arapca": "Harekeli Arapca metin", "okunus": "Turkce okunus", "tercume": "Turkce anlam", "adet": "33", "amac": "Hangi askere karsi"}]
     },
     "bitkisel": {
       "aktif": true,
-      "bitkiler": [{"ad_tr": "Ad", "ad_ar": "Arapca", "etki": "Neden", "kullanim": "Nasil", "kaynak": "Kaynak"}],
-      "sade": "Kisa", "akademik": "Kaynakli"
+      "bitkiler": [{"ad_tr": "Ad", "ad_ar": "Arapca", "etki": "Neden", "kaynak": "Kaynak"}]
     },
     "beslenme": {
       "aktif": true,
       "ilke": "Az yemek prensibi",
+      "ilke_kaynak": "Gazzali — Ihya, Cilt 5",
       "onerililer": [{"gida": "Ad", "neden": "Aciklama"}],
-      "kacinilacaklar": [{"gida": "Ad", "neden": "Aciklama"}],
-      "sade": "Kisa", "akademik": "Kaynakli"
+      "kacinilacaklar": [{"gida": "Ad", "neden": "Aciklama"}]
     }
   },
-  "hikmetli_soz": {"metin": "Turkce", "metin_ar": "Arapca", "kaynak": "Kaynak"},
-  "sonraki_adim": {"sure": "2 hafta", "odak": "Ne uzerinde calisilacak", "profesyonel_yonlendirme": null},
+  "hikmetli_soz": {"metin_tr": "Turkce", "metin_ar": "Arapca", "kaynak": "Kaynak"},
+  "sonraki_adim": {"sure": "2 hafta", "odak": "Ne uzerinde calisilacak", "not": null},
   "yasal_not": "Bu rapor klasik Islam dusuncesi cercevesinde hazirlanmis bir oz-degerlendirme aracidir."
 }
 

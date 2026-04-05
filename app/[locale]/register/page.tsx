@@ -61,11 +61,11 @@ export default function RegisterPage() {
         {/* Logo */}
         <div style={{ textAlign: 'center', marginBottom: 32 }}>
           <svg width="48" height="48" viewBox="0 0 64 64" fill="none" style={{ margin: '0 auto 12px auto', display: 'block' }}>
-            <ellipse cx="32" cy="37" rx="13" ry="11" fill="none" stroke="#C9A84C" strokeWidth="1.5"/>
-            <path d="M22 37 Q22 25 32 23 Q42 25 42 37" fill="none" stroke="#C9A84C" strokeWidth="1.5"/>
-            <rect x="28" y="21" width="8" height="4" rx="1.5" fill="none" stroke="#C9A84C" strokeWidth="1.5"/>
-            <path d="M32 14 Q36 10 40 12 Q38 18 32 20 Q26 18 24 12 Q28 10 32 14Z" fill="#C9A84C"/>
-            <path d="M32 38 Q28.5 42 32 45.5 Q35.5 42 32 38Z" fill="#C9A84C" opacity="0.8"/>
+            <ellipse cx="32" cy="37" rx="13" ry="11" fill="none" stroke="#8B6914" strokeWidth="1.5"/>
+            <path d="M22 37 Q22 25 32 23 Q42 25 42 37" fill="none" stroke="#8B6914" strokeWidth="1.5"/>
+            <rect x="28" y="21" width="8" height="4" rx="1.5" fill="none" stroke="#8B6914" strokeWidth="1.5"/>
+            <path d="M32 14 Q36 10 40 12 Q38 18 32 20 Q26 18 24 12 Q28 10 32 14Z" fill="#8B6914"/>
+            <path d="M32 38 Q28.5 42 32 45.5 Q35.5 42 32 38Z" fill="#8B6914" opacity="0.8"/>
             <circle cx="32" cy="32" r="2.8" fill="#EF5350"/>
             <circle cx="26.5" cy="34" r="2" fill="#FF7043"/>
             <circle cx="37.5" cy="34" r="2" fill="#42A5F5"/>
@@ -134,7 +134,7 @@ export default function RegisterPage() {
 
         <p style={{ textAlign: 'center', fontSize: 14, color: '#5C4A2A', marginTop: 24 }}>
           Zaten hesabınız var mı?{' '}
-          <Link href="/login" style={{ color: '#C9A84C', fontWeight: 600, textDecoration: 'none' }}>
+          <Link href="/login" style={{ color: '#1B4332', fontWeight: 600, textDecoration: 'underline' }}>
             Giriş Yap
           </Link>
         </p>

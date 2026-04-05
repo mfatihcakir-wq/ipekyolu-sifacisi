@@ -9,7 +9,7 @@ export default function Error({ error, reset }: { error: Error & { digest?: stri
     <div style={{ minHeight: '100vh', background: '#F5EFE6', display: 'flex', flexDirection: 'column' as const, fontFamily: garamond.style.fontFamily }}>
       {/* Header */}
       <div style={{ background: '#1B4332', padding: '16px 24px', textAlign: 'center' }}>
-        <div style={{ fontFamily: cinzel.style.fontFamily, color: '#C9A84C', fontSize: 14, fontWeight: 600, letterSpacing: 3 }}>{"İPEK YOLU ŞİFACISI"}</div>
+        <div style={{ fontFamily: cinzel.style.fontFamily, color: '#8B6914', fontSize: 14, fontWeight: 600, letterSpacing: 3 }}>{"İPEK YOLU ŞİFACISI"}</div>
       </div>
       {/* Content */}
       <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
