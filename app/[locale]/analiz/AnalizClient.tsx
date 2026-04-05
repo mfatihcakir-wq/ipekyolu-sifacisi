@@ -49,6 +49,7 @@ export default function AnalizClient() {
   }
 
   const [nabizModu, setNabizModu] = useState<'kamera' | 'manuel'>('kamera')
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [dyModu, setDyModu] = useState<'kamera' | 'manuel'>('kamera')
 
   const [form, setForm] = useState({
