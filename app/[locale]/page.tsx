@@ -276,14 +276,14 @@ export default function LandingPage() {
             {"Size Uygun Plani Secin"}
           </h2>
           <p style={{ textAlign: 'center' as const, fontStyle: 'italic', fontSize: 16, color: C.secondary, marginBottom: 52 }}>
-            {"Ilk analizden sonra fark yasarsiniz. Yillik planda aylik 390\u20BA ile sinirsiz takip."}
+            {"Ilk analizden sonra fark yasarsiniz. Yillik planda aylik 590\u20BA ile sinirsiz takip."}
           </p>
 
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 20, marginTop: 52 }} className="pricing-grid">
             {[
-              { name: 'AYLIK', price: '690\u20BA', period: '/ay', sub: 'gunde 23\u20BA', features: ['Sinirsiz analiz', 'WhatsApp danismanlik', 'Bitki protokolu', 'PDF recete'], badge: null, highlight: false },
-              { name: 'YILLIK', price: '390\u20BA', period: '/ay', sub: '%43 indirim, gunde 13\u20BA', features: ['Sinirsiz analiz', 'WhatsApp danismanlik', 'Bitki protokolu', 'PDF recete', 'Oncelikli destek'], badge: 'EN AVANTAJLI', highlight: true },
-              { name: 'TEK SEFERLIK', price: '990\u20BA', period: '', sub: 'tek odeme, 1 analiz + sonuc', features: ['Tek analiz hakki', 'WhatsApp protokol', 'Bitki protokolu', 'PDF rapor'], badge: null, highlight: false },
+              { name: 'AYLIK', price: '890\u20BA', period: '/ay', sub: 'gunde 29\u20BA', features: ['Sinirsiz analiz', 'WhatsApp danismanlik', 'Bitki protokolu', 'PDF recete'], badge: null, highlight: false },
+              { name: 'YILLIK', price: '590\u20BA', period: '/ay', sub: '%34 indirim, gunde 19\u20BA', features: ['Sinirsiz analiz', 'WhatsApp danismanlik', 'Bitki protokolu', 'PDF recete', 'Oncelikli destek'], badge: 'EN AVANTAJLI', highlight: true },
+              { name: 'TEK SEFERLIK', price: '1.290\u20BA', period: '', sub: 'tek odeme, 1 analiz + sonuc', features: ['Tek analiz hakki', 'WhatsApp protokol', 'Bitki protokolu', 'PDF rapor'], badge: null, highlight: false },
             ].map(plan => (
               <div key={plan.name} style={{
                 background: C.white, borderRadius: 22, padding: '36px 28px',
