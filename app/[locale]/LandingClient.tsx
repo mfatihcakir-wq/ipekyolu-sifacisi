@@ -260,6 +260,234 @@ export default function LandingClient() {
         </div>
       </section>
 
+      {/* ═══════ HİKÂYE ═══════ */}
+      <section style={{background:'#1C3A26', padding:'80px 0'}}>
+        <div style={{maxWidth:860, margin:'0 auto', padding:'0 40px'}}>
+
+          {/* Eyebrow */}
+          <div style={{
+            fontFamily: cinzel.style.fontFamily, fontSize:10,
+            color:'rgba(184,134,11,0.6)', letterSpacing:4,
+            marginBottom:28, display:'flex',
+            alignItems:'center', gap:16
+          }}>
+            <span style={{width:32,height:1,background:'rgba(184,134,11,0.3)',display:'block'}}/>
+            {"NEDEN İPEK YOLU ŞİFACISI"}
+            <span style={{flex:1,height:1,background:'rgba(184,134,11,0.15)',display:'block'}}/>
+          </div>
+
+          {/* Pullquote */}
+          <h2 style={{
+            fontFamily: cinzel.style.fontFamily,
+            fontSize:'clamp(22px,3.5vw,34px)',
+            fontWeight:500, color:'#F5EDE0',
+            lineHeight:1.25, marginBottom:40,
+            letterSpacing:0.3
+          }}>
+            {"On yıl boyunca "}
+            <span style={{color:'#B8860B'}}>{"unutulan bir hazineyi"}</span>
+            {" arayanın hikâyesi."}
+            <br/>
+            {"Ve o hazinenin size sunulması."}
+          </h2>
+
+          {/* Divider */}
+          <div style={{width:48,height:2,background:'#B8860B',marginBottom:40,opacity:0.6}}/>
+
+          {/* Paragraflar */}
+          {[
+            <>{"2017 yılında influenza geçirdim. Haftalarca ilaç kullandım, iyileşemedim. O dönemde yıllardır sürdürdüğüm klasik İslam metinleri araştırmalarım vardı, Arapça, Farsça, Osmanlıca kaynaklara doğrudan erişebiliyordum. "}<strong style={{color:'#F5EDE0',fontWeight:500}}>{"Bir gece, semptomlarımı klasik tıp terminolojisinde aradım."}</strong></>,
+            <>{"Influenza\u2019nın \u201Cbalgamî hıltın galebe çalması\u201D olarak tanımlandığını, semptom bazlı teşhis protokollerinin yüzyıllar öncesinden detaylıca yazıldığını gördüm. Klasik formülasyonu hazırladım. "}<strong style={{color:'#F5EDE0',fontWeight:500}}>{"On günde tamamen iyileştim."}</strong>{" Bu, araştırma yönümü tamamen değiştirdi."}</>,
+          ].map((p, i) => (
+            <p key={i} style={{
+              fontSize:'clamp(16px,1.8vw,19px)',
+              color:'rgba(245,237,224,0.72)',
+              lineHeight:1.95, marginBottom:24,
+              fontFamily: garamond.style.fontFamily
+            }}>{p}</p>
+          ))}
+
+          {/* Highlight 1 */}
+          <div style={{
+            borderLeft:'2px solid rgba(184,134,11,0.4)',
+            padding:'20px 28px', margin:'36px 0',
+            background:'rgba(184,134,11,0.05)',
+            borderRadius:'0 8px 8px 0'
+          }}>
+            <p style={{
+              fontSize:'clamp(15px,1.6vw,18px)',
+              color:'rgba(245,237,224,0.85)',
+              lineHeight:1.9, fontStyle:'italic',
+              fontFamily: garamond.style.fontFamily
+            }}>
+              {"Sonra Alzheimer\u2019ı araştırdım. Yüzyıllar önce "}
+              <strong style={{color:'#F5EDE0',fontWeight:500}}>{"\u201Cunutsak hastalığı\u201D"}</strong>
+              {" adıyla semptom semptom tanımlanmış, tedavi protokolleri yazılmıştı. Kalp hastalıklarını araştırdım. Kronik yorgunluğu araştırdım. Her birinde aynı şeyi gördüm: "}
+              <strong style={{color:'#F5EDE0',fontWeight:500}}>
+                {"Modern tıbbın \u201Ckeşfettiği\u201D pek çok şey, bin yıl önce zaten biliniyordu."}
+              </strong>
+            </p>
+          </div>
+
+          {/* Section break */}
+          <div style={{
+            display:'flex', alignItems:'center',
+            gap:16, margin:'44px 0 36px'
+          }}>
+            <span style={{flex:1,height:1,background:'rgba(184,134,11,0.12)',display:'block'}}/>
+            <span style={{
+              fontFamily: cinzel.style.fontFamily, fontSize:9,
+              color:'rgba(184,134,11,0.4)', letterSpacing:3,
+              whiteSpace:'nowrap' as const
+            }}>{"BİR KEŞİF DAHA"}</span>
+            <span style={{flex:1,height:1,background:'rgba(184,134,11,0.12)',display:'block'}}/>
+          </div>
+
+          {/* Kanser paragrafları */}
+          {[
+            <>{"Sonra kanseri araştırdım. Klasik metinlerde kanser için "}
+              <span style={{fontFamily:'serif',fontSize:'1.1em',color:'#B8860B',direction:'rtl' as const,display:'inline'}}>{"سرطان"}</span>
+              {" yani "}<strong style={{color:'#F5EDE0',fontWeight:500}}>{"seretan"}</strong>{" kelimesi kullanılıyor. Bu kelimenin kökü yengeç demek. Rastlantı değil: klasik hekimler tedavide kullandıkları ana maddeyi de yengeçten, deniz yengecinin yakılmış külünden elde ediyorlardı. İsim, tedavinin ta kendisinden geliyordu."}</>,
+            <>{"İbn Sînâ\u2019nın cerrahi önerileri "}
+              <strong style={{color:'#F5EDE0',fontWeight:500}}>
+                {"modern onkolojik cerrahinin temel ilkelerini sekiz yüz yıl önceden öngörüyor."}
+              </strong>
+              {" Bu bulgu, kanser üzerine sürdürdüğüm araştırmaları büyük ölçüde hızlandırdı."}</>,
+          ].map((p, i) => (
+            <p key={i} style={{
+              fontSize:'clamp(16px,1.8vw,19px)',
+              color:'rgba(245,237,224,0.72)',
+              lineHeight:1.95, marginBottom:24,
+              fontFamily: garamond.style.fontFamily
+            }}>{p}</p>
+          ))}
+
+          {/* Highlight 2 */}
+          <div style={{
+            borderLeft:'2px solid rgba(184,134,11,0.4)',
+            padding:'20px 28px', margin:'36px 0',
+            background:'rgba(184,134,11,0.05)',
+            borderRadius:'0 8px 8px 0'
+          }}>
+            <p style={{
+              fontSize:'clamp(15px,1.6vw,18px)',
+              color:'rgba(245,237,224,0.85)',
+              lineHeight:1.9, fontStyle:'italic',
+              fontFamily: garamond.style.fontFamily
+            }}>
+              {"Modern tıp \u201Ckanser\u201D kelimesinin Latince yengeç anlamına geldiğini söyler ve bunu Hippokrates\u2019e bağlar. Ama klasik İslam hekimleri bu ismi yalnızca metafor olarak kullanmamış, "}
+              <strong style={{color:'#F5EDE0',fontWeight:500}}>
+                {"tedavinin özünü o ismin içine işlemişler."}
+              </strong>
+            </p>
+          </div>
+
+          {/* Section break 2 */}
+          <div style={{
+            display:'flex', alignItems:'center',
+            gap:16, margin:'44px 0 36px'
+          }}>
+            <span style={{flex:1,height:1,background:'rgba(184,134,11,0.12)',display:'block'}}/>
+            <span style={{
+              fontFamily: cinzel.style.fontFamily, fontSize:9,
+              color:'rgba(184,134,11,0.4)', letterSpacing:3,
+              whiteSpace:'nowrap' as const
+            }}>{"BURADAN ORAYA"}</span>
+            <span style={{flex:1,height:1,background:'rgba(184,134,11,0.12)',display:'block'}}/>
+          </div>
+
+          {/* Son paragraflar */}
+          {[
+            <>{"Bu hakikati insanlara ulaştırmak istedim. "}
+              <strong style={{color:'#F5EDE0',fontWeight:500}}>
+                {"Bu yol on yıl boyunca büyük ölçüde yalnız yürünen, zaman zaman motor üzerinde, zaman zaman inşaatta, zaman zaman garsonluk yaparken düşünülen bir yoldu. Kolay olmadı. Ama hiçbir şey durduramadı."}
+              </strong></>,
+            <>{"Yazılım bilmiyordum. Para yoktu. Ama elimdeki kaynaklar, on yıllık birikim ve yapay zeka ile dünyada bir ilk olduğuna inandığım bu sistemi inşa ettim."}</>,
+          ].map((p, i) => (
+            <p key={i} style={{
+              fontSize:'clamp(16px,1.8vw,19px)',
+              color:'rgba(245,237,224,0.72)',
+              lineHeight:1.95, marginBottom:24,
+              fontFamily: garamond.style.fontFamily
+            }}>{p}</p>
+          ))}
+
+          {/* Highlight 3 */}
+          <div style={{
+            borderLeft:'2px solid rgba(184,134,11,0.4)',
+            padding:'20px 28px', margin:'36px 0',
+            background:'rgba(184,134,11,0.05)',
+            borderRadius:'0 8px 8px 0'
+          }}>
+            <p style={{
+              fontSize:'clamp(15px,1.6vw,18px)',
+              color:'rgba(245,237,224,0.85)',
+              lineHeight:1.9, fontStyle:'italic',
+              fontFamily: garamond.style.fontFamily
+            }}>
+              {"Bu sistemi kullandığınızda yalnızca kendi sağlığınıza yatırım yapmıyorsunuz. Farkında olmadan, bu çalışmaların büyümesine ve daha fazla insana ulaşmasına vesile oluyorsunuz. "}
+              <strong style={{color:'#F5EDE0',fontWeight:500}}>
+                {"Ben sadece unutulanı hatırlatıyorum."}
+              </strong>
+            </p>
+          </div>
+
+          {/* İlim cümlesi */}
+          <p style={{
+            fontSize:18, color:'rgba(245,237,224,0.4)',
+            fontStyle:'italic', marginTop:32,
+            lineHeight:1.8,
+            fontFamily: garamond.style.fontFamily
+          }}>
+            {"İlim ikidir: biri beden ilmi, diğeri inanç ilmi. Her ikisi doğru birleştiğinde buna sağlıklı bir yaşam deriz."}
+          </p>
+
+          {/* İmza */}
+          <div style={{
+            display:'flex', alignItems:'center',
+            gap:20, marginTop:48, paddingTop:36,
+            borderTop:'1px solid rgba(184,134,11,0.15)'
+          }}>
+            <div style={{
+              width:52, height:52, borderRadius:'50%',
+              background:'rgba(184,134,11,0.1)',
+              border:'1px solid rgba(184,134,11,0.2)',
+              display:'flex', alignItems:'center',
+              justifyContent:'center',
+              fontFamily: cinzel.style.fontFamily, fontSize:16,
+              fontWeight:600, color:'#B8860B', flexShrink:0
+            }}>{"MF"}</div>
+            <div>
+              <div style={{
+                fontFamily: cinzel.style.fontFamily, fontSize:13,
+                fontWeight:600, color:'#F5EDE0',
+                letterSpacing:1, marginBottom:4
+              }}>{"M. FATİH ÇAKIR"}</div>
+              <div style={{
+                fontSize:13,
+                color:'rgba(245,237,224,0.45)',
+                fontStyle:'italic',
+                fontFamily: garamond.style.fontFamily
+              }}>
+                {"Klasik İslam Tıbbı Araştırmacısı · FSM Fuat Sezgin Enstitüsü Doktora Adayı"}
+              </div>
+            </div>
+          </div>
+
+          {/* Outro */}
+          <div style={{
+            fontFamily: cinzel.style.fontFamily, fontSize:11,
+            color:'rgba(184,134,11,0.5)', letterSpacing:3,
+            textAlign:'center' as const, marginTop:56,
+            paddingTop:32,
+            borderTop:'1px solid rgba(184,134,11,0.1)'
+          }}>
+            {"ON YILLIK İLMEK İLMEK İŞLENEN BİR BİLİM ARKEOLOJİSİ"}
+          </div>
+
+        </div>
+      </section>
+
       {/* ═══════ 6. DANIŞMAN ═══════ */}
       <section style={{ background: C.white, padding: '80px 56px' }} className="danisman-section">
         <div style={{ maxWidth: 1200, margin: '0 auto', display: 'grid', gridTemplateColumns: '320px 1fr', gap: 72, alignItems: 'center' }} className="danisman-grid">
