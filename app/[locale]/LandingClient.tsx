@@ -38,19 +38,10 @@ export default function LandingClient() {
   const router = useRouter()
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [yorumlar, setYorumlar] = useState<any[]>([])
-  const [kayitSayisi, setKayitSayisi] = useState('46.000+')
+  const kayitSayisi = '46.000+'
 
   useEffect(() => {
     const supabase = createClient()
-
-    // Dinamik kayit sayisi
-    Promise.all([
-      supabase.from('klasik_kaynaklar').select('*', { count: 'exact', head: true }),
-      supabase.from('karakter_kaynaklar').select('*', { count: 'exact', head: true }),
-    ]).then(([k1, k2]) => {
-      const toplam = (k1.count || 0) + (k2.count || 0)
-      if (toplam > 0) setKayitSayisi(toplam.toLocaleString('tr-TR') + '+')
-    }).catch(() => {})
 
     supabase.from('yorumlar')
       .select('*')
