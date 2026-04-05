@@ -284,7 +284,7 @@ export default function AnalizClient() {
     setPpgAktif(false)
 
     const data = ppgDataRef.current
-    if (data.length > 30) {
+    if (data.length > 90) {
       const bpm = ppgBpmHesapla(data)
       if (bpm > 40 && bpm < 200) {
         setPpgBpm(bpm)
@@ -348,11 +348,29 @@ export default function AnalizClient() {
           const frame = ctx.getImageData(0, 0, 64, 48)
           let rSum = 0
           let count = 0
+          // Kanal secimi: mobilde red, masaustunde green
+          const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent)
+          const channelIdx = isMobile ? 0 : 1
           for (let i = 0; i < frame.data.length; i += 4) {
-            rSum += frame.data[i]
+            rSum += frame.data[i + channelIdx]
             count++
           }
           const avgR = rSum / count
+
+          // Parmak tespiti — red channel ortalamasi
+          let redSum = 0, redCount = 0
+          for (let i = 0; i < frame.data.length; i += 16) {
+            redSum += frame.data[i]; redCount++
+          }
+          const redMean = redSum / redCount
+          const parmakVar = redMean > 100
+          if (!parmakVar) {
+            ppgDataRef.current = []
+            setPpgBpm(null)
+            ppgAnimRef.current = requestAnimationFrame(loop)
+            return
+          }
+
           const filtered = ppgBandpass(avgR)
           const now = performance.now()
           ppgDataRef.current.push({ v: filtered, t: now })
@@ -363,8 +381,17 @@ export default function AnalizClient() {
             const bpm = ppgBpmHesapla(ppgDataRef.current)
             if (bpm > 40 && bpm < 200) {
               setPpgBpm(bpm)
-              const q = Math.min(100, Math.round((ppgDataRef.current.length / 300) * 100))
-              setPpgKalite(q)
+            }
+            // SNR kalite skoru
+            const pencere = ppgDataRef.current.slice(-60)
+            if (pencere.length >= 30) {
+              const qVals = pencere.map(p => p.v)
+              const qMean = qVals.reduce((a, b) => a + b, 0) / qVals.length
+              const qStd = Math.sqrt(qVals.map(v => (v - qMean) ** 2).reduce((a, b) => a + b, 0) / qVals.length)
+              const qRms = Math.sqrt(qVals.map(v => v * v).reduce((a, b) => a + b, 0) / qVals.length)
+              const snr = qRms / (qStd + 0.001)
+              const kalite = Math.min(100, Math.round(snr * 20))
+              setPpgKalite(kalite)
             }
           }
         }
@@ -777,16 +804,27 @@ export default function AnalizClient() {
                     {ppgBpm ? ppgBpm : '--'}
                     <span style={{ fontSize: 16, color: 'rgba(255,255,255,0.5)', marginLeft: 4 }}>{"BPM"}</span>
                   </div>
-                  <div style={{ display: 'flex', justifyContent: 'center', gap: 24, marginTop: 8 }}>
-                    <div style={{ fontSize: 12, color: 'rgba(255,255,255,0.6)' }}>
-                      {"Kalite: "}{ppgKalite}{"%"}
+                  {/* Sinyal kalitesi */}
+                  <div style={{ marginTop: 8, marginBottom: 4 }}>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 3 }}>
+                      <span style={{ fontFamily: cinzel.style.fontFamily, fontSize: 8, color: 'rgba(201,168,76,0.5)', letterSpacing: 1.5 }}>
+                        {"SINYAL KALITESI"}
+                      </span>
+                      <span style={{ fontFamily: cinzel.style.fontFamily, fontSize: 8, color: '#C9A84C' }}>
+                        {ppgKalite}{"%"}
+                      </span>
                     </div>
-                    <div style={{ fontSize: 12, color: 'rgba(255,255,255,0.6)' }}>
-                      {"Kalan: "}{ppgCountdown}{"s"}
+                    <div style={{ height: 3, background: 'rgba(255,255,255,0.08)', borderRadius: 2 }}>
+                      <div style={{ height: '100%', width: `${ppgKalite}%`, borderRadius: 2, background: ppgKalite > 60 ? '#52B788' : ppgKalite > 30 ? '#FF8F00' : '#EF5350', transition: 'width 0.3s' }} />
                     </div>
                   </div>
-                  <div style={{ height: 4, background: 'rgba(255,255,255,0.1)', borderRadius: 2, marginTop: 8 }}>
-                    <div style={{ height: 4, background: '#EF5350', borderRadius: 2, width: `${((30 - ppgCountdown) / 30) * 100}%`, transition: 'width 1s linear' }} />
+                  {/* Countdown */}
+                  <div style={{ fontSize: 12, color: 'rgba(255,255,255,0.5)', marginTop: 6, textAlign: 'center' as const }}>
+                    {ppgCountdown}{"s kaldi"}
+                  </div>
+                  {/* Status mesaji */}
+                  <div style={{ fontSize: 10, color: 'rgba(255,255,255,0.4)', fontStyle: 'italic', marginTop: 6, textAlign: 'center' as const }}>
+                    {ppgKalite > 60 ? `Mukemmel sinyal, ${ppgCountdown}s kaldi` : ppgKalite > 30 ? 'Iyi sinyal aliniyor, sabit tutun' : ppgBpm ? 'Parmagi daha siki bastirin' : 'Parmak ucunu TAMAMEN kameraya bastirin'}
                   </div>
                 </div>
               )}
