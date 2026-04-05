@@ -3,6 +3,12 @@
 import { useState, useRef, useCallback, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import { Cinzel, EB_Garamond } from 'next/font/google'
+import dynamic from 'next/dynamic'
+
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+const PPGNabiz = dynamic(() => import('@/components/analiz/PPGNabiz'), { ssr: false })
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+const DilYuzKamera = dynamic(() => import('@/components/analiz/DilYuzKamera'), { ssr: false })
 
 const cinzel = Cinzel({ subsets: ['latin'], weight: ['400', '500', '600'] })
 const garamond = EB_Garamond({ subsets: ['latin'], weight: ['400', '500'], style: ['normal', 'italic'] })
@@ -576,6 +582,24 @@ export default function AnalizForm() {
           {"Nabız Gözlemi — el-Kânûn (9 Sıfat)"}
         </div>
 
+        {/* PPG Nabiz Olcumu */}
+        <div style={{ marginBottom: 16 }}>
+          <PPGNabiz onSonuc={(sonuc) => {
+            set('nb_hiz_sinif', sonuc.sifatlar.hiz)
+            set('nb_buyukluk', sonuc.sifatlar.buyukluk)
+            set('nb_kuvvet', sonuc.sifatlar.kuvvet)
+            set('nb_dolgunluk', sonuc.sifatlar.dolgunluk)
+            set('nb_sertlik', sonuc.sifatlar.sertlik)
+            set('nb_ritim', sonuc.sifatlar.ritim)
+            set('nb_esitlik', sonuc.sifatlar.esitlik)
+            set('nb_sureklitik', sonuc.sifatlar.sureklitik)
+            gosterToast(`${sonuc.bpm} BPM — 8/8 sifat otomatik dolduruldu`, 'basari')
+          }} />
+          <div style={{ fontSize: 11, color: '#999', textAlign: 'center', marginTop: 8, fontStyle: 'italic' }}>
+            {"veya asagidan manuel olarak secin"}
+          </div>
+        </div>
+
         {/* Kamera Tipi Secimi */}
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(min(160px, 100%), 1fr))', gap: 10, marginBottom: 16 }}>
           {[
@@ -749,6 +773,28 @@ export default function AnalizForm() {
         <div style={s.sectionTitle}>
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="3"/></svg>
           {"Dil ve Yüz Gözlemi"}
+        </div>
+
+        {/* Dil/Yuz Kamera Analizi */}
+        <div style={{ marginBottom: 16 }}>
+          <DilYuzKamera onSonuc={(sonuc) => {
+            if (sonuc.dil) {
+              if (sonuc.dil.renk) set('dil_renk', sonuc.dil.renk)
+              if (sonuc.dil.kaplama) set('dil_kaplama', sonuc.dil.kaplama)
+              if (sonuc.dil.nem) set('dil_nem', sonuc.dil.nem)
+              if (sonuc.dil.sekil) set('dil_sekil', sonuc.dil.sekil)
+            }
+            if (sonuc.yuz) {
+              if (sonuc.yuz.ten) set('yuz_ten', sonuc.yuz.ten)
+              if (sonuc.yuz.sekil) set('yuz_sekil', sonuc.yuz.sekil)
+              if (sonuc.yuz.cilt) set('yuz_cilt', sonuc.yuz.cilt)
+              if (sonuc.yuz.gozalti) set('yuz_gozalti', sonuc.yuz.gozalti)
+            }
+            gosterToast('Dil/Yuz analizi tamamlandi — form alanlari dolduruldu', 'basari')
+          }} />
+          <div style={{ fontSize: 11, color: '#999', textAlign: 'center', marginTop: 8, fontStyle: 'italic' }}>
+            {"veya asagidan manuel olarak secin"}
+          </div>
         </div>
 
         {/* Tab system */}
