@@ -35,57 +35,103 @@ export default function LandingClient() {
     <main>
 
       {/* HERO */}
-      <section style={{ background: '#1C3A26', padding: 'clamp(64px,8vw,96px) clamp(24px,5vw,80px) 0', display: 'grid', gridTemplateColumns: '1fr clamp(300px,30vw,400px)', gap: 'clamp(32px,5vw,64px)', alignItems: 'center', position: 'relative' as const, overflow: 'hidden' }} className="hero-grid">
-        <div style={{ position: 'absolute' as const, right: -40, top: '50%', transform: 'translateY(-50%)', fontFamily: 'Cinzel,serif', fontSize: 160, fontWeight: 700, color: 'rgba(255,255,255,0.025)', pointerEvents: 'none', userSelect: 'none', letterSpacing: -4, whiteSpace: 'nowrap' as const }}>{"MIZAC"}</div>
+      <section style={{ background: '#1C3A26', padding: 'clamp(48px,7vw,88px) clamp(24px,5vw,64px) 0', display: 'grid', gridTemplateColumns: '1fr 220px 300px', gap: 40, alignItems: 'center', position: 'relative' as const, overflow: 'hidden' }} className="hero-grid">
+        {/* Arka plan soluk logo */}
+        <div style={{ position: 'absolute' as const, top: '50%', left: '50%', transform: 'translate(-50%,-50%)', opacity: 0.04, pointerEvents: 'none', animation: 'bgLogoPulse 6s ease-in-out infinite' }}>
+          <svg width={500} height={500} viewBox="0 0 64 64" fill="none">
+            <ellipse cx="32" cy="37" rx="12" ry="10" fill="none" stroke="#B8860B" strokeWidth="0.5" />
+            <path d="M22 37 Q22 25 32 23 Q42 25 42 37" fill="none" stroke="#B8860B" strokeWidth="0.5" />
+            <path d="M32 15 Q36 11 40 13 Q38 18 32 20 Q26 18 24 13 Q28 11 32 15Z" fill="#B8860B" />
+          </svg>
+        </div>
 
+        {/* SOL: metin + butonlar */}
         <div style={{ position: 'relative' as const, zIndex: 1 }}>
           <div style={{ fontFamily: 'Cinzel,serif', fontSize: 10, color: 'rgba(184,134,11,0.5)', letterSpacing: 4, marginBottom: 20, display: 'flex', alignItems: 'center', gap: 12 }}>
             <span style={{ width: 24, height: 1, background: 'rgba(184,134,11,0.3)', display: 'block' }} />
             {"KLASİK İSLAM VE OSMANLI TIBBI"}
           </div>
 
-          <h1 style={{ fontFamily: 'Cinzel,serif', fontSize: 'clamp(36px,5vw,54px)', fontWeight: 600, color: '#F5EDE0', lineHeight: 1.08, marginBottom: 14 }}>
+          <h1 style={{ fontFamily: 'Cinzel,serif', fontSize: 'clamp(32px,4.5vw,50px)', fontWeight: 600, color: '#F5EDE0', lineHeight: 1.08, marginBottom: 14 }}>
             {"Bedeninizin "}
             <span style={{ color: '#B8860B', display: 'block' }}>{"Dilini Anlıyoruz."}</span>
           </h1>
 
-          <p style={{ fontSize: 19, color: 'rgba(245,237,224,0.55)', fontStyle: 'italic', lineHeight: 1.85, marginBottom: 40, maxWidth: 480 }}>
+          <p style={{ fontSize: 18, color: 'rgba(245,237,224,0.55)', fontStyle: 'italic', lineHeight: 1.85, marginBottom: 32, maxWidth: 440 }}>
             {"Nabızınızdan mizacınıza, dilinizden hılt dengenize; bin yıllık birikimle hazırlanmış, size özel danışmanlık."}
           </p>
 
-          <div style={{ display: 'flex', gap: 14, marginBottom: 40, flexWrap: 'wrap' as const }}>
-            <button onClick={() => router.push('/analiz')} style={{ fontFamily: 'Cinzel,serif', fontSize: 11, fontWeight: 700, color: '#1C3A26', background: '#B8860B', padding: '16px 36px', borderRadius: 11, letterSpacing: 2, border: 'none', cursor: 'pointer' }}>{"ANALİZİMİ BAŞLAT"}</button>
-            <button onClick={() => router.push('/bitkiler')} style={{ fontFamily: 'Cinzel,serif', fontSize: 11, color: 'rgba(245,237,224,0.55)', background: 'transparent', padding: '15px 26px', borderRadius: 11, border: '1.5px solid rgba(245,237,224,0.15)', letterSpacing: 1.5, cursor: 'pointer' }}>{"BİTKİ ANSİKLOPEDİSİ"}</button>
+          {/* Ana CTA */}
+          <button onClick={() => router.push('/analiz')} style={{ fontFamily: 'Cinzel,serif', fontSize: 11, fontWeight: 700, color: '#1C3A26', background: '#B8860B', padding: '16px 36px', borderRadius: 11, letterSpacing: 2, border: 'none', cursor: 'pointer', marginBottom: 20, display: 'block' }}>{"ANALİZİMİ BAŞLAT"}</button>
+
+          {/* Sekme butonları */}
+          <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' as const, marginBottom: 32 }}>
+            {[
+              { label: 'Bitki Atlası', href: '/bitkiler' },
+              { label: 'Kalp Şehri', href: '/karakter' },
+              { label: 'Cilt Bakımı', href: '/hasta/cilt' },
+              { label: 'Fiyatlar', href: '/#fiyatlandirma' },
+              { label: 'Hakkımızda', href: '/hakkimizda' },
+            ].map(t => (
+              <button key={t.label} onClick={() => router.push(t.href)} style={{ background: 'transparent', border: '1.5px solid rgba(245,237,224,0.15)', borderRadius: 9, padding: '12px 20px', fontFamily: 'Cinzel,serif', fontSize: 10, color: 'rgba(245,237,224,0.55)', letterSpacing: 1.5, cursor: 'pointer' }}>
+                {t.label}
+              </button>
+            ))}
           </div>
 
-          <div style={{ fontFamily: 'Cinzel,serif', fontSize: 9, color: 'rgba(184,134,11,0.35)', letterSpacing: 2.5, paddingBottom: 80 }}>{"38 KLASİK ESER · "}{kayitSayisi}{" METİN KAYDI · 1.180 BİTKİ"}</div>
+          <div style={{ fontFamily: 'Cinzel,serif', fontSize: 9, color: 'rgba(184,134,11,0.3)', letterSpacing: 2.5, paddingBottom: 48 }}>{"38 KLASİK ESER · "}{kayitSayisi}{" METİN KAYDI · 1.180 BİTKİ"}</div>
+        </div>
 
-          {/* Danisman karti — mobil */}
-          <div className="hero-card-mobile" style={{ display: 'none', alignItems: 'center', gap: 12, padding: '16px 0 32px', borderTop: '1px solid rgba(184,134,11,0.1)', marginTop: 24 }}>
-            <div style={{ width: 52, height: 52, borderRadius: '50%', overflow: 'hidden', flexShrink: 0, border: '1.5px solid rgba(184,134,11,0.25)' }}>
-              <Image src="/danisan.jpg" alt="M. Fatih Çakır" width={52} height={52} style={{ width: 52, height: 52, objectFit: 'cover', objectPosition: 'top' }} />
-            </div>
-            <div>
-              <div style={{ fontFamily: 'Cinzel,serif', fontSize: 12, fontWeight: 600, color: '#F5EDE0', marginBottom: 2 }}>{"M. Fatih Çakır"}</div>
-              <div style={{ fontSize: 12, color: 'rgba(245,237,224,0.45)', fontStyle: 'italic', fontFamily: 'EB Garamond,serif' }}>{"Klasik İslam Tıbbı Araştırmacısı"}</div>
-            </div>
+        {/* ORTA: Büyük hareketli logo */}
+        <div className="hero-logo-col" style={{ display: 'flex', justifyContent: 'center', position: 'relative' as const, zIndex: 1 }}>
+          <div className="logo-big-wrap"
+            onMouseEnter={e => {
+              const el = e.currentTarget
+              el.style.animation = 'none'
+              const svg = el.querySelector('svg')
+              if (svg) svg.style.filter = 'drop-shadow(0 0 24px rgba(184,134,11,0.5))'
+              el.querySelectorAll('.dem').forEach(c => ((c as SVGElement).style.animation = 'orbitDem 1.2s linear infinite'))
+              el.querySelectorAll('.saf').forEach(c => ((c as SVGElement).style.animation = 'orbitSaf 1.2s linear infinite'))
+              el.querySelectorAll('.bal').forEach(c => ((c as SVGElement).style.animation = 'orbitBal 1.2s linear infinite'))
+              el.querySelectorAll('.sev').forEach(c => ((c as SVGElement).style.animation = 'orbitSev 1.2s linear infinite'))
+              el.querySelectorAll('.lbody').forEach(c => { (c as SVGElement).setAttribute('stroke', '#D4A843'); (c as SVGElement).setAttribute('stroke-width', '2') })
+            }}
+            onMouseLeave={e => {
+              const el = e.currentTarget
+              el.style.animation = 'gentlePulse 3s ease-in-out infinite'
+              const svg = el.querySelector('svg')
+              if (svg) svg.style.filter = 'none'
+              el.querySelectorAll('.dem,.saf,.bal,.sev').forEach(c => ((c as SVGElement).style.animation = ''))
+              el.querySelectorAll('.lbody').forEach(c => { (c as SVGElement).setAttribute('stroke', '#B8860B'); (c as SVGElement).setAttribute('stroke-width', '1.5') })
+            }}>
+            <svg width={200} height={200} viewBox="0 0 64 64" fill="none" style={{ transition: 'filter 0.3s' }}>
+              <ellipse cx="32" cy="37" rx="12" ry="10" fill="none" stroke="#B8860B" strokeWidth="1.5" className="lbody" />
+              <path d="M22 37 Q22 25 32 23 Q42 25 42 37" fill="none" stroke="#B8860B" strokeWidth="1.5" className="lbody" />
+              <rect x="29" y="21" width="6" height="3.5" rx="1" fill="none" stroke="#B8860B" strokeWidth="1.5" className="lbody" />
+              <path d="M32 15 Q36 11 40 13 Q38 18 32 20 Q26 18 24 13 Q28 11 32 15Z" fill="#B8860B" className="lhorn" />
+              <path d="M32 38 Q28.5 42 32 45.5 Q35.5 42 32 38Z" fill="#B8860B" opacity={0.55} className="ldrop" />
+              <circle cx="33" cy="31" r="2.5" fill="#EF5350" className="dem" />
+              <circle cx="28" cy="33.5" r="1.8" fill="#FF7043" className="saf" />
+              <circle cx="37" cy="33.5" r="1.8" fill="#42A5F5" className="bal" />
+              <circle cx="33" cy="37" r="1.5" fill="#AB47BC" className="sev" />
+            </svg>
           </div>
         </div>
 
-        {/* Danisman karti — desktop */}
-        <div style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(184,134,11,0.1)', borderRadius: 20, padding: 28, marginBottom: 24, position: 'relative' as const, zIndex: 1 }} className="hero-panel hero-card-desktop">
-          <div style={{ fontFamily: 'Cinzel,serif', fontSize: 8, color: 'rgba(184,134,11,0.45)', letterSpacing: 2, marginBottom: 18 }}>{"DANIŞMAN"}</div>
-          <div style={{ width: 64, height: 64, borderRadius: '50%', overflow: 'hidden', border: '1.5px solid rgba(184,134,11,0.18)', marginBottom: 14, background: 'rgba(184,134,11,0.1)' }}>
-            <Image src="/danisan.jpg" alt="M. Fatih Cakir" width={64} height={64} style={{ objectFit: 'cover', width: 64, height: 64, borderRadius: '50%' }} />
+        {/* SAĞ: Danışman kartı */}
+        <div className="hero-dan-col" style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(184,134,11,0.1)', borderRadius: 20, padding: 24, position: 'relative' as const, zIndex: 1 }}>
+          <div style={{ fontFamily: 'Cinzel,serif', fontSize: 8, color: 'rgba(184,134,11,0.45)', letterSpacing: 2, marginBottom: 14 }}>{"DANIŞMAN"}</div>
+          <div style={{ width: 56, height: 56, borderRadius: '50%', overflow: 'hidden', border: '1.5px solid rgba(184,134,11,0.18)', marginBottom: 12, background: 'rgba(184,134,11,0.1)' }}>
+            <Image src="/danisan.jpg" alt="M. Fatih Çakır" width={56} height={56} style={{ objectFit: 'cover', width: 56, height: 56, borderRadius: '50%' }} />
           </div>
           <div style={{ fontFamily: 'Cinzel,serif', fontSize: 13, fontWeight: 600, color: '#F5EDE0', marginBottom: 3 }}>{"M. Fatih Çakır"}</div>
-          <div style={{ fontSize: 12, color: 'rgba(245,237,224,0.38)', fontStyle: 'italic', marginBottom: 18, lineHeight: 1.5 }}>{"Klasik İslam Tıbbı Araştırmacısı"}<br />{"Tıp Tarihi Yüksek Lisans"}</div>
-          <div style={{ height: 1, background: 'rgba(184,134,11,0.08)', marginBottom: 14 }} />
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 8 }}>
+          <div style={{ fontSize: 12, color: 'rgba(245,237,224,0.38)', fontStyle: 'italic', marginBottom: 14, lineHeight: 1.4 }}>{"Klasik İslam Tıbbı Araştırmacısı"}</div>
+          <div style={{ height: 1, background: 'rgba(184,134,11,0.08)', marginBottom: 12 }} />
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 6 }}>
             {[{ n: '38', l: 'ESER' }, { n: '46K+', l: 'KAYIT' }, { n: '8', l: 'KİTAP' }, { n: '10+', l: 'YIL' }].map(({ n, l }) => (
-              <div key={l} style={{ textAlign: 'center' as const, padding: 9, background: 'rgba(184,134,11,0.05)', borderRadius: 7, border: '1px solid rgba(184,134,11,0.07)' }}>
-                <div style={{ fontFamily: 'Cinzel,serif', fontSize: 17, fontWeight: 600, color: '#B8860B', lineHeight: 1 }}>{n}</div>
-                <div style={{ fontFamily: 'Cinzel,serif', fontSize: 6, color: 'rgba(245,237,224,0.25)', letterSpacing: 1.5, marginTop: 3 }}>{l}</div>
+              <div key={l} style={{ textAlign: 'center' as const, padding: 8, background: 'rgba(184,134,11,0.05)', borderRadius: 6, border: '1px solid rgba(184,134,11,0.07)' }}>
+                <div style={{ fontFamily: 'Cinzel,serif', fontSize: 16, fontWeight: 600, color: '#B8860B', lineHeight: 1 }}>{n}</div>
+                <div style={{ fontFamily: 'Cinzel,serif', fontSize: 6, color: 'rgba(245,237,224,0.25)', letterSpacing: 1.5, marginTop: 2 }}>{l}</div>
               </div>
             ))}
           </div>
@@ -305,7 +351,9 @@ export default function LandingClient() {
       <style jsx global>{`
         @media (max-width: 960px) {
           .hero-grid { grid-template-columns: 1fr !important; }
-          .hero-panel { display: none !important; }
+          .hero-logo-col { order: -1; display: flex !important; justify-content: center; }
+          .hero-logo-col svg { width: 140px !important; height: 140px !important; }
+          .hero-dan-col { order: 3; }
           .features-grid { grid-template-columns: 1fr 1fr !important; }
           .stats-grid { grid-template-columns: 1fr 1fr !important; }
           .steps-grid { grid-template-columns: 1fr !important; gap: 32px !important; }
