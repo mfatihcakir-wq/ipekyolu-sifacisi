@@ -277,10 +277,24 @@ export default function AnalizClient() {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [form.nb_buyukluk, form.nb_kuvvet, form.nb_hiz_sinif, form.nb_dolgunluk, form.nb_sertlik, form.nb_ritim, form.nb_esitlik, form.nb_sureklitik])
 
-  const ppgDurdur = useCallback(() => {
+  const ppgDurdur = useCallback(async () => {
     if (ppgAnimRef.current) { cancelAnimationFrame(ppgAnimRef.current); ppgAnimRef.current = null }
     if (ppgCountdownRef.current) { clearInterval(ppgCountdownRef.current); ppgCountdownRef.current = null }
-    if (ppgStreamRef.current) { ppgStreamRef.current.getTracks().forEach(t => t.stop()); ppgStreamRef.current = null }
+    if (ppgStreamRef.current) {
+      // Torch kapat
+      const tracks = ppgStreamRef.current.getVideoTracks()
+      for (const track of tracks) {
+        try {
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          const cap = (track as any).getCapabilities?.()
+          if (cap?.torch) {
+            await track.applyConstraints({ advanced: [{ torch: false } as MediaTrackConstraintSet] })
+          }
+        } catch { /* torch kapatilamadi */ }
+      }
+      ppgStreamRef.current.getTracks().forEach(t => t.stop())
+      ppgStreamRef.current = null
+    }
     setPpgAktif(false)
 
     const data = ppgDataRef.current
@@ -309,9 +323,21 @@ export default function AnalizClient() {
   const ppgBaslat = useCallback(async () => {
     try {
       const stream = await navigator.mediaDevices.getUserMedia({
-        video: { facingMode: 'environment', width: { ideal: 320 }, height: { ideal: 240 } }
+        video: { facingMode: { ideal: 'environment' }, width: { ideal: 320 }, height: { ideal: 240 } }
       })
       ppgStreamRef.current = stream
+
+      // Torch (flas) ac
+      const videoTrack = stream.getVideoTracks()[0]
+      if (videoTrack) {
+        try {
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          const capabilities = (videoTrack as any).getCapabilities?.()
+          if (capabilities?.torch) {
+            await videoTrack.applyConstraints({ advanced: [{ torch: true } as MediaTrackConstraintSet] })
+          }
+        } catch (e) { console.log('Torch desteklenmiyor:', e) }
+      }
       if (ppgVideoRef.current) {
         ppgVideoRef.current.srcObject = stream
         ppgVideoRef.current.play()
@@ -328,7 +354,7 @@ export default function AnalizClient() {
       ppgCountdownRef.current = setInterval(() => {
         setPpgCountdown(prev => {
           if (prev <= 1) {
-            ppgDurdur()
+            void ppgDurdur()
             return 0
           }
           return prev - 1
