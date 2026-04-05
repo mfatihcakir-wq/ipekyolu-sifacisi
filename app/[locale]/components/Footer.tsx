@@ -35,7 +35,7 @@ export default function Footer() {
             <span style={{ fontFamily: cinzel.style.fontFamily, color: C.gold, fontSize: 12, fontWeight: 600, letterSpacing: 2 }}>{"IPEK YOLU SIFACISI"}</span>
           </div>
           <p style={{ fontSize: 13, lineHeight: 1.7, maxWidth: 260 }}>
-            {"Klasik Islam ve Osmanli tibbinin bin yillik birikimini modern dijital danismanlikla bulusturan saglik platformu."}
+            {"Klasik Islam ve Osmanli tibbinin bin yillik birikimini modern dijital danışmanlıkla bulusturan saglik platformu."}
           </p>
         </div>
 

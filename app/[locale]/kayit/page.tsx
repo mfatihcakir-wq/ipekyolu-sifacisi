@@ -157,7 +157,7 @@ export default function KayitPage() {
               <input type="checkbox" checked={kvkk} onChange={e => setKvkk(e.target.checked)}
                 style={{ marginTop: 2, width: 16, height: 16, cursor: 'pointer', flexShrink: 0 }} />
               <label style={{ fontSize: 12, color: C.secondary, lineHeight: 1.6, cursor: 'pointer' }} onClick={() => setKvkk(!kvkk)}>
-                Saglik verilerimin klasik Islam tibbi danismanligi amaciyla islenmesine KVKK kapsaminda onay veriyorum.
+                Saglik verilerimin klasik Islam tibbi danışmanlığı amaciyla islenmesine KVKK kapsaminda onay veriyorum.
               </label>
             </div>
 

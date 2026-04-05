@@ -217,7 +217,7 @@ export default function SonucPage() {
 
                 <div style={{ background: C.surface, border: `1px solid ${C.border}`, borderRadius: 12, padding: '14px 18px', marginBottom: 16 }}>
                   <p style={{ fontSize: 13, color: C.secondary, fontStyle: 'italic', lineHeight: 1.6, margin: 0 }}>
-                    &ldquo;Beden, ancak mizaci bilindiginde tedavi edilebilir.&rdquo; — el-Kanun fi&apos;t-Tib
+                    &ldquo;Beden, ancak mizaci bilindiginde tedavi edilebilir.&rdquo; — el-Kânûn fi&apos;t-Tib
                   </p>
                 </div>
               </div>

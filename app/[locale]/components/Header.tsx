@@ -134,7 +134,7 @@ export default function Header() {
                     </button>
                     <button onClick={cikisYap}
                       style={{ display: 'block', width: '100%', padding: '10px 16px', border: 'none', background: 'white', cursor: 'pointer', fontSize: 13, color: '#C62828', textAlign: 'left', borderTop: '1px solid #eee' }}>
-                      {"Cikis Yap"}
+                      {"Çıkış Yap"}
                     </button>
                   </div>
                 )}

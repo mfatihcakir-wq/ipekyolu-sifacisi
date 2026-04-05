@@ -297,7 +297,7 @@ export default function DashboardCiltDetailPage() {
                       {"Klasik kaynaklar taraniyor..."}
                     </p>
                     <p style={{ fontSize: 12, color: C.secondary }}>
-                      {"Ibn Sina, er-Razi ve diger otorite kaynaklari inceleniyor"}
+                      {"İbn Sînâ, er-Râzî ve diger otorite kaynaklari inceleniyor"}
                     </p>
                   </>
                 ) : (

@@ -154,7 +154,7 @@ export default function BitkilerPage() {
           Klasik İslam Tıbbı Mufredat Ansiklopedisi
         </div>
         <div style={{ fontSize: 15, color: 'rgba(255,255,255,0.6)', fontStyle: 'italic', marginBottom: 6 }}>
-          el-Cami li-Mufredat (Ibn Beytar) kaynakli {stats.toplam} bitki
+          el-Cami li-Mufredat (İbn Beytâr) kaynakli {stats.toplam} bitki
         </div>
         <div style={{ fontSize: 14, color: C.gold, fontFamily: naskh.style.fontFamily }}>الجامع لمفردات الأدوية والأغذية</div>
       </div>

@@ -110,7 +110,7 @@ function BasariliIcerik() {
                   &ldquo;Beden, ancak mizaci bilindiginde tedavi edilebilir.&rdquo;
                 </p>
                 <p style={{ fontSize: 11, color: '#999', marginTop: 6, marginBottom: 0 }}>
-                  el-Kanun fi&apos;t-Tib, Kitab 1
+                  el-Kânûn fi&apos;t-Tib, Kitab 1
                 </p>
               </div>
             </div>

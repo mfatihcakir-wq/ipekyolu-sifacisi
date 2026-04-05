@@ -138,7 +138,7 @@ export default function HastaPage() {
             Hosgeldiniz, {ad}
           </h1>
           <p style={{ fontSize: 14, color: C.secondary, fontStyle: 'italic' }}>
-            &ldquo;Saglik, bedenin fitri mizacina donmesidir.&rdquo; — Ibn Sina
+            &ldquo;Saglik, bedenin fıtrî mizaçina donmesidir.&rdquo; — İbn Sînâ
           </p>
         </div>
 
@@ -216,7 +216,7 @@ export default function HastaPage() {
             <div style={{ background: C.white, borderRadius: 12, border: `1px solid ${C.border}`, padding: '40px', textAlign: 'center' }}>
               <div style={{ fontSize: 40, marginBottom: 12, opacity: 0.3 }}>{'\u2697'}</div>
               <p style={{ fontSize: 15, color: C.dark, marginBottom: 6 }}>Henuz analiz yok</p>
-              <p style={{ fontSize: 13, color: C.secondary, marginBottom: 16 }}>Ilk mizac analizinizi yaparak klasik Islam tibbi yolculugunuza baslayin.</p>
+              <p style={{ fontSize: 13, color: C.secondary, marginBottom: 16 }}>Ilk mizaç analizinizi yaparak klasik Islam tibbi yolculugunuza baslayin.</p>
               <button onClick={() => router.push('/analiz')}
                 style={{ padding: '12px 28px', background: C.primary, color: C.gold, border: 'none', borderRadius: 10, fontFamily: cinzel.style.fontFamily, fontSize: 12, cursor: 'pointer', letterSpacing: 1, fontWeight: 600 }}>
                 Ilk Analizini Yap
@@ -268,7 +268,7 @@ export default function HastaPage() {
           <p style={{ fontSize: 13, color: C.secondary, fontStyle: 'italic', lineHeight: 1.6, margin: 0 }}>
             &ldquo;Beden, ancak mizaci bilindiginde tedavi edilebilir.&rdquo;
           </p>
-          <p style={{ fontSize: 10, color: '#999', marginTop: 4, marginBottom: 0 }}>el-Kanun fi&apos;t-Tib, Kitab 1</p>
+          <p style={{ fontSize: 10, color: '#999', marginTop: 4, marginBottom: 0 }}>el-Kânûn fi&apos;t-Tib, Kitab 1</p>
         </div>
       </main>
 

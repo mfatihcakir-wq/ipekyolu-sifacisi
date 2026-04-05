@@ -346,7 +346,7 @@ export default function KarakterAnaliziPage() {
             )}
             {!fizikselMizac && (
               <div style={{ background: '#FFF8E7', borderRadius: 10, border: `1px solid ${C.gold}`, padding: '12px 16px', marginBottom: 16, fontSize: 12, color: C.secondary }}>
-                {"Fiziksel mizac analiziniz bulunamadi."}{' '}
+                {"Fiziksel mizaç analiziniz bulunamadi."}{' '}
                 <a href="/analiz" style={{ color: C.gold, fontWeight: 600 }}>{"Mizac analizi yapmak ister misiniz?"}</a>
               </div>
             )}

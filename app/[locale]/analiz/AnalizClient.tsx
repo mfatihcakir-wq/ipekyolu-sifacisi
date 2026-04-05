@@ -490,7 +490,7 @@ export default function AnalizClient() {
       }
       content.push({
         type: 'text',
-        text: 'el-Kanun fi\'t-Tibb cercevesinde degerlendir. JSON dondur: {"dil_renk":"","dil_kaplama":"","dil_nem":"","dil_sekil":"","yuz_ten":"","yuz_sekil":"","yuz_cilt":"","yuz_gozalti":"","yorum":""}'
+        text: 'el-Kânûn fi\'t-Tibb cercevesinde degerlendir. JSON dondur: {"dil_renk":"","dil_kaplama":"","dil_nem":"","dil_sekil":"","yuz_ten":"","yuz_sekil":"","yuz_cilt":"","yuz_gozalti":"","yorum":""}'
       })
 
       const res = await fetch('/api/vision', {
@@ -537,7 +537,7 @@ export default function AnalizClient() {
   const handleSubmit = () => {
     if (!form.ad_soyad?.trim()) { gosterToast('Ad Soyad alani zorunludur.'); setAdim(1); return }
     if (!form.telefon?.trim()) { gosterToast('Telefon numarasi zorunludur.'); setAdim(1); return }
-    if (!form.symptoms?.trim()) { gosterToast('Sikayetler alani zorunludur.'); setAdim(8); return }
+    if (!form.symptoms?.trim()) { gosterToast('Şikayetler alanı zorunludur.'); setAdim(8); return }
     if (!form.kvkk) { gosterToast('KVKK onayi gereklidir.'); return }
     localStorage.setItem('ipekyolu_analiz_form', JSON.stringify(form))
     localStorage.setItem('ipekyolu_secili_plan', 'yearly')
@@ -788,7 +788,7 @@ export default function AnalizClient() {
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
             {"Nabiz Gozlemi"}
           </div>
-          <div style={s.tip}>{"el-Kanun fi't-Tibb: Nabiz, kalbin ve damarlarin halini gosteren en onemli belirtidir. 8 sifati ile mizac ve hilt dengesi hakkinda bilgi verir."}</div>
+          <div style={s.tip}>{"el-Kânûn fi't-Tibb: Nabiz, kalbin ve damarlarin halini gosteren en onemli belirtidir. 8 sifati ile mizaç ve hılt dengesi hakkinda bilgi verir."}</div>
 
           {/* Toggle: Kamera / Manuel */}
           <div style={{ display: 'flex', gap: 8, marginBottom: 16 }}>
@@ -1102,7 +1102,7 @@ export default function AnalizClient() {
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="3"/></svg>
             {"Dil ve Yuz Gozlemi"}
           </div>
-          <div style={s.tip}>{"el-Kanun fi't-Tibb: Dil rengi, kaplamasi ve yuz gorunumu mizac ve hilt dengesinin onemli belirtileridir."}</div>
+          <div style={s.tip}>{"el-Kânûn fi't-Tibb: Dil rengi, kaplamasi ve yuz gorunumu mizaç ve hılt dengesinin onemli belirtileridir."}</div>
 
           {/* Toggle: Kamera / Manuel */}
           <div style={{ display: 'flex', gap: 8, marginBottom: 16 }}>
@@ -1191,7 +1191,7 @@ export default function AnalizClient() {
                     background: C.primary, color: C.gold, fontSize: 14, fontWeight: 600, fontFamily: cinzel.style.fontFamily, marginTop: 12,
                     opacity: dyAnalizing ? 0.7 : 1,
                   }}
-                >{dyAnalizing ? "Analiz ediliyor..." : "el-Kanun ile Analiz Et"}</button>
+                >{dyAnalizing ? "Analiz ediliyor..." : "el-Kânûn ile Analiz Et"}</button>
               )}
 
               {/* Analysis result */}

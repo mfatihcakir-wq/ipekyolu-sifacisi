@@ -861,7 +861,7 @@ export default function DashboardPage() {
                   {/* SEBEP ANALİZİ */}
                   {analiz.sebep_analizi && (
                     <div style={{ background: C.surface, borderRadius: 10, padding: '12px 14px', marginBottom: 12, border: `1px solid ${C.border}` }}>
-                      <div style={{ fontSize: 10, color: C.secondary, fontWeight: 600, letterSpacing: 1, marginBottom: 8, textTransform: 'uppercase' as const }}>Sebep Analizi — Ibn Rusd</div>
+                      <div style={{ fontSize: 10, color: C.secondary, fontWeight: 600, letterSpacing: 1, marginBottom: 8, textTransform: 'uppercase' as const }}>Sebep Analizi — İbn Rüşd</div>
                       {analiz.sebep_analizi.badi && (
                         <div style={{ marginBottom: 6 }}>
                           <span style={{ fontSize: 10, fontWeight: 600, color: '#C62828' }}>YAKIN SEBEP: </span>

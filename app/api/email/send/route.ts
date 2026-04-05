@@ -4,6 +4,9 @@ import { ciltRaporuHtml } from '@/app/emails/cilt-raporu'
 import { analizRaporuHtml } from '@/app/emails/analiz-raporu'
 
 export async function POST(request: NextRequest) {
+  if (!process.env.RESEND_API_KEY) {
+    return NextResponse.json({ error: 'Email servisi yapilandirilmamis' }, { status: 503 })
+  }
   const resend = new Resend(process.env.RESEND_API_KEY)
   const FROM_EMAIL = process.env.FROM_EMAIL || 'onboarding@resend.dev'
   const ADMIN_EMAIL = process.env.ADMIN_EMAIL || 'm.fatih.cakir@gmail.com'

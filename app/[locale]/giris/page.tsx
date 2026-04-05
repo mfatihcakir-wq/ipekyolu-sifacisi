@@ -84,7 +84,7 @@ export default function GirisPage() {
             &ldquo;Bedeninizi tanimak sagliginizin temelidir.&rdquo;
           </p>
           <p style={{ fontSize: 12, color: 'rgba(255,255,255,0.4)', marginTop: 12 }}>
-            el-Kanun fi&apos;t-Tib, Kitab 1
+            el-Kânûn fi&apos;t-Tib, Kitab 1
           </p>
         </div>
       </div>
@@ -153,7 +153,7 @@ export default function GirisPage() {
                 fontWeight: 600, fontSize: 15, letterSpacing: 1, minHeight: 44,
                 cursor: loading ? 'not-allowed' : 'pointer', opacity: loading ? 0.6 : 1,
               }}>
-              {loading ? 'Giris yapiliyor...' : 'Giris Yap'}
+              {loading ? 'Giris yapiliyor...' : 'Giriş Yap'}
             </button>
           </form>
 

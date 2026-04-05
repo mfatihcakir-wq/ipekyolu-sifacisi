@@ -5,6 +5,8 @@ import { useRouter } from 'next/navigation'
 import { Cinzel, EB_Garamond, Noto_Naskh_Arabic } from 'next/font/google'
 import Header from './components/Header'
 import { createClient } from '@/lib/supabase'
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+import Image from 'next/image'
 
 const cinzel = Cinzel({ display: 'swap', preload: false, subsets: ['latin', 'latin-ext'], weight: ['400', '500', '600', '700'] })
 const garamond = EB_Garamond({ display: 'swap', preload: false, subsets: ['latin', 'latin-ext'], weight: ['400', '500'], style: ['normal', 'italic'] })
@@ -126,9 +128,9 @@ export default function LandingClient() {
       <section style={{ background: C.cream, padding: '48px 56px' }} className="stats-section">
         <div style={{ maxWidth: 1200, margin: '0 auto', display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 18 }} className="stats-grid">
           {[
-            { n: '38', l: 'KLASIK ESER', s: 'el-Havi, el-Kanun, el-Samil, 35 eser daha' },
+            { n: '38', l: 'KLASIK ESER', s: 'el-Havi, el-Kânûn, el-Samil, 35 eser daha' },
             { n: kayitSayisi, l: 'METIN KAYDI', s: 'İndekslenmiş klasik metin parçası' },
-            { n: '9', l: 'NABIZ SIFATI', s: 'Ibn Sina metodolojisi' },
+            { n: '9', l: 'NABIZ SIFATI', s: 'İbn Sînâ metodolojisi' },
             { n: '4', l: 'MIZAC TIPI', s: 'Demevi, Safravi, Balgami, Sevdavi' },
           ].map(st => (
             <div key={st.l} style={{ background: C.white, border: `1px solid ${C.border}`, borderRadius: 18, padding: '30px 22px', textAlign: 'center' as const, position: 'relative' as const, overflow: 'hidden' }}>
@@ -150,10 +152,10 @@ export default function LandingClient() {
             <div style={{ width: 32, height: 1, background: C.gold, opacity: 0.3 }} />
           </div>
           <p style={{ fontStyle: 'italic', fontSize: 22, color: 'rgba(255,255,255,0.75)', lineHeight: 1.9, maxWidth: 680, margin: '20px auto 0 auto' }}>
-            {"Ibn Sina, er-Razi ve Osmanli hekimlerinin bin yil boyunca gelistirdigi tip gelenegi; her insanin dogustan gelen mizacini esas alir. Hastaligi degil, hastayi tanir. Semptomu degil, sebebi arar."}
+            {"İbn Sînâ, er-Râzî ve Osmanli hekimlerinin bin yil boyunca gelistirdigi tip gelenegi; her insanin dogustan gelen mizacini esas alir. Hastaligi degil, hastayi tanir. Semptomu degil, sebebi arar."}
           </p>
           <div style={{ marginTop: 32, display: 'flex', justifyContent: 'center', gap: 40, flexWrap: 'wrap' as const }}>
-            {["el-Kanun fi't-Tib, Ibn Sina", "el-Havi fi't-Tib, er-Razi", "Tahbizu'l-Mathun, Tokadi"].map(k => (
+            {["el-Kânûn fi't-Tib, İbn Sînâ", "el-Havi fi't-Tib, er-Râzî", "Tahbizu'l-Mathun, Tokadi"].map(k => (
               <span key={k} style={{ fontFamily: cinzel.style.fontFamily, fontSize: 9, color: 'rgba(184,146,42,0.55)', letterSpacing: 2 }}>{k}</span>
             ))}
           </div>
@@ -180,14 +182,14 @@ export default function LandingClient() {
             {[
               {
                 icon: <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke={C.primary} strokeWidth="1.5"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>,
-                title: 'Mizac Tespiti',
+                title: 'Mizaç Tespiti',
                 desc: 'Demevi, Safravi, Balgami veya Sevdavi; nabiz, dil, yuz ve lab degerleri birlikte okunarak vucudunuzun derin tabiati belirlenir.',
                 href: '/analiz',
               },
               {
                 icon: <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke={C.primary} strokeWidth="1.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>,
                 title: 'Kişisel Bitki Protokolü',
-                desc: '1180 bitki ve tibbi madde iceren Ibn Beytar kaynakli veritabanindan, sizin mizaciniza ve sikayetinize ozel protokol hazirlanir.',
+                desc: '1180 bitki ve tibbi madde iceren İbn Beytâr kaynakli veritabanindan, sizin mizaciniza ve sikayetinize ozel protokol hazirlanir.',
                 href: '/bitkiler',
               },
               {
@@ -263,9 +265,8 @@ export default function LandingClient() {
         <div style={{ maxWidth: 1200, margin: '0 auto', display: 'grid', gridTemplateColumns: '320px 1fr', gap: 72, alignItems: 'center' }} className="danisman-grid">
           {/* Sol: Foto */}
           <div style={{ position: 'relative' as const, width: 320, height: 380, borderRadius: 24, overflow: 'hidden', border: '1.5px solid rgba(184,146,42,0.18)' }}>
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src="/danisan.jpg" alt="M. Fatih Cakir" style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center top', filter: 'sepia(15%) contrast(1.05) brightness(0.96)' }}
-              onError={(e) => { (e.target as HTMLImageElement).style.display = 'none' }} />
+            <Image src="/danisan.jpg" alt="M. Fatih Cakir" width={320} height={380}
+              style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center top', filter: 'sepia(15%) contrast(1.05) brightness(0.96)' }} />
             <div style={{ position: 'absolute' as const, inset: 0, background: 'linear-gradient(to bottom, transparent 50%, rgba(27,67,50,0.55) 100%)' }} />
             <div style={{ position: 'absolute' as const, bottom: 20, left: 20, background: 'rgba(184,146,42,0.92)', fontFamily: cinzel.style.fontFamily, fontSize: 10, fontWeight: 700, color: C.primary, padding: '6px 14px', borderRadius: 8 }}>
               {"M. FATIH CAKIR"}
@@ -281,7 +282,7 @@ export default function LandingClient() {
             <div style={{ fontFamily: cinzel.style.fontFamily, fontSize: 26, fontWeight: 600, color: C.primary, marginBottom: 8 }}>{"M. Fatih Cakir"}</div>
             <div style={{ fontSize: 16, color: C.gold, fontStyle: 'italic', marginBottom: 20 }}>{"Klasik Islam Tibbi Arastirmacisi, Tıp Tarihi Yüksek Lisans"}</div>
             <p style={{ fontSize: 16, color: C.secondary, lineHeight: 1.88, marginBottom: 24 }}>
-              {"FSM Vakif Universitesi Fuat Sezgin Islam Bilim Tarihi Enstitusu doktora adayi. Hekim Ahmet el-Hayati'nin Seceretut-Tib adli eserini ilk kez akademik duzeyde inceleyen arastirmaci. Ibn Sina el-Kanun ve Tahbizul-Mathun cevirileri uzerine calismalar yurutmektedir."}
+              {"FSM Vakif Universitesi Fuat Sezgin Islam Bilim Tarihi Enstitusu doktora adayi. Hekim Ahmet el-Hayati'nin Seceretut-Tib adli eserini ilk kez akademik duzeyde inceleyen arastirmaci. İbn Sînâ el-Kânûn ve Tahbizul-Mathun cevirileri uzerine calismalar yurutmektedir."}
             </p>
 
             {/* Akademik */}
@@ -377,8 +378,8 @@ export default function LandingClient() {
 
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 20, marginTop: 52 }} className="pricing-grid">
             {[
-              { name: 'AYLIK', price: '890\u20BA', period: '/ay', sub: 'gunde 29\u20BA', features: ['Sinirsiz analiz', 'WhatsApp danismanlik', 'Bitki protokolu', 'PDF recete'], badge: null, highlight: false },
-              { name: 'YILLIK', price: '590\u20BA', period: '/ay', sub: '%34 indirim, gunde 19\u20BA', features: ['Sinirsiz analiz', 'WhatsApp danismanlik', 'Bitki protokolu', 'PDF recete', 'Oncelikli destek'], badge: 'EN AVANTAJLI', highlight: true },
+              { name: 'AYLIK', price: '890\u20BA', period: '/ay', sub: 'gunde 29\u20BA', features: ['Sinirsiz analiz', 'WhatsApp danışmanlık', 'Bitki protokolu', 'PDF recete'], badge: null, highlight: false },
+              { name: 'YILLIK', price: '590\u20BA', period: '/ay', sub: '%34 indirim, gunde 19\u20BA', features: ['Sinirsiz analiz', 'WhatsApp danışmanlık', 'Bitki protokolu', 'PDF recete', 'Oncelikli destek'], badge: 'EN AVANTAJLI', highlight: true },
               { name: 'TEK SEFERLIK', price: '1.290\u20BA', period: '', sub: 'tek odeme, 1 analiz + sonuc', features: ['Tek analiz hakki', 'WhatsApp protokol', 'Bitki protokolu', 'PDF rapor'], badge: null, highlight: false },
             ].map(plan => (
               <div key={plan.name} style={{

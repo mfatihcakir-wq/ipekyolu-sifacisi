@@ -23,8 +23,8 @@ const inputStyle: React.CSSProperties = {
 }
 
 const PLANLAR = [
-  { id: 'monthly', ad: 'Aylik Plan', fiyat: 890, birim: '/ay', gun: 'Haftada 1 analiz', aciklama: 'WhatsApp danismanlik · Aylik protokol guncellemesi', indirim: '' },
-  { id: 'yearly', ad: 'Yillik Plan', fiyat: 590, birim: '/ay', gun: 'Haftada 1 analiz', aciklama: 'WhatsApp danismanlik · Oncelikli hizmet · PDF rapor', indirim: '%34 indirim', popular: true },
+  { id: 'monthly', ad: 'Aylik Plan', fiyat: 890, birim: '/ay', gun: 'Haftada 1 analiz', aciklama: 'WhatsApp danışmanlık · Aylik protokol guncellemesi', indirim: '' },
+  { id: 'yearly', ad: 'Yillik Plan', fiyat: 590, birim: '/ay', gun: 'Haftada 1 analiz', aciklama: 'WhatsApp danışmanlık · Oncelikli hizmet · PDF rapor', indirim: '%34 indirim', popular: true },
   { id: 'one_time', ad: 'Tek Seferlik', fiyat: 1290, birim: '', gun: '1 tam analiz', aciklama: 'WhatsApp protokol · PDF sonuc' },
 ]
 
