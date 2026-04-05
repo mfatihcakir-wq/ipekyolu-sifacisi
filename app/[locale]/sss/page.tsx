@@ -13,13 +13,13 @@ const C = { primary: '#1B4332', gold: '#C9A84C', cream: '#F5EFE6', secondary: '#
 const SORULAR = [
   { s: 'Bu analiz tıbbi teşhis midir?', c: 'Hayır. Bu analiz klasik İslam tıbbı geleneğine dayanan bir danışmanlık hizmetidir. Modern tıbbın tanı ve tedavilerinin yerini tutmaz. Ciddi sağlık sorunlarında mutlaka uzman hekime başvurunuz.' },
   { s: 'Analiz ne kadar sürer?', c: 'Formunuz iletildikten sonra danışmanınız 24-48 saat içinde WhatsApp üzerinden size ulaşır. Acil durumlarda doğrudan WhatsApp hattımızdan iletişime geçebilirsiniz.' },
-  { s: 'Hangi klasik kaynaklardan yararlanıyorsunuz?', c: '18 büyük İslam tıbbı eserinden yararlanıyoruz. Başlıcaları: el-Havi fit-Tib (er-Razi), el-Samil (İbn Nefis), Tahbizul-Mathun (Tokadi Mustafa Efendi) ve el-Kanun fit-Tib (İbn Sina). Tamamı dijitalleştirilmiş ve yapılandırılmış formatta analiz motoruna entegre edilmiştir.' },
+  { s: 'Hangi klasik kaynaklardan yararlanıyorsunuz?', c: '38 klasik İslam ve Osmanlı tıbbı eserinden yararlanıyoruz. Başlıcaları: el-Havi fit-Tib (er-Razi), el-Samil (İbn Nefis), Tahbizul-Mathun (Tokadi Mustafa Efendi) ve el-Kanun fit-Tib (İbn Sina). Tamamı dijitalleştirilmiş ve yapılandırılmış formatta analiz motoruna entegre edilmiştir.' },
   { s: 'Analiz sonuçları kişiye özel midir?', c: 'Evet. Her analiz; nabız gözlemi (9 sıfat), dil ve yüz muayenesi, idrar ve dışkı gözlemi, laboratuvar değerleri ve fıtrî mizaç sorularına göre ayrı ayrı değerlendirilir. Hiçbir analiz bir diğerinin kopyası değildir.' },
   { s: 'Ödeme güvenli mi?', c: 'Tüm ödemeler iyzico altyapısı ile 256-bit SSL şifreleme altında gerçekleştirilir. Kart bilgileriniz sunucularımızda saklanmaz.' },
   { s: 'Aboneliği iptal edebilir miyim?', c: 'Evet, dilediğiniz zaman iptal edebilirsiniz. İptal sonrası mevcut dönem sonuna kadar hizmetiniz devam eder. İade politikası için info@ipekyolusicifacisi.com adresine yazabilirsiniz.' },
   { s: 'Danışman kimdir?', c: 'Danışmanınız M. Fatih Çakır; Kocaeli Üniversitesi Tıp Tarihi yüksek lisansı ve FSM Vakıf Üniversitesi İslam Bilim Tarihi doktora programı öğrencisidir. Osmanlı Türkçesi ve Arapça bilgisiyle birincil kaynaklara doğrudan erişen bir araştırmacıdır.' },
   { s: 'Verilerim güvende mi?', c: 'Evet. Tüm sağlık verileriniz 6698 sayılı KVKK kapsamında korunmaktadır. Bilgileriniz üçüncü taraflarla paylaşılmaz, reklam amacıyla kullanılmaz. Detaylar için KVKK Aydınlatma Metnimizi inceleyebilirsiniz.' },
-  { s: 'Yapay zeka mı karar veriyor?', c: 'Hayır. Yapay zeka (Anthropic Claude) klasik kaynaklardan ilgili bölümleri bulur ve eşleştirir; ancak nihai değerlendirme ve protokol kararı her zaman danışman tarafından verilir. Yapay zeka araçtır, karar insanındır.' },
+  { s: 'Yapay zeka mı karar veriyor?', c: 'Hayır. Yapay zeka (Anthropic Claude) 38 klasik eserden ilgili bölümleri bulur ve eşleştirir; ancak nihai değerlendirme ve protokol kararı her zaman danışman tarafından verilir. Yapay zeka araçtır, karar insanındır.' },
   { s: 'Üye olmadan form doldurabilir miyim?', c: 'Evet. Analiz formunu üye olmadan doldurabilirsiniz. Formunuz danışmana iletilir. Detaylı analiz ve sürekli takip için üyelik gereklidir.' },
 ]
 
