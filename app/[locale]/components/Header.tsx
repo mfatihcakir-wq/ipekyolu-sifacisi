@@ -60,29 +60,29 @@ export default function Header() {
 
           {/* SOL: Logo */}
           <div style={{ display: 'flex', alignItems: 'center', gap: 12, cursor: 'pointer', flexShrink: 0 }} onClick={() => router.push('/')}>
-            <svg width="36" height="36" viewBox="0 0 64 64" fill="none" style={{ overflow: 'visible' }}>
+            <svg width="36" height="36" viewBox="0 0 64 64" fill="none" style={{ overflow: 'visible', flexShrink: 0 }}>
               <style>{`
-                @keyframes drawLogo { from { stroke-dashoffset: 200 } to { stroke-dashoffset: 0 } }
-                @keyframes popDot { from { opacity:0; transform:scale(0) } to { opacity:1; transform:scale(1) } }
-                @keyframes fadeHorn { from { opacity:0 } to { opacity:1 } }
-                .hdr-lb { stroke-dasharray:200; stroke-dashoffset:200; animation: drawLogo 1s ease 0.2s forwards }
-                .hdr-ln { stroke-dasharray:50; stroke-dashoffset:50; animation: drawLogo 0.5s ease 0.8s forwards }
-                .hdr-lh { opacity:0; animation: fadeHorn 0.4s ease 1.1s forwards }
-                .hdr-ld { opacity:0; animation: fadeHorn 0.4s ease 1.3s forwards }
-                .hdr-d1 { opacity:0; animation: popDot 0.3s cubic-bezier(0.34,1.56,0.64,1) 1.4s forwards }
-                .hdr-d2 { opacity:0; animation: popDot 0.3s cubic-bezier(0.34,1.56,0.64,1) 1.55s forwards }
-                .hdr-d3 { opacity:0; animation: popDot 0.3s cubic-bezier(0.34,1.56,0.64,1) 1.7s forwards }
-                .hdr-d4 { opacity:0; animation: popDot 0.3s cubic-bezier(0.34,1.56,0.64,1) 1.85s forwards }
+                @keyframes hdrDraw { from{stroke-dashoffset:200} to{stroke-dashoffset:0} }
+                @keyframes hdrPop { from{opacity:0;transform:scale(0)} to{opacity:1;transform:scale(1)} }
+                @keyframes hdrFade { from{opacity:0} to{opacity:1} }
+                .hb1{stroke-dasharray:200;stroke-dashoffset:200;animation:hdrDraw 1s ease 0.2s forwards}
+                .hb2{stroke-dasharray:50;stroke-dashoffset:50;animation:hdrDraw 0.5s ease 0.8s forwards}
+                .hh{opacity:0;animation:hdrFade 0.4s ease 1.1s forwards}
+                .hd{opacity:0;animation:hdrFade 0.4s ease 1.3s forwards}
+                .p1{opacity:0;animation:hdrPop 0.3s cubic-bezier(0.34,1.56,0.64,1) 1.4s forwards}
+                .p2{opacity:0;animation:hdrPop 0.3s cubic-bezier(0.34,1.56,0.64,1) 1.55s forwards}
+                .p3{opacity:0;animation:hdrPop 0.3s cubic-bezier(0.34,1.56,0.64,1) 1.7s forwards}
+                .p4{opacity:0;animation:hdrPop 0.3s cubic-bezier(0.34,1.56,0.64,1) 1.85s forwards}
               `}</style>
-              <ellipse cx="32" cy="37" rx="12" ry="10" fill="none" stroke="#B8860B" strokeWidth="1.5" className="hdr-lb" />
-              <path d="M22 37 Q22 25 32 23 Q42 25 42 37" fill="none" stroke="#B8860B" strokeWidth="1.5" className="hdr-lb" />
-              <rect x="29" y="21" width="6" height="3.5" rx="1" fill="none" stroke="#B8860B" strokeWidth="1.5" className="hdr-ln" />
-              <path d="M32 15 Q36 11 40 13 Q38 18 32 20 Q26 18 24 13 Q28 11 32 15Z" fill="#B8860B" className="hdr-lh" />
-              <path d="M32 38 Q28.5 42 32 45.5 Q35.5 42 32 38Z" fill="#B8860B" opacity={0.55} className="hdr-ld" />
-              <circle cx="32" cy="32" r="2.5" fill="#EF5350" className="hdr-d1" />
-              <circle cx="26.5" cy="34" r="1.8" fill="#FF7043" className="hdr-d2" />
-              <circle cx="37.5" cy="34" r="1.8" fill="#42A5F5" className="hdr-d3" />
-              <circle cx="32" cy="38" r="1.5" fill="#AB47BC" className="hdr-d4" />
+              <ellipse cx="32" cy="37" rx="12" ry="10" fill="none" stroke="#B8860B" strokeWidth="1.5" className="hb1" />
+              <path d="M22 37 Q22 25 32 23 Q42 25 42 37" fill="none" stroke="#B8860B" strokeWidth="1.5" className="hb1" />
+              <rect x="29" y="21" width="6" height="3.5" rx="1" fill="none" stroke="#B8860B" strokeWidth="1.5" className="hb2" />
+              <path d="M32 15 Q36 11 40 13 Q38 18 32 20 Q26 18 24 13 Q28 11 32 15Z" fill="#B8860B" className="hh" />
+              <path d="M32 38 Q28.5 42 32 45.5 Q35.5 42 32 38Z" fill="#B8860B" opacity={0.55} className="hd" />
+              <circle cx="32" cy="32" r="2.5" fill="#EF5350" className="p1" />
+              <circle cx="26.5" cy="34" r="1.8" fill="#FF7043" className="p2" />
+              <circle cx="37.5" cy="34" r="1.8" fill="#42A5F5" className="p3" />
+              <circle cx="32" cy="38" r="1.5" fill="#AB47BC" className="p4" />
             </svg>
             <div style={{ display: 'flex', flexDirection: 'column' as const, gap: 1 }}>
               <span style={{ fontFamily: cinzel.style.fontFamily, fontSize: 12, fontWeight: 600, color: '#F5EDE0', letterSpacing: 3, lineHeight: 1.1 }}>

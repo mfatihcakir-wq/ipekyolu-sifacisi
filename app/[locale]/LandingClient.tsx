@@ -106,16 +106,17 @@ export default function LandingClient() {
       <section style={{ padding: '88px clamp(24px,5vw,80px)', background: '#FAF6EF' }}>
         <div style={{ textAlign: 'center' as const, marginBottom: 60 }}>
           <div style={{ fontFamily: 'Cinzel,serif', fontSize: 10, color: '#B8860B', letterSpacing: 3, marginBottom: 14 }}>{"NEDEN FARKLI"}</div>
-          <h2 style={{ fontFamily: 'Cinzel,serif', fontSize: 'clamp(28px,4vw,38px)', fontWeight: 600, color: '#1A1208', lineHeight: 1.15, marginBottom: 12 }}>{"Beden Bir B\u00fct\u00fcnd\u00fcr"}</h2>
-          <p style={{ fontSize: 18, color: '#5C4A2A', fontStyle: 'italic', lineHeight: 1.75, maxWidth: 540, margin: '0 auto' }}>{"Modern t\u0131bb\u0131n semptomu g\u00f6rd\u00fc\u011f\u00fc yerde, klasik t\u0131p sebebi arar."}</p>
+          <h2 style={{ fontFamily: 'Cinzel,serif', fontSize: 'clamp(28px,4vw,38px)', fontWeight: 600, color: '#1A1208', lineHeight: 1.15, marginBottom: 12 }}>{"Beden Bir Bütündür"}</h2>
+          <p style={{ fontSize: 18, color: '#5C4A2A', fontStyle: 'italic', lineHeight: 1.75, maxWidth: 540, margin: '0 auto' }}>{"Modern tıbbın semptomu gördüğü yerde, klasik tıp sebebi arar."}</p>
         </div>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: 20, maxWidth: 1100, margin: '0 auto' }} className="features-grid">
-          <FeatCard icon={<svg style={iconStyle} viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12" /></svg>} title="Miza\u00e7 Tespiti" desc="Nab\u0131z, dil, y\u00fcz ve lab de\u011ferleri birlikte okunarak v\u00fccudunuzun derin tabiat\u0131 belirlenir." link="/analiz" />
-          <FeatCard icon={<svg style={{ ...iconStyle, stroke: '#B8860B' }} viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" /><path d="M8 12h8M12 8v8" /></svg>} title="Ki\u015fisel Bitki Protokol\u00fc" desc="1.180 bitki ve t\u0131bbi maddeden sizin mizac\u0131n\u0131za \u00f6zel protokol haz\u0131rlan\u0131r." link="/bitkiler" hot />
-          <FeatCard icon={<svg style={iconStyle} viewBox="0 0 24 24"><circle cx="12" cy="8" r="4" /><path d="M4 20c0-4 3.58-7 8-7s8 3 8 7" /></svg>} title="Uzman Dan\u0131\u015fmanl\u0131k" desc="24-48 saat i\u00e7inde dan\u0131\u015fman\u0131n\u0131z WhatsApp \u00fczerinden protokol\u00fcn\u00fczü iletir." link="/hakkimizda" />
-          <FeatCard icon={<svg style={iconStyle} viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" /><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z" /></svg>} title="38 Klasik Kaynak" desc="el-H\u00e2v\u00ee, Tahb\u00eez\u00fc'l-Math\u00fbn, el-\u015e\u00e2mil ve 35 eser daha analizinize destek verir." link="/hakkimizda" />
-          <FeatCard icon={<svg style={iconStyle} viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" /></svg>} title="Kalp \u015eehri Analizi" desc="Klasik \u0130slam ahlak gelene\u011fine dayal\u0131 \u00f6z-de\u011ferlendirme. 4 cephe, 40 soru." link="/karakter" />
-          <FeatCard icon={<svg style={iconStyle} viewBox="0 0 24 24"><rect x="5" y="2" width="14" height="20" rx="2" /><path d="M9 7h6M9 11h6M9 15h4" /></svg>} title="PDF Protokol Raporu" desc="Her analizin sonunda kaynakl\u0131, detayl\u0131 PDF rapor ve WhatsApp iletimi." link="/analiz" />
+          <FeatCard icon={<svg style={iconStyle} viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12" /></svg>} title="Mizaç Tespiti" desc="Nabız, dil, yüz ve lab değerleri birlikte okunarak vücudunuzun derin tabiatı belirlenir." link="/analiz" />
+          <FeatCard icon={<svg style={{ ...iconStyle, stroke: '#B8860B' }} viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" /><path d="M8 12h8M12 8v8" /></svg>} title="Kişisel Bitki Protokolü" desc="1.180 bitki ve tıbbi maddeden sizin mizacınıza özel protokol hazırlanır." link="/bitkiler" hot />
+          <FeatCard icon={<svg style={iconStyle} viewBox="0 0 24 24"><circle cx="12" cy="8" r="4" /><path d="M4 20c0-4 3.58-7 8-7s8 3 8 7" /></svg>} title="Uzman Danışmanlık" desc="24-48 saat içinde danışmanınız WhatsApp üzerinden protokolünüzü iletir." link="/hakkimizda" />
+          <FeatCard icon={<svg style={iconStyle} viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" /><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z" /></svg>} title="38 Klasik Kaynak" desc="el-Hâvî, Tahbîzü'l-Mathûn, el-Şâmil ve 35 eser daha analizinize destek verir." link="/hakkimizda" />
+          <FeatCard icon={<svg style={iconStyle} viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" /></svg>} title="Kalp Şehri Analizi" desc="Klasik İslam ahlak geleneğine dayalı öz-değerlendirme. 4 cephe, 40 soru." link="/karakter" />
+          <FeatCard icon={<svg style={iconStyle} viewBox="0 0 24 24"><rect x="5" y="2" width="14" height="20" rx="2" /><path d="M9 7h6M9 11h6M9 15h4" /></svg>} title="PDF Protokol Raporu" desc="Her analizin sonunda kaynaklı, detaylı PDF rapor ve WhatsApp iletimi." link="/analiz" />
+          <FeatCard icon={<svg style={iconStyle} viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" /></svg>} title="Cilt Bakımı Protokolü" desc="Mizacınıza özel klasik İslam tıbbı kaynaklı cilt bakım protokolü. Bitki bazlı, kişiye özel." link="/hasta/cilt" />
         </div>
       </section>
 
@@ -160,7 +161,45 @@ export default function LandingClient() {
           <div style={{ borderLeft: '2px solid rgba(184,134,11,0.35)', padding: '18px 26px', margin: '32px 0', background: 'rgba(184,134,11,0.04)', borderRadius: '0 8px 8px 0' }}>
             <p style={{ fontSize: 17, color: 'rgba(245,237,224,0.82)', lineHeight: 1.9, fontStyle: 'italic' }}>{"Modern t\u0131bb\u0131n ke\u015ffetti\u011fi pek \u00e7ok \u015fey, "}<strong style={{ color: '#F5EDE0', fontWeight: 500 }}>{"bin y\u0131l \u00f6nce zaten biliniyordu."}</strong></p>
           </div>
-          <p style={{ fontSize: 18, color: 'rgba(245,237,224,0.68)', lineHeight: 1.95, marginTop: 32 }}>{"Bu hakikati insanlara ula\u015ft\u0131rmak istedim. Yaz\u0131l\u0131m bilmiyordum. Para yoktu. Ama elimdeki kaynaklar, on y\u0131ll\u0131k birikim ve yapay zeka ile bu sistemi in\u015fa ettim."}</p>
+          {/* BİR KEŞİF DAHA */}
+          <div style={{ display: 'flex', alignItems: 'center', gap: 14, margin: '40px 0 32px' }}>
+            <span style={{ flex: 1, height: 1, background: 'rgba(184,134,11,0.1)', display: 'block' }} />
+            <span style={{ fontFamily: 'Cinzel,serif', fontSize: 9, color: 'rgba(184,134,11,0.35)', letterSpacing: 3, whiteSpace: 'nowrap' as const }}>{"B\u0130R KE\u015eF\u0130T DAHA"}</span>
+            <span style={{ flex: 1, height: 1, background: 'rgba(184,134,11,0.1)', display: 'block' }} />
+          </div>
+          <p style={{ fontSize: 18, color: 'rgba(245,237,224,0.68)', lineHeight: 1.95, marginBottom: 22, fontFamily: 'EB Garamond,serif' }}>
+            {"Sonra kanseri ara\u015ft\u0131rd\u0131m. Klasik metinlerde kanser i\u00e7in "}<span style={{ fontFamily: 'serif', fontSize: '1.1em', color: '#B8860B', direction: 'rtl' as const, display: 'inline' }}>{"\u0633\u0631\u0637\u0627\u0646"}</span>{" yani "}<strong style={{ color: '#F5EDE0', fontWeight: 500 }}>{"seretan"}</strong>{" kelimesi kullan\u0131l\u0131yor. Bu kelimenin k\u00f6k\u00fc yenge\u00e7 demek. Rastlant\u0131 de\u011fil: klasik hekimler tedavide kulland\u0131klar\u0131 ana maddeyi de yenge\u00e7ten elde ediyorlard\u0131. \u0130sim, tedavinin ta kendisinden geliyordu."}
+          </p>
+          <p style={{ fontSize: 18, color: 'rgba(245,237,224,0.68)', lineHeight: 1.95, marginBottom: 22, fontFamily: 'EB Garamond,serif' }}>
+            {"\u0130bn S\u00een\u00e2'n\u0131n cerrahi \u00f6nerileri "}<strong style={{ color: '#F5EDE0', fontWeight: 500 }}>{"modern onkolojik cerrahinin temel ilkelerini sekiz y\u00fcz y\u0131l \u00f6nceden \u00f6ng\u00f6r\u00fcyor."}</strong>
+          </p>
+          <div style={{ borderLeft: '2px solid rgba(184,134,11,0.35)', padding: '18px 26px', margin: '32px 0', background: 'rgba(184,134,11,0.04)', borderRadius: '0 8px 8px 0' }}>
+            <p style={{ fontSize: 17, color: 'rgba(245,237,224,0.82)', lineHeight: 1.9, fontStyle: 'italic', fontFamily: 'EB Garamond,serif' }}>
+              {"Klasik \u0130slam hekimleri bu ismi yaln\u0131zca metafor olarak kullanmam\u0131\u015f, "}<strong style={{ color: '#F5EDE0', fontWeight: 500 }}>{"tedavinin \u00f6z\u00fcn\u00fc o ismin i\u00e7ine i\u015flemi\u015fler."}</strong>
+            </p>
+          </div>
+
+          {/* BURADAN ORAYA */}
+          <div style={{ display: 'flex', alignItems: 'center', gap: 14, margin: '40px 0 32px' }}>
+            <span style={{ flex: 1, height: 1, background: 'rgba(184,134,11,0.1)', display: 'block' }} />
+            <span style={{ fontFamily: 'Cinzel,serif', fontSize: 9, color: 'rgba(184,134,11,0.35)', letterSpacing: 3, whiteSpace: 'nowrap' as const }}>{"BURADAN ORAYA"}</span>
+            <span style={{ flex: 1, height: 1, background: 'rgba(184,134,11,0.1)', display: 'block' }} />
+          </div>
+          <p style={{ fontSize: 18, color: 'rgba(245,237,224,0.68)', lineHeight: 1.95, marginBottom: 22, fontFamily: 'EB Garamond,serif' }}>
+            {"Bu hakikati insanlara ula\u015ft\u0131rmak istedim. "}<strong style={{ color: '#F5EDE0', fontWeight: 500 }}>{"Bu yol on y\u0131l boyunca b\u00fcy\u00fck \u00f6l\u00e7\u00fcde yaln\u0131z y\u00fcr\u00fcnen, zaman zaman motor \u00fczerinde, zaman zaman in\u015faatta, zaman zaman garsonluk yaparken d\u00fc\u015f\u00fcn\u00fclen bir yoldu. Kolay olmad\u0131. Ama hi\u00e7bir \u015fey durduramad\u0131."}</strong>
+          </p>
+          <p style={{ fontSize: 18, color: 'rgba(245,237,224,0.68)', lineHeight: 1.95, marginBottom: 22, fontFamily: 'EB Garamond,serif' }}>
+            {"Yaz\u0131l\u0131m bilmiyordum. Para yoktu. Ama elimdeki kaynaklar, on y\u0131ll\u0131k birikim ve yapay zeka ile d\u00fcnyada bir ilk oldu\u011funa inand\u0131\u011f\u0131m bu sistemi in\u015fa ettim."}
+          </p>
+          <div style={{ borderLeft: '2px solid rgba(184,134,11,0.35)', padding: '18px 26px', margin: '32px 0', background: 'rgba(184,134,11,0.04)', borderRadius: '0 8px 8px 0' }}>
+            <p style={{ fontSize: 17, color: 'rgba(245,237,224,0.82)', lineHeight: 1.9, fontStyle: 'italic', fontFamily: 'EB Garamond,serif' }}>
+              {"Bu sistemi kulland\u0131\u011f\u0131n\u0131zda yaln\u0131zca kendi sa\u011fl\u0131\u011f\u0131n\u0131za yat\u0131r\u0131m yapm\u0131yorsunuz. "}<strong style={{ color: '#F5EDE0', fontWeight: 500 }}>{"Ben sadece unutulan\u0131 hat\u0131rlat\u0131yorum."}</strong>
+            </p>
+          </div>
+          <p style={{ fontSize: 15, color: 'rgba(245,237,224,0.35)', fontStyle: 'italic', marginTop: 28, lineHeight: 1.8, fontFamily: 'EB Garamond,serif' }}>
+            {"\u0130lim ikidir: biri beden ilmi, di\u011feri inan\u00e7 ilmi. Her ikisi do\u011fru birle\u015fti\u011finde buna sa\u011fl\u0131kl\u0131 bir ya\u015fam deriz."}
+          </p>
+
           <div style={{ display: 'flex', alignItems: 'center', gap: 18, marginTop: 48, paddingTop: 32, borderTop: '1px solid rgba(184,134,11,0.12)' }}>
             <div style={{ width: 50, height: 50, borderRadius: '50%', background: 'rgba(184,134,11,0.1)', border: '1px solid rgba(184,134,11,0.18)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: 'Cinzel,serif', fontSize: 15, fontWeight: 600, color: '#B8860B', flexShrink: 0 }}>{"MF"}</div>
             <div>
@@ -177,10 +216,7 @@ export default function LandingClient() {
           <div style={{ fontFamily: 'Cinzel,serif', fontSize: 10, color: '#B8860B', letterSpacing: 3, marginBottom: 14 }}>{"DANI\u015eMAN"}</div>
           <h2 style={{ fontFamily: 'Cinzel,serif', fontSize: 'clamp(28px,4vw,38px)', fontWeight: 600, color: '#1A1208' }}>{"M. Fatih \u00c7ak\u0131r"}</h2>
         </div>
-        <div style={{ maxWidth: 900, margin: '0 auto', display: 'grid', gridTemplateColumns: '240px 1fr', gap: 64, alignItems: 'start' }} className="danisman-grid">
-          <div style={{ background: '#F5EFE0', borderRadius: 20, aspectRatio: '3/4', overflow: 'hidden', border: '1px solid #DEB887' }}>
-            <Image src="/danisan.jpg" alt="M. Fatih Cakir" width={240} height={320} style={{ objectFit: 'cover', width: '100%', height: '100%' }} />
-          </div>
+        <div style={{ maxWidth: 720, margin: '0 auto' }}>
           <div>
             <div style={{ fontFamily: 'Cinzel,serif', fontSize: 10, color: '#B8860B', letterSpacing: 3, marginBottom: 14 }}>{"KLAS\u0130K \u0130SLAM TIBBI ARA\u015eTIRMACISI"}</div>
             <h3 style={{ fontFamily: 'Cinzel,serif', fontSize: 22, fontWeight: 600, color: '#1A1208', marginBottom: 6 }}>{"T\u0131p Tarihi Y\u00fcksek Lisans"}</h3>
