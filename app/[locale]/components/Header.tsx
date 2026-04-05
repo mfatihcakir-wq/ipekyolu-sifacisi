@@ -22,11 +22,7 @@ const NAV_LINKS = [
   { href: '/sss', label: 'SSS' },
 ]
 
-const LANGS = [
-  { code: 'TR', flag: '\uD83C\uDDF9\uD83C\uDDF7' },
-  { code: 'EN', flag: '\uD83C\uDDEC\uD83C\uDDE7' },
-  { code: 'AR', flag: '\uD83C\uDDF8\uD83C\uDDE6' },
-]
+// Dil secici kaldirildi — sadece TR
 
 interface HeaderUser {
   email?: string
@@ -36,7 +32,6 @@ export default function Header() {
   const [user, setUser] = useState<HeaderUser | null>(null)
   const [menuAcik, setMenuAcik] = useState(false)
   const [profilAcik, setProfilAcik] = useState(false)
-  const [dilAcik, setDilAcik] = useState(false)
   const router = useRouter()
   const pathname = usePathname()
   const supabase = createClient()
@@ -109,24 +104,6 @@ export default function Header() {
           {/* SAG: Dil + Auth */}
           <div style={{ display: 'flex', alignItems: 'center', gap: 8, flexShrink: 0 }}>
 
-            {/* Dil Secici */}
-            <div style={{ position: 'relative' }}>
-              <button onClick={() => setDilAcik(!dilAcik)}
-                style={{ background: 'rgba(255,255,255,0.08)', border: '1px solid rgba(255,255,255,0.15)', borderRadius: 6, padding: '4px 8px', color: 'white', fontSize: 12, cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 4 }}>
-                {LANGS[0].flag} TR
-              </button>
-              {dilAcik && (
-                <div style={{ position: 'absolute', top: 36, right: 0, background: 'white', borderRadius: 8, boxShadow: '0 4px 16px rgba(0,0,0,0.15)', overflow: 'hidden', minWidth: 100, zIndex: 200 }}>
-                  {LANGS.map(l => (
-                    <button key={l.code} onClick={() => { setDilAcik(false); window.location.href = l.code === 'TR' ? '/' : '/' + l.code.toLowerCase() }}
-                      style={{ display: 'flex', alignItems: 'center', gap: 6, padding: '8px 14px', width: '100%', border: 'none', background: 'white', cursor: 'pointer', fontSize: 13, color: C.primary }}>
-                      {l.flag} {l.code}
-                    </button>
-                  ))}
-                </div>
-              )}
-            </div>
-
             {/* Auth Butonlari */}
             {!user ? (
               <div style={{ display: 'flex', gap: 6 }}>
@@ -187,8 +164,8 @@ export default function Header() {
       </header>
 
       {/* Overlay kapama */}
-      {(dilAcik || profilAcik) && (
-        <div onClick={() => { setDilAcik(false); setProfilAcik(false) }}
+      {profilAcik && (
+        <div onClick={() => { setProfilAcik(false) }}
           style={{ position: 'fixed', inset: 0, zIndex: 99 }} />
       )}
     </>

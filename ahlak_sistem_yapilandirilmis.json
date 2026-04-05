@@ -1,0 +1,679 @@
+{
+  "kaynak": {
+    "kaynak_kodu": "AHL-HAM",
+    "kitap_adi": "Ahlâk-ı Hamide ve Zemîme",
+    "yazar": "Anonim",
+    "hicri": "970",
+    "aciklama": "İnsanın kalbini (medine-i vücud) ele geçirmek isteyen 4 düşman ordusu ile onlara karşı konuşlandırılan 4 erdem ordusu. Her cephe kendi mukabiliyle karşı karşıya gelir."
+  },
+  "cepheler": [
+    {
+      "id": "dunya",
+      "ad": "Dünya",
+      "ad_ar": "الدنيا",
+      "tip": "dusman",
+      "konum": "Önde (medine-i vücudun önü)",
+      "mukabili_id": "zuhd",
+      "aciklama": "Dünya sevgisi ve ona bağlılık. Kalp şehrine önden saldırır.",
+      "askerler": [
+        {
+          "sira": 1,
+          "ad": "Riya",
+          "ad_ar": "الرياء",
+          "tanim": "İbadetle dünya kaidesin ve nef'in murad etmek",
+          "kategori": "niyet_bozukluğu"
+        },
+        {
+          "sira": 2,
+          "ad": "Tefahür",
+          "ad_ar": "التفاخر",
+          "tanim": "Dünyaya müteallık şeyle ululanmak; cah ve mal ve mansıb ve neseb gibi",
+          "kategori": "kibir"
+        },
+        {
+          "sira": 3,
+          "ad": "Batar",
+          "ad_ar": "البطر",
+          "tanim": "Ferahlanmak (nimete şükretmeyip böbürlenmek)",
+          "kategori": "nankörlük"
+        },
+        {
+          "sira": 4,
+          "ad": "Hevâ",
+          "ad_ar": "الهوى",
+          "tanim": "Arzu (nefsin meşru olmayan istekleri)",
+          "kategori": "nefs"
+        },
+        {
+          "sira": 5,
+          "ad": "Lu'b",
+          "ad_ar": "اللعب",
+          "tanim": "Oyun (boş ve anlamsız eğlenceye dalmak)",
+          "kategori": "gaflet"
+        },
+        {
+          "sira": 6,
+          "ad": "Zûr",
+          "ad_ar": "الزور",
+          "tanim": "Bühtana mukarin yalan (iftiraya yakın yalan)",
+          "kategori": "yalan"
+        },
+        {
+          "sira": 7,
+          "ad": "Kizb",
+          "ad_ar": "الكذب",
+          "tanim": "Mutlak yalan",
+          "kategori": "yalan"
+        },
+        {
+          "sira": 8,
+          "ad": "Gışş",
+          "ad_ar": "الغش",
+          "tanim": "Şer sanmak (hile ve aldatmaca)",
+          "kategori": "hile"
+        },
+        {
+          "sira": 9,
+          "ad": "Hadî'a",
+          "ad_ar": "الخديعة",
+          "tanim": "Aldatmak",
+          "kategori": "hile"
+        },
+        {
+          "sira": 10,
+          "ad": "Tefrit fi'ş-Şerî'a",
+          "ad_ar": "التفريط في الشريعة",
+          "tanim": "Şer-i şerifle amelde kusur etmek",
+          "kategori": "ihmal"
+        }
+      ]
+    },
+    {
+      "id": "zuhd",
+      "ad": "Zühd",
+      "ad_ar": "الزهد",
+      "tip": "erdem",
+      "konum": "Önde (dünyaya karşı)",
+      "mukabili_id": "dunya",
+      "aciklama": "Dünya sevgisine karşı konuşlandırılan erdem ordusu. Musahib (yoldaş) konumundadır.",
+      "askerler": [
+        {
+          "sira": 1,
+          "ad": "İftikar-ı ilallah",
+          "ad_ar": "الافتقار إلى الله",
+          "tanim": "Hak sübhanehu ve tealaya ihtiyacını arz etmek",
+          "kategori": "tevazu"
+        },
+        {
+          "sira": 2,
+          "ad": "İctinab-ı Haram",
+          "ad_ar": "اجتناب الحرام",
+          "tanim": "Haramdan kaçmak",
+          "kategori": "takva"
+        },
+        {
+          "sira": 3,
+          "ad": "Talebü'l-Helâl",
+          "ad_ar": "طلب الحلال",
+          "tanim": "Kendinin ve ıyalinin nafakasını helalden istemek",
+          "kategori": "helal_aray"
+        },
+        {
+          "sira": 4,
+          "ad": "Terk-i İ'tizâr",
+          "ad_ar": "ترك الاعتذار",
+          "tanim": "Aldanmağı terk etmek (mazeret üretmeyi bırakmak)",
+          "kategori": "dürüstlük"
+        },
+        {
+          "sira": 5,
+          "ad": "Şefkat-i alâ Halkillah",
+          "ad_ar": "الشفقة على خلق الله",
+          "tanim": "Meratibince halka merhamet etmek",
+          "kategori": "merhamet"
+        },
+        {
+          "sira": 6,
+          "ad": "Tuka billah",
+          "ad_ar": "التقوى بالله",
+          "tanim": "Hak sübhanehu ve tealadan korkmak",
+          "kategori": "takva"
+        },
+        {
+          "sira": 7,
+          "ad": "Terk-i Zendeka",
+          "ad_ar": "ترك الزندقة",
+          "tanim": "İnkâr-ı kıyameti terk etmek",
+          "kategori": "iman"
+        },
+        {
+          "sira": 8,
+          "ad": "Nedm meal İstiğfar",
+          "ad_ar": "الندم مع الاستغفار",
+          "tanim": "Yarlığanmak talep edip günahına pişman olmak",
+          "kategori": "tevbe"
+        },
+        {
+          "sira": 9,
+          "ad": "Teheccüd fi'l-Eshâr",
+          "ad_ar": "التهجد في الأسحار",
+          "tanim": "Seher vakitlerinde teheccüd namazı kılmak",
+          "kategori": "ibadet"
+        },
+        {
+          "sira": 10,
+          "ad": "Bükâ min Haşyetil Cebbâr",
+          "ad_ar": "البكاء من خشية الجبار",
+          "tanim": "Mahza Hak celle ve alanın havfından ağlamak",
+          "kategori": "huşu"
+        }
+      ]
+    },
+    {
+      "id": "heva",
+      "ad": "Hevâ",
+      "ad_ar": "الهوى",
+      "tip": "dusman",
+      "konum": "Sağdan (medine-i vücudun sağı)",
+      "mukabili_id": "akil",
+      "aciklama": "Nefsin meşru olmayan arzuları. Kalp şehrine sağdan saldırır.",
+      "askerler": [
+        {
+          "sira": 1,
+          "ad": "Hased",
+          "ad_ar": "الحسد",
+          "tanim": "Kadrin bilip faydalandığı dünya ve ahiret nimetinin bir kimseden gitmesini veyahut onun gibi nimete ulaşamasın istemek",
+          "kategori": "kıskanclık"
+        },
+        {
+          "sira": 2,
+          "ad": "Tecebbür",
+          "ad_ar": "التجبر",
+          "tanim": "Zalim olmak",
+          "kategori": "zulüm"
+        },
+        {
+          "sira": 3,
+          "ad": "Ucub",
+          "ad_ar": "العجب",
+          "tanim": "İlmin ve amelin kendüden bilip Hak tealanın tevfikıyle ve lütfuyla olduğundan gafil olmak",
+          "kategori": "kibir"
+        },
+        {
+          "sira": 4,
+          "ad": "Tekebbür",
+          "ad_ar": "التكبر",
+          "tanim": "Ahardan büyüklük ve iyilik izhar etmek",
+          "kategori": "kibir"
+        },
+        {
+          "sira": 5,
+          "ad": "Gıll",
+          "ad_ar": "الغل",
+          "tanim": "İçerisi dışının hilafı olmak (içi dışına uymamak)",
+          "kategori": "ikiyüzlülük"
+        },
+        {
+          "sira": 6,
+          "ad": "Mekr",
+          "ad_ar": "المكر",
+          "tanim": "Hile etmek",
+          "kategori": "hile"
+        },
+        {
+          "sira": 7,
+          "ad": "Vesvese",
+          "ad_ar": "الوسوسة",
+          "tanim": "Gönlünde gizli kelam olmak (kalbi şüphe ve karanlık düşünceler)",
+          "kategori": "şüphe"
+        },
+        {
+          "sira": 8,
+          "ad": "Gadr",
+          "ad_ar": "الغدر",
+          "tanim": "Hıyanet edip doğruluk etmemek",
+          "kategori": "ihanet"
+        },
+        {
+          "sira": 9,
+          "ad": "Hıkd",
+          "ad_ar": "الحقد",
+          "tanim": "Kin tutmak",
+          "kategori": "kin"
+        },
+        {
+          "sira": 10,
+          "ad": "Muhalefet fi'l-Emr",
+          "ad_ar": "المخالفة في الأمر",
+          "tanim": "Emre uymamak",
+          "kategori": "isyan"
+        }
+      ]
+    },
+    {
+      "id": "akil",
+      "ad": "Akıl",
+      "ad_ar": "العقل",
+      "tip": "erdem",
+      "konum": "Sağdan (hevaya karşı)",
+      "mukabili_id": "heva",
+      "aciklama": "Hevaya karşı konuşlandırılan erdem ordusu. Vezir konumundadır.",
+      "askerler": [
+        {
+          "sira": 1,
+          "ad": "İhlâs",
+          "ad_ar": "الإخلاص",
+          "tanim": "Amelini ancak Allah tealaya takarrüb için edip nefsi dünya için etmemek",
+          "kategori": "niyet"
+        },
+        {
+          "sira": 2,
+          "ad": "Hudû",
+          "ad_ar": "الخضوع",
+          "tanim": "Kalbin Hak tealanın cenab-ı aliyesinde kaim ve hazır olması",
+          "kategori": "huşu"
+        },
+        {
+          "sira": 3,
+          "ad": "Yakîn",
+          "ad_ar": "اليقين",
+          "tanim": "Hak tealadan Resulüne her ne geldiyse itikada ve amele müteallık hilafına kalbinde ihtimali kalmamak",
+          "kategori": "iman"
+        },
+        {
+          "sira": 4,
+          "ad": "Huşû",
+          "ad_ar": "الخشوع",
+          "tanim": "Hak tealadan korkup günahların andıkta kalbi ve derisi titremek",
+          "kategori": "haşyet"
+        },
+        {
+          "sira": 5,
+          "ad": "Marifet",
+          "ad_ar": "المعرفة",
+          "tanim": "İtikada, amele ve huya müteallik mesail-i lazımesin bilmek ve onunla kalmağın sonunda kişiye arız olan zevk, şevk ve lezzet",
+          "kategori": "ilim"
+        },
+        {
+          "sira": 6,
+          "ad": "Hidâyet",
+          "ad_ar": "الهداية",
+          "tanim": "Hak teala canibinden tarik-ı şer'a delalet olunup ulaşmak veya ulaşmağa karib olmak",
+          "kategori": "rehberlik"
+        },
+        {
+          "sira": 7,
+          "ad": "Teslîm",
+          "ad_ar": "التسليم",
+          "tanim": "Tab'a muvafık olmayan şeylere niçin etti diye Hak tealaya i'raz etmeyi terk edip emrine muti olmak",
+          "kategori": "tevekkül"
+        },
+        {
+          "sira": 8,
+          "ad": "Rızâ",
+          "ad_ar": "الرضا",
+          "tanim": "Giden nimet ve gelen bela ve nıkmet Hak tealanın kazasıyla olduğun bilip hatırın hoş tutmak",
+          "kategori": "kanaat"
+        },
+        {
+          "sira": 9,
+          "ad": "İnkıyâd",
+          "ad_ar": "الانقياد",
+          "tanim": "Kazaya karşı boyun eğmek; afet ve belaları Hakk'ın takdiriyle kabullenmek",
+          "kategori": "sabır"
+        },
+        {
+          "sira": 10,
+          "ad": "Verâ'",
+          "ad_ar": "الورع",
+          "tanim": "Şer'-i şerifin ruhsat verdiği şeylerden dahi kaçmak",
+          "kategori": "takva"
+        }
+      ]
+    },
+    {
+      "id": "nefs",
+      "ad": "Nefs",
+      "ad_ar": "النفس",
+      "tip": "dusman",
+      "konum": "Soldan (medine-i vücudun solu)",
+      "mukabili_id": "hilm",
+      "aciklama": "Emmâre nefsin kötü arzuları. Kalp şehrine soldan saldırır.",
+      "askerler": [
+        {
+          "sira": 1,
+          "ad": "Hırs",
+          "ad_ar": "الحرص",
+          "tanim": "Gayrin nimeti gibi bende de nimet olsun diye arzuya düşmek",
+          "kategori": "açgözlülük"
+        },
+        {
+          "sira": 2,
+          "ad": "Şehvet",
+          "ad_ar": "الشهوة",
+          "tanim": "Üzerine muvafıkı talep için nefsin hareketidir",
+          "kategori": "arzu"
+        },
+        {
+          "sira": 3,
+          "ad": "Şuhh",
+          "ad_ar": "الشح",
+          "tanim": "Üzerinden ve gayri yedinden eli komak (aşırı cimrilik/pintilik)",
+          "kategori": "cimrilik"
+        },
+        {
+          "sira": 4,
+          "ad": "Rağbet",
+          "ad_ar": "الرغبة",
+          "tanim": "Hayra meyletmeyip gayra meyletmek",
+          "kategori": "yönelim_bozukluğu"
+        },
+        {
+          "sira": 5,
+          "ad": "Zayiğ",
+          "ad_ar": "الزيغ",
+          "tanim": "Batıla meyledip eğilmek",
+          "kategori": "sapma"
+        },
+        {
+          "sira": 6,
+          "ad": "Kasavet",
+          "ad_ar": "القساوة",
+          "tanim": "Kalbi katı olup günahından ve kıyamet korkularından elem çekmemek",
+          "kategori": "katı_kalplilik"
+        },
+        {
+          "sira": 7,
+          "ad": "Buhl",
+          "ad_ar": "البخل",
+          "tanim": "Şer'an ve mürüvveten harç ve bezletmeyi lazım kıldığı yerde malı harcetmeyip men etmek",
+          "kategori": "cimrilik"
+        },
+        {
+          "sira": 8,
+          "ad": "Emel",
+          "ad_ar": "الأمل",
+          "tanim": "Uzun arzu ve temenni (ahireti unutturan dünya hevesleri)",
+          "kategori": "gaflet"
+        },
+        {
+          "sira": 9,
+          "ad": "Tama'",
+          "ad_ar": "الطمع",
+          "tanim": "Hurmet ve kerahete ihtimali olan şeylerin hasıl olmasına kast etmek",
+          "kategori": "tamah"
+        },
+        {
+          "sira": 10,
+          "ad": "Kesel",
+          "ad_ar": "الكسل",
+          "tanim": "Süstlük edip ibadette ve levazımlarında yorgunluk",
+          "kategori": "tembellik"
+        }
+      ]
+    },
+    {
+      "id": "hilm",
+      "ad": "Hilm",
+      "ad_ar": "الحلم",
+      "tip": "erdem",
+      "konum": "Soldan (nefse karşı)",
+      "mukabili_id": "nefs",
+      "aciklama": "Nefse karşı konuşlandırılan erdem ordusu. Kapıcı (hâcib) konumundadır.",
+      "askerler": [
+        {
+          "sira": 1,
+          "ad": "Teyakkuz",
+          "ad_ar": "التيقظ",
+          "tanim": "Umur-ı ahirette uyanık bulunup nadim olacak işleri etmemek",
+          "kategori": "basiret"
+        },
+        {
+          "sira": 2,
+          "ad": "İlim",
+          "ad_ar": "العلم",
+          "tanim": "Bu misafir-i haneden almaya layık olan zadını ve o zadı haramilerden emin edecek şeyleri bilmek",
+          "kategori": "bilgi"
+        },
+        {
+          "sira": 3,
+          "ad": "Kanaat",
+          "ad_ar": "القناعة",
+          "tanim": "Az nesneye katlanmak, tama etmemek",
+          "kategori": "yetinme"
+        },
+        {
+          "sira": 4,
+          "ad": "Şükür",
+          "ad_ar": "الشكر",
+          "tanim": "Hak Teala'nın nimetlerini tazimle kulluk etmek",
+          "kategori": "şükran"
+        },
+        {
+          "sira": 5,
+          "ad": "İcâbet",
+          "ad_ar": "الإجابة",
+          "tanim": "Hazret-i Mevlâ celle şanuhü tarafından ne ki buyuruldu ona uymak",
+          "kategori": "itaat"
+        },
+        {
+          "sira": 6,
+          "ad": "Teaffüf",
+          "ad_ar": "التعفف",
+          "tanim": "Gönlü istediği şeyleri şer'-i şerif ve mürüvvetin izni oldukça ondan nefsini men etmek",
+          "kategori": "iffet"
+        },
+        {
+          "sira": 7,
+          "ad": "Sabır",
+          "ad_ar": "الصبر",
+          "tanim": "Belaya ve meşakkate tahammül edip şikayet etmemek",
+          "kategori": "dayanıklılık"
+        },
+        {
+          "sira": 8,
+          "ad": "İctinab-ı Kabâyıh",
+          "ad_ar": "اجتناب القبائح",
+          "tanim": "Yaramaz şeylerden kaçmak, kavlen ve fiilen",
+          "kategori": "kaçınma"
+        },
+        {
+          "sira": 9,
+          "ad": "Nasihat",
+          "ad_ar": "النصيحة",
+          "tanim": "Âhara hayır sanıp faydalı nimetin durduğunu istemek",
+          "kategori": "iyilik"
+        },
+        {
+          "sira": 10,
+          "ad": "Atâ",
+          "ad_ar": "العطاء",
+          "tanim": "Cömertlik ve ihsan ile vermek",
+          "kategori": "cömertlik"
+        }
+      ]
+    },
+    {
+      "id": "seytan",
+      "ad": "Şeytan",
+      "ad_ar": "الشيطان",
+      "tip": "dusman",
+      "konum": "Enseden (medine-i vücudun arkası)",
+      "mukabili_id": "zikr",
+      "aciklama": "Şeytanın vesvese ve iğvası. Kalp şehrine arkadan saldırır.",
+      "askerler": [
+        {
+          "sira": 1,
+          "ad": "Zulüm",
+          "ad_ar": "الظلم",
+          "tanim": "Şeyin mevzi-i lâyıkının gayride koymak (bir şeyi yerine koymamak)",
+          "kategori": "haksızlık"
+        },
+        {
+          "sira": 2,
+          "ad": "Hıyânet",
+          "ad_ar": "الخيانة",
+          "tanim": "İşinde hainlik edip doğru sözü saklayıp dememek",
+          "kategori": "ihanet"
+        },
+        {
+          "sira": 3,
+          "ad": "Küfür",
+          "ad_ar": "الكفر",
+          "tanim": "Mümin olmak şanı olan kimse mümin olmamak",
+          "kategori": "inkâr"
+        },
+        {
+          "sira": 4,
+          "ad": "Terk-i Âne",
+          "ad_ar": "ترك الإعانة",
+          "tanim": "Mahalline yardım etmemek",
+          "kategori": "ihmal"
+        },
+        {
+          "sira": 5,
+          "ad": "Buğz",
+          "ad_ar": "البغض",
+          "tanim": "Ulemayı ve sülehayı sevmemek",
+          "kategori": "düşmanlık"
+        },
+        {
+          "sira": 6,
+          "ad": "Nifak",
+          "ad_ar": "النفاق",
+          "tanim": "Sözü işine ve içerisi dışına muhalif olmak",
+          "kategori": "ikiyüzlülük"
+        },
+        {
+          "sira": 7,
+          "ad": "Şekk fi Kudretillah",
+          "ad_ar": "الشك في قدرة الله",
+          "tanim": "Hak Teala'nın cemi eşyaya ve mümkünata gücü yettiğinde şüphe etmek",
+          "kategori": "şüphe"
+        },
+        {
+          "sira": 8,
+          "ad": "Hilâf-ı Emrillah",
+          "ad_ar": "خلاف أمر الله",
+          "tanim": "Hak Teala'nın emrine ve emrettiğine uymamak",
+          "kategori": "isyan"
+        },
+        {
+          "sira": 9,
+          "ad": "Tegafül an Sünnet-i Rasulillah",
+          "ad_ar": "التغافل عن سنة رسول الله",
+          "tanim": "Sünnetten gafil olmak; sünnete tabi olmayı terk etmek",
+          "kategori": "gaflet"
+        },
+        {
+          "sira": 10,
+          "ad": "Bid'at",
+          "ad_ar": "البدعة",
+          "tanim": "Rasul-i Ekrem ve Sahabe-i İzam'dan sonra izin olmaksızın dinde yeni şeyler icat etmek",
+          "kategori": "sapma"
+        }
+      ]
+    },
+    {
+      "id": "zikr",
+      "ad": "Zikr / Kur'an Tilâveti",
+      "ad_ar": "الذكر وتلاوة القرآن",
+      "tip": "erdem",
+      "konum": "Enseden (şeytana karşı)",
+      "mukabili_id": "seytan",
+      "aciklama": "Şeytana karşı konuşlandırılan erdem ordusu. Sahib-i sır (sır dostu) konumundadır.",
+      "askerler": [
+        {
+          "sira": 1,
+          "ad": "Hayâ",
+          "ad_ar": "الحياء",
+          "tanim": "Hak Teala'dan ve Rasulünden utanmak",
+          "kategori": "haya"
+        },
+        {
+          "sira": 2,
+          "ad": "Muhabbet",
+          "ad_ar": "المحبة",
+          "tanim": "Hak Tealayı sevmek; şurutuna riayet edersen mücerred dava ile olmaz",
+          "kategori": "sevgi"
+        },
+        {
+          "sira": 3,
+          "ad": "Îsâr",
+          "ad_ar": "الإيثار",
+          "tanim": "Gayriyi nefsinin üzerine tercih edip iyiliği rızaen lillahi ona etmek",
+          "kategori": "fedakârlık"
+        },
+        {
+          "sira": 4,
+          "ad": "Hüsn-i Sohbet",
+          "ad_ar": "حسن الصحبة",
+          "tanim": "Gökçek yol üzre olup muaşerette ve ibadette pâk gitmek",
+          "kategori": "güzel_ahlak"
+        },
+        {
+          "sira": 5,
+          "ad": "Tevekkül",
+          "ad_ar": "التوكل",
+          "tanim": "Her umurda gerek rızık gerek gayri, Mevla'ya dayanmak",
+          "kategori": "güven"
+        },
+        {
+          "sira": 6,
+          "ad": "Terk-i Cefâ",
+          "ad_ar": "ترك الجفاء",
+          "tanim": "Muziyatı terk etmek (eziyet verici şeyleri terk etmek)",
+          "kategori": "yumuşaklık"
+        },
+        {
+          "sira": 7,
+          "ad": "Tevâzu",
+          "ad_ar": "التواضع",
+          "tanim": "Kendinin gayriden alçak olmasını izhar etmek",
+          "kategori": "alçakgönüllülük"
+        },
+        {
+          "sira": 8,
+          "ad": "Vefâ",
+          "ad_ar": "الوفاء",
+          "tanim": "Va'd eğer ahd yerine getirmek",
+          "kategori": "sadakat"
+        },
+        {
+          "sira": 9,
+          "ad": "İnâyet",
+          "ad_ar": "العناية",
+          "tanim": "İnayet Mevla'ya rücu etmek (her işte Allah'a yönelmek)",
+          "kategori": "tevekkül"
+        },
+        {
+          "sira": 10,
+          "ad": "Şecâat",
+          "ad_ar": "الشجاعة",
+          "tanim": "İkdama lâyık olan umurda ikdam etmek",
+          "kategori": "cesaret"
+        }
+      ]
+    }
+  ],
+  "ozet": {
+    "toplam_cephe": 8,
+    "dusman_cephe": 4,
+    "erdem_cephe": 4,
+    "toplam_asker": 80,
+    "dusman_asker": 40,
+    "erdem_asker": 40,
+    "cephe_eslestirme": {
+      "dünya": "zühd",
+      "hevâ": "akıl",
+      "nefs": "hilm",
+      "şeytan": "zikr"
+    },
+    "konum_haritasi": {
+      "önde": {"dusman": "dünya", "erdem": "zühd"},
+      "sağda": {"dusman": "hevâ", "erdem": "akıl"},
+      "solda": {"dusman": "nefs", "erdem": "hilm"},
+      "ensede": {"dusman": "şeytan", "erdem": "zikr"}
+    }
+  }
+}

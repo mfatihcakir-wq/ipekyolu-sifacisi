@@ -1,7 +1,7 @@
 import {notFound} from 'next/navigation'
 import {getRequestConfig} from 'next-intl/server'
 
-const locales = ['tr', 'en', 'ar', 'es', 'ru']
+const locales = ['tr']
 
 export default getRequestConfig(async ({locale}) => {
   const loc = locale ?? 'tr'
