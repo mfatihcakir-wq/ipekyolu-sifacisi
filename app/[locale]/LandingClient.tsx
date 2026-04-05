@@ -6,9 +6,9 @@ import { Cinzel, EB_Garamond, Noto_Naskh_Arabic } from 'next/font/google'
 import Header from './components/Header'
 import { createClient } from '@/lib/supabase'
 
-const cinzel = Cinzel({ subsets: ['latin', 'latin-ext'], weight: ['400', '500', '600', '700'] })
-const garamond = EB_Garamond({ subsets: ['latin', 'latin-ext'], weight: ['400', '500'], style: ['normal', 'italic'] })
-const naskh = Noto_Naskh_Arabic({ subsets: ['arabic'], weight: ['400', '500'] })
+const cinzel = Cinzel({ display: 'swap', preload: false, subsets: ['latin', 'latin-ext'], weight: ['400', '500', '600', '700'] })
+const garamond = EB_Garamond({ display: 'swap', preload: false, subsets: ['latin', 'latin-ext'], weight: ['400', '500'], style: ['normal', 'italic'] })
+const naskh = Noto_Naskh_Arabic({ display: 'swap', preload: false, subsets: ['arabic'], weight: ['400', '500'] })
 
 const C = {
   primary: '#1C3A26', primaryDark: '#122B1C', gold: '#8B6914',

@@ -5,7 +5,7 @@ import { useRouter, usePathname } from 'next/navigation'
 import { Cinzel } from 'next/font/google'
 import { createClient } from '@/lib/supabase'
 
-const cinzel = Cinzel({ subsets: ['latin', 'latin-ext'], weight: ['400', '500', '600'] })
+const cinzel = Cinzel({ display: 'swap', preload: false, subsets: ['latin', 'latin-ext'], weight: ['400', '500', '600'] })
 
 const C = {
   primary: '#1C3A26', gold: '#8B6914', cream: '#FAF7F2',

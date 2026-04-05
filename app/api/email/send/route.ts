@@ -3,11 +3,10 @@ import { Resend } from 'resend'
 import { ciltRaporuHtml } from '@/app/emails/cilt-raporu'
 import { analizRaporuHtml } from '@/app/emails/analiz-raporu'
 
-const resend = new Resend(process.env.RESEND_API_KEY)
-const FROM_EMAIL = process.env.FROM_EMAIL || 'onboarding@resend.dev'
-const ADMIN_EMAIL = process.env.ADMIN_EMAIL || 'm.fatih.cakir@gmail.com'
-
 export async function POST(request: NextRequest) {
+  const resend = new Resend(process.env.RESEND_API_KEY)
+  const FROM_EMAIL = process.env.FROM_EMAIL || 'onboarding@resend.dev'
+  const ADMIN_EMAIL = process.env.ADMIN_EMAIL || 'm.fatih.cakir@gmail.com'
   try {
     const { to, subject, type, sonuc_verisi, hasta_adi, kayit_no } = await request.json()
 

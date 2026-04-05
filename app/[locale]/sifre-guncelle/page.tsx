@@ -6,8 +6,8 @@ import { Cinzel, EB_Garamond } from 'next/font/google'
 import Header from '../components/Header'
 import Footer from '../components/Footer'
 
-const cinzel = Cinzel({ subsets: ['latin', 'latin-ext'], weight: ['400', '600'] })
-const garamond = EB_Garamond({ subsets: ['latin', 'latin-ext'], weight: ['400'], style: ['normal'] })
+const cinzel = Cinzel({ display: 'swap', preload: false, subsets: ['latin', 'latin-ext'], weight: ['400', '600'] })
+const garamond = EB_Garamond({ display: 'swap', preload: false, subsets: ['latin', 'latin-ext'], weight: ['400'], style: ['normal'] })
 
 const C = { primary: '#1C3A26', gold: '#8B6914', cream: '#FAF7F2', border: '#E8DFD4' }
 

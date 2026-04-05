@@ -4,9 +4,9 @@ import { useEffect, useState, useMemo } from 'react'
 import { Cinzel, EB_Garamond, Noto_Naskh_Arabic } from 'next/font/google'
 import { createClient } from '@/lib/supabase'
 
-const cinzel = Cinzel({ subsets: ['latin', 'latin-ext'], weight: ['400', '500', '600'] })
-const garamond = EB_Garamond({ subsets: ['latin', 'latin-ext'], weight: ['400', '500'], style: ['normal', 'italic'] })
-const naskh = Noto_Naskh_Arabic({ subsets: ['arabic'], weight: ['400', '500'] })
+const cinzel = Cinzel({ display: 'swap', preload: false, subsets: ['latin', 'latin-ext'], weight: ['400', '500', '600'] })
+const garamond = EB_Garamond({ display: 'swap', preload: false, subsets: ['latin', 'latin-ext'], weight: ['400', '500'], style: ['normal', 'italic'] })
+const naskh = Noto_Naskh_Arabic({ display: 'swap', preload: false, subsets: ['arabic'], weight: ['400', '500'] })
 
 const C = {
   primary: '#1C3A26', gold: '#8B6914', cream: '#FAF7F2',
