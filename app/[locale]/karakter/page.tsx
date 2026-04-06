@@ -4,27 +4,16 @@ import { useState, useEffect, useRef } from 'react'
 import { useRouter } from 'next/navigation'
 import { Cinzel, EB_Garamond } from 'next/font/google'
 import { createClient } from '@/lib/supabase'
-import Header from '../components/Header'
-import Footer from '../components/Footer'
 
 const cinzel = Cinzel({ display: 'swap', preload: false, subsets: ['latin', 'latin-ext'], weight: ['400', '500', '600'] })
 const garamond = EB_Garamond({ display: 'swap', preload: false, subsets: ['latin', 'latin-ext'], weight: ['400', '500'], style: ['normal', 'italic'] })
 
-const C = {
-  primary: '#1C3A26', gold: '#B8860B', cream: '#FAF6EF',
-  dark: '#1C1C1C', secondary: '#6B5744', border: '#DEB887',
-  white: '#FFFFFF', surface: '#FAF6EF',
+const CEPHE_META: Record<string, {name:string,arabic:string,yon:string,renk:string,tanim:string}> = {
+  dunya: { name:'Dünyâ', arabic:'جبهة الدنيا', yon:'ÖNDEN · CEPHE I', renk:'#D4A843', tanim:'Dünyanın aldatıcı cazibesine karşı kalbin savunması' },
+  heva: { name:'Hevâ', arabic:'جبهة الهوى', yon:'SAĞDAN · CEPHE III', renk:'#78A0C8', tanim:'Nefsin tutkuları ve arzularının yönettiği cephe' },
+  nefs: { name:'Nefs', arabic:'جبهة النفس', yon:'SOLDAN · CEPHE II', renk:'#C47878', tanim:'Nefsin karanlık yüzü — kibir ve ucubun kalbi kuşattığı cephe' },
+  seytan: { name:'Şeytân', arabic:'جبهة الشيطان', yon:'ENSEDEN · CEPHE IV', renk:'#A07BC8', tanim:'İman ve yakîn savaşının en gizli cephesi' },
 }
-
-const CEPHE_RENK: Record<string, string> = { dunya: '#2563EB', heva: '#F59E0B', nefs: '#DC2626', seytan: '#7C3AED' }
-const CEPHE_YON: Record<string, string> = { dunya: 'ONDEN', heva: 'SAGDAN', nefs: 'SOLDAN', seytan: 'ENSEDEN' }
-
-const CEVAPLAR = [
-  { value: 0, label: 'Hic', alt: 'Bu beni tanimlamiyor' },
-  { value: 1, label: 'Bazen', alt: 'Nadiren, fark ediyorum' },
-  { value: 2, label: 'Siklikla', alt: 'Cogu zaman boyle oluyor' },
-  { value: 3, label: 'Cogunlukla', alt: 'Guclu sekilde tanimliyor' },
-]
 
 interface Asker {
   id: string; soru: string; tanim: string; ornek: string
@@ -84,6 +73,8 @@ const CEPHELER: Cephe[] = [
     { id: 'bidat', soru: 'Dinde olmayan seyleri dine dahil ederim', tanim: 'Rasul ve Sahabe den sonra izinsiz dinde icat etmek', ornek: 'Dini konularda herkes boyle yapiyor ya da ben boyle hissediyorum gerekcresiyle kaynaklarda olmayan seyleri benimsedigin olmustur.' },
   ]},
 ]
+
+const CEPHE_SIRASI = ['dunya', 'heva', 'nefs', 'seytan'] as const
 
 export default function KarakterAnaliziPage() {
   const router = useRouter()
@@ -163,10 +154,23 @@ export default function KarakterAnaliziPage() {
     setYukleniyor(false)
   }
 
-  return (
-    <div style={{ background: C.cream, minHeight: '100vh', fontFamily: garamond.style.fontFamily }}>
-      <Header />
+  // Derive current cephe from soruIndex
+  const currentCepheId = CEPHE_SIRASI[Math.floor(soruIndex / 10)] || 'dunya'
+  const currentCepheMeta = CEPHE_META[currentCepheId]
+  const currentCepheAskerler = CEPHELER[Math.floor(soruIndex / 10)]?.askerler || []
+  const askerIdxInCephe = soruIndex % 10
 
+  const LIKERT = [
+    { value: 0, label: 'Hic boyle degilim' },
+    { value: 1, label: 'Bazen boyleyim' },
+    { value: 2, label: 'Siklikla boyleyim' },
+    { value: 3, label: 'Cogunlukla boyleyim' },
+  ]
+
+  return (
+    <div style={{ background: '#1A2E1E', minHeight: '100vh', fontFamily: garamond.style.fontFamily }}>
+
+      {/* TOAST */}
       {toast && (
         <div style={{ position: 'fixed', top: 20, right: 20, zIndex: 9999, background: toast.tip === 'hata' ? '#FCEBEB' : '#EAF3DE', border: `1px solid ${toast.tip === 'hata' ? '#F7C1C1' : '#C0DD97'}`, color: toast.tip === 'hata' ? '#A32D2D' : '#3B6D11', padding: '14px 20px', borderRadius: 10, fontSize: 13, maxWidth: 360, boxShadow: '0 4px 20px rgba(0,0,0,0.12)', display: 'flex', alignItems: 'center', gap: 10 }}>
           <span>{toast.mesaj}</span>
@@ -174,246 +178,360 @@ export default function KarakterAnaliziPage() {
         </div>
       )}
 
-      <div style={{ maxWidth: 900, margin: '0 auto', padding: '32px 20px 60px' }}>
-
-        {/* BASLIK */}
-        <div style={{ textAlign: 'center', marginBottom: 32 }}>
-          <h1 style={{ fontFamily: cinzel.style.fontFamily, fontSize: 'clamp(28px, 5vw, 38px)', color: C.primary, marginBottom: 8, fontWeight: 500 }}>{"Kalp Sehri"}</h1>
-          <p style={{ fontSize: 16, color: C.secondary, fontStyle: 'italic', maxWidth: 500, margin: '0 auto 14px' }}>{"Klasik Islam dusuncesi cercevesinde oz-degerlendirme"}</p>
-          <div style={{ background: '#FFF8E7', border: `1px solid ${C.gold}`, borderRadius: 10, padding: '10px 16px', fontSize: 12, color: C.secondary, display: 'inline-block' }}>
-            {"Bu arac tibbi veya psikolojik tedavinin yerini tutmaz."}
+      {/* ============ VIEW 1: HARITA ============ */}
+      {gorunum === 'harita' && (
+        <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '40px 20px', position: 'relative' }}>
+          {/* Eyebrow */}
+          <div style={{ fontFamily: cinzel.style.fontFamily, fontSize: 7, letterSpacing: 5, color: 'rgba(212,168,67,0.4)', textTransform: 'uppercase', marginBottom: 16, textAlign: 'center' }}>
+            KLASiK iSLAM DUSUNCESi &middot; NEFS MUHASEBESi
           </div>
+
+          {/* Title */}
+          <h1 style={{ fontFamily: cinzel.style.fontFamily, fontSize: 48, fontWeight: 500, margin: '0 0 10px', textAlign: 'center' }}>
+            <span style={{ color: '#FFFFFF' }}>Kalp</span>{' '}
+            <span style={{ color: '#D4A843' }}>Sehri</span>
+          </h1>
+
+          {/* Subtitle */}
+          <p style={{ fontSize: 15, fontStyle: 'italic', color: 'rgba(255,255,255,0.3)', margin: '0 0 40px', textAlign: 'center', maxWidth: 440 }}>
+            40 askerin dort cepheden kusattigi kalbin muhasebesi
+          </p>
+
+          {/* SVG Heart Map */}
+          <div style={{ position: 'relative', width: '100%', maxWidth: 500, margin: '0 auto 40px' }}>
+            <svg viewBox="0 0 500 450" style={{ width: '100%', height: 'auto' }}>
+              {/* Background octagon pattern */}
+              <g opacity="0.045" stroke="#D4A843" strokeWidth="0.5" fill="none">
+                <polygon points="250,40 370,90 410,210 370,330 250,380 130,330 90,210 130,90" />
+                <polygon points="250,80 340,115 370,210 340,305 250,340 160,305 130,210 160,115" />
+                <polygon points="250,120 310,140 330,210 310,280 250,300 190,280 170,210 190,140" />
+              </g>
+
+              {/* Attack lines — dashed animated */}
+              <line x1="250" y1="60" x2="250" y2="155" stroke="#D4A843" strokeWidth="1" strokeDasharray="4 4" opacity="0.25" className="karakter-dash" />
+              <line x1="440" y1="225" x2="325" y2="225" stroke="#78A0C8" strokeWidth="1" strokeDasharray="4 4" opacity="0.25" className="karakter-dash" />
+              <line x1="60" y1="225" x2="175" y2="225" stroke="#C47878" strokeWidth="1" strokeDasharray="4 4" opacity="0.25" className="karakter-dash" />
+              <line x1="250" y1="390" x2="250" y2="295" stroke="#A07BC8" strokeWidth="1" strokeDasharray="4 4" opacity="0.25" className="karakter-dash" />
+
+              {/* Central heart circle */}
+              <circle cx="250" cy="225" r="70" fill="#152A1A" stroke="rgba(212,168,67,0.3)" strokeWidth="1.5" className="karakter-hb" />
+
+              {/* Inner heart anatomy */}
+              <ellipse cx="235" cy="210" rx="22" ry="26" fill="none" stroke="rgba(212,168,67,0.15)" strokeWidth="0.8" />
+              <ellipse cx="265" cy="210" rx="22" ry="26" fill="none" stroke="rgba(212,168,67,0.15)" strokeWidth="0.8" />
+              <ellipse cx="240" cy="240" rx="18" ry="22" fill="none" stroke="rgba(212,168,67,0.12)" strokeWidth="0.8" />
+              <ellipse cx="260" cy="240" rx="18" ry="22" fill="none" stroke="rgba(212,168,67,0.12)" strokeWidth="0.8" />
+
+              {/* Heart label */}
+              <text x="250" y="228" textAnchor="middle" fill="#D4A843" fontFamily={cinzel.style.fontFamily} fontSize="11" letterSpacing="3" opacity="0.7">KALP</text>
+
+              {/* Gate points with glow */}
+              <circle cx="250" cy="155" r="5" fill="#D4A843" opacity="0.6" className="karakter-glow" />
+              <circle cx="325" cy="225" r="5" fill="#78A0C8" opacity="0.6" className="karakter-glow" />
+              <circle cx="175" cy="225" r="5" fill="#C47878" opacity="0.6" className="karakter-glow" />
+              <circle cx="250" cy="295" r="5" fill="#A07BC8" opacity="0.6" className="karakter-glow" />
+
+              {/* Directional labels */}
+              {/* Dunya — top */}
+              <text x="250" y="40" textAnchor="middle" fill="#D4A843" fontFamily={cinzel.style.fontFamily} fontSize="9" letterSpacing="2" opacity="0.7">ONDEN</text>
+              <text x="250" y="55" textAnchor="middle" fill="#D4A843" fontFamily={cinzel.style.fontFamily} fontSize="13" opacity="0.9">Dunya</text>
+
+              {/* Heva — right */}
+              <text x="450" y="220" textAnchor="middle" fill="#78A0C8" fontFamily={cinzel.style.fontFamily} fontSize="9" letterSpacing="2" opacity="0.7">SAGDAN</text>
+              <text x="450" y="235" textAnchor="middle" fill="#78A0C8" fontFamily={cinzel.style.fontFamily} fontSize="13" opacity="0.9">Heva</text>
+
+              {/* Nefs — left */}
+              <text x="50" y="220" textAnchor="middle" fill="#C47878" fontFamily={cinzel.style.fontFamily} fontSize="9" letterSpacing="2" opacity="0.7">SOLDAN</text>
+              <text x="50" y="235" textAnchor="middle" fill="#C47878" fontFamily={cinzel.style.fontFamily} fontSize="13" opacity="0.9">Nefs</text>
+
+              {/* Seytan — bottom */}
+              <text x="250" y="405" textAnchor="middle" fill="#A07BC8" fontFamily={cinzel.style.fontFamily} fontSize="9" letterSpacing="2" opacity="0.7">ENSEDEN</text>
+              <text x="250" y="420" textAnchor="middle" fill="#A07BC8" fontFamily={cinzel.style.fontFamily} fontSize="13" opacity="0.9">Seytan</text>
+            </svg>
+          </div>
+
+          {/* Warning */}
+          <div style={{ background: 'rgba(212,168,67,0.08)', border: '1px solid rgba(212,168,67,0.2)', borderRadius: 8, padding: '8px 18px', fontSize: 11, color: 'rgba(212,168,67,0.6)', marginBottom: 32, textAlign: 'center', maxWidth: 400 }}>
+            Bu arac tibbi veya psikolojik tedavinin yerini tutmaz.
+          </div>
+
+          {/* CTA */}
+          <button
+            onClick={() => { if (!isLoggedIn) setAuthModal(true); else { setGorunum('form'); setSoruIndex(0) } }}
+            style={{
+              padding: '16px 48px',
+              background: '#D4A843',
+              border: 'none',
+              borderRadius: 8,
+              color: '#1A2E1E',
+              fontFamily: cinzel.style.fontFamily,
+              fontSize: 14,
+              fontWeight: 600,
+              letterSpacing: 3,
+              cursor: 'pointer',
+              transition: 'opacity 0.2s',
+            }}
+            onMouseEnter={e => (e.currentTarget.style.opacity = '0.9')}
+            onMouseLeave={e => (e.currentTarget.style.opacity = '1')}
+          >
+            MUHASEBEYE BASLA
+          </button>
         </div>
+      )}
 
-        {/* HARITA */}
-        {gorunum === 'harita' && (
-          <div style={{ background: C.white, borderRadius: 16, border: `1px solid ${C.border}`, padding: '28px', marginBottom: 28 }}>
-            <div style={{ fontFamily: cinzel.style.fontFamily, fontSize: 10, color: C.gold, letterSpacing: 3, textAlign: 'center', marginBottom: 20 }}>{"KALBIN KUSATMA HARITASI"}</div>
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gridTemplateRows: 'auto auto auto', gap: 12, maxWidth: 480, margin: '0 auto' }}>
-              {/* Ust orta: Dunya */}
-              <div />
-              <button onClick={() => { if (!isLoggedIn) { setAuthModal(true); return } setGorunum('form'); setSoruIndex(0) }} style={{ background: `${CEPHE_RENK.dunya}10`, border: `1.5px solid ${CEPHE_RENK.dunya}`, borderRadius: 12, padding: '14px 10px', cursor: 'pointer', textAlign: 'center' }}>
-                <div style={{ fontSize: 9, color: CEPHE_RENK.dunya, letterSpacing: 2 }}>ONDEN</div>
-                <div style={{ fontFamily: cinzel.style.fontFamily, fontSize: 14, color: C.primary, marginTop: 4 }}>Dunya</div>
-                <div style={{ fontSize: 13, color: C.gold, fontFamily: 'serif' }}>{CEPHELER[0].ad_ar}</div>
-                <div style={{ fontSize: 10, color: '#999', marginTop: 4 }}>10 asker</div>
-              </button>
-              <div />
-
-              {/* Orta: Nefs — Kalp — Heva */}
-              <button onClick={() => { if (!isLoggedIn) { setAuthModal(true); return } setGorunum('form'); setSoruIndex(20) }} style={{ background: `${CEPHE_RENK.nefs}10`, border: `1.5px solid ${CEPHE_RENK.nefs}`, borderRadius: 12, padding: '14px 10px', cursor: 'pointer', textAlign: 'center' }}>
-                <div style={{ fontSize: 9, color: CEPHE_RENK.nefs, letterSpacing: 2 }}>SOLDAN</div>
-                <div style={{ fontFamily: cinzel.style.fontFamily, fontSize: 14, color: C.primary, marginTop: 4 }}>Nefs</div>
-                <div style={{ fontSize: 13, color: C.gold, fontFamily: 'serif' }}>{CEPHELER[2].ad_ar}</div>
-                <div style={{ fontSize: 10, color: '#999', marginTop: 4 }}>10 asker</div>
-              </button>
-              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                <div style={{ width: 80, height: 80, borderRadius: '50%', background: C.primary, display: 'flex', alignItems: 'center', justifyContent: 'center', flexDirection: 'column' }}>
-                  <span style={{ fontSize: 24, color: C.gold }}>{'\u2665'}</span>
-                  <span style={{ fontFamily: cinzel.style.fontFamily, fontSize: 10, color: C.gold, letterSpacing: 2 }}>KALP</span>
-                </div>
-              </div>
-              <button onClick={() => { if (!isLoggedIn) { setAuthModal(true); return } setGorunum('form'); setSoruIndex(10) }} style={{ background: `${CEPHE_RENK.heva}10`, border: `1.5px solid ${CEPHE_RENK.heva}`, borderRadius: 12, padding: '14px 10px', cursor: 'pointer', textAlign: 'center' }}>
-                <div style={{ fontSize: 9, color: CEPHE_RENK.heva, letterSpacing: 2 }}>SAGDAN</div>
-                <div style={{ fontFamily: cinzel.style.fontFamily, fontSize: 14, color: C.primary, marginTop: 4 }}>Heva</div>
-                <div style={{ fontSize: 13, color: C.gold, fontFamily: 'serif' }}>{CEPHELER[1].ad_ar}</div>
-                <div style={{ fontSize: 10, color: '#999', marginTop: 4 }}>10 asker</div>
-              </button>
-
-              {/* Alt orta: Seytan */}
-              <div />
-              <button onClick={() => { if (!isLoggedIn) { setAuthModal(true); return } setGorunum('form'); setSoruIndex(30) }} style={{ background: `${CEPHE_RENK.seytan}10`, border: `1.5px solid ${CEPHE_RENK.seytan}`, borderRadius: 12, padding: '14px 10px', cursor: 'pointer', textAlign: 'center' }}>
-                <div style={{ fontSize: 9, color: CEPHE_RENK.seytan, letterSpacing: 2 }}>ENSEDEN</div>
-                <div style={{ fontFamily: cinzel.style.fontFamily, fontSize: 14, color: C.primary, marginTop: 4 }}>Seytan</div>
-                <div style={{ fontSize: 13, color: C.gold, fontFamily: 'serif' }}>{CEPHELER[3].ad_ar}</div>
-                <div style={{ fontSize: 10, color: '#999', marginTop: 4 }}>10 asker</div>
-              </button>
-              <div />
+      {/* ============ VIEW 2: FORM ============ */}
+      {gorunum === 'form' && mevcutSoru && (
+        <div ref={formRef} className="karakter-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', minHeight: '100vh' }}>
+          {/* LEFT PANEL */}
+          <div className="karakter-left-panel" style={{ background: '#1A2E1E', padding: '48px 36px', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+            {/* Cephe direction */}
+            <div style={{ fontFamily: cinzel.style.fontFamily, fontSize: 7, letterSpacing: 4, color: currentCepheMeta.renk, opacity: 0.7, marginBottom: 12, textTransform: 'uppercase' }}>
+              {currentCepheMeta.yon}
             </div>
-            <div style={{ textAlign: 'center', marginTop: 24 }}>
-              <button onClick={() => { if (!isLoggedIn) { setAuthModal(true); return } setGorunum('form'); setSoruIndex(0) }}
-                style={{ padding: '14px 36px', background: C.primary, border: 'none', borderRadius: 12, color: C.gold, fontFamily: cinzel.style.fontFamily, fontSize: 14, fontWeight: 600, cursor: 'pointer', letterSpacing: 2 }}>
-                {"BASLAT"}
-              </button>
+
+            {/* Cephe name */}
+            <div style={{ fontFamily: cinzel.style.fontFamily, fontSize: 36, fontWeight: 700, color: '#F5EAD4', marginBottom: 6 }}>
+              {currentCepheMeta.name}
+            </div>
+
+            {/* Arabic name */}
+            <div style={{ fontFamily: 'serif', fontSize: 18, color: currentCepheMeta.renk, opacity: 0.55, marginBottom: 16, direction: 'rtl' as const }}>
+              {currentCepheMeta.arabic}
+            </div>
+
+            {/* Divider */}
+            <div style={{ width: 40, height: 1, background: 'rgba(212,168,67,0.2)', marginBottom: 16 }} />
+
+            {/* Description */}
+            <div style={{ fontSize: 13, fontStyle: 'italic', color: 'rgba(255,255,255,0.4)', lineHeight: 1.7, marginBottom: 28, maxWidth: 320 }}>
+              {currentCepheMeta.tanim}
+            </div>
+
+            {/* Asker chips */}
+            <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6 }}>
+              {currentCepheAskerler.map((asker, idx) => {
+                const isActive = idx === askerIdxInCephe
+                const isPast = idx < askerIdxInCephe
+                const isFuture = idx > askerIdxInCephe
+                return (
+                  <div
+                    key={asker.id}
+                    style={{
+                      padding: '5px 10px',
+                      borderRadius: 20,
+                      fontSize: 10,
+                      fontFamily: cinzel.style.fontFamily,
+                      letterSpacing: 1,
+                      cursor: 'pointer',
+                      transition: 'all 0.2s',
+                      ...(isActive
+                        ? { background: '#D4A843', color: '#1A2E1E', fontWeight: 600 }
+                        : isPast
+                          ? { background: 'transparent', border: '1px solid rgba(212,168,67,0.15)', color: 'rgba(212,168,67,0.3)' }
+                          : isFuture
+                            ? { background: 'transparent', border: '1px solid rgba(255,255,255,0.12)', color: 'rgba(255,255,255,0.3)' }
+                            : {}
+                      ),
+                    }}
+                    onClick={() => {
+                      const base = Math.floor(soruIndex / 10) * 10
+                      setSoruIndex(base + idx)
+                    }}
+                  >
+                    {asker.id.charAt(0).toUpperCase() + asker.id.slice(1).replace('_', ' ')}
+                  </div>
+                )
+              })}
             </div>
           </div>
-        )}
 
-        {/* FORM */}
-        {gorunum === 'form' && mevcutSoru && (
-          <div ref={formRef}>
-            {/* Progress */}
-            <div style={{ marginBottom: 20 }}>
-              <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 11, color: '#999', marginBottom: 6 }}>
-                <span>{mevcutSoru.cephe.ad} {'·'} {mevcutSoru.askerIdx + 1}/10</span>
-                <span>{soruIndex + 1}/{toplamSoru}</span>
-              </div>
-              <div style={{ height: 4, background: C.border, borderRadius: 2 }}>
-                <div style={{ height: 4, background: CEPHE_RENK[mevcutSoru.cephe.id], borderRadius: 2, width: `${((soruIndex + 1) / toplamSoru) * 100}%`, transition: 'width 0.3s' }} />
-              </div>
+          {/* RIGHT PANEL */}
+          <div style={{ background: '#FAF6EF', padding: '48px 36px', display: 'flex', flexDirection: 'column', justifyContent: 'center', position: 'relative' }}>
+            {/* Question number */}
+            <div style={{ fontFamily: cinzel.style.fontFamily, fontSize: 7, letterSpacing: 4, color: 'rgba(0,0,0,0.3)', marginBottom: 20, textTransform: 'uppercase' }}>
+              SORU {soruIndex + 1} / 40
             </div>
 
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 20 }}>
-              {/* SOL: Asker kimligi */}
-              <div style={{ background: C.white, borderRadius: 14, border: `1px solid ${C.border}`, padding: '24px' }}>
-                <div style={{ fontSize: 10, color: CEPHE_RENK[mevcutSoru.cephe.id], letterSpacing: 2, marginBottom: 6 }}>
-                  {mevcutSoru.cephe.ad.toUpperCase()} {'·'} {CEPHE_YON[mevcutSoru.cephe.id]} {'·'} {mevcutSoru.askerIdx + 1}/10
-                </div>
-                <h2 style={{ fontFamily: cinzel.style.fontFamily, fontSize: 22, color: C.primary, marginBottom: 4 }}>{mevcutSoru.id.charAt(0).toUpperCase() + mevcutSoru.id.slice(1).replace('_', ' ')}</h2>
-                <div style={{ background: C.surface, borderLeft: `3px solid ${C.gold}`, borderRadius: '0 8px 8px 0', padding: '10px 14px', marginBottom: 12, fontSize: 13, color: C.secondary, lineHeight: 1.6 }}>
-                  {mevcutSoru.tanim}
-                </div>
-                <div style={{ background: '#FFF8E7', borderRadius: 8, padding: '10px 14px', fontSize: 13, color: C.secondary, fontStyle: 'italic', lineHeight: 1.6 }}>
-                  {mevcutSoru.ornek}
-                </div>
-              </div>
-
-              {/* SAG: Soru */}
-              <div style={{ background: C.white, borderRadius: 14, border: `1px solid ${C.border}`, padding: '24px', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
-                <div style={{ width: 4, height: 32, background: CEPHE_RENK[mevcutSoru.cephe.id], borderRadius: 2, marginBottom: 16 }} />
-                <p style={{ fontFamily: cinzel.style.fontFamily, fontSize: 18, color: C.primary, lineHeight: 1.5, marginBottom: 24 }}>
-                  {mevcutSoru.soru}
-                </p>
-                <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
-                  {CEVAPLAR.map(c => {
-                    const secili = cevaplar[mevcutSoru.id] === c.value
-                    return (
-                      <button key={c.value} onClick={() => cevapVer(c.value)}
-                        style={{
-                          display: 'flex', alignItems: 'center', gap: 12, padding: '12px 16px',
-                          borderRadius: 10, cursor: 'pointer', textAlign: 'left',
-                          border: `1.5px solid ${secili ? C.primary : C.border}`,
-                          background: secili ? `${C.primary}08` : C.white,
-                          borderLeft: secili ? `4px solid ${C.primary}` : `4px solid transparent`,
-                        }}>
-                        <div>
-                          <div style={{ fontSize: 14, color: secili ? C.primary : C.dark, fontWeight: secili ? 600 : 400 }}>{c.label}</div>
-                          <div style={{ fontSize: 11, color: '#999' }}>{c.alt}</div>
-                        </div>
-                      </button>
-                    )
-                  })}
-                </div>
-              </div>
+            {/* Cephe + asker label */}
+            <div style={{ fontSize: 11, color: 'rgba(0,0,0,0.35)', marginBottom: 8 }}>
+              {currentCepheMeta.name} &middot; {mevcutSoru.id.charAt(0).toUpperCase() + mevcutSoru.id.slice(1).replace('_', ' ')}
             </div>
 
-            {/* Nav */}
-            <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: 20 }}>
-              <button onClick={() => { if (soruIndex > 0) setSoruIndex(soruIndex - 1); else setGorunum('harita') }}
-                style={{ padding: '10px 24px', border: `1px solid ${C.border}`, borderRadius: 8, background: C.white, color: C.secondary, cursor: 'pointer', fontSize: 13 }}>
+            {/* Question text */}
+            <p style={{ fontFamily: garamond.style.fontFamily, fontSize: 18, lineHeight: 1.7, color: '#1A2E1E', marginBottom: 32, maxWidth: 440 }}>
+              {mevcutSoru.soru}
+            </p>
+
+            {/* Likert options */}
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 8, marginBottom: 32 }}>
+              {LIKERT.map(opt => {
+                const secili = cevaplar[mevcutSoru.id] === opt.value
+                return (
+                  <button
+                    key={opt.value}
+                    onClick={() => cevapVer(opt.value)}
+                    style={{
+                      padding: '11px 14px',
+                      borderRadius: 8,
+                      border: secili ? '0.5px solid #D4A843' : '0.5px solid rgba(0,0,0,0.1)',
+                      background: secili ? 'rgba(212,168,67,0.08)' : 'transparent',
+                      cursor: 'pointer',
+                      textAlign: 'left',
+                      fontSize: 14,
+                      color: secili ? '#1A2E1E' : 'rgba(0,0,0,0.55)',
+                      fontFamily: garamond.style.fontFamily,
+                      fontWeight: secili ? 600 : 400,
+                      transition: 'all 0.15s',
+                    }}
+                  >
+                    {opt.label}
+                  </button>
+                )
+              })}
+            </div>
+
+            {/* Navigation buttons */}
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+              <button
+                onClick={() => { if (soruIndex > 0) setSoruIndex(soruIndex - 1); else setGorunum('harita') }}
+                style={{ padding: '8px 20px', border: '1px solid rgba(0,0,0,0.1)', borderRadius: 6, background: 'transparent', color: 'rgba(0,0,0,0.4)', cursor: 'pointer', fontSize: 12 }}
+              >
                 {soruIndex > 0 ? '\u2190 Onceki' : '\u2190 Harita'}
               </button>
               {soruIndex < toplamSoru - 1 && (
-                <button onClick={() => setSoruIndex(soruIndex + 1)}
-                  style={{ padding: '10px 24px', background: C.primary, border: 'none', borderRadius: 8, color: C.gold, cursor: 'pointer', fontSize: 13, fontWeight: 600 }}>
-                  {"Sonraki \u2192"}
+                <button
+                  onClick={() => setSoruIndex(soruIndex + 1)}
+                  style={{ padding: '8px 20px', background: '#D4A843', border: 'none', borderRadius: 6, color: '#1A2E1E', cursor: 'pointer', fontSize: 12, fontWeight: 600 }}
+                >
+                  Sonraki &rarr;
                 </button>
               )}
             </div>
 
-            <style>{`@media(max-width:768px){[style*="grid-template-columns: 1fr 1fr"]{grid-template-columns:1fr !important}}`}</style>
+            {/* Progress bar */}
+            <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, height: 3, background: 'rgba(0,0,0,0.05)' }}>
+              <div style={{ height: 3, background: '#D4A843', width: `${((soruIndex + 1) / toplamSoru) * 100}%`, transition: 'width 0.3s' }} />
+            </div>
           </div>
-        )}
+        </div>
+      )}
 
-        {/* SONUC EKRANI */}
-        {gorunum === 'sonuc' && (
-          <div>
-            <div style={{ background: C.white, borderRadius: 14, border: `1px solid ${C.border}`, padding: '24px', marginBottom: 20 }}>
-              <div style={{ fontFamily: cinzel.style.fontFamily, fontSize: 12, color: C.gold, letterSpacing: 2, marginBottom: 16 }}>{"CEPHE SKORLARI"}</div>
+      {/* ============ VIEW 3: SONUC ============ */}
+      {gorunum === 'sonuc' && (
+        <div style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '40px 20px' }}>
+          <div style={{ maxWidth: 600, width: '100%' }}>
+            <div style={{ fontFamily: cinzel.style.fontFamily, fontSize: 8, letterSpacing: 4, color: 'rgba(212,168,67,0.5)', textAlign: 'center', marginBottom: 20, textTransform: 'uppercase' }}>
+              CEPHE SKORLARI
+            </div>
+
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12, marginBottom: 28 }}>
               {CEPHELER.map(c => {
                 const skor = cepheSkoru(c.id)
-                const renk = skor > 60 ? '#C62828' : skor > 35 ? '#F57C00' : '#2E7D32'
+                const meta = CEPHE_META[c.id]
                 return (
-                  <div key={c.id} style={{ marginBottom: 12 }}>
-                    <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 13, marginBottom: 4 }}>
-                      <span style={{ color: C.dark }}>{c.ad}</span>
-                      <span style={{ color: renk, fontWeight: 600 }}>{skor}%</span>
-                    </div>
-                    <div style={{ height: 6, background: '#eee', borderRadius: 3 }}>
-                      <div style={{ height: 6, background: CEPHE_RENK[c.id], borderRadius: 3, width: `${skor}%`, transition: 'width 0.5s' }} />
+                  <div key={c.id} style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.06)', borderRadius: 12, padding: '20px' }}>
+                    <div style={{ fontFamily: cinzel.style.fontFamily, fontSize: 8, letterSpacing: 3, color: meta.renk, opacity: 0.6, marginBottom: 6 }}>{meta.yon}</div>
+                    <div style={{ fontFamily: cinzel.style.fontFamily, fontSize: 18, color: '#F5EAD4', marginBottom: 4 }}>{meta.name}</div>
+                    <div style={{ fontSize: 28, fontWeight: 700, color: meta.renk, marginBottom: 8 }}>{skor}%</div>
+                    <div style={{ height: 3, background: 'rgba(255,255,255,0.06)', borderRadius: 2 }}>
+                      <div style={{ height: 3, background: meta.renk, borderRadius: 2, width: `${skor}%`, transition: 'width 0.5s', opacity: 0.7 }} />
                     </div>
                   </div>
                 )
               })}
-              <div style={{ fontSize: 11, color: '#999', marginTop: 10 }}>{"Aktif asker:"} {aktifAskerler().length}/40</div>
+            </div>
+
+            <div style={{ fontSize: 11, color: 'rgba(255,255,255,0.3)', textAlign: 'center', marginBottom: 8 }}>
+              Aktif asker: {aktifAskerler().length}/40
             </div>
 
             {fizikselMizac && (
-              <div style={{ background: C.surface, borderRadius: 10, border: `1px solid ${C.border}`, padding: '12px 16px', marginBottom: 16, fontSize: 13 }}>
-                <span style={{ color: '#999' }}>{"Fiziksel mizac:"} </span>
-                <span style={{ color: C.primary, fontWeight: 600 }}>{fizikselMizac}</span>
+              <div style={{ background: 'rgba(212,168,67,0.06)', borderRadius: 8, border: '1px solid rgba(212,168,67,0.15)', padding: '10px 16px', marginBottom: 16, fontSize: 13, textAlign: 'center' }}>
+                <span style={{ color: 'rgba(255,255,255,0.4)' }}>Fiziksel mizac: </span>
+                <span style={{ color: '#D4A843', fontWeight: 600 }}>{fizikselMizac}</span>
               </div>
             )}
             {!fizikselMizac && (
-              <div style={{ background: '#FFF8E7', borderRadius: 10, border: `1px solid ${C.gold}`, padding: '12px 16px', marginBottom: 16, fontSize: 12, color: C.secondary }}>
-                {"Fiziksel mizaç analiziniz bulunamadi."}{' '}
-                <a href="/analiz" style={{ color: C.gold, fontWeight: 600 }}>{"Mizac analizi yapmak ister misiniz?"}</a>
+              <div style={{ background: 'rgba(212,168,67,0.06)', borderRadius: 8, border: '1px solid rgba(212,168,67,0.15)', padding: '10px 16px', marginBottom: 16, fontSize: 12, color: 'rgba(255,255,255,0.4)', textAlign: 'center' }}>
+                Fiziksel mizac analiziniz bulunamadi.{' '}
+                <a href="/analiz" style={{ color: '#D4A843', fontWeight: 600 }}>Mizac analizi yapmak ister misiniz?</a>
               </div>
             )}
 
             <button onClick={gonder} disabled={yukleniyor}
-              style={{ width: '100%', padding: '16px', background: yukleniyor ? '#999' : C.primary, border: 'none', borderRadius: 12, cursor: yukleniyor ? 'not-allowed' : 'pointer', fontFamily: cinzel.style.fontFamily, fontSize: 15, fontWeight: 600, color: C.gold, letterSpacing: 2 }}>
+              style={{
+                width: '100%', padding: '16px', border: 'none', borderRadius: 8, cursor: yukleniyor ? 'not-allowed' : 'pointer',
+                fontFamily: cinzel.style.fontFamily, fontSize: 14, fontWeight: 600, letterSpacing: 3,
+                background: yukleniyor ? 'rgba(255,255,255,0.1)' : '#D4A843',
+                color: yukleniyor ? 'rgba(255,255,255,0.3)' : '#1A2E1E',
+              }}>
               {yukleniyor ? 'Analiz ediliyor...' : 'ANALIZIMI TAMAMLA'}
             </button>
             <button onClick={() => { setGorunum('form'); setSoruIndex(0) }}
-              style={{ width: '100%', marginTop: 8, padding: '10px', background: 'transparent', border: `1px solid ${C.border}`, borderRadius: 8, cursor: 'pointer', fontSize: 12, color: C.secondary }}>
-              {"Cevaplari duzenle"}
+              style={{ width: '100%', marginTop: 8, padding: '10px', background: 'transparent', border: '1px solid rgba(255,255,255,0.1)', borderRadius: 6, cursor: 'pointer', fontSize: 12, color: 'rgba(255,255,255,0.35)' }}>
+              Cevaplari duzenle
             </button>
           </div>
-        )}
-        {/* PAYWALL — giris yapmis ama abone degil */}
-        {gorunum === 'paywall' && (
-          <div style={{ textAlign: 'center' }}>
-            <div style={{ background: C.white, borderRadius: 16, border: `1px solid ${C.border}`, padding: '40px 32px', marginBottom: 20 }}>
-              {/* Bulanik onizleme */}
+        </div>
+      )}
+
+      {/* ============ VIEW 4: PAYWALL ============ */}
+      {gorunum === 'paywall' && (
+        <div style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '40px 20px' }}>
+          <div style={{ maxWidth: 520, width: '100%', textAlign: 'center' }}>
+            <div style={{ background: 'rgba(255,255,255,0.03)', borderRadius: 16, border: '1px solid rgba(255,255,255,0.06)', padding: '40px 32px', marginBottom: 20 }}>
+              {/* Blurred preview */}
               <div style={{ filter: 'blur(6px)', pointerEvents: 'none', userSelect: 'none', marginBottom: 20 }}>
                 <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12 }}>
-                  {CEPHELER.map(c => (
-                    <div key={c.id} style={{ background: C.surface, borderRadius: 10, padding: 16 }}>
-                      <div style={{ fontSize: 13, color: C.primary, fontWeight: 600 }}>{c.ad}</div>
-                      <div style={{ fontSize: 24, color: CEPHE_RENK[c.id], fontWeight: 600, marginTop: 4 }}>{cepheSkoru(c.id)}%</div>
-                    </div>
-                  ))}
+                  {CEPHELER.map(c => {
+                    const meta = CEPHE_META[c.id]
+                    return (
+                      <div key={c.id} style={{ background: 'rgba(255,255,255,0.04)', borderRadius: 10, padding: 16 }}>
+                        <div style={{ fontSize: 13, color: '#F5EAD4', fontWeight: 600 }}>{meta.name}</div>
+                        <div style={{ fontSize: 24, color: meta.renk, fontWeight: 600, marginTop: 4 }}>{cepheSkoru(c.id)}%</div>
+                      </div>
+                    )
+                  })}
                 </div>
               </div>
-              <div style={{ position: 'relative', marginTop: -60, paddingTop: 20, background: 'rgba(255,255,255,0.85)', borderRadius: 12 }}>
+              <div style={{ position: 'relative', marginTop: -60, paddingTop: 20, background: 'rgba(26,46,30,0.85)', borderRadius: 12 }}>
                 <div style={{ fontSize: 36, marginBottom: 12 }}>{'\uD83D\uDD12'}</div>
-                <div style={{ fontFamily: cinzel.style.fontFamily, fontSize: 20, color: C.primary, marginBottom: 8 }}>Sonuclari Gormek Icin Plan Secin</div>
-                <p style={{ fontSize: 14, color: C.secondary, lineHeight: 1.6, marginBottom: 24, maxWidth: 400, margin: '0 auto 24px' }}>
+                <div style={{ fontFamily: cinzel.style.fontFamily, fontSize: 20, color: '#F5EAD4', marginBottom: 8 }}>Sonuclari Gormek Icin Plan Secin</div>
+                <p style={{ fontSize: 14, color: 'rgba(255,255,255,0.4)', lineHeight: 1.6, marginBottom: 24, maxWidth: 400, margin: '0 auto 24px' }}>
                   Sorulari tamamladiniz. Detayli karakter analizi sonuclarinizi ve kisisel tavsiyeleri gormek icin uyelik plani secin.
                 </p>
                 <div style={{ display: 'flex', gap: 10, justifyContent: 'center', flexWrap: 'wrap' as const }}>
                   <button onClick={() => router.push('/odeme')}
-                    style={{ padding: '14px 32px', background: C.gold, border: 'none', borderRadius: 10, fontFamily: cinzel.style.fontFamily, fontSize: 14, fontWeight: 600, color: C.primary, cursor: 'pointer', letterSpacing: 1 }}>
+                    style={{ padding: '14px 32px', background: '#D4A843', border: 'none', borderRadius: 10, fontFamily: cinzel.style.fontFamily, fontSize: 14, fontWeight: 600, color: '#1A2E1E', cursor: 'pointer', letterSpacing: 1 }}>
                     Plan Sec — 590{'\u20BA'}/ay
                   </button>
                 </div>
               </div>
             </div>
             <button onClick={() => { setGorunum('form'); setSoruIndex(0) }}
-              style={{ padding: '10px 20px', background: 'transparent', border: `1px solid ${C.border}`, borderRadius: 8, fontSize: 12, color: C.secondary, cursor: 'pointer' }}>
+              style={{ padding: '10px 20px', background: 'transparent', border: '1px solid rgba(255,255,255,0.1)', borderRadius: 8, fontSize: 12, color: 'rgba(255,255,255,0.35)', cursor: 'pointer' }}>
               Cevaplari Duzenle
             </button>
           </div>
-        )}
-      </div>
+        </div>
+      )}
 
-      {/* AUTH MODAL — giris yapmamis */}
+      {/* ============ AUTH MODAL ============ */}
       {authModal && (
         <div onClick={() => setAuthModal(false)} style={{ position: 'fixed', inset: 0, zIndex: 1000, background: 'rgba(0,0,0,0.6)', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 20 }}>
-          <div onClick={e => e.stopPropagation()} style={{ background: C.white, borderRadius: 20, maxWidth: 420, width: '100%', padding: '40px 36px', textAlign: 'center' }}>
+          <div onClick={e => e.stopPropagation()} style={{ background: '#FAF6EF', borderRadius: 20, maxWidth: 420, width: '100%', padding: '40px 36px', textAlign: 'center' }}>
             <div style={{ fontSize: 48, marginBottom: 16 }}>{'\uD83D\uDD12'}</div>
-            <div style={{ fontFamily: cinzel.style.fontFamily, fontSize: 20, color: C.primary, marginBottom: 8 }}>Bu Ozellik Uyelere Ozeldir</div>
-            <p style={{ fontSize: 14, color: C.secondary, lineHeight: 1.6, marginBottom: 24 }}>
+            <div style={{ fontFamily: cinzel.style.fontFamily, fontSize: 20, color: '#1A2E1E', marginBottom: 8 }}>Bu Ozellik Uyelere Ozeldir</div>
+            <p style={{ fontSize: 14, color: 'rgba(0,0,0,0.5)', lineHeight: 1.6, marginBottom: 24 }}>
               Kalp Sehri karakter analizini kullanmak icin giris yapin veya uye olun.
             </p>
             <div style={{ display: 'flex', gap: 12, justifyContent: 'center' }}>
               <button onClick={() => router.push('/giris')}
-                style={{ padding: '12px 28px', borderRadius: 10, background: C.primary, color: C.gold, fontFamily: cinzel.style.fontFamily, fontSize: 14, fontWeight: 600, letterSpacing: 1, border: 'none', cursor: 'pointer' }}>
+                style={{ padding: '12px 28px', borderRadius: 10, background: '#1A2E1E', color: '#D4A843', fontFamily: cinzel.style.fontFamily, fontSize: 14, fontWeight: 600, letterSpacing: 1, border: 'none', cursor: 'pointer' }}>
                 Giris Yap
               </button>
               <button onClick={() => router.push('/kayit')}
-                style={{ padding: '12px 28px', borderRadius: 10, background: C.gold, color: C.primary, fontFamily: cinzel.style.fontFamily, fontSize: 14, fontWeight: 600, letterSpacing: 1, border: 'none', cursor: 'pointer' }}>
+                style={{ padding: '12px 28px', borderRadius: 10, background: '#D4A843', color: '#1A2E1E', fontFamily: cinzel.style.fontFamily, fontSize: 14, fontWeight: 600, letterSpacing: 1, border: 'none', cursor: 'pointer' }}>
                 Uye Ol
               </button>
             </div>
@@ -425,7 +543,46 @@ export default function KarakterAnaliziPage() {
         </div>
       )}
 
-      <Footer />
+      {/* ============ CSS ANIMATIONS ============ */}
+      <style>{`
+        @keyframes hb {
+          0%, 100% { transform: scale(1); }
+          20% { transform: scale(1.06); }
+          40% { transform: scale(1); }
+        }
+        @keyframes dash {
+          to { stroke-dashoffset: -20; }
+        }
+        @keyframes glow {
+          0%, 100% { opacity: 0.35; }
+          50% { opacity: 0.7; }
+        }
+        @keyframes fadeUp {
+          from { transform: translateY(12px); opacity: 0; }
+          to { transform: translateY(0); opacity: 1; }
+        }
+        .karakter-hb {
+          animation: hb 2.5s ease-in-out infinite;
+          transform-origin: center;
+        }
+        .karakter-dash {
+          animation: dash 1.5s linear infinite;
+        }
+        .karakter-glow {
+          animation: glow 2s ease-in-out infinite;
+        }
+        @media (max-width: 768px) {
+          .karakter-grid {
+            grid-template-columns: 1fr !important;
+          }
+          .karakter-left-panel {
+            height: 120px !important;
+            padding: 16px 24px !important;
+            justify-content: flex-start !important;
+            overflow: hidden;
+          }
+        }
+      `}</style>
     </div>
   )
 }

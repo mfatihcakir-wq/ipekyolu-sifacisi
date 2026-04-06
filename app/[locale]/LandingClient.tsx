@@ -117,36 +117,17 @@ export default function LandingClient() {
 
         {/* ORTA: Büyük hareketli logo */}
         <div className="hero-logo-col" style={{ display: 'flex', justifyContent: 'center', position: 'relative' as const, zIndex: 1 }}>
-          <div className="logo-big-wrap"
-            onMouseEnter={e => {
-              const el = e.currentTarget
-              el.style.animation = 'none'
-              const svg = el.querySelector('svg')
-              if (svg) svg.style.filter = 'drop-shadow(0 0 24px rgba(184,134,11,0.5))'
-              el.querySelectorAll('.dem').forEach(c => ((c as SVGElement).style.animation = 'orbitDem 1.2s linear infinite'))
-              el.querySelectorAll('.saf').forEach(c => ((c as SVGElement).style.animation = 'orbitSaf 1.2s linear infinite'))
-              el.querySelectorAll('.bal').forEach(c => ((c as SVGElement).style.animation = 'orbitBal 1.2s linear infinite'))
-              el.querySelectorAll('.sev').forEach(c => ((c as SVGElement).style.animation = 'orbitSev 1.2s linear infinite'))
-              el.querySelectorAll('.lbody').forEach(c => { (c as SVGElement).setAttribute('stroke', '#D4A843'); (c as SVGElement).setAttribute('stroke-width', '2') })
-            }}
-            onMouseLeave={e => {
-              const el = e.currentTarget
-              el.style.animation = 'gentlePulse 3s ease-in-out infinite'
-              const svg = el.querySelector('svg')
-              if (svg) svg.style.filter = 'none'
-              el.querySelectorAll('.dem,.saf,.bal,.sev').forEach(c => ((c as SVGElement).style.animation = ''))
-              el.querySelectorAll('.lbody').forEach(c => { (c as SVGElement).setAttribute('stroke', '#B8860B'); (c as SVGElement).setAttribute('stroke-width', '1.5') })
-            }}>
-            <svg width={200} height={200} viewBox="0 0 64 64" fill="none" style={{ transition: 'filter 0.3s' }}>
-              <ellipse cx="32" cy="37" rx="12" ry="10" fill="none" stroke="#B8860B" strokeWidth="1.5" className="lbody" />
-              <path d="M22 37 Q22 25 32 23 Q42 25 42 37" fill="none" stroke="#B8860B" strokeWidth="1.5" className="lbody" />
-              <rect x="29" y="21" width="6" height="3.5" rx="1" fill="none" stroke="#B8860B" strokeWidth="1.5" className="lbody" />
-              <path d="M32 15 Q36 11 40 13 Q38 18 32 20 Q26 18 24 13 Q28 11 32 15Z" fill="#B8860B" className="lhorn" />
-              <path d="M32 38 Q28.5 42 32 45.5 Q35.5 42 32 38Z" fill="#B8860B" opacity={0.55} className="ldrop" />
-              <circle cx="33" cy="31" r="2.5" fill="#EF5350" className="dem" />
-              <circle cx="28" cy="33.5" r="1.8" fill="#FF7043" className="saf" />
-              <circle cx="37" cy="33.5" r="1.8" fill="#42A5F5" className="bal" />
-              <circle cx="33" cy="37" r="1.5" fill="#AB47BC" className="sev" />
+          <div className="hero-logo-anim">
+            <svg width={200} height={200} viewBox="0 0 64 64" fill="none">
+              <ellipse cx="32" cy="37" rx="12" ry="10" fill="none" stroke="#B8860B" strokeWidth="1.5" className="logo-body" />
+              <path d="M22 37 Q22 25 32 23 Q42 25 42 37" fill="none" stroke="#B8860B" strokeWidth="1.5" className="logo-body" />
+              <rect x="29" y="21" width="6" height="3.5" rx="1" fill="none" stroke="#B8860B" strokeWidth="1.5" className="logo-body" />
+              <path d="M32 15 Q36 11 40 13 Q38 18 32 20 Q26 18 24 13 Q28 11 32 15Z" fill="#B8860B" className="logo-horn" />
+              <path d="M32 38 Q28.5 42 32 45.5 Q35.5 42 32 38Z" fill="#B8860B" opacity={0.55} className="logo-drop" />
+              <circle cx="33" cy="31" r="2.5" fill="#EF5350" className="orbit-dem" />
+              <circle cx="28" cy="33.5" r="1.8" fill="#FF7043" className="orbit-saf" />
+              <circle cx="37" cy="33.5" r="1.8" fill="#42A5F5" className="orbit-bal" />
+              <circle cx="33" cy="37" r="1.5" fill="#AB47BC" className="orbit-sev" />
             </svg>
           </div>
         </div>

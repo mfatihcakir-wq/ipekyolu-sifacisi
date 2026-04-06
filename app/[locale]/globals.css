@@ -124,32 +124,50 @@ p {
 
 /* Logo animasyonları */
 @keyframes gentlePulse {
-  0%,100% { transform: scale(1) }
-  50% { transform: scale(1.03) }
+  0%,100% { transform: scale(1); }
+  50% { transform: scale(1.04); }
 }
 @keyframes orbitDem {
-  from { transform: rotate(0deg) translateX(10px) rotate(0deg) }
-  to { transform: rotate(360deg) translateX(10px) rotate(-360deg) }
+  from { transform: rotate(0deg) translateX(12px) rotate(0deg); }
+  to { transform: rotate(360deg) translateX(12px) rotate(-360deg); }
 }
 @keyframes orbitSaf {
-  from { transform: rotate(90deg) translateX(10px) rotate(-90deg) }
-  to { transform: rotate(450deg) translateX(10px) rotate(-450deg) }
+  from { transform: rotate(90deg) translateX(12px) rotate(-90deg); }
+  to { transform: rotate(450deg) translateX(12px) rotate(-450deg); }
 }
 @keyframes orbitBal {
-  from { transform: rotate(180deg) translateX(10px) rotate(-180deg) }
-  to { transform: rotate(540deg) translateX(10px) rotate(-540deg) }
+  from { transform: rotate(180deg) translateX(12px) rotate(-180deg); }
+  to { transform: rotate(540deg) translateX(12px) rotate(-540deg); }
 }
 @keyframes orbitSev {
-  from { transform: rotate(270deg) translateX(10px) rotate(-270deg) }
-  to { transform: rotate(630deg) translateX(10px) rotate(-630deg) }
+  from { transform: rotate(270deg) translateX(12px) rotate(-270deg); }
+  to { transform: rotate(630deg) translateX(12px) rotate(-630deg); }
 }
 @keyframes bgLogoPulse {
-  0%,100% { opacity: 0.04; transform: translate(-50%,-50%) scale(1) }
-  50% { opacity: 0.07; transform: translate(-50%,-50%) scale(1.015) }
+  0%,100% { opacity: 0.04; transform: translate(-50%,-50%) scale(1); }
+  50% { opacity: 0.07; transform: translate(-50%,-50%) scale(1.015); }
 }
 
-.logo-big-wrap {
-  cursor: pointer;
+.hero-logo-anim {
   animation: gentlePulse 3s ease-in-out infinite;
-  display: block;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: filter 0.3s;
 }
+.hero-logo-anim:hover {
+  animation: none;
+  filter: drop-shadow(0 0 24px rgba(184,134,11,0.45));
+}
+.hero-logo-anim:hover .orbit-dem { animation: orbitDem 1.2s linear infinite; }
+.hero-logo-anim:hover .orbit-saf { animation: orbitSaf 1.2s linear infinite; }
+.hero-logo-anim:hover .orbit-bal { animation: orbitBal 1.2s linear infinite; }
+.hero-logo-anim:hover .orbit-sev { animation: orbitSev 1.2s linear infinite; }
+.orbit-dem { transform-origin: 33px 31px; }
+.orbit-saf { transform-origin: 28px 33.5px; }
+.orbit-bal { transform-origin: 37px 33.5px; }
+.orbit-sev { transform-origin: 33px 37px; }
+.hero-logo-anim:hover .logo-body { stroke: #D4A843 !important; stroke-width: 2 !important; }
+.hero-logo-anim:hover .logo-horn { fill: #D4A843 !important; }
+.hero-logo-anim:hover .logo-drop { fill: #D4A843 !important; opacity: 0.8 !important; }
