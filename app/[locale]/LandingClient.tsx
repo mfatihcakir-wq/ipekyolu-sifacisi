@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation'
 import Image from 'next/image'
 import { createClient } from '@/lib/supabase'
 import MakalelerSection from '@/components/MakalelerSection'
+import Header from './components/Header'
 
 function useCountUp(target: number, duration: number = 1800, active: boolean = false) {
   const [count, setCount] = useState(0)
@@ -67,6 +68,7 @@ export default function LandingClient() {
 
   return (
     <main>
+      <Header />
 
       {/* HERO */}
       <section style={{ background: '#1C3A26', padding: 'clamp(48px,7vw,88px) clamp(24px,5vw,64px) 0', display: 'grid', gridTemplateColumns: '1fr 220px 300px', gap: 40, alignItems: 'center', position: 'relative' as const, overflow: 'hidden' }} className="hero-grid">
