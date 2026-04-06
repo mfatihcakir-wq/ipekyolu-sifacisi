@@ -122,6 +122,11 @@ p {
   }
 }
 
+@keyframes rotS {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
 /* Logo animasyonları */
 @keyframes gentlePulse {
   0%,100% { transform: scale(1); }
