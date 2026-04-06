@@ -67,7 +67,7 @@ const router = useRouter()
         <div style={{ marginBottom: 36 }}>
           <h2 style={{ fontFamily: cinzel.style.fontFamily, fontSize: 18, color: C.gold, marginBottom: 12, letterSpacing: 2 }}>{"MİSYON"}</h2>
           <p style={{ fontSize: 15, color: C.secondary, lineHeight: 1.8 }}>
-            {"Klasik İslam tıbbının asırlık gözlem ve tedavi birikimini, yapay zeka destekli analiz ile birleştirerek kişiye özel sağlık danışmanlığı sunmak. Her bireyin fıtrî mizacını anlamak ve hâlî dengesizlikleri kaynağında tespit etmek."}
+            {"Klasik İslam tıbbının asırlık gözlem ve tedavi birikimini, modern derleme yöntemleriyle birleştirerek kişiye özel sağlık danışmanlığı sunmak. Her bireyin fıtrî mizacını anlamak ve hâlî dengesizlikleri kaynağında tespit etmek."}
           </p>
         </div>
 
@@ -83,7 +83,7 @@ const router = useRouter()
         <div style={{ marginBottom: 40 }}>
           <h2 style={{ fontFamily: cinzel.style.fontFamily, fontSize: 18, color: C.gold, marginBottom: 12, letterSpacing: 2 }}>{"YAKLAŞIM"}</h2>
           <p style={{ fontSize: 15, color: C.secondary, lineHeight: 1.8 }}>
-            {"Analizlerimiz 38 klasik İslam ve Osmanlı tıbbı eserinden derlenen dijitalleştirilmiş bilgi tabanına dayanır. Yapay zeka (Claude) bu kaynaklardan ilgili bölümleri bulur ve eşleştirir; ancak nihai karar her zaman danışman tarafından verilir. Kaynak gösterilemeyen hiçbir öneri sunulmaz."}
+            {"Analizlerimiz 38 klasik İslam ve Osmanlı tıbbı eserinden derlenen dijitalleştirilmiş bilgi tabanına dayanır. Sistemimiz bu kaynaklardan ilgili bölümleri bulur ve eşleştirir; ancak nihai karar her zaman danışman tarafından verilir. Kaynak gösterilemeyen hiçbir öneri sunulmaz."}
           </p>
         </div>
 

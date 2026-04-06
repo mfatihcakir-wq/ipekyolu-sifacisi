@@ -156,7 +156,7 @@ export default function MakaleUret() {
           textAlign: 'center' as const,
           marginBottom: 40,
         }}>
-          {"Klasik kaynaklardan yapay zeka destekli makale uretimi"}
+          {"Klasik kaynaklardan derlenmiş makale üretimi"}
         </p>
 
         {/* Basari Durumu */}

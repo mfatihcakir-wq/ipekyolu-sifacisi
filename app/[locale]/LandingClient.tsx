@@ -226,30 +226,35 @@ export default function LandingClient() {
             <span style={{ flex: 1, height: 1, background: 'rgba(184,134,11,0.1)', display: 'block' }} />
           </div>
           <h2 style={{ fontFamily: 'Cinzel,serif', fontSize: 'clamp(22px,3vw,32px)', fontWeight: 500, color: '#F5EDE0', lineHeight: 1.2, marginBottom: 40 }}>
-            {"On yıl boyunca "}<span style={{ color: '#B8860B' }}>{"unutulan bir hazineyi"}</span>{" arayanın hikâyesi."}<br />{"Ve o hazinenin size sunulması."}
+            {"İbn Sînâ 1.037\u2019de öldü."}<br />
+            <span style={{ color: '#B8860B' }}>{"Ama el-Kânûn hâlâ işliyor."}</span>
           </h2>
           <div style={{ width: 48, height: 2, background: '#B8860B', marginBottom: 40, opacity: 0.5 }} />
-          <p style={{ fontSize: 18, color: 'rgba(245,237,224,0.68)', lineHeight: 1.95, marginBottom: 22 }}>{"2017 yılında influenza geçirdim. Haftalarca ilaç kullandım, iyileşemedim. Klasik İslam metinlerinde semptomlarımı aradım. Influenza'nın \"balgamî hıltın galebe çalması\" olarak tanımlandığını gördüm. Klasik formülasyonu hazırladım. On günde tamamen iyileştim."}</p>
-          <div style={{ borderLeft: '2px solid rgba(184,134,11,0.35)', padding: '18px 26px', margin: '32px 0', background: 'rgba(184,134,11,0.04)', borderRadius: '0 8px 8px 0' }}>
-            <p style={{ fontSize: 17, color: 'rgba(245,237,224,0.82)', lineHeight: 1.9, fontStyle: 'italic' }}>{"Modern tıbbın keşfettiği pek çok şey, "}<strong style={{ color: '#F5EDE0', fontWeight: 500 }}>{"bin yıl önce zaten biliniyordu."}</strong></p>
-          </div>
-          {/* BİR KEŞİF DAHA */}
-          <div style={{ display: 'flex', alignItems: 'center', gap: 14, margin: '40px 0 32px' }}>
-            <span style={{ flex: 1, height: 1, background: 'rgba(184,134,11,0.1)', display: 'block' }} />
-            <span style={{ fontFamily: 'Cinzel,serif', fontSize: 9, color: 'rgba(184,134,11,0.35)', letterSpacing: 3, whiteSpace: 'nowrap' as const }}>{"BİR KEŞFİT DAHA"}</span>
-            <span style={{ flex: 1, height: 1, background: 'rgba(184,134,11,0.1)', display: 'block' }} />
-          </div>
           <p style={{ fontSize: 18, color: 'rgba(245,237,224,0.68)', lineHeight: 1.95, marginBottom: 22, fontFamily: 'EB Garamond,serif' }}>
-            {"Sonra kanseri araştırdım. Klasik metinlerde kanser için "}<span style={{ fontFamily: 'serif', fontSize: '1.1em', color: '#B8860B', direction: 'rtl' as const, display: 'inline' }}>{"\u0633\u0631\u0637\u0627\u0646"}</span>{" yani "}<strong style={{ color: '#F5EDE0', fontWeight: 500 }}>{"seretan"}</strong>{" kelimesi kullanılıyor. Bu kelimenin kökü yengeç demek. Rastlantı değil: klasik hekimler tedavide kullandıkları ana maddeyi de yengeçten elde ediyorlardı. İsim, tedavinin ta kendisinden geliyordu."}
+            {"Klasik İslam tıbbı semptomlarla değil, mizaçla başlar. Hastayı değil, insanı tanır. İbn Sînâ nabzı dokuz sıfatla ölçtüğünde modern kardiyolojinin henüz adı yoktu. Er-Râzî klinik gözlem kayıtları tuttuğunda tıp tarihi henüz yazılmamıştı. Ez-Zehravî\u2019nin cerrahi aletlerinin çizimleri, beş yüz yıl boyunca Avrupa tıp okullarında ders kitabı olarak okutuldu."}
           </p>
-          <p style={{ fontSize: 18, color: 'rgba(245,237,224,0.68)', lineHeight: 1.95, marginBottom: 22, fontFamily: 'EB Garamond,serif' }}>
-            {"İbn Sînâ'nın cerrahi önerileri "}<strong style={{ color: '#F5EDE0', fontWeight: 500 }}>{"modern onkolojik cerrahinin temel ilkelerini sekiz yüz yıl önceden öngörüyor."}</strong>
+          <p style={{ fontSize: 18, color: '#F5EDE0', lineHeight: 1.95, marginBottom: 22, fontFamily: 'EB Garamond,serif', fontWeight: 500 }}>
+            {"Bu birikim kaybolmadı. Sadece okunmaz oldu."}
           </p>
           <div style={{ borderLeft: '2px solid rgba(184,134,11,0.35)', padding: '18px 26px', margin: '32px 0', background: 'rgba(184,134,11,0.04)', borderRadius: '0 8px 8px 0' }}>
             <p style={{ fontSize: 17, color: 'rgba(245,237,224,0.82)', lineHeight: 1.9, fontStyle: 'italic', fontFamily: 'EB Garamond,serif' }}>
-              {"Klasik İslam hekimleri bu ismi yalnızca metafor olarak kullanmamış, "}<strong style={{ color: '#F5EDE0', fontWeight: 500 }}>{"tedavinin özünü o ismin içine işlemişler."}</strong>
+              {"On dördüncü yüzyılda İbn Nefîs küçük kan dolaşımını tanımladığında, William Harvey aynı keşfi üç yüz yıl sonra yapacaktı. Tahbîzü\u2019l-Mathûn\u2019da tarif edilen beyin yorgunluğu protokolü, modern tıbbın \u201Cbrain fog\u201D dediği tablonun neredeyse tam karşılığıdır. "}
+              <strong style={{ color: '#F5EDE0', fontWeight: 500 }}>{"Bu tesadüf değil; gözlem birikiminin kaçınılmaz sonucudur."}</strong>
             </p>
           </div>
+
+          {/* BİR KEŞİF DAHA */}
+          <div style={{ display: 'flex', alignItems: 'center', gap: 14, margin: '40px 0 32px' }}>
+            <span style={{ flex: 1, height: 1, background: 'rgba(184,134,11,0.1)', display: 'block' }} />
+            <span style={{ fontFamily: 'Cinzel,serif', fontSize: 9, color: 'rgba(184,134,11,0.35)', letterSpacing: 3, whiteSpace: 'nowrap' as const }}>{"BİR KEŞİF DAHA"}</span>
+            <span style={{ flex: 1, height: 1, background: 'rgba(184,134,11,0.1)', display: 'block' }} />
+          </div>
+          <p style={{ fontSize: 18, color: 'rgba(245,237,224,0.68)', lineHeight: 1.95, marginBottom: 22, fontFamily: 'EB Garamond,serif' }}>
+            {"Klasik metinlerde kanser için "}<span style={{ fontFamily: 'serif', fontSize: '1.1em', color: '#B8860B', direction: 'rtl' as const, display: 'inline' }}>{"\u0633\u0631\u0637\u0627\u0646"}</span>{" yani "}<strong style={{ color: '#F5EDE0', fontWeight: 500 }}>{"seretan"}</strong>{" kelimesi kullanılıyor. Bu kelimenin kökü yengeç demek. Rastlantı değil: klasik hekimler tedavide kullandıkları ana maddeyi de yengeçten elde ediyorlardı. İsim, tedavinin ta kendisinden geliyordu."}
+          </p>
+          <p style={{ fontSize: 18, color: 'rgba(245,237,224,0.68)', lineHeight: 1.95, marginBottom: 22, fontFamily: 'EB Garamond,serif' }}>
+            {"İbn Sînâ\u2019nın cerrahi önerileri "}<strong style={{ color: '#F5EDE0', fontWeight: 500 }}>{"modern onkolojik cerrahinin temel ilkelerini sekiz yüz yıl önceden öngörüyor."}</strong>
+          </p>
 
           {/* BURADAN ORAYA */}
           <div style={{ display: 'flex', alignItems: 'center', gap: 14, margin: '40px 0 32px' }}>
@@ -258,14 +263,11 @@ export default function LandingClient() {
             <span style={{ flex: 1, height: 1, background: 'rgba(184,134,11,0.1)', display: 'block' }} />
           </div>
           <p style={{ fontSize: 18, color: 'rgba(245,237,224,0.68)', lineHeight: 1.95, marginBottom: 22, fontFamily: 'EB Garamond,serif' }}>
-            {"Bu hakikati insanlara ulaştırmak istedim. "}<strong style={{ color: '#F5EDE0', fontWeight: 500 }}>{"Bu yol on yıl boyunca büyük ölçüde yalnız yürünen, zaman zaman motor üzerinde, zaman zaman inşaatta, zaman zaman garsonluk yaparken düşünülen bir yoldu. Kolay olmadı. Ama hiçbir şey durduramadı."}</strong>
-          </p>
-          <p style={{ fontSize: 18, color: 'rgba(245,237,224,0.68)', lineHeight: 1.95, marginBottom: 22, fontFamily: 'EB Garamond,serif' }}>
-            {"Yazılım bilmiyordum. Para yoktu. Ama elimdeki kaynaklar, on yıllık birikim ve yapay zeka ile dünyada bir ilk olduğuna inandığım bu sistemi inşa ettim."}
+            {"İpek Yolu Şifacısı bu birikimi dijital ortama taşıdı. Otuz sekiz klasik eser. Kırk altı bin indekslenmiş metin kaydı. Bin yüz seksen bitki ve tıbbi madde. Her analiz, şikâyetinizle örtüşen klasik metinleri bulur, mizacınızı tespit eder, kaynağını göstererek protokol üretir."}
           </p>
           <div style={{ borderLeft: '2px solid rgba(184,134,11,0.35)', padding: '18px 26px', margin: '32px 0', background: 'rgba(184,134,11,0.04)', borderRadius: '0 8px 8px 0' }}>
             <p style={{ fontSize: 17, color: 'rgba(245,237,224,0.82)', lineHeight: 1.9, fontStyle: 'italic', fontFamily: 'EB Garamond,serif' }}>
-              {"Bu sistemi kullandığınızda yalnızca kendi sağlığınıza yatırım yapmıyorsunuz. "}<strong style={{ color: '#F5EDE0', fontWeight: 500 }}>{"Ben sadece unutulanı hatırlatıyorum."}</strong>
+              <strong style={{ color: '#F5EDE0', fontWeight: 500 }}>{"Burada sunulan her bilgi bir kaynaktan gelir. Her kaynak bir hekimden. Her hekim ölçülebilir klinik gözlemden."}</strong>
             </p>
           </div>
           <p style={{ fontSize: 15, color: 'rgba(245,237,224,0.35)', fontStyle: 'italic', marginTop: 28, lineHeight: 1.8, fontFamily: 'EB Garamond,serif' }}>
