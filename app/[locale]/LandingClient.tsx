@@ -4,6 +4,7 @@ import { useState, useEffect, useRef } from 'react'
 import { useRouter } from 'next/navigation'
 import Image from 'next/image'
 import { createClient } from '@/lib/supabase'
+import MakalelerSection from '@/components/MakalelerSection'
 
 function useCountUp(target: number, duration: number = 1800, active: boolean = false) {
   const [count, setCount] = useState(0)
@@ -328,6 +329,8 @@ export default function LandingClient() {
           </div>
         </section>
       )}
+
+      <MakalelerSection />
 
       {/* PRICING */}
       <section id="fiyatlandirma" style={{ background: '#FAF6EF', padding: '88px clamp(24px,5vw,80px)', borderTop: '1px solid #DEB887' }}>
