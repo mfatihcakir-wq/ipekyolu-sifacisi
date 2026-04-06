@@ -442,9 +442,6 @@ ${klasikBaglam ? `---\nKLASİK KAYNAKLARDAN İLGİLİ METİNLER:\n${klasikBaglam
     })
 
     const text = message.content[0].type === 'text' ? message.content[0].text : ''
-    console.log('Claude raw response ilk 300:', text.substring(0, 300))
-    console.log('Claude raw response son 300:', text.substring(text.length - 300))
-
     // Agresif JSON temizleme
     const jsonStr = text
       .replace(/```json\s*/g, '')

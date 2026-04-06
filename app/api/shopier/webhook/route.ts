@@ -9,8 +9,6 @@ export async function POST(req: NextRequest) {
 
   try {
     const body = await req.json()
-    console.log('[Shopier Webhook]', body)
-
     const status = body.status || body.payment_status
     if (status !== 'success' && status !== 'completed') {
       return NextResponse.json({ ok: false })

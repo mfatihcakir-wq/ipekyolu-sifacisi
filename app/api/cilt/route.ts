@@ -412,8 +412,6 @@ ${klasikBaglam ? `---\nKLASIK KAYNAKLARDAN ILGILI METINLER:\n${klasikBaglam}\n--
     })
 
     const text = message.content[0].type === 'text' ? message.content[0].text : ''
-    console.log('Cilt analiz raw response ilk 300:', text.substring(0, 300))
-
     // JSON temizleme
     const jsonStr = text
       .replace(/```json\s*/g, '')

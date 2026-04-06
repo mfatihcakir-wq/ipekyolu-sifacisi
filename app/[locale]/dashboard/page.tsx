@@ -189,7 +189,6 @@ export default function DashboardPage() {
           durum: 'tamamlandi',
         })
       } catch {
-        console.log('analyses tablosu yok veya hata')
       }
 
       formlariYukle()
