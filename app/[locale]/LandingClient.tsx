@@ -23,17 +23,6 @@ function useCountUp(target: number, duration: number = 1800, active: boolean = f
   return count
 }
 
-function FeatCard({ icon, title, desc, link, hot }: { icon: React.ReactNode; title: string; desc: string; link: string; hot?: boolean }) {
-  return (
-    <div style={{ background: hot ? '#FFFDF7' : 'white', border: `${hot ? 1.5 : 1}px solid ${hot ? '#B8860B' : '#DEB887'}`, borderRadius: 16, padding: '32px 28px', position: 'relative' as const, overflow: 'hidden' }}>
-      <div style={{ height: 3, background: hot ? '#B8860B' : '#1C3A26', borderRadius: '16px 16px 0 0', position: 'absolute' as const, top: 0, left: 0, right: 0 }} />
-      <div style={{ width: 44, height: 44, background: hot ? 'rgba(184,134,11,0.1)' : '#F5EFE0', borderRadius: 10, display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: 16 }}>{icon}</div>
-      <div style={{ fontFamily: 'Cinzel,serif', fontSize: 15, fontWeight: 600, color: '#1A1208', marginBottom: 10 }}>{title}</div>
-      <p style={{ fontSize: 16, color: '#5C4A2A', lineHeight: 1.75 }}>{desc}</p>
-      <a href={link} style={{ fontFamily: 'Cinzel,serif', fontSize: 9, color: '#B8860B', letterSpacing: 1.5, marginTop: 18, display: 'block', textDecoration: 'none' }}>{"DETAYLI İNCELE \u2192"}</a>
-    </div>
-  )
-}
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export default function LandingClient() {
@@ -64,7 +53,6 @@ export default function LandingClient() {
     supabase.from('yorumlar').select('*').eq('onaylandi', true).order('onay_tarihi', { ascending: false }).limit(6).then(({ data }) => { if (data && data.length > 0) setYorumlar(data) })
   }, [])
 
-  const iconStyle = { width: 22, height: 22, stroke: '#1C3A26', fill: 'none', strokeWidth: 1.5 } as const
 
   return (
     <main>
@@ -189,22 +177,60 @@ export default function LandingClient() {
         </button>
       </section>
 
-      {/* FEATURES */}
-      <section style={{ padding: '88px clamp(24px,5vw,80px)', background: '#FAF6EF' }}>
-        <div style={{ textAlign: 'center' as const, marginBottom: 60 }}>
-          <div style={{ fontFamily: 'Cinzel,serif', fontSize: 10, color: '#B8860B', letterSpacing: 3, marginBottom: 14 }}>{"NEDEN FARKLI"}</div>
-          <h2 style={{ fontFamily: 'Cinzel,serif', fontSize: 'clamp(28px,4vw,38px)', fontWeight: 600, color: '#1A1208', lineHeight: 1.15, marginBottom: 12 }}>{"Beden Bir Bütündür"}</h2>
-          <p style={{ fontSize: 18, color: '#5C4A2A', fontStyle: 'italic', lineHeight: 1.75, maxWidth: 540, margin: '0 auto' }}>{"Modern tıbbın semptomu gördüğü yerde, klasik tıp sebebi arar."}</p>
+      {/* KLASİK TIBBIN HAZİNESİ */}
+      <section style={{ padding: '88px clamp(24px,5vw,80px)', background: '#F5EFE6' }}>
+        <div style={{ textAlign: 'center' as const, marginBottom: 56 }}>
+          <div style={{ fontFamily: 'Cinzel,serif', fontSize: 10, color: '#B8860B', letterSpacing: 3, marginBottom: 14 }}>{"KAYNAKLARIMIZ"}</div>
+          <h2 style={{ fontFamily: 'Cinzel,serif', fontSize: 'clamp(28px,4vw,38px)', fontWeight: 600, color: '#1A1208', lineHeight: 1.15, marginBottom: 12 }}>{"Klasik Tıbbın Hazinesi"}</h2>
+          <p style={{ fontSize: 17, color: '#5C4A2A', fontStyle: 'italic', lineHeight: 1.75, maxWidth: 600, margin: '0 auto' }}>{"Bin yıllık bilgi birikimi, 38 eser, 46.000+ metin kaydı"}</p>
         </div>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: 20, maxWidth: 1100, margin: '0 auto' }} className="features-grid">
-          <FeatCard icon={<svg style={iconStyle} viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12" /></svg>} title="Mizaç Tespiti" desc="Nabız, dil, yüz ve lab değerleri birlikte okunarak vücudunuzun derin tabiatı belirlenir." link="/analiz" />
-          <FeatCard icon={<svg style={{ ...iconStyle, stroke: '#B8860B' }} viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" /><path d="M8 12h8M12 8v8" /></svg>} title="Kişisel Bitki Protokolü" desc="1.180 bitki ve tıbbi maddeden sizin mizacınıza özel protokol hazırlanır." link="/bitkiler" hot />
-          <FeatCard icon={<svg style={iconStyle} viewBox="0 0 24 24"><circle cx="12" cy="8" r="4" /><path d="M4 20c0-4 3.58-7 8-7s8 3 8 7" /></svg>} title="Uzman Danışmanlık" desc="24-48 saat içinde danışmanınız WhatsApp üzerinden protokolünüzü iletir." link="/hakkimizda" />
-          <FeatCard icon={<svg style={iconStyle} viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" /><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z" /></svg>} title="38 Klasik Kaynak" desc="el-Hâvî, Tahbîzü'l-Mathûn, el-Şâmil ve 35 eser daha analizinize destek verir." link="/hakkimizda" />
-          <FeatCard icon={<svg style={iconStyle} viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" /></svg>} title="Kalp Şehri Analizi" desc="Klasik İslam ahlak geleneğine dayalı öz-değerlendirme. 4 cephe, 40 soru." link="/karakter" />
-          <FeatCard icon={<svg style={iconStyle} viewBox="0 0 24 24"><rect x="5" y="2" width="14" height="20" rx="2" /><path d="M9 7h6M9 11h6M9 15h4" /></svg>} title="PDF Protokol Raporu" desc="Her analizin sonunda kaynaklı, detaylı PDF rapor ve WhatsApp iletimi." link="/analiz" />
-          <FeatCard icon={<svg style={iconStyle} viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" /></svg>} title="Cilt Bakımı Protokolü" desc="Mizacınıza özel klasik İslam tıbbı kaynaklı cilt bakım protokolü. Bitki bazlı, kişiye özel." link="/hasta/cilt" />
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2,1fr)', gap: 20, maxWidth: 980, margin: '0 auto' }} className="hazine-grid">
+          {[
+            { ar: 'القانون في الطب', tr: "el-Kânûn fi\u2019t-Tıb", yazar: 'İbn Sînâ (ö. 1037)', desc: 'İslam tıbbının temel taşı. Mizaç teorisi, nabız ilmi ve tedavi metodolojisinin ana kaynağı.' },
+            { ar: 'الحاوي في الطب', tr: "el-Hâvî fi\u2019t-Tıb", yazar: 'er-Râzî (ö. 925)', desc: 'Klasik İslam tıbbının en kapsamlı ansiklopedisi. Klinik gözlem ve ilaç bilgisinin şaheseri.' },
+            { ar: 'الجامع لمفردات الأدوية', tr: 'el-Câmî li-Müfredât', yazar: 'İbn Beytâr (ö. 1248)', desc: "1.400\u2019den fazla tıbbi madde ve bitkiyi inceleyen devasa eczacılık ansiklopedisi." },
+            { ar: 'إحياء علوم الدين', tr: "İhyâu Ulûmi\u2019d-Dîn", yazar: 'Gazzâlî (ö. 1111)', desc: 'Kalbin hastalıkları ve erdemlerin kazanılması. Karakter analizimizin temel kaynağı.' },
+          ].map(k => (
+            <div key={k.tr} style={{ background: '#FFFFFF', border: '1px solid #DEB887', borderRadius: 14, padding: '28px 30px' }}>
+              <div style={{ fontFamily: 'serif', fontSize: 22, color: '#B8860B', direction: 'rtl' as const, textAlign: 'right' as const, marginBottom: 12, lineHeight: 1.4 }}>{k.ar}</div>
+              <div style={{ fontFamily: 'Cinzel,serif', fontSize: 18, fontWeight: 600, color: '#1A1208', marginBottom: 4 }}>{k.tr}</div>
+              <div style={{ fontSize: 12, color: '#9B8060', fontStyle: 'italic', marginBottom: 14, letterSpacing: 0.3 }}>{k.yazar}</div>
+              <p style={{ fontSize: 14, color: '#5C4A2A', lineHeight: 1.7, margin: 0 }}>{k.desc}</p>
+            </div>
+          ))}
         </div>
+      </section>
+
+      {/* SİSTEMİN MİMARLARI */}
+      <section style={{ padding: '88px clamp(24px,5vw,80px)', background: '#1B4332' }}>
+        <div style={{ textAlign: 'center' as const, marginBottom: 56 }}>
+          <div style={{ fontFamily: 'Cinzel,serif', fontSize: 10, color: '#B8860B', letterSpacing: 3, marginBottom: 14 }}>{"BÜYÜK HEKİMLER"}</div>
+          <h2 style={{ fontFamily: 'Cinzel,serif', fontSize: 'clamp(28px,4vw,38px)', fontWeight: 600, color: '#F5EFE6', lineHeight: 1.15, marginBottom: 12 }}>{"Sistemin Mimarları"}</h2>
+          <p style={{ fontSize: 17, color: 'rgba(245,239,230,0.55)', fontStyle: 'italic', lineHeight: 1.75, maxWidth: 600, margin: '0 auto' }}>{"Klasik hekimler bu sistemde nasıl konuşlanıyor?"}</p>
+        </div>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(5,1fr)', gap: 16, maxWidth: 1180, margin: '0 auto', overflowX: 'auto' as const }} className="mimar-grid">
+          {[
+            { ad: 'er-Râzî', ar: 'الرازي', uzm: 'Klinik teşhis ve ilaç', rol: 'el-Hâvî kaynağı' },
+            { ad: 'İbn Sînâ', ar: 'ابن سينا', uzm: 'Mizaç teorisi ve nabız', rol: 'el-Kânûn kaynağı' },
+            { ad: 'İbn Rüşd', ar: 'ابن رشد', uzm: 'Felsefe ve ahlak teorisi', rol: 'Karakter analizi' },
+            { ad: 'ez-Zehravî', ar: 'الزهراوي', uzm: 'Cerrahi ve tedavi', rol: 'Tedavi protokolü' },
+            { ad: 'İbn Beytâr', ar: 'ابن البيطار', uzm: 'Bitkiler ve eczacılık', rol: 'Bitki atlası' },
+          ].map(h => (
+            <div key={h.ad} className="mimar-card" style={{ background: 'rgba(245,239,230,0.05)', border: '1px solid rgba(201,168,76,0.2)', borderRadius: 12, padding: '26px 20px', textAlign: 'center' as const, transition: 'border-color 0.2s', minWidth: 180 }}>
+              <div style={{ fontFamily: 'Cinzel,serif', fontSize: 16, fontWeight: 600, color: '#C9A84C', marginBottom: 4 }}>{h.ad}</div>
+              <div style={{ fontFamily: 'serif', fontSize: 14, color: 'rgba(201,168,76,0.55)', direction: 'rtl' as const, marginBottom: 14 }}>{h.ar}</div>
+              <div style={{ fontSize: 13, color: '#F5EFE6', lineHeight: 1.6, marginBottom: 14, minHeight: 38 }}>{h.uzm}</div>
+              <div style={{ display: 'inline-block', fontFamily: 'Cinzel,serif', fontSize: 9, letterSpacing: 1.5, color: '#B8860B', background: 'rgba(184,134,11,0.1)', border: '1px solid rgba(184,134,11,0.25)', borderRadius: 20, padding: '5px 12px' }}>{h.rol}</div>
+            </div>
+          ))}
+        </div>
+        <style>{`
+          .mimar-card:hover { border-color: rgba(201,168,76,0.6) !important; }
+          @media (max-width: 768px) {
+            .hazine-grid { grid-template-columns: 1fr !important; }
+            .mimar-grid { grid-template-columns: repeat(5, 220px) !important; }
+          }
+        `}</style>
       </section>
 
       {/* STEPS */}
