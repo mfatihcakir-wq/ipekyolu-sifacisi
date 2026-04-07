@@ -53,18 +53,17 @@ export default function BitkilerPage() {
     async function yukle() {
       setLoading(true)
       try {
-        const { data, error } = await supabase
-          .from('bitkiler')
-          .select('*')
-          .order('ad_tr', { ascending: true })
-          .range(0, 1999)
-        console.log('[Bitkiler]', {
-          count: data?.length,
-          error: error?.message,
-          url: process.env.NEXT_PUBLIC_SUPABASE_URL?.slice(0, 30)
-        })
-        if (error) console.error('bitkiler fetch error:', error)
-        setBitkiler(data || [])
+        // Supabase REST API'nin server-side max_rows: 1000 limiti var
+        // Iki ayri sorgu ile 2000+ kaydi cekiyoruz
+        const [p1, p2] = await Promise.all([
+          supabase.from('bitkiler').select('*').order('ad_tr', { ascending: true }).range(0, 999),
+          supabase.from('bitkiler').select('*').order('ad_tr', { ascending: true }).range(1000, 1999),
+        ])
+        const combined = [...(p1.data || []), ...(p2.data || [])]
+        console.log('[Bitkiler]', { toplam: combined.length, p1: p1.data?.length, p2: p2.data?.length, err: p1.error?.message || p2.error?.message })
+        if (p1.error) console.error('bitkiler p1 error:', p1.error)
+        if (p2.error) console.error('bitkiler p2 error:', p2.error)
+        setBitkiler(combined)
       } catch (e) {
         console.error('bitkiler exception:', e)
       }
