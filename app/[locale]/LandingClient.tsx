@@ -175,6 +175,17 @@ export default function LandingClient() {
         ))}
       </section>
 
+      {/* CTA — STATS SONRASI */}
+      <section style={{ textAlign: 'center', padding: '56px clamp(24px,5vw,80px)', background: '#F5EFE0', borderBottom: '1px solid #DEB887' }}>
+        <p style={{ fontFamily: 'Cinzel,serif', fontSize: 18, marginBottom: 20, color: '#1C3A26', letterSpacing: 0.5 }}>
+          {"Bin yıllık birikimle hazırlanan analiziniz sizi bekliyor."}
+        </p>
+        <button onClick={() => router.push('/analiz')}
+          style={{ fontFamily: 'Cinzel,serif', fontSize: 12, fontWeight: 700, color: '#1C3A26', background: '#B8860B', padding: '16px 36px', borderRadius: 11, letterSpacing: 2, border: 'none', cursor: 'pointer' }}>
+          {"ANALİZİMİ BAŞLAT →"}
+        </button>
+      </section>
+
       {/* FEATURES */}
       <section style={{ padding: '88px clamp(24px,5vw,80px)', background: '#FAF6EF' }}>
         <div style={{ textAlign: 'center' as const, marginBottom: 60 }}>
@@ -334,6 +345,27 @@ export default function LandingClient() {
       )}
 
       <MakalelerSection />
+
+      {/* BIG CTA — sayfa sonu */}
+      <section style={{ background: '#1C3A26', padding: '88px clamp(24px,5vw,80px)', textAlign: 'center', position: 'relative' as const, overflow: 'hidden' }}>
+        <div style={{ position: 'absolute' as const, inset: 0, background: 'radial-gradient(circle at 50% 50%, rgba(184,134,11,0.08) 0%, transparent 70%)', pointerEvents: 'none' }} />
+        <div style={{ position: 'relative' as const, zIndex: 1, maxWidth: 720, margin: '0 auto' }}>
+          <div style={{ fontFamily: 'Cinzel,serif', fontSize: 10, color: 'rgba(184,134,11,0.6)', letterSpacing: 4, marginBottom: 20 }}>{"BAŞLAYIN"}</div>
+          <h2 style={{ fontFamily: 'Cinzel,serif', fontSize: 'clamp(28px,4vw,42px)', fontWeight: 600, color: '#F5EDE0', lineHeight: 1.15, marginBottom: 16, letterSpacing: 0.3 }}>
+            {"Bedeninizi Tanımaya Hazır Mısınız?"}
+          </h2>
+          <p style={{ fontSize: 18, color: 'rgba(245,237,224,0.6)', fontStyle: 'italic', marginBottom: 36, lineHeight: 1.7 }}>
+            {"Ücretsiz analizinizi şimdi başlatın."}
+          </p>
+          <button onClick={() => router.push('/analiz')}
+            style={{ fontFamily: 'Cinzel,serif', fontSize: 14, fontWeight: 700, color: '#1C3A26', background: '#B8860B', padding: '20px 48px', borderRadius: 12, letterSpacing: 2.5, border: 'none', cursor: 'pointer', boxShadow: '0 8px 32px rgba(184,134,11,0.25)' }}>
+            {"ANALİZİMİ BAŞLAT →"}
+          </button>
+          <div style={{ marginTop: 24, fontFamily: 'Cinzel,serif', fontSize: 9, color: 'rgba(184,134,11,0.4)', letterSpacing: 2 }}>
+            {"38 KLASİK ESER · 46.000+ KAYIT · 1.180 BİTKİ"}
+          </div>
+        </div>
+      </section>
 
       {/* RESPONSIVE */}
       <style jsx global>{`
