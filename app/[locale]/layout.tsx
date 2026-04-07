@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
-import { Cinzel, EB_Garamond } from 'next/font/google';
+import { Cinzel, EB_Garamond, Roboto } from 'next/font/google';
 import { NextIntlClientProvider } from 'next-intl';
 import { getMessages } from 'next-intl/server';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -33,6 +33,14 @@ const ebGaramond = EB_Garamond({
   style: ['normal', 'italic'],
   variable: '--font-eb-garamond',
   display: 'swap',
+});
+
+const roboto = Roboto({
+  subsets: ['latin', 'latin-ext'],
+  weight: ['300', '400', '500'],
+  variable: '--font-roboto',
+  display: 'swap',
+  preload: false,
 });
 
 export const viewport = {
@@ -76,14 +84,14 @@ export default async function RootLayout({
   const messages = await getMessages();
 
   return (
-    <html lang={locale} dir={locale === 'ar' ? 'rtl' : 'ltr'} className={`${cinzel.variable} ${ebGaramond.variable}`}>
+    <html lang={locale} dir={locale === 'ar' ? 'rtl' : 'ltr'} className={`${cinzel.variable} ${ebGaramond.variable} ${roboto.variable}`}>
       <head>
         <meta charSet="utf-8" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
       </head>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} ${cinzel.variable} ${ebGaramond.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} ${cinzel.variable} ${ebGaramond.variable} ${roboto.variable} ${roboto.className} antialiased`}
       >
         <NextIntlClientProvider messages={messages}>
           <main>{children}</main>

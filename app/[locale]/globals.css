@@ -54,13 +54,17 @@
 }
 
 body {
-  font-family: var(--font-govde);
-  font-size: var(--fs-base);
-  line-height: var(--lh-base);
+  font-family: var(--font-roboto), 'Roboto', -apple-system, sans-serif;
+  font-size: 16px;
+  line-height: 1.7;
   color: #1A1208;
   background: #FAF6EF;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+button, input, select, textarea, label {
+  font-family: var(--font-roboto), 'Roboto', -apple-system, sans-serif;
 }
 
 input, select, textarea {
@@ -69,7 +73,7 @@ input, select, textarea {
 
 h1 {
   font-family: var(--font-baslik);
-  font-size: clamp(32px, 5vw, var(--fs-3xl));
+  font-size: 2.5rem;
   line-height: var(--lh-tight);
   font-weight: 600;
   color: #1A1208;
@@ -77,21 +81,27 @@ h1 {
 }
 h2 {
   font-family: var(--font-baslik);
-  font-size: clamp(24px, 3.5vw, var(--fs-2xl));
+  font-size: 2rem;
   line-height: var(--lh-tight);
   font-weight: 600;
   color: #1A1208;
 }
 h3 {
   font-family: var(--font-baslik);
-  font-size: clamp(17px, 2vw, 22px);
+  font-size: 1.5rem;
   font-weight: 500;
   color: #1A1208;
 }
 p {
-  font-size: 18px;
-  line-height: 1.8;
+  font-family: var(--font-roboto), 'Roboto', -apple-system, sans-serif;
+  font-size: 16px;
+  line-height: 1.7;
   color: #5C4A2A;
+}
+
+blockquote, cite, .alinti, .klasik-metin {
+  font-family: var(--font-govde), 'EB Garamond', Georgia, serif;
+  font-style: italic;
 }
 
 ::selection {
