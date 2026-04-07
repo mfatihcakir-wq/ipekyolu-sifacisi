@@ -178,57 +178,136 @@ export default function LandingClient() {
       </section>
 
       {/* KLASİK TIBBIN HAZİNESİ */}
-      <section style={{ padding: '88px clamp(24px,5vw,80px)', background: '#F5EFE6' }}>
-        <div style={{ textAlign: 'center' as const, marginBottom: 56 }}>
-          <div style={{ fontFamily: 'Cinzel,serif', fontSize: 10, color: '#B8860B', letterSpacing: 3, marginBottom: 14 }}>{"KAYNAKLARIMIZ"}</div>
-          <h2 style={{ fontFamily: 'Cinzel,serif', fontSize: 'clamp(28px,4vw,38px)', fontWeight: 600, color: '#1A1208', lineHeight: 1.15, marginBottom: 12 }}>{"Klasik Tıbbın Hazinesi"}</h2>
-          <p style={{ fontSize: 17, color: '#5C4A2A', fontStyle: 'italic', lineHeight: 1.75, maxWidth: 600, margin: '0 auto' }}>{"Bin yıllık bilgi birikimi, 38 eser, 46.000+ metin kaydı"}</p>
+      <section style={{ padding: '88px clamp(24px,5vw,80px)', background: '#1B4332' }}>
+        <div style={{ textAlign: 'center' as const, marginBottom: 48 }}>
+          <div style={{ fontFamily: 'Cinzel,serif', fontSize: 10, color: 'rgba(201,168,76,0.55)', letterSpacing: 4, marginBottom: 16 }}>{"İLİM · MAARİF · HİKMET"}</div>
+          <h2 style={{ fontFamily: 'Cinzel,serif', fontSize: 'clamp(28px,4vw,40px)', fontWeight: 600, color: '#F5EFE6', lineHeight: 1.15, marginBottom: 14 }}>
+            {"Klasik Tıbbın "}<span style={{ color: '#C9A84C' }}>{"Hazinesi"}</span>
+          </h2>
+          <div style={{ fontFamily: 'serif', fontSize: 18, color: '#C9A84C', direction: 'rtl' as const, marginBottom: 14 }}>{"كنوز الطب الإسلامي الكلاسيكي"}</div>
+          <p style={{ fontSize: 16, color: 'rgba(245,239,230,0.55)', fontStyle: 'italic', lineHeight: 1.7, maxWidth: 560, margin: '0 auto 18px' }}>{"31.369 metin kaydından derlenen, kaynak gösterimli makaleler."}</p>
+          <div style={{ display: 'inline-flex', alignItems: 'center', gap: 14, fontFamily: 'Cinzel,serif', fontSize: 9, letterSpacing: 2, color: '#C9A84C', border: '1px solid rgba(201,168,76,0.3)', borderRadius: 20, padding: '7px 18px' }}>
+            <span>{"● KLASİK METİNLERDEN DERLENDİ"}</span>
+            <span style={{ opacity: 0.4 }}>{"|"}</span>
+            <span>{"KAYNAK GÖSTERİMLİ"}</span>
+          </div>
         </div>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2,1fr)', gap: 20, maxWidth: 980, margin: '0 auto' }} className="hazine-grid">
+
+        <div style={{ display: 'grid', gridTemplateColumns: '1.2fr 1fr', gap: 18, maxWidth: 1180, margin: '0 auto 18px' }} className="hazine-top-grid">
+          {/* BÜYÜK FEATURED */}
+          <div className="hazine-card" style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(201,168,76,0.15)', borderRadius: 14, padding: '32px 34px', display: 'flex', flexDirection: 'column' as const, transition: 'all 0.2s' }}>
+            <div style={{ display: 'inline-block', alignSelf: 'flex-start', fontFamily: 'Cinzel,serif', fontSize: 9, letterSpacing: 2, color: '#C9A84C', background: 'rgba(201,168,76,0.12)', border: '1px solid rgba(201,168,76,0.3)', borderRadius: 20, padding: '5px 12px', marginBottom: 18 }}>{"TEMEL KAVRAMLAR"}</div>
+            <div style={{ fontFamily: 'serif', fontSize: 22, color: '#C9A84C', direction: 'rtl' as const, textAlign: 'right' as const, marginBottom: 18 }}>{"نظرية الأمزجة والأخلاط"}</div>
+            <div style={{ display: 'flex', justifyContent: 'center', marginBottom: 22 }}>
+              <div style={{ position: 'relative' as const, width: 90, height: 90 }}>
+                <div style={{ position: 'absolute' as const, inset: 0, borderRadius: '50%', border: '1px solid rgba(201,168,76,0.4)' }} />
+                <div style={{ position: 'absolute' as const, top: 12, left: 12, right: 12, bottom: 12, borderRadius: '50%', border: '1px solid rgba(201,168,76,0.25)' }} />
+                <div style={{ position: 'absolute' as const, top: 24, left: 24, right: 24, bottom: 24, borderRadius: '50%', border: '1px solid rgba(201,168,76,0.5)' }} />
+                <div style={{ position: 'absolute' as const, top: '50%', left: '50%', width: 8, height: 8, borderRadius: '50%', background: '#C9A84C', transform: 'translate(-50%,-50%)' }} />
+              </div>
+            </div>
+            <div style={{ fontFamily: 'Cinzel,serif', fontSize: 19, fontWeight: 600, color: '#FFFFFF', lineHeight: 1.3, marginBottom: 12 }}>{"Mizaç Teorisi: Dört Hılt, Dört Mevsim, Dört İnsan"}</div>
+            <p style={{ fontSize: 14, color: 'rgba(245,239,230,0.7)', lineHeight: 1.75, marginBottom: 22, flex: 1 }}>{"İbn Sînâ\u2019nın el-Kânûn\u2019unda sistemleştirdiği hümoral tıbbın temelleri."}</p>
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', paddingTop: 16, borderTop: '1px solid rgba(201,168,76,0.12)' }}>
+              <div style={{ display: 'flex', gap: 10, fontFamily: 'Cinzel,serif', fontSize: 9, letterSpacing: 1.5, color: 'rgba(201,168,76,0.7)' }}>
+                <span>{"● İBN SÎNÂ"}</span>
+                <span style={{ opacity: 0.4 }}>{"·"}</span>
+                <span>{"EL-KÂNÛN I"}</span>
+              </div>
+              <a href="/makale/mizac-teorisi" style={{ fontFamily: 'Cinzel,serif', fontSize: 9, letterSpacing: 1.5, color: '#C9A84C', textDecoration: 'none' }}>{"DEVAMI →"}</a>
+            </div>
+          </div>
+
+          {/* SAĞ ÜST KART */}
+          <div className="hazine-card" style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(201,168,76,0.15)', borderRadius: 14, padding: '32px 30px', display: 'flex', flexDirection: 'column' as const, transition: 'all 0.2s' }}>
+            <div style={{ display: 'inline-block', alignSelf: 'flex-start', fontFamily: 'Cinzel,serif', fontSize: 9, letterSpacing: 2, color: '#C9A84C', background: 'rgba(201,168,76,0.12)', border: '1px solid rgba(201,168,76,0.3)', borderRadius: 20, padding: '5px 12px', marginBottom: 18 }}>{"NABIZ İLMİ"}</div>
+            <div style={{ fontFamily: 'serif', fontSize: 18, color: '#C9A84C', direction: 'rtl' as const, textAlign: 'right' as const, marginBottom: 14 }}>{"علم النبض عند ابن سينا"}</div>
+            <div style={{ fontFamily: 'Cinzel,serif', fontSize: 17, fontWeight: 600, color: '#FFFFFF', lineHeight: 1.3, marginBottom: 12 }}>{"Nabız Dokuz Sıfatı: İbn Sînâ\u2019nın Teşhis Anahtarı"}</div>
+            <p style={{ fontSize: 14, color: 'rgba(245,239,230,0.7)', lineHeight: 1.75, marginBottom: 18, flex: 1 }}>{"Büyüklük, kuvvet, hız, dolgunluk ve 5 sıfatla teşhis yöntemi."}</p>
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', paddingTop: 14, borderTop: '1px solid rgba(201,168,76,0.12)' }}>
+              <div style={{ fontFamily: 'Cinzel,serif', fontSize: 9, letterSpacing: 1.5, color: 'rgba(201,168,76,0.7)' }}>{"● İBN SÎNÂ"}</div>
+              <a href="/makale/nabiz-dokuz-sifati" style={{ fontFamily: 'Cinzel,serif', fontSize: 12, color: '#C9A84C', textDecoration: 'none' }}>{"→"}</a>
+            </div>
+          </div>
+        </div>
+
+        {/* ALT 3 KART */}
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: 18, maxWidth: 1180, margin: '0 auto' }} className="hazine-bottom-grid">
           {[
-            { ar: 'القانون في الطب', tr: "el-Kânûn fi\u2019t-Tıb", yazar: 'İbn Sînâ (ö. 1037)', desc: 'İslam tıbbının temel taşı. Mizaç teorisi, nabız ilmi ve tedavi metodolojisinin ana kaynağı.' },
-            { ar: 'الحاوي في الطب', tr: "el-Hâvî fi\u2019t-Tıb", yazar: 'er-Râzî (ö. 925)', desc: 'Klasik İslam tıbbının en kapsamlı ansiklopedisi. Klinik gözlem ve ilaç bilgisinin şaheseri.' },
-            { ar: 'الجامع لمفردات الأدوية', tr: 'el-Câmî li-Müfredât', yazar: 'İbn Beytâr (ö. 1248)', desc: "1.400\u2019den fazla tıbbi madde ve bitkiyi inceleyen devasa eczacılık ansiklopedisi." },
-            { ar: 'إحياء علوم الدين', tr: "İhyâu Ulûmi\u2019d-Dîn", yazar: 'Gazzâlî (ö. 1111)', desc: 'Kalbin hastalıkları ve erdemlerin kazanılması. Karakter analizimizin temel kaynağı.' },
+            { etiket: 'BESİN İLMİ', ar: 'الأغذية والأدوية المفردة', baslik: "Mizaca Göre Beslenme: El-Hâvî\u2019nin Sofra Rehberi", desc: "Er-Râzî\u2019nin besin maddeleri ve mevsimsel beslenme önerileri.", hekim: 'ER-RÂZÎ', slug: 'mizaca-gore-beslenme' },
+            { etiket: 'RUHSAL SAĞLIK', ar: 'طب الأرواح والنفس', baslik: "Kalp Hastalıkları: Gazzâlî\u2019nin Nefs Muhasebesi", desc: 'Kibir, hased ve dünya sevgisinin bedene yansımaları.', hekim: 'GAZZÂLÎ', slug: 'kalp-hastaliklari' },
+            { etiket: 'CERRAHİ', ar: 'الجراحة والعمليات', baslik: "Ez-Zehravî\u2019nin Cerrahi Aletleri: 200 Operasyon", desc: "Et-Tasrîf\u2019teki cerrahi aletler ve modern karşılıkları.", hekim: 'EZ-ZEHRAVÎ', slug: 'zehravi-cerrahi' },
           ].map(k => (
-            <div key={k.tr} style={{ background: '#FFFFFF', border: '1px solid #DEB887', borderRadius: 14, padding: '28px 30px' }}>
-              <div style={{ fontFamily: 'serif', fontSize: 22, color: '#B8860B', direction: 'rtl' as const, textAlign: 'right' as const, marginBottom: 12, lineHeight: 1.4 }}>{k.ar}</div>
-              <div style={{ fontFamily: 'Cinzel,serif', fontSize: 18, fontWeight: 600, color: '#1A1208', marginBottom: 4 }}>{k.tr}</div>
-              <div style={{ fontSize: 12, color: '#9B8060', fontStyle: 'italic', marginBottom: 14, letterSpacing: 0.3 }}>{k.yazar}</div>
-              <p style={{ fontSize: 14, color: '#5C4A2A', lineHeight: 1.7, margin: 0 }}>{k.desc}</p>
+            <div key={k.slug} className="hazine-card" style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(201,168,76,0.15)', borderRadius: 14, padding: '26px 26px', display: 'flex', flexDirection: 'column' as const, transition: 'all 0.2s' }}>
+              <div style={{ display: 'inline-block', alignSelf: 'flex-start', fontFamily: 'Cinzel,serif', fontSize: 9, letterSpacing: 2, color: '#C9A84C', background: 'rgba(201,168,76,0.12)', border: '1px solid rgba(201,168,76,0.3)', borderRadius: 20, padding: '5px 12px', marginBottom: 14 }}>{k.etiket}</div>
+              <div style={{ fontFamily: 'serif', fontSize: 16, color: '#C9A84C', direction: 'rtl' as const, textAlign: 'right' as const, marginBottom: 12 }}>{k.ar}</div>
+              <div style={{ fontFamily: 'Cinzel,serif', fontSize: 15, fontWeight: 600, color: '#FFFFFF', lineHeight: 1.35, marginBottom: 10 }}>{k.baslik}</div>
+              <p style={{ fontSize: 13, color: 'rgba(245,239,230,0.7)', lineHeight: 1.7, marginBottom: 16, flex: 1 }}>{k.desc}</p>
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', paddingTop: 12, borderTop: '1px solid rgba(201,168,76,0.12)' }}>
+                <div style={{ fontFamily: 'Cinzel,serif', fontSize: 9, letterSpacing: 1.5, color: 'rgba(201,168,76,0.7)' }}>{"● "}{k.hekim}</div>
+                <a href={`/makale/${k.slug}`} style={{ fontFamily: 'Cinzel,serif', fontSize: 12, color: '#C9A84C', textDecoration: 'none' }}>{"→"}</a>
+              </div>
             </div>
           ))}
         </div>
       </section>
 
       {/* SİSTEMİN MİMARLARI */}
-      <section style={{ padding: '88px clamp(24px,5vw,80px)', background: '#1B4332' }}>
-        <div style={{ textAlign: 'center' as const, marginBottom: 56 }}>
-          <div style={{ fontFamily: 'Cinzel,serif', fontSize: 10, color: '#B8860B', letterSpacing: 3, marginBottom: 14 }}>{"BÜYÜK HEKİMLER"}</div>
-          <h2 style={{ fontFamily: 'Cinzel,serif', fontSize: 'clamp(28px,4vw,38px)', fontWeight: 600, color: '#F5EFE6', lineHeight: 1.15, marginBottom: 12 }}>{"Sistemin Mimarları"}</h2>
-          <p style={{ fontSize: 17, color: 'rgba(245,239,230,0.55)', fontStyle: 'italic', lineHeight: 1.75, maxWidth: 600, margin: '0 auto' }}>{"Klasik hekimler bu sistemde nasıl konuşlanıyor?"}</p>
+      <section style={{ padding: '88px clamp(24px,5vw,80px)', background: '#1B4332', borderTop: '1px solid rgba(201,168,76,0.08)' }}>
+        <div style={{ textAlign: 'center' as const, marginBottom: 48 }}>
+          <div style={{ fontFamily: 'Cinzel,serif', fontSize: 10, color: 'rgba(201,168,76,0.55)', letterSpacing: 4, marginBottom: 16 }}>{"BÜYÜK HEKİMLER"}</div>
+          <h2 style={{ fontFamily: 'Cinzel,serif', fontSize: 'clamp(28px,4vw,40px)', fontWeight: 600, color: '#F5EFE6', lineHeight: 1.15, marginBottom: 14 }}>
+            {"Sistemin "}<span style={{ color: '#C9A84C' }}>{"Mimarları"}</span>
+          </h2>
+          <div style={{ fontFamily: 'serif', fontSize: 18, color: '#C9A84C', direction: 'rtl' as const, marginBottom: 14 }}>{"أعلام الطب الإسلامي"}</div>
+          <p style={{ fontSize: 16, color: 'rgba(245,239,230,0.55)', fontStyle: 'italic', lineHeight: 1.7, maxWidth: 580, margin: '0 auto' }}>{"Veritabanımızdaki 38 eserin sahipleri. Her biyografi kendi eseri üzerinden yazılmıştır."}</p>
         </div>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(5,1fr)', gap: 16, maxWidth: 1180, margin: '0 auto', overflowX: 'auto' as const }} className="mimar-grid">
+
+        {/* ÜST 5 KART */}
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(5,1fr)', gap: 14, maxWidth: 1180, margin: '0 auto 14px' }} className="mimar-grid-5">
           {[
-            { ad: 'er-Râzî', ar: 'الرازي', uzm: 'Klinik teşhis ve ilaç', rol: 'el-Hâvî kaynağı' },
-            { ad: 'İbn Sînâ', ar: 'ابن سينا', uzm: 'Mizaç teorisi ve nabız', rol: 'el-Kânûn kaynağı' },
-            { ad: 'İbn Rüşd', ar: 'ابن رشد', uzm: 'Felsefe ve ahlak teorisi', rol: 'Karakter analizi' },
-            { ad: 'ez-Zehravî', ar: 'الزهراوي', uzm: 'Cerrahi ve tedavi', rol: 'Tedavi protokolü' },
-            { ad: 'İbn Beytâr', ar: 'ابن البيطار', uzm: 'Bitkiler ve eczacılık', rol: 'Bitki atlası' },
+            { ad: 'İbn Sînâ', ar: 'ابن سينا', bas: 'سينا', tarih: '980–1037', eser: "EL-KÂNÛN Fİ\u2019T-TIB · 5 CİLT", slug: 'ibn-sina' },
+            { ad: 'Er-Râzî', ar: 'الرازي', bas: 'الرازي', tarih: '865–925', eser: "EL-HÂVÎ Fİ\u2019T-TIB · 25 CİLT", slug: 'er-razi' },
+            { ad: 'Ez-Zehravî', ar: 'الزهراوي', bas: 'الزهراوي', tarih: '936–1013', eser: 'ET-TASRÎF · 30 CİLT', slug: 'ez-zehravi' },
+            { ad: 'İbn Beytâr', ar: 'ابن البيطار', bas: 'البيطار', tarih: '1197–1248', eser: 'EL-CÂMİ LİL-MÜFREDÂT · 1.400+', slug: 'ibn-beytar' },
+            { ad: 'İbn Nefîs', ar: 'ابن النفيس', bas: 'النفيس', tarih: '1213–1288', eser: "EL-ŞÂMİL · 9 CİLT", slug: 'ibn-nefis' },
           ].map(h => (
-            <div key={h.ad} className="mimar-card" style={{ background: 'rgba(245,239,230,0.05)', border: '1px solid rgba(201,168,76,0.2)', borderRadius: 12, padding: '26px 20px', textAlign: 'center' as const, transition: 'border-color 0.2s', minWidth: 180 }}>
-              <div style={{ fontFamily: 'Cinzel,serif', fontSize: 16, fontWeight: 600, color: '#C9A84C', marginBottom: 4 }}>{h.ad}</div>
-              <div style={{ fontFamily: 'serif', fontSize: 14, color: 'rgba(201,168,76,0.55)', direction: 'rtl' as const, marginBottom: 14 }}>{h.ar}</div>
-              <div style={{ fontSize: 13, color: '#F5EFE6', lineHeight: 1.6, marginBottom: 14, minHeight: 38 }}>{h.uzm}</div>
-              <div style={{ display: 'inline-block', fontFamily: 'Cinzel,serif', fontSize: 9, letterSpacing: 1.5, color: '#B8860B', background: 'rgba(184,134,11,0.1)', border: '1px solid rgba(184,134,11,0.25)', borderRadius: 20, padding: '5px 12px' }}>{h.rol}</div>
-            </div>
+            <a key={h.slug} href={`/hekim/${h.slug}`} className="mimar-card" style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(201,168,76,0.2)', borderRadius: 12, padding: '24px 16px', textAlign: 'center' as const, transition: 'all 0.25s', textDecoration: 'none', display: 'block' }}>
+              <div style={{ width: 60, height: 60, margin: '0 auto 14px', borderRadius: '50%', background: 'rgba(201,168,76,0.15)', border: '1px solid rgba(201,168,76,0.4)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: 'serif', fontSize: 14, color: '#C9A84C', direction: 'rtl' as const }}>{h.bas}</div>
+              <div style={{ fontFamily: 'serif', fontSize: 14, color: 'rgba(201,168,76,0.7)', direction: 'rtl' as const, marginBottom: 4 }}>{h.ar}</div>
+              <div style={{ fontFamily: 'Cinzel,serif', fontSize: 14, fontWeight: 600, color: '#FFFFFF', marginBottom: 4 }}>{h.ad}</div>
+              <div style={{ fontSize: 12, color: 'rgba(245,239,230,0.45)', fontStyle: 'italic', marginBottom: 10 }}>{h.tarih}</div>
+              <div style={{ fontFamily: 'Cinzel,serif', fontSize: 8, letterSpacing: 1, color: 'rgba(201,168,76,0.6)', lineHeight: 1.5 }}>{h.eser}</div>
+            </a>
           ))}
         </div>
+
+        {/* ALT 4 KART */}
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4,1fr)', gap: 14, maxWidth: 1180, margin: '0 auto' }} className="mimar-grid-4">
+          {[
+            { ad: 'El-Herevî', ar: 'الهروي', bas: 'الهروي', tarih: 'ö. 1533', eser: "BAHRÜ\u2019L-CEVÂHİR", slug: 'el-herevi' },
+            { ad: 'El-Antâkî', ar: 'الأنطاكي', bas: 'الأنطاكي', tarih: 'ö. 1599', eser: "TEZKİRETÜ\u2019L-ELBÂB", slug: 'el-antaki' },
+            { ad: 'Tokatlı Mustafa Efendi', ar: 'توقاتلي مصطفى أفندي', bas: 'توقاتلي', tarih: '18. yüzyıl', eser: "TAHBÎZÜ\u2019L-MATHÛN", slug: 'tokatli' },
+            { ad: 'Hekim Ahmet el-Hayâtî', ar: 'الحياتي أحمد الحكيم', bas: 'الحياتي', tarih: '15. yüzyıl', eser: "ŞECERETÜ\u2019T-TIB", slug: 'el-hayati' },
+          ].map(h => (
+            <a key={h.slug} href={`/hekim/${h.slug}`} className="mimar-card" style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(201,168,76,0.2)', borderRadius: 12, padding: '24px 16px', textAlign: 'center' as const, transition: 'all 0.25s', textDecoration: 'none', display: 'block' }}>
+              <div style={{ width: 60, height: 60, margin: '0 auto 14px', borderRadius: '50%', background: 'rgba(201,168,76,0.15)', border: '1px solid rgba(201,168,76,0.4)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: 'serif', fontSize: 14, color: '#C9A84C', direction: 'rtl' as const }}>{h.bas}</div>
+              <div style={{ fontFamily: 'serif', fontSize: 14, color: 'rgba(201,168,76,0.7)', direction: 'rtl' as const, marginBottom: 4 }}>{h.ar}</div>
+              <div style={{ fontFamily: 'Cinzel,serif', fontSize: 13, fontWeight: 600, color: '#FFFFFF', marginBottom: 4, lineHeight: 1.3 }}>{h.ad}</div>
+              <div style={{ fontSize: 12, color: 'rgba(245,239,230,0.45)', fontStyle: 'italic', marginBottom: 10 }}>{h.tarih}</div>
+              <div style={{ fontFamily: 'Cinzel,serif', fontSize: 8, letterSpacing: 1, color: 'rgba(201,168,76,0.6)', lineHeight: 1.5 }}>{h.eser}</div>
+            </a>
+          ))}
+        </div>
+
         <style>{`
-          .mimar-card:hover { border-color: rgba(201,168,76,0.6) !important; }
+          .hazine-card:hover { border-color: rgba(201,168,76,0.5) !important; background: rgba(255,255,255,0.06) !important; }
+          .mimar-card:hover { border-color: rgba(201,168,76,0.6) !important; transform: translateY(-3px); }
           @media (max-width: 768px) {
-            .hazine-grid { grid-template-columns: 1fr !important; }
-            .mimar-grid { grid-template-columns: repeat(5, 220px) !important; }
+            .hazine-top-grid { grid-template-columns: 1fr !important; }
+            .hazine-bottom-grid { grid-template-columns: 1fr !important; }
+            .mimar-grid-5 { grid-template-columns: repeat(2,1fr) !important; }
+            .mimar-grid-4 { grid-template-columns: repeat(2,1fr) !important; }
           }
         `}</style>
       </section>
