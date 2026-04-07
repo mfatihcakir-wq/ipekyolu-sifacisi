@@ -177,6 +177,8 @@ export default function LandingClient() {
         </button>
       </section>
 
+      <MakalelerSection />
+
       {/* STEPS */}
       <section id="nasil-calisir" style={{ background: '#1C3A26', padding: '88px clamp(24px,5vw,80px)' }}>
         <div style={{ maxWidth: 820, margin: '0 auto' }}>
@@ -316,8 +318,6 @@ export default function LandingClient() {
           </div>
         </section>
       )}
-
-      <MakalelerSection />
 
       {/* BIG CTA — sayfa sonu */}
       <section style={{ background: '#1C3A26', padding: '88px clamp(24px,5vw,80px)', textAlign: 'center', position: 'relative' as const, overflow: 'hidden' }}>
