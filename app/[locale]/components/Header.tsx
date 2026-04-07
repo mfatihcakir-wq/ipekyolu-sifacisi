@@ -18,7 +18,6 @@ const DANISМАН_EMAIL = 'm.fatih.cakir@gmail.com'
 const NAV_LINKS = [
   { href: '/#nasil-calisir', label: 'Nasıl Çalışır' },
   { href: '/bitkiler', label: 'Bitkiler' },
-  { href: '/#fiyatlandirma', label: 'Fiyatlar' },
   { href: '/hakkimizda', label: 'Hakkımızda' },
 ]
 
