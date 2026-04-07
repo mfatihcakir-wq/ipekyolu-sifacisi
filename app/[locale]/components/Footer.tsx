@@ -13,10 +13,10 @@ export default function Footer() {
     {/* Footer CTA */}
     <div style={{ background: '#122B1C', padding: '48px 24px', textAlign: 'center' as const }}>
       <div style={{ maxWidth: 560, margin: '0 auto' }}>
-        <div style={{ fontFamily: cinzel.style.fontFamily, fontSize: 22, color: 'white', fontWeight: 600, marginBottom: 8 }}>{"Bedeninizi Tanimaya Hazir misiniz?"}</div>
-        <div style={{ fontSize: 15, color: 'rgba(255,255,255,0.5)', fontStyle: 'italic', marginBottom: 24 }}>{"Ucretsiz analizinizi simdi baslatin."}</div>
+        <div style={{ fontFamily: cinzel.style.fontFamily, fontSize: 22, color: 'white', fontWeight: 600, marginBottom: 8 }}>{"Bedeninizi Tanımaya Hazır mısınız?"}</div>
+        <div style={{ fontSize: 15, color: 'rgba(255,255,255,0.5)', fontStyle: 'italic', marginBottom: 24 }}>{"Ücretsiz analizinizi şimdi başlatın."}</div>
         <a href="/analiz" style={{ display: 'inline-block', background: '#059669', color: 'white', borderRadius: 10, padding: '14px 32px', fontFamily: cinzel.style.fontFamily, fontSize: 13, fontWeight: 600, textDecoration: 'none', letterSpacing: 1 }}>
-          {"Ucretsiz Analizi Baslat \u2192"}
+          {"Ücretsiz Analizi Başlat \u2192"}
         </a>
       </div>
     </div>
@@ -32,20 +32,20 @@ export default function Footer() {
               <path d="M32 14 Q36 10 40 12 Q38 18 32 20 Q26 18 24 12 Q28 10 32 14Z" fill="#B8860B"/>
               <circle cx="32" cy="32" r="2.8" fill="#EF5350"/>
             </svg>
-            <span style={{ fontFamily: cinzel.style.fontFamily, color: C.gold, fontSize: 12, fontWeight: 600, letterSpacing: 2 }}>{"IPEK YOLU SIFACISI"}</span>
+            <span style={{ fontFamily: cinzel.style.fontFamily, color: C.gold, fontSize: 12, fontWeight: 600, letterSpacing: 2 }}>{"İPEK YOLU ŞİFACISI"}</span>
           </div>
           <p style={{ fontSize: 13, lineHeight: 1.7, maxWidth: 260 }}>
-            {"Klasik Islam ve Osmanli tibbinin bin yillik birikimini modern dijital danışmanlıkla bulusturan saglik platformu."}
+            {"Bin yıllık şifa geleneği, modern danışmanlık."}
           </p>
         </div>
 
         {/* Kolon 2: Hizmetler */}
         <div>
-          <div style={{ fontFamily: cinzel.style.fontFamily, color: C.gold, fontSize: 11, fontWeight: 600, letterSpacing: 2, marginBottom: 12 }}>{"HIZMETLER"}</div>
+          <div style={{ fontFamily: cinzel.style.fontFamily, color: C.gold, fontSize: 11, fontWeight: 600, letterSpacing: 2, marginBottom: 12 }}>{"HİZMETLER"}</div>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 8, fontSize: 13 }}>
-            <a href="/analiz" style={{ color: 'rgba(255,255,255,0.6)', textDecoration: 'none' }}>{"Analiz Baslat"}</a>
-            <a href="/bitkiler" style={{ color: 'rgba(255,255,255,0.6)', textDecoration: 'none' }}>{"Bitki Ansiklopedisi"}</a>
-            <a href="/odeme" style={{ color: 'rgba(255,255,255,0.6)', textDecoration: 'none' }}>{"Uyelik Planlari"}</a>
+            <a href="/analiz" style={{ color: 'rgba(255,255,255,0.6)', textDecoration: 'none' }}>{"Analiz Başlat"}</a>
+            <a href="/bitkiler" style={{ color: 'rgba(255,255,255,0.6)', textDecoration: 'none' }}>{"Bitki Atlası"}</a>
+            <a href="/odeme" style={{ color: 'rgba(255,255,255,0.6)', textDecoration: 'none' }}>{"Üyelik Planları"}</a>
           </div>
         </div>
 
@@ -53,9 +53,9 @@ export default function Footer() {
         <div>
           <div style={{ fontFamily: cinzel.style.fontFamily, color: C.gold, fontSize: 11, fontWeight: 600, letterSpacing: 2, marginBottom: 12 }}>{"KURUMSAL"}</div>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 8, fontSize: 13 }}>
-            <a href="/hakkimizda" style={{ color: 'rgba(255,255,255,0.6)', textDecoration: 'none' }}>{"Hakkimizda"}</a>
-            <a href="/sss" style={{ color: 'rgba(255,255,255,0.6)', textDecoration: 'none' }}>{"Sikca Sorulan Sorular"}</a>
-            <a href="https://wa.me/905331687226" target="_blank" style={{ color: 'rgba(255,255,255,0.6)', textDecoration: 'none' }}>{"WhatsApp Iletisim"}</a>
+            <a href="/hakkimizda" style={{ color: 'rgba(255,255,255,0.6)', textDecoration: 'none' }}>{"Hakkımızda"}</a>
+            <a href="/sss" style={{ color: 'rgba(255,255,255,0.6)', textDecoration: 'none' }}>{"Sıkça Sorulan Sorular"}</a>
+            <a href="https://wa.me/905331687226" target="_blank" style={{ color: 'rgba(255,255,255,0.6)', textDecoration: 'none' }}>{"WhatsApp İletişim"}</a>
           </div>
         </div>
 
@@ -63,8 +63,8 @@ export default function Footer() {
         <div>
           <div style={{ fontFamily: cinzel.style.fontFamily, color: C.gold, fontSize: 11, fontWeight: 600, letterSpacing: 2, marginBottom: 12 }}>{"YASAL"}</div>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 8, fontSize: 13 }}>
-            <a href="/kvkk" style={{ color: 'rgba(255,255,255,0.6)', textDecoration: 'none' }}>{"KVKK Aydinlatma Metni"}</a>
-            <a href="/gizlilik-politikasi" style={{ color: 'rgba(255,255,255,0.6)', textDecoration: 'none' }}>{"Gizlilik Politikasi"}</a>
+            <a href="/kvkk" style={{ color: 'rgba(255,255,255,0.6)', textDecoration: 'none' }}>{"KVKK Aydınlatma Metni"}</a>
+            <a href="/gizlilik-politikasi" style={{ color: 'rgba(255,255,255,0.6)', textDecoration: 'none' }}>{"Gizlilik Politikası"}</a>
           </div>
         </div>
       </div>
