@@ -83,9 +83,12 @@ export default function LandingClient() {
 
         {/* SOL: metin + butonlar */}
         <div style={{ position: 'relative' as const, zIndex: 1 }}>
-          <div style={{ fontFamily: 'Cinzel,serif', fontSize: 10, color: 'rgba(184,134,11,0.5)', letterSpacing: 4, marginBottom: 20, display: 'flex', alignItems: 'center', gap: 12 }}>
+          <div style={{ fontFamily: 'Cinzel,serif', fontSize: 10, color: 'rgba(184,134,11,0.5)', letterSpacing: 4, marginBottom: 8, display: 'flex', alignItems: 'center', gap: 12 }}>
             <span style={{ width: 24, height: 1, background: 'rgba(184,134,11,0.3)', display: 'block' }} />
             {"KLASİK İSLAM VE OSMANLI TIBBI"}
+          </div>
+          <div style={{ fontFamily: 'Cinzel,serif', fontSize: 11, color: 'rgba(245,239,230,0.6)', letterSpacing: 2, marginBottom: 20, marginLeft: 36 }}>
+            {"FSM Fuat Sezgin Enstitüsü · Doktora Araştırmacısı"}
           </div>
 
           <h1 style={{ fontFamily: 'Cinzel,serif', fontSize: 'clamp(32px,4.5vw,50px)', fontWeight: 600, color: '#F5EDE0', lineHeight: 1.08, marginBottom: 14 }}>
