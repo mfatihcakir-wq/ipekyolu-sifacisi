@@ -2,12 +2,9 @@
 
 import { useEffect, useState, useMemo } from 'react'
 import { Cinzel, EB_Garamond, Noto_Naskh_Arabic } from 'next/font/google'
-import { createClient } from '@supabase/supabase-js'
+import { createClient } from '@/lib/supabase'
 
-const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-)
+const supabase = createClient()
 
 const cinzel = Cinzel({ display: 'swap', preload: false, subsets: ['latin', 'latin-ext'], weight: ['400', '500', '600'] })
 const garamond = EB_Garamond({ display: 'swap', preload: false, subsets: ['latin', 'latin-ext'], weight: ['400', '500'], style: ['normal', 'italic'] })
