@@ -55,7 +55,7 @@ export default function LandingClient() {
 
 
   return (
-    <main>
+    <div>
       <Header />
 
       {/* HERO */}
@@ -99,7 +99,7 @@ export default function LandingClient() {
               { label: 'Cilt Bakımı', href: '/hasta/cilt' },
               { label: 'Hakkımızda', href: '/hakkimizda' },
             ].map(t => (
-              <button key={t.label} onClick={() => router.push(t.href)} style={{ background: 'transparent', border: '1.5px solid rgba(245,237,224,0.15)', borderRadius: 9, padding: '12px 20px', fontFamily: 'Cinzel,serif', fontSize: 10, color: 'rgba(245,237,224,0.55)', letterSpacing: 1.5, cursor: 'pointer' }}>
+              <button key={t.label} onClick={() => router.push(t.href)} style={{ background: 'transparent', border: '1.5px solid rgba(245,237,224,0.15)', borderRadius: 9, padding: '14px 20px', fontFamily: 'Cinzel,serif', fontSize: 10, color: 'rgba(245,237,224,0.55)', letterSpacing: 1.5, cursor: 'pointer', minHeight: 44 }}>
                 {t.label}
               </button>
             ))}

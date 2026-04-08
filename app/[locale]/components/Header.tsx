@@ -132,7 +132,7 @@ export default function Header() {
 
             {/* Hamburger (mobil) */}
             <button onClick={() => setMenuAcik(!menuAcik)} className="header-hamburger"
-              style={{ background: 'none', border: 'none', color: 'white', fontSize: 22, cursor: 'pointer', padding: '4px', display: 'none' }}>
+              style={{ background: 'none', border: 'none', color: 'white', fontSize: 24, cursor: 'pointer', padding: 0, display: 'none', minWidth: 44, minHeight: 44, alignItems: 'center', justifyContent: 'center' }}>
               {menuAcik ? '\u2715' : '\u2630'}
             </button>
           </div>
@@ -165,7 +165,7 @@ export default function Header() {
         @media (max-width: 768px) {
           .header-desktop-nav { display: none !important; }
           .header-auth-btns { display: none !important; }
-          .header-hamburger { display: block !important; }
+          .header-hamburger { display: flex !important; }
         }
       `}</style>
     </>
