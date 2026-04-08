@@ -105,10 +105,6 @@ export default function Header() {
                   style={{ background: 'rgba(255,255,255,0.1)', border: '1px solid rgba(255,255,255,0.2)', color: 'white', borderRadius: 6, padding: '6px 14px', fontSize: 11, cursor: 'pointer', fontFamily: cinzel.style.fontFamily, letterSpacing: 1 }}>
                   {"Giriş"}
                 </button>
-                <button onClick={() => router.push('/analiz')}
-                  style={{ background: '#059669', border: 'none', color: 'white', borderRadius: 6, padding: '7px 16px', fontSize: 11, cursor: 'pointer', fontFamily: cinzel.style.fontFamily, fontWeight: 600, letterSpacing: 1 }}>
-                  {"Ücretsiz Başla \u2192"}
-                </button>
               </div>
             ) : (
               <div style={{ position: 'relative', display: 'flex', alignItems: 'center', gap: 8 }}>
@@ -154,10 +150,6 @@ export default function Header() {
                 {link.label}
               </button>
             ))}
-            <button onClick={() => { setMenuAcik(false); router.push('/analiz') }}
-              style={{ display: 'block', width: '100%', padding: '12px 0', marginTop: 8, border: 'none', background: '#059669', color: 'white', borderRadius: 8, fontSize: 13, cursor: 'pointer', fontFamily: cinzel.style.fontFamily, fontWeight: 600, letterSpacing: 1 }}>
-              {"Ücretsiz Başla \u2192"}
-            </button>
           </div>
         )}
       </header>
