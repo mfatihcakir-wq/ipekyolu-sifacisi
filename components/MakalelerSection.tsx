@@ -112,7 +112,7 @@ export default function MakalelerSection() {
 
         <div style={{display:'grid',gridTemplateColumns:'repeat(auto-fit,minmax(280px,1fr))',gap:18,maxWidth:1100,margin:'0 auto 40px'}}>
           {featured && (
-            <div onClick={()=>{window.location.href=`/makale/${featured.slug}`}} style={{background:'rgba(212,168,67,0.04)',border:'1px solid rgba(212,168,67,0.2)',borderRadius:16,padding:28,cursor:'pointer',gridColumn:'span 2',display:'grid',gridTemplateColumns:'130px 1fr',gap:24,alignItems:'center'}}>
+            <div style={{background:'rgba(212,168,67,0.04)',border:'1px solid rgba(212,168,67,0.2)',borderRadius:16,padding:28,gridColumn:'span 2',display:'grid',gridTemplateColumns:'130px 1fr',gap:24,alignItems:'center'}}>
               <div style={{display:'flex',alignItems:'center',justifyContent:'center'}}>
                 <svg width="110" height="110" viewBox="0 0 140 140" fill="none">
                   <circle cx="70" cy="70" r="65" stroke="#D4A843" strokeWidth="0.5" strokeOpacity="0.2"/>
@@ -139,7 +139,7 @@ export default function MakalelerSection() {
             </div>
           )}
           {rest.map(m => (
-            <div key={m.id} onClick={()=>{window.location.href=`/makale/${m.slug}`}} style={{background:'rgba(255,255,255,0.03)',border:'1px solid rgba(212,168,67,0.1)',borderRadius:16,padding:26,cursor:'pointer'}}>
+            <div key={m.id} style={{background:'rgba(255,255,255,0.03)',border:'1px solid rgba(212,168,67,0.1)',borderRadius:16,padding:26}}>
               <div style={{fontFamily:'Cinzel,serif',fontSize:7,letterSpacing:3,color:'#D4A843',padding:'4px 10px',border:'1px solid rgba(212,168,67,0.2)',borderRadius:20,display:'inline-block',marginBottom:12}}>{m.kategori||'MAKALE'}</div>
               {m.baslik_ar && (<div style={{fontFamily:'serif',fontSize:13,color:'rgba(212,168,67,0.4)',marginBottom:6,direction:'rtl' as const,textAlign:'right' as const}}>{m.baslik_ar}</div>)}
               <div style={{fontFamily:'Cinzel,serif',fontSize:14,fontWeight:600,color:'#F5EAD4',lineHeight:1.35,marginBottom:10}}>{m.baslik}</div>
@@ -154,7 +154,7 @@ export default function MakalelerSection() {
         </div>
 
         <div style={{textAlign:'center'}}>
-          <button onClick={()=>{window.location.href='/makaleler'}} style={{fontFamily:'Cinzel,serif',fontSize:9,letterSpacing:3,color:'#D4A843',background:'transparent',border:'1px solid rgba(212,168,67,0.25)',padding:'12px 36px',borderRadius:8,cursor:'pointer'}}>TÜM MAKALELER →</button>
+          <div style={{fontFamily:'Cinzel,serif',fontSize:9,letterSpacing:3,color:'rgba(212,168,67,0.5)',padding:'12px 36px'}}>YAKINDA — TÜM MAKALELER</div>
         </div>
       </div>
     </section>
@@ -171,15 +171,15 @@ export default function MakalelerSection() {
 
         <div style={{display:'grid',gridTemplateColumns:'repeat(auto-fill,minmax(180px,1fr))',gap:14,maxWidth:1100,margin:'0 auto'}}>
           {hekimler.map((h,i) => (
-            <div key={h.id} onClick={()=>{window.location.href=`/hekim/${h.slug}`}} style={{background:'rgba(255,255,255,0.02)',border:'1px solid rgba(212,168,67,0.08)',borderRadius:14,padding:'22px 16px',textAlign:'center' as const,cursor:'pointer'}}>
+            <div key={h.id} style={{background:'rgba(255,255,255,0.05)',border:'1px solid rgba(212,168,67,0.25)',borderRadius:14,padding:'24px 16px',textAlign:'center' as const}}>
               <div style={{width:60,height:60,margin:'0 auto 12px',position:'relative'}}>
-                <div style={{position:'absolute',inset:0,borderRadius:'50%',border:'1px solid rgba(212,168,67,0.2)',animation:'gentlePulse 3s ease-in-out infinite',animationDelay:`${i*0.4}s`}}/>
-                <div style={{width:'100%',height:'100%',borderRadius:'50%',background:'#1A2E1E',border:'1px solid rgba(212,168,67,0.15)',display:'flex',alignItems:'center',justifyContent:'center',fontFamily:'serif',fontSize:10,color:'rgba(212,168,67,0.5)',lineHeight:1.3}}>{h.isim_ar?.split(' ').slice(-1)[0]||'—'}</div>
+                <div style={{position:'absolute',inset:0,borderRadius:'50%',border:'1px solid rgba(212,168,67,0.4)',animation:'gentlePulse 3s ease-in-out infinite',animationDelay:`${i*0.4}s`}}/>
+                <div style={{width:'100%',height:'100%',borderRadius:'50%',background:'rgba(212,168,67,0.12)',border:'1px solid rgba(212,168,67,0.35)',display:'flex',alignItems:'center',justifyContent:'center',fontFamily:'serif',fontSize:13,color:'#D4A843',lineHeight:1.3}}>{h.isim_ar?.split(' ').slice(-1)[0]||'—'}</div>
               </div>
-              {h.isim_ar && (<div style={{fontFamily:'serif',fontSize:12,color:'rgba(212,168,67,0.4)',marginBottom:4,direction:'rtl' as const}}>{h.isim_ar}</div>)}
-              <div style={{fontFamily:'Cinzel,serif',fontSize:10,fontWeight:600,color:'#F5EAD4',marginBottom:4,lineHeight:1.3}}>{h.isim}</div>
-              <div style={{fontFamily:'EB Garamond,serif',fontSize:12,color:'rgba(245,234,212,.3)',fontStyle:'italic',marginBottom:6}}>{h.dogum_olum}</div>
-              <div style={{fontFamily:'Cinzel,serif',fontSize:7,color:'rgba(212,168,67,0.3)',letterSpacing:1}}>{h.eserler?.[0]?.toUpperCase().substring(0,25)}</div>
+              {h.isim_ar && (<div style={{fontFamily:'serif',fontSize:13,color:'rgba(212,168,67,0.7)',marginBottom:4,direction:'rtl' as const}}>{h.isim_ar}</div>)}
+              <div style={{fontFamily:'Cinzel,serif',fontSize:12,fontWeight:600,color:'#F5EAD4',marginBottom:4,lineHeight:1.3}}>{h.isim}</div>
+              <div style={{fontFamily:'EB Garamond,serif',fontSize:12,color:'rgba(245,234,212,.55)',fontStyle:'italic',marginBottom:6}}>{h.dogum_olum}</div>
+              <div style={{fontFamily:'Cinzel,serif',fontSize:8,color:'rgba(212,168,67,0.55)',letterSpacing:1}}>{h.eserler?.[0]?.toUpperCase().substring(0,25)}</div>
             </div>
           ))}
         </div>

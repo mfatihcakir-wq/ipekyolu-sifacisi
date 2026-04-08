@@ -18,6 +18,7 @@ const DANISМАН_EMAIL = 'm.fatih.cakir@gmail.com'
 const NAV_LINKS = [
   { href: '/#nasil-calisir', label: 'Nasıl Çalışır' },
   { href: '/bitkiler', label: 'Bitkiler' },
+  { href: '/karakter', label: 'Kalp Şehri' },
   { href: '/hakkimizda', label: 'Hakkımızda' },
 ]
 
