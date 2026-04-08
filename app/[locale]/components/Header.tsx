@@ -20,6 +20,7 @@ const NAV_LINKS = [
   { href: '/bitkiler', label: 'Bitkiler' },
   { href: '/karakter', label: 'Kalp Şehri' },
   { href: '/hakkimizda', label: 'Hakkımızda' },
+  { href: '/admin', label: 'YÖNETİM' },
 ]
 
 // Dil secici kaldirildi — sadece TR
