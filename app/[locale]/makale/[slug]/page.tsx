@@ -39,7 +39,7 @@ export default async function MakaleDetay({ params }: { params: Promise<{ locale
             padding: '6px 16px',
             borderRadius: 4,
             textTransform: 'uppercase' as const,
-            fontFamily: 'Cinzel, serif'
+            fontFamily: 'Cormorant Garamond, serif'
           }}>
             {makale.kategori}
           </span>
@@ -62,7 +62,7 @@ export default async function MakaleDetay({ params }: { params: Promise<{ locale
 
         {/* Turkce Baslik */}
         <h1 style={{
-          fontFamily: 'Cinzel, serif',
+          fontFamily: 'Cormorant Garamond, serif',
           fontSize: 36,
           fontWeight: 700,
           color: '#F5EAD4',
@@ -100,7 +100,7 @@ export default async function MakaleDetay({ params }: { params: Promise<{ locale
             if (paragraf.startsWith('### ')) {
               return (
                 <h3 key={i} style={{
-                  fontFamily: 'Cinzel, serif',
+                  fontFamily: 'Cormorant Garamond, serif',
                   fontSize: 20,
                   fontWeight: 600,
                   color: '#D4A843',
@@ -114,7 +114,7 @@ export default async function MakaleDetay({ params }: { params: Promise<{ locale
             if (paragraf.startsWith('## ')) {
               return (
                 <h2 key={i} style={{
-                  fontFamily: 'Cinzel, serif',
+                  fontFamily: 'Cormorant Garamond, serif',
                   fontSize: 24,
                   fontWeight: 700,
                   color: '#D4A843',
@@ -146,7 +146,7 @@ export default async function MakaleDetay({ params }: { params: Promise<{ locale
             paddingTop: 32
           }}>
             <h3 style={{
-              fontFamily: 'Cinzel, serif',
+              fontFamily: 'Cormorant Garamond, serif',
               fontSize: 18,
               fontWeight: 600,
               color: '#D4A843',

@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react'
 import { useRouter, usePathname } from 'next/navigation'
 import Link from 'next/link'
-import { Cinzel, EB_Garamond } from 'next/font/google'
+import { Cormorant_Garamond as Cinzel, EB_Garamond } from 'next/font/google'
 import { createClient } from '@/lib/supabase'
 
 const cinzel = Cinzel({ display: 'swap', preload: false, subsets: ['latin', 'latin-ext'], weight: ['400', '500', '600'] })
@@ -257,15 +257,15 @@ export default function DashboardPage() {
   .page { max-width: 800px; margin: 0 auto; padding: 40px; }
   .header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 32px; padding-bottom: 20px; border-bottom: 2px solid #1C3A26; }
   .logo-area { display: flex; flex-direction: column; gap: 4px; }
-  .logo-title { font-family: 'Cinzel', serif; font-size: 18px; font-weight: 600; color: #1C3A26; letter-spacing: 3px; }
+  .logo-title { font-family: 'Cormorant Garamond', serif; font-size: 18px; font-weight: 600; color: #1C3A26; letter-spacing: 3px; }
   .logo-ar { font-size: 14px; color: #B8860B; }
   .meta { text-align: right; font-size: 11px; color: #999; line-height: 1.8; }
-  .hasta-baslik { background: #1C3A26; color: #B8860B; font-family: 'Cinzel', serif; font-size: 22px; font-weight: 600; padding: 16px 24px; border-radius: 8px; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 2px; }
+  .hasta-baslik { background: #1C3A26; color: #B8860B; font-family: 'Cormorant Garamond', serif; font-size: 22px; font-weight: 600; padding: 16px 24px; border-radius: 8px; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 2px; }
   .hasta-alt { font-size: 12px; color: #6B5744; margin-bottom: 24px; }
   .section { margin-bottom: 20px; page-break-inside: avoid; }
-  .section-title { font-family: 'Cinzel', serif; font-size: 11px; font-weight: 600; color: #B8860B; letter-spacing: 3px; text-transform: uppercase; margin-bottom: 10px; padding-bottom: 4px; border-bottom: 1px solid #DEB887; }
+  .section-title { font-family: 'Cormorant Garamond', serif; font-size: 11px; font-weight: 600; color: #B8860B; letter-spacing: 3px; text-transform: uppercase; margin-bottom: 10px; padding-bottom: 4px; border-bottom: 1px solid #DEB887; }
   .mizac-kart { background: #1C3A26; color: white; border-radius: 8px; padding: 16px 20px; margin-bottom: 16px; }
-  .mizac-buyuk { font-family: 'Cinzel', serif; font-size: 18px; color: #B8860B; margin-bottom: 12px; }
+  .mizac-buyuk { font-family: 'Cormorant Garamond', serif; font-size: 18px; color: #B8860B; margin-bottom: 12px; }
   .hilt-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 16px; }
   .hilt-kart { border-radius: 6px; padding: 8px 12px; border-left: 3px solid; }
   .hilt-dem { border-color: #EF5350; background: #FFF8F8; }
@@ -275,7 +275,7 @@ export default function DashboardPage() {
   .hilt-yuzde { font-size: 18px; font-weight: 600; float: right; }
   .ozet-metin { font-size: 13px; line-height: 1.8; color: #2C1A00; background: #FAF6EF; border-radius: 6px; padding: 14px; margin-bottom: 16px; }
   .bitki-kart { background: #FAF6EF; border-radius: 6px; padding: 12px; margin-bottom: 8px; border-left: 3px solid #1C3A26; }
-  .bitki-ad { font-family: 'Cinzel', serif; font-size: 14px; font-weight: 600; color: #1C3A26; }
+  .bitki-ad { font-family: 'Cormorant Garamond', serif; font-size: 14px; font-weight: 600; color: #1C3A26; }
   .bitki-ar { font-size: 13px; color: #B8860B; margin-bottom: 6px; }
   .bitki-detay { font-size: 11px; color: #6B5744; line-height: 1.6; }
   .bitki-kaynak { font-size: 10px; color: #999; font-style: italic; margin-top: 4px; border-top: 1px solid #DEB887; padding-top: 4px; }
@@ -283,7 +283,7 @@ export default function DashboardPage() {
   .sabah-blok { background: #FFF8E7; }
   .ogle-blok { background: #F0FDF4; }
   .aksam-blok { background: #EDE7F6; }
-  .rutin-baslik { font-family: 'Cinzel', serif; font-size: 11px; font-weight: 600; color: #1C3A26; margin-bottom: 6px; }
+  .rutin-baslik { font-family: 'Cormorant Garamond', serif; font-size: 11px; font-weight: 600; color: #1C3A26; margin-bottom: 6px; }
   .rutin-item { font-size: 11px; color: #2C1A00; padding: 2px 0; border-bottom: 1px solid rgba(0,0,0,0.05); }
   .beslenme-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
   .beslenme-oneri { background: #F0FDF4; border-radius: 6px; padding: 10px; }
@@ -319,7 +319,7 @@ export default function DashboardPage() {
       <div style="font-size:10px;color:#999;margin-top:4px;">Klasik İslam Tıbbı Danismanligi</div>
     </div>
     <div class="meta">
-      <div style="font-family:'Cinzel',serif;font-size:13px;font-weight:600;color:#1C3A26;">KISISEL MIZAC RECETESI</div>
+      <div style="font-family:'Cormorant Garamond',serif;font-size:13px;font-weight:600;color:#1C3A26;">KISISEL MIZAC RECETESI</div>
       <div>${new Date().toLocaleDateString('tr-TR', { day: '2-digit', month: 'long', year: 'numeric' })}</div>
       <div>MZ-${Date.now().toString().slice(-8)}</div>
     </div>

@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import { useRouter, usePathname } from 'next/navigation'
-import { Cinzel } from 'next/font/google'
+import { Cormorant_Garamond as Cinzel } from 'next/font/google'
 import { createClient } from '@/lib/supabase'
 import Logo from '@/components/Logo'
 

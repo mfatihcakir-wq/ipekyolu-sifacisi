@@ -49,7 +49,7 @@ export default function Logo({
       </svg>
       {showText && (
         <div style={{ display: 'flex', flexDirection: 'column' as const, gap: 1 }}>
-          <span style={{ fontFamily: 'Cinzel, serif', fontSize: 12, fontWeight: 600, color: textColor, letterSpacing: 3, lineHeight: 1.1 }}>
+          <span style={{ fontFamily: 'Cormorant Garamond, serif', fontSize: 12, fontWeight: 600, color: textColor, letterSpacing: 3, lineHeight: 1.1 }}>
             {"İPEK YOLU ŞİFACISI"}
           </span>
           <span style={{ fontFamily: 'serif', fontSize: 9, color: arColor, direction: 'rtl' as const }}>

@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect, useState, useCallback } from 'react'
-import { Cinzel, EB_Garamond } from 'next/font/google'
+import { Cormorant_Garamond as Cinzel, EB_Garamond } from 'next/font/google'
 import { createClient } from '@/lib/supabase'
 import Link from 'next/link'
 

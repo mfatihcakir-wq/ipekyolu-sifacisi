@@ -2,7 +2,7 @@
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { createClient } from '@/lib/supabase'
-import { Cinzel, EB_Garamond } from 'next/font/google'
+import { Cormorant_Garamond as Cinzel, EB_Garamond } from 'next/font/google'
 import Header from '../components/Header'
 import Footer from '../components/Footer'
 

@@ -35,7 +35,7 @@
   --renk-safra:       #D4821A;
   --renk-sevda:       #6B3FA0;
 
-  --font-baslik:      'Cinzel', Georgia, serif;
+  --font-baslik:      var(--font-cormorant), 'Cormorant Garamond', Georgia, serif;
   --font-govde:       'EB Garamond', Georgia, serif;
   --font-arapca:      'Noto Naskh Arabic', serif;
   /* Typography Scale — İpek Yolu Şifacısı */

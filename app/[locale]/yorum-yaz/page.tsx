@@ -1,6 +1,6 @@
 'use client'
 import { useState } from 'react'
-import { Cinzel, EB_Garamond } from 'next/font/google'
+import { Cormorant_Garamond as Cinzel, EB_Garamond } from 'next/font/google'
 import Header from '../components/Header'
 import Footer from '../components/Footer'
 

@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react'
 import { useRouter, useParams } from 'next/navigation'
-import { Cinzel, EB_Garamond } from 'next/font/google'
+import { Cormorant_Garamond as Cinzel, EB_Garamond } from 'next/font/google'
 import { createClient } from '@/lib/supabase'
 
 const cinzel = Cinzel({ display: 'swap', preload: false, subsets: ['latin', 'latin-ext'], weight: ['400', '500', '600'] })

@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect, useState, useMemo } from 'react'
-import { Cinzel, EB_Garamond, Noto_Naskh_Arabic } from 'next/font/google'
+import { Cormorant_Garamond as Cinzel, EB_Garamond, Noto_Naskh_Arabic } from 'next/font/google'
 import { createClient } from '@/lib/supabase'
 
 const supabase = createClient()

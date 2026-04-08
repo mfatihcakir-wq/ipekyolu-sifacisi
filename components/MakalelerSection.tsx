@@ -103,11 +103,11 @@ export default function MakalelerSection() {
       <GEO/>
       <div style={{position:'relative',zIndex:2}}>
         <div style={{textAlign:'center',marginBottom:48}}>
-          <div style={{fontFamily:'Cinzel,serif',fontSize:9,letterSpacing:5,color:'rgba(212,168,67,.5)',marginBottom:12}}>İLİM · MAARİF · HİKMET</div>
-          <h2 style={{fontFamily:'Cinzel,serif',fontSize:'clamp(26px,3.5vw,40px)',fontWeight:700,color:'#F5EAD4',letterSpacing:2,marginBottom:8}}>Klasik Tıbbın <span style={{color:'#D4A843'}}>Hazinesi</span></h2>
+          <div style={{fontFamily:'Cormorant Garamond,serif',fontSize:9,letterSpacing:5,color:'rgba(212,168,67,.5)',marginBottom:12}}>İLİM · MAARİF · HİKMET</div>
+          <h2 style={{fontFamily:'Cormorant Garamond,serif',fontSize:'clamp(26px,3.5vw,40px)',fontWeight:700,color:'#F5EAD4',letterSpacing:2,marginBottom:8}}>Klasik Tıbbın <span style={{color:'#D4A843'}}>Hazinesi</span></h2>
           <div style={{fontFamily:'serif',fontSize:16,color:'rgba(212,168,67,.35)',marginBottom:12,direction:'rtl' as const}}>كنوز الطب الإسلامي الكلاسيكي</div>
           <p style={{fontFamily:'EB Garamond,serif',fontSize:17,fontStyle:'italic',color:'rgba(245,234,212,.4)',maxWidth:520,margin:'0 auto 16px',lineHeight:1.7}}>31.369 metin kaydından derlenen, kaynak gösterimli makaleler.</p>
-          <div style={{display:'inline-block',background:'rgba(212,168,67,0.08)',border:'1px solid rgba(212,168,67,0.15)',borderRadius:20,padding:'6px 16px',fontFamily:'Cinzel,serif',fontSize:8,color:'rgba(212,168,67,0.5)',letterSpacing:2}}>✦ KLASİK METİNLERDEN DERLENDİ · KAYNAK GÖSTERİMLİ</div>
+          <div style={{display:'inline-block',background:'rgba(212,168,67,0.08)',border:'1px solid rgba(212,168,67,0.15)',borderRadius:20,padding:'6px 16px',fontFamily:'Cormorant Garamond,serif',fontSize:8,color:'rgba(212,168,67,0.5)',letterSpacing:2}}>✦ KLASİK METİNLERDEN DERLENDİ · KAYNAK GÖSTERİMLİ</div>
         </div>
 
         <div style={{display:'grid',gridTemplateColumns:'repeat(auto-fit,minmax(280px,1fr))',gap:18,maxWidth:1100,margin:'0 auto 40px'}}>
@@ -126,35 +126,35 @@ export default function MakalelerSection() {
                 </svg>
               </div>
               <div>
-                <div style={{fontFamily:'Cinzel,serif',fontSize:7,letterSpacing:3,color:'#D4A843',padding:'4px 10px',border:'1px solid rgba(212,168,67,0.2)',borderRadius:20,display:'inline-block',marginBottom:12}}>{featured.kategori||'MAKALE'}</div>
+                <div style={{fontFamily:'Cormorant Garamond,serif',fontSize:7,letterSpacing:3,color:'#D4A843',padding:'4px 10px',border:'1px solid rgba(212,168,67,0.2)',borderRadius:20,display:'inline-block',marginBottom:12}}>{featured.kategori||'MAKALE'}</div>
                 {featured.baslik_ar && (<div style={{fontFamily:'serif',fontSize:14,color:'rgba(212,168,67,0.4)',marginBottom:6,direction:'rtl' as const,textAlign:'right' as const}}>{featured.baslik_ar}</div>)}
-                <div style={{fontFamily:'Cinzel,serif',fontSize:17,fontWeight:600,color:'#F5EAD4',lineHeight:1.3,marginBottom:10}}>{featured.baslik}</div>
+                <div style={{fontFamily:'Cormorant Garamond,serif',fontSize:17,fontWeight:600,color:'#F5EAD4',lineHeight:1.3,marginBottom:10}}>{featured.baslik}</div>
                 <div style={{fontFamily:'EB Garamond,serif',fontSize:15,color:'rgba(245,234,212,.45)',lineHeight:1.75,marginBottom:14,fontStyle:'italic'}}>{featured.ozet}</div>
                 <div style={{display:'flex',alignItems:'center',gap:8,paddingTop:12,borderTop:'1px solid rgba(212,168,67,0.08)'}}>
                   <div style={{width:5,height:5,borderRadius:'50%',background:'#D4A843',opacity:0.5}}/>
-                  <div style={{fontFamily:'Cinzel,serif',fontSize:8,color:'rgba(212,168,67,0.4)',letterSpacing:1}}>{featured.kaynak_metinler?.[0]?.hekim?.toUpperCase()}{' · '}{featured.kaynak_metinler?.[0]?.eser?.toUpperCase()}</div>
-                  <div style={{marginLeft:'auto',fontFamily:'Cinzel,serif',fontSize:9,color:'rgba(212,168,67,0.4)'}}>DEVAMI →</div>
+                  <div style={{fontFamily:'Cormorant Garamond,serif',fontSize:8,color:'rgba(212,168,67,0.4)',letterSpacing:1}}>{featured.kaynak_metinler?.[0]?.hekim?.toUpperCase()}{' · '}{featured.kaynak_metinler?.[0]?.eser?.toUpperCase()}</div>
+                  <div style={{marginLeft:'auto',fontFamily:'Cormorant Garamond,serif',fontSize:9,color:'rgba(212,168,67,0.4)'}}>DEVAMI →</div>
                 </div>
               </div>
             </div>
           )}
           {rest.map(m => (
             <div key={m.id} style={{background:'rgba(255,255,255,0.03)',border:'1px solid rgba(212,168,67,0.1)',borderRadius:16,padding:26}}>
-              <div style={{fontFamily:'Cinzel,serif',fontSize:7,letterSpacing:3,color:'#D4A843',padding:'4px 10px',border:'1px solid rgba(212,168,67,0.2)',borderRadius:20,display:'inline-block',marginBottom:12}}>{m.kategori||'MAKALE'}</div>
+              <div style={{fontFamily:'Cormorant Garamond,serif',fontSize:7,letterSpacing:3,color:'#D4A843',padding:'4px 10px',border:'1px solid rgba(212,168,67,0.2)',borderRadius:20,display:'inline-block',marginBottom:12}}>{m.kategori||'MAKALE'}</div>
               {m.baslik_ar && (<div style={{fontFamily:'serif',fontSize:13,color:'rgba(212,168,67,0.4)',marginBottom:6,direction:'rtl' as const,textAlign:'right' as const}}>{m.baslik_ar}</div>)}
-              <div style={{fontFamily:'Cinzel,serif',fontSize:14,fontWeight:600,color:'#F5EAD4',lineHeight:1.35,marginBottom:10}}>{m.baslik}</div>
+              <div style={{fontFamily:'Cormorant Garamond,serif',fontSize:14,fontWeight:600,color:'#F5EAD4',lineHeight:1.35,marginBottom:10}}>{m.baslik}</div>
               <div style={{fontFamily:'EB Garamond,serif',fontSize:14,color:'rgba(245,234,212,.45)',lineHeight:1.75,marginBottom:14,fontStyle:'italic'}}>{m.ozet}</div>
               <div style={{display:'flex',alignItems:'center',gap:8,paddingTop:12,borderTop:'1px solid rgba(212,168,67,0.08)'}}>
                 <div style={{width:5,height:5,borderRadius:'50%',background:'#D4A843',opacity:0.5}}/>
-                <div style={{fontFamily:'Cinzel,serif',fontSize:8,color:'rgba(212,168,67,0.4)',letterSpacing:1}}>{m.kaynak_metinler?.[0]?.hekim?.toUpperCase()}</div>
-                <div style={{marginLeft:'auto',fontFamily:'Cinzel,serif',fontSize:9,color:'rgba(212,168,67,0.4)'}}>→</div>
+                <div style={{fontFamily:'Cormorant Garamond,serif',fontSize:8,color:'rgba(212,168,67,0.4)',letterSpacing:1}}>{m.kaynak_metinler?.[0]?.hekim?.toUpperCase()}</div>
+                <div style={{marginLeft:'auto',fontFamily:'Cormorant Garamond,serif',fontSize:9,color:'rgba(212,168,67,0.4)'}}>→</div>
               </div>
             </div>
           ))}
         </div>
 
         <div style={{textAlign:'center'}}>
-          <div style={{fontFamily:'Cinzel,serif',fontSize:9,letterSpacing:3,color:'rgba(212,168,67,0.5)',padding:'12px 36px'}}>YAKINDA — TÜM MAKALELER</div>
+          <div style={{fontFamily:'Cormorant Garamond,serif',fontSize:9,letterSpacing:3,color:'rgba(212,168,67,0.5)',padding:'12px 36px'}}>YAKINDA — TÜM MAKALELER</div>
         </div>
       </div>
     </section>
@@ -163,8 +163,8 @@ export default function MakalelerSection() {
       <GEO/>
       <div style={{position:'relative',zIndex:2}}>
         <div style={{textAlign:'center',marginBottom:48}}>
-          <div style={{fontFamily:'Cinzel,serif',fontSize:9,letterSpacing:5,color:'rgba(212,168,67,.5)',marginBottom:12}}>BÜYÜK HEKİMLER</div>
-          <h2 style={{fontFamily:'Cinzel,serif',fontSize:'clamp(26px,3.5vw,40px)',fontWeight:700,color:'#F5EAD4',letterSpacing:2,marginBottom:8}}>Sistemin <span style={{color:'#D4A843'}}>Mimarları</span></h2>
+          <div style={{fontFamily:'Cormorant Garamond,serif',fontSize:9,letterSpacing:5,color:'rgba(212,168,67,.5)',marginBottom:12}}>BÜYÜK HEKİMLER</div>
+          <h2 style={{fontFamily:'Cormorant Garamond,serif',fontSize:'clamp(26px,3.5vw,40px)',fontWeight:700,color:'#F5EAD4',letterSpacing:2,marginBottom:8}}>Sistemin <span style={{color:'#D4A843'}}>Mimarları</span></h2>
           <div style={{fontFamily:'serif',fontSize:16,color:'rgba(212,168,67,.35)',marginBottom:12,direction:'rtl' as const}}>أعلام الطب الإسلامي</div>
           <p style={{fontFamily:'EB Garamond,serif',fontSize:17,fontStyle:'italic',color:'rgba(245,234,212,.4)',maxWidth:520,margin:'0 auto',lineHeight:1.7}}>Veritabanımızdaki 38 eserin sahipleri. Her biyografi kendi eseri üzerinden yazılmıştır.</p>
         </div>
@@ -177,9 +177,9 @@ export default function MakalelerSection() {
                 <div style={{width:'100%',height:'100%',borderRadius:'50%',background:'rgba(212,168,67,0.12)',border:'1px solid rgba(212,168,67,0.35)',display:'flex',alignItems:'center',justifyContent:'center',fontFamily:'serif',fontSize:13,color:'#D4A843',lineHeight:1.3}}>{h.isim_ar?.split(' ').slice(-1)[0]||'—'}</div>
               </div>
               {h.isim_ar && (<div style={{fontFamily:'serif',fontSize:13,color:'rgba(212,168,67,0.7)',marginBottom:4,direction:'rtl' as const}}>{h.isim_ar}</div>)}
-              <div style={{fontFamily:'Cinzel,serif',fontSize:12,fontWeight:600,color:'#F5EAD4',marginBottom:4,lineHeight:1.3}}>{h.isim}</div>
+              <div style={{fontFamily:'Cormorant Garamond,serif',fontSize:12,fontWeight:600,color:'#F5EAD4',marginBottom:4,lineHeight:1.3}}>{h.isim}</div>
               <div style={{fontFamily:'EB Garamond,serif',fontSize:12,color:'rgba(245,234,212,.55)',fontStyle:'italic',marginBottom:6}}>{h.dogum_olum}</div>
-              <div style={{fontFamily:'Cinzel,serif',fontSize:8,color:'rgba(212,168,67,0.55)',letterSpacing:1}}>{h.eserler?.[0]?.toUpperCase().substring(0,25)}</div>
+              <div style={{fontFamily:'Cormorant Garamond,serif',fontSize:8,color:'rgba(212,168,67,0.55)',letterSpacing:1}}>{h.eserler?.[0]?.toUpperCase().substring(0,25)}</div>
             </div>
           ))}
         </div>

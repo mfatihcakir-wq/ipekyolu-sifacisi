@@ -71,15 +71,15 @@ export default function LandingClient() {
 
         {/* SOL: metin + butonlar */}
         <div style={{ position: 'relative' as const, zIndex: 1 }}>
-          <div style={{ fontFamily: 'Cinzel,serif', fontSize: 10, color: 'rgba(184,134,11,0.5)', letterSpacing: 4, marginBottom: 8, display: 'flex', alignItems: 'center', gap: 12 }}>
+          <div style={{ fontFamily: 'Cormorant Garamond,serif', fontSize: 10, color: 'rgba(184,134,11,0.5)', letterSpacing: 4, marginBottom: 8, display: 'flex', alignItems: 'center', gap: 12 }}>
             <span style={{ width: 24, height: 1, background: 'rgba(184,134,11,0.3)', display: 'block' }} />
             {"KLASİK İSLAM VE OSMANLI TIBBI"}
           </div>
-          <div style={{ fontFamily: 'Cinzel,serif', fontSize: 11, color: 'rgba(245,239,230,0.6)', letterSpacing: 2, marginBottom: 20, marginLeft: 36 }}>
+          <div style={{ fontFamily: 'Cormorant Garamond,serif', fontSize: 11, color: 'rgba(245,239,230,0.6)', letterSpacing: 2, marginBottom: 20, marginLeft: 36 }}>
             {"FSM Fuat Sezgin Enstitüsü · Doktora Araştırmacısı"}
           </div>
 
-          <h1 style={{ fontFamily: 'Cinzel,serif', fontSize: 'clamp(32px,4.5vw,50px)', fontWeight: 600, color: '#F5EDE0', lineHeight: 1.08, marginBottom: 14 }}>
+          <h1 style={{ fontFamily: 'Cormorant Garamond,serif', fontSize: 'clamp(32px,4.5vw,50px)', fontWeight: 600, color: '#F5EDE0', lineHeight: 1.08, marginBottom: 14 }}>
             {"Bedeninizin "}
             <span style={{ color: '#B8860B', display: 'block' }}>{"Dilini Anlıyoruz."}</span>
           </h1>
@@ -89,7 +89,7 @@ export default function LandingClient() {
           </p>
 
           {/* Ana CTA */}
-          <button onClick={() => router.push('/analiz')} style={{ fontFamily: 'Cinzel,serif', fontSize: 11, fontWeight: 700, color: '#1C3A26', background: '#B8860B', padding: '16px 36px', borderRadius: 11, letterSpacing: 2, border: 'none', cursor: 'pointer', marginBottom: 20, display: 'block' }}>{"ANALİZİMİ BAŞLAT"}</button>
+          <button onClick={() => router.push('/analiz')} style={{ fontFamily: 'Cormorant Garamond,serif', fontSize: 11, fontWeight: 700, color: '#1C3A26', background: '#B8860B', padding: '16px 36px', borderRadius: 11, letterSpacing: 2, border: 'none', cursor: 'pointer', marginBottom: 20, display: 'block' }}>{"ANALİZİMİ BAŞLAT"}</button>
 
           {/* Sekme butonları */}
           <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' as const, marginBottom: 32 }}>
@@ -99,13 +99,13 @@ export default function LandingClient() {
               { label: 'Cilt Bakımı', href: '/hasta/cilt' },
               { label: 'Hakkımızda', href: '/hakkimizda' },
             ].map(t => (
-              <button key={t.label} onClick={() => router.push(t.href)} style={{ background: 'transparent', border: '1.5px solid rgba(245,237,224,0.15)', borderRadius: 9, padding: '14px 20px', fontFamily: 'Cinzel,serif', fontSize: 10, color: 'rgba(245,237,224,0.55)', letterSpacing: 1.5, cursor: 'pointer', minHeight: 44 }}>
+              <button key={t.label} onClick={() => router.push(t.href)} style={{ background: 'transparent', border: '1.5px solid rgba(245,237,224,0.15)', borderRadius: 9, padding: '14px 20px', fontFamily: 'Cormorant Garamond,serif', fontSize: 10, color: 'rgba(245,237,224,0.55)', letterSpacing: 1.5, cursor: 'pointer', minHeight: 44 }}>
                 {t.label}
               </button>
             ))}
           </div>
 
-          <div style={{ fontFamily: 'Cinzel,serif', fontSize: 11, color: 'rgba(184,134,11,0.3)', letterSpacing: 2.5, paddingBottom: 48 }}>{"38 KLASİK ESER · "}{kayitSayisi}{" METİN KAYDI · 1.180 BİTKİ"}</div>
+          <div style={{ fontFamily: 'Cormorant Garamond,serif', fontSize: 11, color: 'rgba(184,134,11,0.3)', letterSpacing: 2.5, paddingBottom: 48 }}>{"38 KLASİK ESER · "}{kayitSayisi}{" METİN KAYDI · 1.180 BİTKİ"}</div>
         </div>
 
         {/* ORTA: Büyük hareketli logo */}
@@ -127,18 +127,18 @@ export default function LandingClient() {
 
         {/* SAĞ: Danışman kartı */}
         <div className="hero-dan-col" style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(184,134,11,0.1)', borderRadius: 20, padding: 24, position: 'relative' as const, zIndex: 1 }}>
-          <div style={{ fontFamily: 'Cinzel,serif', fontSize: 10, color: 'rgba(184,134,11,0.45)', letterSpacing: 2, marginBottom: 14 }}>{"DANIŞMAN"}</div>
+          <div style={{ fontFamily: 'Cormorant Garamond,serif', fontSize: 10, color: 'rgba(184,134,11,0.45)', letterSpacing: 2, marginBottom: 14 }}>{"DANIŞMAN"}</div>
           <div style={{ width: 56, height: 56, borderRadius: '50%', overflow: 'hidden', border: '1.5px solid rgba(184,134,11,0.18)', marginBottom: 12, background: 'rgba(184,134,11,0.1)' }}>
             <Image src="/danisan.jpg" alt="M. Fatih Çakır" width={56} height={56} style={{ objectFit: 'cover', width: 56, height: 56, borderRadius: '50%' }} />
           </div>
-          <div style={{ fontFamily: 'Cinzel,serif', fontSize: 12, fontWeight: 600, color: '#F5EDE0', marginBottom: 3 }}>{"M. Fatih Çakır"}</div>
+          <div style={{ fontFamily: 'Cormorant Garamond,serif', fontSize: 12, fontWeight: 600, color: '#F5EDE0', marginBottom: 3 }}>{"M. Fatih Çakır"}</div>
           <div style={{ fontSize: 12, color: 'rgba(245,237,224,0.38)', fontStyle: 'italic', marginBottom: 14, lineHeight: 1.4 }}>{"Klasik İslam Tıbbı Araştırmacısı"}</div>
           <div style={{ height: 1, background: 'rgba(184,134,11,0.08)', marginBottom: 12 }} />
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 6 }}>
             {[{ n: '38', l: 'ESER' }, { n: '46K+', l: 'KAYIT' }, { n: '8', l: 'KİTAP' }, { n: '10+', l: 'YIL' }].map(({ n, l }) => (
               <div key={l} style={{ textAlign: 'center' as const, padding: 8, background: 'rgba(184,134,11,0.05)', borderRadius: 6, border: '1px solid rgba(184,134,11,0.07)' }}>
-                <div style={{ fontFamily: 'Cinzel,serif', fontSize: 16, fontWeight: 600, color: '#B8860B', lineHeight: 1 }}>{n}</div>
-                <div style={{ fontFamily: 'Cinzel,serif', fontSize: 6, color: 'rgba(245,237,224,0.25)', letterSpacing: 1.5, marginTop: 2 }}>{l}</div>
+                <div style={{ fontFamily: 'Cormorant Garamond,serif', fontSize: 16, fontWeight: 600, color: '#B8860B', lineHeight: 1 }}>{n}</div>
+                <div style={{ fontFamily: 'Cormorant Garamond,serif', fontSize: 6, color: 'rgba(245,237,224,0.25)', letterSpacing: 1.5, marginTop: 2 }}>{l}</div>
               </div>
             ))}
           </div>
@@ -159,8 +159,8 @@ export default function LandingClient() {
           { n: statsVisible ? count9 : 0, l: 'NABIZ SIFATI', s: 'İbn Sînâ metodolojisi' },
         ].map(({ n, l, s }, i, arr) => (
           <div key={l} style={{ textAlign: 'center' as const, padding: '40px 20px', borderRight: i < arr.length - 1 ? '1px solid #DEB887' : 'none' }}>
-            <div style={{ fontFamily: 'Cinzel,serif', fontSize: 38, fontWeight: 700, color: '#1C3A26', lineHeight: 1, marginBottom: 8 }}>{n}</div>
-            <div style={{ fontFamily: 'Cinzel,serif', fontSize: 10, color: '#9B8060', letterSpacing: 2.5, marginBottom: 4 }}>{l}</div>
+            <div style={{ fontFamily: 'Cormorant Garamond,serif', fontSize: 38, fontWeight: 700, color: '#1C3A26', lineHeight: 1, marginBottom: 8 }}>{n}</div>
+            <div style={{ fontFamily: 'Cormorant Garamond,serif', fontSize: 10, color: '#9B8060', letterSpacing: 2.5, marginBottom: 4 }}>{l}</div>
             <div style={{ fontSize: 12, color: '#9B8060', fontStyle: 'italic' }}>{s}</div>
           </div>
         ))}
@@ -168,11 +168,11 @@ export default function LandingClient() {
 
       {/* CTA — STATS SONRASI */}
       <section style={{ textAlign: 'center', padding: '56px clamp(24px,5vw,80px)', background: '#F5EFE0', borderBottom: '1px solid #DEB887' }}>
-        <p style={{ fontFamily: 'Cinzel,serif', fontSize: 18, marginBottom: 20, color: '#1C3A26', letterSpacing: 0.5 }}>
+        <p style={{ fontFamily: 'Cormorant Garamond,serif', fontSize: 18, marginBottom: 20, color: '#1C3A26', letterSpacing: 0.5 }}>
           {"Bin yıllık birikimle hazırlanan analiziniz sizi bekliyor."}
         </p>
         <button onClick={() => router.push('/analiz')}
-          style={{ fontFamily: 'Cinzel,serif', fontSize: 12, fontWeight: 700, color: '#1C3A26', background: '#B8860B', padding: '16px 36px', borderRadius: 11, letterSpacing: 2, border: 'none', cursor: 'pointer' }}>
+          style={{ fontFamily: 'Cormorant Garamond,serif', fontSize: 12, fontWeight: 700, color: '#1C3A26', background: '#B8860B', padding: '16px 36px', borderRadius: 11, letterSpacing: 2, border: 'none', cursor: 'pointer' }}>
           {"ANALİZİMİ BAŞLAT →"}
         </button>
       </section>
@@ -183,8 +183,8 @@ export default function LandingClient() {
       <section id="nasil-calisir" style={{ background: '#1C3A26', padding: '88px clamp(24px,5vw,80px)' }}>
         <div style={{ maxWidth: 820, margin: '0 auto' }}>
           <div style={{ textAlign: 'center' as const, marginBottom: 56 }}>
-            <div style={{ fontFamily: 'Cinzel,serif', fontSize: 10, color: 'rgba(184,134,11,0.5)', letterSpacing: 3, marginBottom: 14 }}>{"SÜREÇ"}</div>
-            <h2 style={{ fontFamily: 'Cinzel,serif', fontSize: 'clamp(28px,4vw,38px)', fontWeight: 600, color: '#F5EDE0', lineHeight: 1.15, marginBottom: 12 }}>{"Nasıl Çalışır?"}</h2>
+            <div style={{ fontFamily: 'Cormorant Garamond,serif', fontSize: 10, color: 'rgba(184,134,11,0.5)', letterSpacing: 3, marginBottom: 14 }}>{"SÜREÇ"}</div>
+            <h2 style={{ fontFamily: 'Cormorant Garamond,serif', fontSize: 'clamp(28px,4vw,38px)', fontWeight: 600, color: '#F5EDE0', lineHeight: 1.15, marginBottom: 12 }}>{"Nasıl Çalışır?"}</h2>
             <p style={{ fontSize: 18, color: 'rgba(245,237,224,0.4)', fontStyle: 'italic', lineHeight: 1.75, maxWidth: 480, margin: '0 auto' }}>{"Üç adımda kişisel sağlık protokolünüze kavuşun."}</p>
           </div>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: 40, position: 'relative' as const }} className="steps-grid">
@@ -195,8 +195,8 @@ export default function LandingClient() {
               { n: '03', h: 'Danışmanınız Ulaşır', p: '24-48 saat içinde uzman danışmanınız WhatsApp ile protokolünüzü iletir.' },
             ].map(({ n, h, p }) => (
               <div key={n} style={{ textAlign: 'center' as const }}>
-                <div style={{ width: 56, height: 56, borderRadius: '50%', background: 'rgba(184,134,11,0.08)', border: '1.5px solid rgba(184,134,11,0.2)', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 20px', fontFamily: 'Cinzel,serif', fontSize: 18, fontWeight: 600, color: '#B8860B', position: 'relative' as const, zIndex: 1 }}>{n}</div>
-                <div style={{ fontFamily: 'Cinzel,serif', fontSize: 13, fontWeight: 600, color: '#F5EDE0', marginBottom: 10 }}>{h}</div>
+                <div style={{ width: 56, height: 56, borderRadius: '50%', background: 'rgba(184,134,11,0.08)', border: '1.5px solid rgba(184,134,11,0.2)', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 20px', fontFamily: 'Cormorant Garamond,serif', fontSize: 18, fontWeight: 600, color: '#B8860B', position: 'relative' as const, zIndex: 1 }}>{n}</div>
+                <div style={{ fontFamily: 'Cormorant Garamond,serif', fontSize: 13, fontWeight: 600, color: '#F5EDE0', marginBottom: 10 }}>{h}</div>
                 <p style={{ fontSize: 15, color: 'rgba(245,237,224,0.45)', lineHeight: 1.75 }}>{p}</p>
               </div>
             ))}
@@ -207,12 +207,12 @@ export default function LandingClient() {
       {/* HIKAYE */}
       <section style={{ background: '#1C3A26' }}>
         <div style={{ maxWidth: 860, margin: '0 auto', padding: '80px clamp(24px,5vw,48px)' }}>
-          <div style={{ fontFamily: 'Cinzel,serif', fontSize: 10, color: 'rgba(184,134,11,0.55)', letterSpacing: 4, marginBottom: 28, display: 'flex', alignItems: 'center', gap: 16 }}>
+          <div style={{ fontFamily: 'Cormorant Garamond,serif', fontSize: 10, color: 'rgba(184,134,11,0.55)', letterSpacing: 4, marginBottom: 28, display: 'flex', alignItems: 'center', gap: 16 }}>
             <span style={{ width: 32, height: 1, background: 'rgba(184,134,11,0.25)', display: 'block' }} />
             {"NEDEN İPEK YOLU ŞİFACISI"}
             <span style={{ flex: 1, height: 1, background: 'rgba(184,134,11,0.1)', display: 'block' }} />
           </div>
-          <h2 style={{ fontFamily: 'Cinzel,serif', fontSize: 'clamp(22px,3vw,32px)', fontWeight: 500, color: '#F5EDE0', lineHeight: 1.2, marginBottom: 40 }}>
+          <h2 style={{ fontFamily: 'Cormorant Garamond,serif', fontSize: 'clamp(22px,3vw,32px)', fontWeight: 500, color: '#F5EDE0', lineHeight: 1.2, marginBottom: 40 }}>
             {"İbn Sînâ 1.037\u2019de öldü."}<br />
             <span style={{ color: '#B8860B' }}>{"Ama el-Kânûn hâlâ işliyor."}</span>
           </h2>
@@ -233,7 +233,7 @@ export default function LandingClient() {
           {/* BİR KEŞİF DAHA */}
           <div style={{ display: 'flex', alignItems: 'center', gap: 14, margin: '40px 0 32px' }}>
             <span style={{ flex: 1, height: 1, background: 'rgba(184,134,11,0.1)', display: 'block' }} />
-            <span style={{ fontFamily: 'Cinzel,serif', fontSize: 11, color: 'rgba(184,134,11,0.35)', letterSpacing: 3, whiteSpace: 'nowrap' as const }}>{"BİR KEŞİF DAHA"}</span>
+            <span style={{ fontFamily: 'Cormorant Garamond,serif', fontSize: 11, color: 'rgba(184,134,11,0.35)', letterSpacing: 3, whiteSpace: 'nowrap' as const }}>{"BİR KEŞİF DAHA"}</span>
             <span style={{ flex: 1, height: 1, background: 'rgba(184,134,11,0.1)', display: 'block' }} />
           </div>
           <p style={{ fontSize: 18, color: 'rgba(245,237,224,0.68)', lineHeight: 1.95, marginBottom: 22, fontFamily: 'EB Garamond,serif' }}>
@@ -246,7 +246,7 @@ export default function LandingClient() {
           {/* BURADAN ORAYA */}
           <div style={{ display: 'flex', alignItems: 'center', gap: 14, margin: '40px 0 32px' }}>
             <span style={{ flex: 1, height: 1, background: 'rgba(184,134,11,0.1)', display: 'block' }} />
-            <span style={{ fontFamily: 'Cinzel,serif', fontSize: 11, color: 'rgba(184,134,11,0.35)', letterSpacing: 3, whiteSpace: 'nowrap' as const }}>{"BURADAN ORAYA"}</span>
+            <span style={{ fontFamily: 'Cormorant Garamond,serif', fontSize: 11, color: 'rgba(184,134,11,0.35)', letterSpacing: 3, whiteSpace: 'nowrap' as const }}>{"BURADAN ORAYA"}</span>
             <span style={{ flex: 1, height: 1, background: 'rgba(184,134,11,0.1)', display: 'block' }} />
           </div>
           <p style={{ fontSize: 18, color: 'rgba(245,237,224,0.68)', lineHeight: 1.95, marginBottom: 22, fontFamily: 'EB Garamond,serif' }}>
@@ -262,9 +262,9 @@ export default function LandingClient() {
           </p>
 
           <div style={{ display: 'flex', alignItems: 'center', gap: 18, marginTop: 48, paddingTop: 32, borderTop: '1px solid rgba(184,134,11,0.12)' }}>
-            <div style={{ width: 50, height: 50, borderRadius: '50%', background: 'rgba(184,134,11,0.1)', border: '1px solid rgba(184,134,11,0.18)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: 'Cinzel,serif', fontSize: 15, fontWeight: 600, color: '#B8860B', flexShrink: 0 }}>{"MF"}</div>
+            <div style={{ width: 50, height: 50, borderRadius: '50%', background: 'rgba(184,134,11,0.1)', border: '1px solid rgba(184,134,11,0.18)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: 'Cormorant Garamond,serif', fontSize: 15, fontWeight: 600, color: '#B8860B', flexShrink: 0 }}>{"MF"}</div>
             <div>
-              <div style={{ fontFamily: 'Cinzel,serif', fontSize: 12, fontWeight: 600, color: '#F5EDE0', letterSpacing: 1, marginBottom: 3 }}>{"M. FATİH ÇAKIR"}</div>
+              <div style={{ fontFamily: 'Cormorant Garamond,serif', fontSize: 12, fontWeight: 600, color: '#F5EDE0', letterSpacing: 1, marginBottom: 3 }}>{"M. FATİH ÇAKIR"}</div>
               <div style={{ fontSize: 13, color: 'rgba(245,237,224,0.4)', fontStyle: 'italic' }}>{"Klasik İslam Tıbbı Araştırmacısı · FSM Fuat Sezgin Enstitüsü Doktora Adayı"}</div>
             </div>
           </div>
@@ -274,25 +274,25 @@ export default function LandingClient() {
       {/* DANISMAN */}
       <section style={{ background: '#FAF6EF', padding: '88px clamp(24px,5vw,80px)' }}>
         <div style={{ textAlign: 'center' as const, marginBottom: 48 }}>
-          <div style={{ fontFamily: 'Cinzel,serif', fontSize: 10, color: '#B8860B', letterSpacing: 3, marginBottom: 14 }}>{"DANIŞMANINIZ"}</div>
+          <div style={{ fontFamily: 'Cormorant Garamond,serif', fontSize: 10, color: '#B8860B', letterSpacing: 3, marginBottom: 14 }}>{"DANIŞMANINIZ"}</div>
         </div>
         <div style={{ maxWidth: 720, margin: '0 auto' }}>
           <div>
-            <div style={{ fontFamily: 'Cinzel,serif', fontSize: 10, color: '#B8860B', letterSpacing: 3, marginBottom: 14 }}>{"KLASİK İSLAM TIBBI ARAŞTIRMACISI"}</div>
-            <h3 style={{ fontFamily: 'Cinzel,serif', fontSize: 22, fontWeight: 600, color: '#1A1208', marginBottom: 6 }}>{"Tıp Tarihi Yüksek Lisans"}</h3>
+            <div style={{ fontFamily: 'Cormorant Garamond,serif', fontSize: 10, color: '#B8860B', letterSpacing: 3, marginBottom: 14 }}>{"KLASİK İSLAM TIBBI ARAŞTIRMACISI"}</div>
+            <h3 style={{ fontFamily: 'Cormorant Garamond,serif', fontSize: 22, fontWeight: 600, color: '#1A1208', marginBottom: 6 }}>{"Tıp Tarihi Yüksek Lisans"}</h3>
             <div style={{ fontSize: 16, color: '#9B8060', fontStyle: 'italic', marginBottom: 24 }}>{"FSM Vakıf Üniversitesi Fuat Sezgin İslam Bilim Tarihi Enstitüsü Doktora Adayı"}</div>
             <p style={{ fontSize: 17, color: '#5C4A2A', lineHeight: 1.85, marginBottom: 24 }}>{"Hekim Ahmet el-Hayâtî'nin Şeceretü't-Tıb adlı eserini ilk kez akademik düzeyde inceleyen araştırmacı. İbn Sînâ el-Kânûn ve Tahbîzü'l-Mathûn çevirileri üzerine çalışmalar yürütmektedir."}</p>
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12, marginBottom: 24 }} className="akademik-grid">
               {[{ l: 'DOKTORA', v: 'FSM Fuat Sezgin Enstitüsü' }, { l: 'YÜKSEK LİSANS', v: 'Tıp Tarihi, Kocaeli Üniversitesi' }, { l: 'YAYINLAR', v: '8 Kitap, 7 Çeviri' }, { l: 'UZMANLIK', v: 'Klasik İslam ve Osmanlı Tıbbı' }].map(({ l, v }) => (
                 <div key={l} style={{ background: 'white', border: '1px solid #DEB887', borderRadius: 10, padding: '14px 16px' }}>
-                  <div style={{ fontFamily: 'Cinzel,serif', fontSize: 10, color: '#9B8060', letterSpacing: 2, marginBottom: 5 }}>{l}</div>
+                  <div style={{ fontFamily: 'Cormorant Garamond,serif', fontSize: 10, color: '#9B8060', letterSpacing: 2, marginBottom: 5 }}>{l}</div>
                   <div style={{ fontSize: 15, color: '#1A1208' }}>{v}</div>
                 </div>
               ))}
             </div>
             <div style={{ display: 'flex', gap: 12 }}>
-              <a href="https://wa.me/905331687226" style={{ fontFamily: 'Cinzel,serif', fontSize: 10, fontWeight: 700, color: 'white', background: '#25D366', padding: '12px 24px', borderRadius: 9, letterSpacing: 1, textDecoration: 'none' }}>{"WhatsApp"}</a>
-              <a href="/hakkimizda" style={{ fontFamily: 'Cinzel,serif', fontSize: 10, color: '#1C3A26', background: 'transparent', padding: '11px 20px', borderRadius: 9, border: '1.5px solid #1C3A26', letterSpacing: 1, textDecoration: 'none' }}>{"Hakkımızda"}</a>
+              <a href="https://wa.me/905331687226" style={{ fontFamily: 'Cormorant Garamond,serif', fontSize: 10, fontWeight: 700, color: 'white', background: '#25D366', padding: '12px 24px', borderRadius: 9, letterSpacing: 1, textDecoration: 'none' }}>{"WhatsApp"}</a>
+              <a href="/hakkimizda" style={{ fontFamily: 'Cormorant Garamond,serif', fontSize: 10, color: '#1C3A26', background: 'transparent', padding: '11px 20px', borderRadius: 9, border: '1.5px solid #1C3A26', letterSpacing: 1, textDecoration: 'none' }}>{"Hakkımızda"}</a>
             </div>
           </div>
         </div>
@@ -302,8 +302,8 @@ export default function LandingClient() {
       {yorumlar.length > 0 && (
         <section style={{ background: '#F5EFE0', padding: '88px clamp(24px,5vw,80px)', borderTop: '1px solid #DEB887' }}>
           <div style={{ textAlign: 'center' as const, marginBottom: 56 }}>
-            <div style={{ fontFamily: 'Cinzel,serif', fontSize: 10, color: '#B8860B', letterSpacing: 3, marginBottom: 14 }}>{"DENEYİMLER"}</div>
-            <h2 style={{ fontFamily: 'Cinzel,serif', fontSize: 'clamp(28px,4vw,38px)', fontWeight: 600, color: '#1A1208' }}>{"İlk Analizden Sonra"}</h2>
+            <div style={{ fontFamily: 'Cormorant Garamond,serif', fontSize: 10, color: '#B8860B', letterSpacing: 3, marginBottom: 14 }}>{"DENEYİMLER"}</div>
+            <h2 style={{ fontFamily: 'Cormorant Garamond,serif', fontSize: 'clamp(28px,4vw,38px)', fontWeight: 600, color: '#1A1208' }}>{"İlk Analizden Sonra"}</h2>
           </div>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: 20, maxWidth: 1100, margin: '0 auto' }} className="yorumlar-grid">
             {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
@@ -311,7 +311,7 @@ export default function LandingClient() {
               <div key={y.id} style={{ background: 'white', border: '1px solid #DEB887', borderRadius: 16, padding: '28px 24px' }}>
                 <div style={{ color: '#B8860B', fontSize: 16, marginBottom: 14, letterSpacing: 2 }}>{"\u2605\u2605\u2605\u2605\u2605"}</div>
                 <p style={{ fontSize: 17, color: '#5C4A2A', fontStyle: 'italic', lineHeight: 1.8, marginBottom: 18 }}>&quot;{y.yorum}&quot;</p>
-                <div style={{ fontFamily: 'Cinzel,serif', fontSize: 12, fontWeight: 600, color: '#1A1208' }}>{y.ad_soyad}</div>
+                <div style={{ fontFamily: 'Cormorant Garamond,serif', fontSize: 12, fontWeight: 600, color: '#1A1208' }}>{y.ad_soyad}</div>
                 {y.sehir && <div style={{ fontSize: 13, color: '#9B8060', fontStyle: 'italic' }}>{y.sehir}</div>}
               </div>
             ))}
@@ -323,18 +323,18 @@ export default function LandingClient() {
       <section style={{ background: '#1C3A26', padding: '88px clamp(24px,5vw,80px)', textAlign: 'center', position: 'relative' as const, overflow: 'hidden' }}>
         <div style={{ position: 'absolute' as const, inset: 0, background: 'radial-gradient(circle at 50% 50%, rgba(184,134,11,0.08) 0%, transparent 70%)', pointerEvents: 'none' }} />
         <div style={{ position: 'relative' as const, zIndex: 1, maxWidth: 720, margin: '0 auto' }}>
-          <div style={{ fontFamily: 'Cinzel,serif', fontSize: 10, color: 'rgba(184,134,11,0.6)', letterSpacing: 4, marginBottom: 20 }}>{"BAŞLAYIN"}</div>
-          <h2 style={{ fontFamily: 'Cinzel,serif', fontSize: 'clamp(28px,4vw,42px)', fontWeight: 600, color: '#F5EDE0', lineHeight: 1.15, marginBottom: 16, letterSpacing: 0.3 }}>
+          <div style={{ fontFamily: 'Cormorant Garamond,serif', fontSize: 10, color: 'rgba(184,134,11,0.6)', letterSpacing: 4, marginBottom: 20 }}>{"BAŞLAYIN"}</div>
+          <h2 style={{ fontFamily: 'Cormorant Garamond,serif', fontSize: 'clamp(28px,4vw,42px)', fontWeight: 600, color: '#F5EDE0', lineHeight: 1.15, marginBottom: 16, letterSpacing: 0.3 }}>
             {"Bedeninizi Tanımaya Hazır Mısınız?"}
           </h2>
           <p style={{ fontSize: 18, color: 'rgba(245,237,224,0.6)', fontStyle: 'italic', marginBottom: 36, lineHeight: 1.7 }}>
             {"Ücretsiz analizinizi şimdi başlatın."}
           </p>
           <button onClick={() => router.push('/analiz')}
-            style={{ fontFamily: 'Cinzel,serif', fontSize: 14, fontWeight: 700, color: '#1C3A26', background: '#B8860B', padding: '20px 48px', borderRadius: 12, letterSpacing: 2.5, border: 'none', cursor: 'pointer', boxShadow: '0 8px 32px rgba(184,134,11,0.25)' }}>
+            style={{ fontFamily: 'Cormorant Garamond,serif', fontSize: 14, fontWeight: 700, color: '#1C3A26', background: '#B8860B', padding: '20px 48px', borderRadius: 12, letterSpacing: 2.5, border: 'none', cursor: 'pointer', boxShadow: '0 8px 32px rgba(184,134,11,0.25)' }}>
             {"ANALİZİMİ BAŞLAT →"}
           </button>
-          <div style={{ marginTop: 24, fontFamily: 'Cinzel,serif', fontSize: 11, color: 'rgba(184,134,11,0.4)', letterSpacing: 2 }}>
+          <div style={{ marginTop: 24, fontFamily: 'Cormorant Garamond,serif', fontSize: 11, color: 'rgba(184,134,11,0.4)', letterSpacing: 2 }}>
             {"38 KLASİK ESER · 46.000+ KAYIT · 1.180 BİTKİ"}
           </div>
         </div>

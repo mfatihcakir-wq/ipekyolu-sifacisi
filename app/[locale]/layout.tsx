@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
-import { Cinzel, EB_Garamond, Roboto } from 'next/font/google';
+import { Cormorant_Garamond, EB_Garamond, Roboto } from 'next/font/google';
 import { NextIntlClientProvider } from 'next-intl';
 import { getMessages } from 'next-intl/server';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -20,10 +20,11 @@ const geistMono = localFont({
   display: 'swap',
 });
 
-const cinzel = Cinzel({
+const cormorantGaramond = Cormorant_Garamond({
   subsets: ['latin', 'latin-ext'],
-  weight: ['400', '500', '600', '700'],
-  variable: '--font-cinzel',
+  weight: ['300', '400', '500', '600', '700'],
+  style: ['normal', 'italic'],
+  variable: '--font-cormorant',
   display: 'swap',
 });
 
@@ -84,14 +85,14 @@ export default async function RootLayout({
   const messages = await getMessages();
 
   return (
-    <html lang={locale} dir={locale === 'ar' ? 'rtl' : 'ltr'} className={`${cinzel.variable} ${ebGaramond.variable} ${roboto.variable}`}>
+    <html lang={locale} dir={locale === 'ar' ? 'rtl' : 'ltr'} className={`${cormorantGaramond.variable} ${ebGaramond.variable} ${roboto.variable}`}>
       <head>
         <meta charSet="utf-8" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
       </head>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} ${cinzel.variable} ${ebGaramond.variable} ${roboto.variable} ${roboto.className} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} ${cormorantGaramond.variable} ${ebGaramond.variable} ${roboto.variable} ${roboto.className} antialiased`}
       >
         <NextIntlClientProvider messages={messages}>
           <main>{children}</main>

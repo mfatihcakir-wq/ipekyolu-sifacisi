@@ -59,18 +59,18 @@ export default function KayitPage() {
               <path d="M20 6L9 17l-5-5"/>
             </svg>
           </div>
-          <h2 style={{fontFamily:'Cinzel,serif',fontSize:20,fontWeight:600,color:'#1C3A26',marginBottom:12}}>
+          <h2 style={{fontFamily:'Cormorant Garamond,serif',fontSize:20,fontWeight:600,color:'#1C3A26',marginBottom:12}}>
             {"Kayit Tamamlandi"}
           </h2>
           <p style={{fontSize:16,color:'#5C4A2A',fontStyle:'italic',lineHeight:1.8,marginBottom:28}}>
             {"E-posta adresinize dogrulama baglantisi gonderdik. Onayladiktan sonra giris yapabilirsiniz."}
           </p>
           <button onClick={() => router.push('/giris')}
-            style={{width:'100%',height:50,background:'#1C3A26',border:'none',borderRadius:12,fontFamily:'Cinzel,serif',fontSize:12,fontWeight:700,color:'#F5EFE0',letterSpacing:2,cursor:'pointer'}}>
+            style={{width:'100%',height:50,background:'#1C3A26',border:'none',borderRadius:12,fontFamily:'Cormorant Garamond,serif',fontSize:12,fontWeight:700,color:'#F5EFE0',letterSpacing:2,cursor:'pointer'}}>
             {"GIRIS YAP"}
           </button>
           <div style={{marginTop:14}}>
-            <a href="/odeme" style={{fontFamily:'Cinzel,serif',fontSize:10,color:'#B8860B',letterSpacing:1,textDecoration:'none'}}>
+            <a href="/odeme" style={{fontFamily:'Cormorant Garamond,serif',fontSize:10,color:'#B8860B',letterSpacing:1,textDecoration:'none'}}>
               {"Plan secmek icin devam et \u2192"}
             </a>
           </div>
@@ -83,7 +83,7 @@ export default function KayitPage() {
     <div style={{minHeight:'100vh',background:'#FAF6EF',display:'flex',alignItems:'center',justifyContent:'center',padding:20}}>
       <div style={{width:'100%',maxWidth:480}}>
         <div style={{textAlign:'center',marginBottom:28}}>
-          <div style={{fontFamily:'Cinzel,serif',fontSize:22,fontWeight:600,color:'#1C3A26',letterSpacing:3,marginBottom:4}}>
+          <div style={{fontFamily:'Cormorant Garamond,serif',fontSize:22,fontWeight:600,color:'#1C3A26',letterSpacing:3,marginBottom:4}}>
             {"IPEK YOLU SIFACISI"}
           </div>
           <div style={{fontFamily:'serif',fontSize:13,color:'#9B8060',direction:'rtl' as const}}>
@@ -101,7 +101,7 @@ export default function KayitPage() {
         </div>
 
         <div style={{background:'white',border:'1px solid #DEB887',borderRadius:20,padding:'36px 32px'}}>
-          <h1 style={{fontFamily:'Cinzel,serif',fontSize:20,fontWeight:600,color:'#1C3A26',marginBottom:6,letterSpacing:0.5}}>
+          <h1 style={{fontFamily:'Cormorant Garamond,serif',fontSize:20,fontWeight:600,color:'#1C3A26',marginBottom:6,letterSpacing:0.5}}>
             {"Hesap Olusturun"}
           </h1>
           <p style={{fontSize:15,color:'#9B8060',fontStyle:'italic',marginBottom:28,lineHeight:1.6}}>
@@ -116,17 +116,17 @@ export default function KayitPage() {
 
           <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:12,marginBottom:14}}>
             <div style={{gridColumn:'1/-1'}}>
-              <label style={{fontFamily:'Cinzel,serif',fontSize:10,color:'#1C3A26',letterSpacing:2,display:'block',marginBottom:7}}>{"AD SOYAD *"}</label>
+              <label style={{fontFamily:'Cormorant Garamond,serif',fontSize:10,color:'#1C3A26',letterSpacing:2,display:'block',marginBottom:7}}>{"AD SOYAD *"}</label>
               <input type="text" value={ad} onChange={e=>setAd(e.target.value)} placeholder="Adiniz Soyadiniz"
                 style={{width:'100%',height:48,border:'1px solid #DEB887',borderRadius:10,padding:'0 16px',fontSize:16,fontFamily:'EB Garamond,serif',color:'#1A1208',background:'#FAF6EF',outline:'none',boxSizing:'border-box' as const}} />
             </div>
             <div>
-              <label style={{fontFamily:'Cinzel,serif',fontSize:10,color:'#1C3A26',letterSpacing:2,display:'block',marginBottom:7}}>{"E-POSTA *"}</label>
+              <label style={{fontFamily:'Cormorant Garamond,serif',fontSize:10,color:'#1C3A26',letterSpacing:2,display:'block',marginBottom:7}}>{"E-POSTA *"}</label>
               <input type="email" value={email} onChange={e=>setEmail(e.target.value)} placeholder="ornek@email.com"
                 style={{width:'100%',height:48,border:'1px solid #DEB887',borderRadius:10,padding:'0 16px',fontSize:16,fontFamily:'EB Garamond,serif',color:'#1A1208',background:'#FAF6EF',outline:'none',boxSizing:'border-box' as const}} />
             </div>
             <div>
-              <label style={{fontFamily:'Cinzel,serif',fontSize:10,color:'#1C3A26',letterSpacing:2,display:'block',marginBottom:7}}>{"TELEFON"}</label>
+              <label style={{fontFamily:'Cormorant Garamond,serif',fontSize:10,color:'#1C3A26',letterSpacing:2,display:'block',marginBottom:7}}>{"TELEFON"}</label>
               <input type="tel" value={telefon} onChange={e=>setTelefon(e.target.value)} placeholder="+90 5XX XXX XX XX"
                 style={{width:'100%',height:48,border:'1px solid #DEB887',borderRadius:10,padding:'0 16px',fontSize:16,fontFamily:'EB Garamond,serif',color:'#1A1208',background:'#FAF6EF',outline:'none',boxSizing:'border-box' as const}} />
               <div style={{fontSize:11,color:'#9B8060',fontStyle:'italic',marginTop:4}}>
@@ -134,7 +134,7 @@ export default function KayitPage() {
               </div>
             </div>
             <div style={{gridColumn:'1/-1'}}>
-              <label style={{fontFamily:'Cinzel,serif',fontSize:10,color:'#1C3A26',letterSpacing:2,display:'block',marginBottom:7}}>{"SIFRE *"}</label>
+              <label style={{fontFamily:'Cormorant Garamond,serif',fontSize:10,color:'#1C3A26',letterSpacing:2,display:'block',marginBottom:7}}>{"SIFRE *"}</label>
               <input type="password" value={sifre} onChange={e=>setSifre(e.target.value)} placeholder="En az 6 karakter"
                 style={{width:'100%',height:48,border:'1px solid #DEB887',borderRadius:10,padding:'0 16px',fontSize:16,fontFamily:'EB Garamond,serif',color:'#1A1208',background:'#FAF6EF',outline:'none',boxSizing:'border-box' as const}} />
             </div>
@@ -151,13 +151,13 @@ export default function KayitPage() {
           </div>
 
           <button onClick={handleKayit} disabled={yukleniyor}
-            style={{width:'100%',height:50,background:'#B8860B',border:'none',borderRadius:12,fontFamily:'Cinzel,serif',fontSize:12,fontWeight:700,color:'#1C3A26',letterSpacing:2,cursor:'pointer',opacity:yukleniyor?0.7:1}}>
+            style={{width:'100%',height:50,background:'#B8860B',border:'none',borderRadius:12,fontFamily:'Cormorant Garamond,serif',fontSize:12,fontWeight:700,color:'#1C3A26',letterSpacing:2,cursor:'pointer',opacity:yukleniyor?0.7:1}}>
             {yukleniyor ? 'Kayit yapiliyor...' : 'KAYIT OL VE DEVAM ET'}
           </button>
 
           <div style={{textAlign:'center',marginTop:20,fontSize:15,color:'#9B8060'}}>
             {"Zaten hesabiniz var mi? "}
-            <a href="/giris" style={{fontFamily:'Cinzel,serif',fontSize:11,color:'#1C3A26',letterSpacing:1,textDecoration:'none'}}>{"GIRIS YAP"}</a>
+            <a href="/giris" style={{fontFamily:'Cormorant Garamond,serif',fontSize:11,color:'#1C3A26',letterSpacing:1,textDecoration:'none'}}>{"GIRIS YAP"}</a>
           </div>
         </div>
       </div>

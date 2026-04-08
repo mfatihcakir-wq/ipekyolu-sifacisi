@@ -141,7 +141,7 @@ export default function MakaleUret() {
         border: '1px solid rgba(212,168,67,0.15)',
       }}>
         <h2 style={{
-          fontFamily: 'Cinzel, serif',
+          fontFamily: 'Cormorant Garamond, serif',
           fontSize: 28,
           fontWeight: 700,
           color: '#F5EAD4',
@@ -171,7 +171,7 @@ export default function MakaleUret() {
           }}>
             <div style={{ fontSize: 24, marginBottom: 12 }}>{"\u2713"}</div>
             <div style={{
-              fontFamily: 'Cinzel, serif',
+              fontFamily: 'Cormorant Garamond, serif',
               fontSize: 20,
               fontWeight: 700,
               color: '#4CAF50',
@@ -190,7 +190,7 @@ export default function MakaleUret() {
                 border: 'none',
                 borderRadius: 8,
                 padding: '12px 32px',
-                fontFamily: 'Cinzel, serif',
+                fontFamily: 'Cormorant Garamond, serif',
                 fontSize: 13,
                 fontWeight: 700,
                 letterSpacing: 2,
@@ -214,7 +214,7 @@ export default function MakaleUret() {
                 letterSpacing: 2,
                 color: '#D4A843',
                 marginBottom: 10,
-                fontFamily: 'Cinzel, serif',
+                fontFamily: 'Cormorant Garamond, serif',
               }}>
                 {"KONU"}
               </label>
@@ -246,7 +246,7 @@ export default function MakaleUret() {
                 letterSpacing: 2,
                 color: '#D4A843',
                 marginBottom: 10,
-                fontFamily: 'Cinzel, serif',
+                fontFamily: 'Cormorant Garamond, serif',
               }}>
                 {"KATEGORI"}
               </label>
@@ -280,7 +280,7 @@ export default function MakaleUret() {
                 letterSpacing: 2,
                 color: '#D4A843',
                 marginBottom: 10,
-                fontFamily: 'Cinzel, serif',
+                fontFamily: 'Cormorant Garamond, serif',
               }}>
                 {"KAYNAKLAR (OPSIYONEL)"}
               </label>
@@ -336,7 +336,7 @@ export default function MakaleUret() {
                 border: 'none',
                 borderRadius: 10,
                 padding: '16px 24px',
-                fontFamily: 'Cinzel, serif',
+                fontFamily: 'Cormorant Garamond, serif',
                 fontSize: 15,
                 fontWeight: 700,
                 letterSpacing: 3,
@@ -358,7 +358,7 @@ export default function MakaleUret() {
               letterSpacing: 2,
               color: '#D4A843',
               marginBottom: 20,
-              fontFamily: 'Cinzel, serif',
+              fontFamily: 'Cormorant Garamond, serif',
               textAlign: 'center' as const,
             }}>
               {"ONIZLEME"}
@@ -386,7 +386,7 @@ export default function MakaleUret() {
               )}
 
               <h3 style={{
-                fontFamily: 'Cinzel, serif',
+                fontFamily: 'Cormorant Garamond, serif',
                 fontSize: 24,
                 fontWeight: 700,
                 color: '#F5EAD4',
@@ -455,7 +455,7 @@ export default function MakaleUret() {
                   fontWeight: 700,
                   letterSpacing: 2,
                   cursor: 'pointer',
-                  fontFamily: 'Cinzel, serif',
+                  fontFamily: 'Cormorant Garamond, serif',
                 }}
               >
                 {"IPTAL"}
@@ -470,7 +470,7 @@ export default function MakaleUret() {
                   border: 'none',
                   borderRadius: 10,
                   padding: '14px 24px',
-                  fontFamily: 'Cinzel, serif',
+                  fontFamily: 'Cormorant Garamond, serif',
                   fontSize: 13,
                   fontWeight: 700,
                   letterSpacing: 2,

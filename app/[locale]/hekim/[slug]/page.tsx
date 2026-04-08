@@ -58,7 +58,7 @@ export default async function HekimDetay({ params }: { params: Promise<{ locale:
 
         {/* Turkce Isim */}
         <h1 style={{
-          fontFamily: 'Cinzel, serif',
+          fontFamily: 'Cormorant Garamond, serif',
           fontSize: 36,
           fontWeight: 700,
           color: '#F5EAD4',
@@ -112,7 +112,7 @@ export default async function HekimDetay({ params }: { params: Promise<{ locale:
             marginBottom: 56
           }}>
             <h2 style={{
-              fontFamily: 'Cinzel, serif',
+              fontFamily: 'Cormorant Garamond, serif',
               fontSize: 22,
               fontWeight: 700,
               color: '#B8860B',
@@ -153,7 +153,7 @@ export default async function HekimDetay({ params }: { params: Promise<{ locale:
             paddingTop: 32
           }}>
             <h2 style={{
-              fontFamily: 'Cinzel, serif',
+              fontFamily: 'Cormorant Garamond, serif',
               fontSize: 22,
               fontWeight: 700,
               color: '#B8860B',
@@ -189,7 +189,7 @@ export default async function HekimDetay({ params }: { params: Promise<{ locale:
                     {m.kategori}
                   </span>
                   <div style={{
-                    fontFamily: 'Cinzel, serif',
+                    fontFamily: 'Cormorant Garamond, serif',
                     fontSize: 16,
                     fontWeight: 600,
                     color: '#F5EAD4',

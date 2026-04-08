@@ -60,11 +60,11 @@ export default function OdemePage() {
     }}>
       <div style={{ textAlign: 'center' as const, marginBottom: 56 }}>
         <div style={{
-          fontFamily: 'Cinzel,serif', fontSize: 10,
+          fontFamily: 'Cormorant Garamond,serif', fontSize: 10,
           color: '#B8860B', letterSpacing: 3, marginBottom: 14,
         }}>ÜYELİK</div>
         <h1 style={{
-          fontFamily: 'Cinzel,serif',
+          fontFamily: 'Cormorant Garamond,serif',
           fontSize: 'clamp(28px,4vw,38px)',
           fontWeight: 600, color: '#1A1208', marginBottom: 12,
         }}>Size Uygun Planı Seçin</h1>
@@ -91,7 +91,7 @@ export default function OdemePage() {
           }}>
             {plan.badge && (
               <div style={{
-                fontFamily: 'Cinzel,serif', fontSize: 8,
+                fontFamily: 'Cormorant Garamond,serif', fontSize: 8,
                 background: '#B8860B', color: '#1C3A26',
                 padding: '4px 14px', borderRadius: 20,
                 letterSpacing: 1.5, display: 'inline-block',
@@ -99,12 +99,12 @@ export default function OdemePage() {
               }}>{plan.badge}</div>
             )}
             <div style={{
-              fontFamily: 'Cinzel,serif', fontSize: 10,
+              fontFamily: 'Cormorant Garamond,serif', fontSize: 10,
               color: plan.hot ? 'rgba(245,237,224,0.4)' : '#9B8060',
               letterSpacing: 2.5, marginBottom: 12,
             }}>{plan.name}</div>
             <div style={{
-              fontFamily: 'Cinzel,serif', fontSize: 44,
+              fontFamily: 'Cormorant Garamond,serif', fontSize: 44,
               fontWeight: 700,
               color: plan.hot ? '#F5EDE0' : '#1C3A26',
               lineHeight: 1,
@@ -115,7 +115,7 @@ export default function OdemePage() {
               fontFamily: 'EB Garamond,serif',
             }}>{plan.period}</div>
             <div style={{
-              fontFamily: 'Cinzel,serif', fontSize: 11,
+              fontFamily: 'Cormorant Garamond,serif', fontSize: 11,
               color: plan.hot ? '#B8860B' : '#9B8060',
               letterSpacing: 1, margin: '4px 0 22px',
             }}>{plan.note}</div>
@@ -140,7 +140,7 @@ export default function OdemePage() {
               onClick={() => window.open(plan.link, '_blank')}
               style={{
                 width: '100%', marginTop: 22, padding: 14,
-                fontFamily: 'Cinzel,serif', fontSize: 10,
+                fontFamily: 'Cormorant Garamond,serif', fontSize: 10,
                 fontWeight: 700, letterSpacing: 2,
                 borderRadius: 10, border: 'none',
                 cursor: 'pointer',
@@ -155,7 +155,7 @@ export default function OdemePage() {
 
       <div style={{
         textAlign: 'center' as const, marginTop: 40,
-        fontFamily: 'Cinzel,serif', fontSize: 9,
+        fontFamily: 'Cormorant Garamond,serif', fontSize: 9,
         color: '#9B8060', letterSpacing: 2,
       }}>
         Ödeme Shopier güvencesiyle gerçekleşir.
