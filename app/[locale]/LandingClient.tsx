@@ -30,6 +30,13 @@ export default function LandingClient() {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [yorumlar, setYorumlar] = useState<any[]>([])
   const kayitSayisi = '46.000+'
+  const [hizliSikayet, setHizliSikayet] = useState('')
+
+  function handleHizliGiris() {
+    if (!hizliSikayet.trim()) return
+    localStorage.setItem('hizliGiris', JSON.stringify({ sikayet: hizliSikayet.trim(), tarih: new Date().toISOString() }))
+    router.push('/analiz')
+  }
 
   // Stats count-up
   const [statsVisible, setStatsVisible] = useState(false)
@@ -145,8 +152,63 @@ export default function LandingClient() {
         </div>
       </section>
 
+      {/* HIZLI GIRIS FORMU */}
+      <section style={{ background: '#1B4332', padding: '48px clamp(20px,5vw,48px)' }}>
+        <div style={{ maxWidth: 600, margin: '0 auto', textAlign: 'center' as const }}>
+          <h2 style={{ fontFamily: 'Cormorant Garamond,serif', fontSize: 24, color: '#F5EDE0', marginBottom: 8, fontWeight: 600 }}>
+            {"En büyük şikayetiniz nedir?"}
+          </h2>
+          <p style={{ fontSize: 14, color: 'rgba(245,237,224,0.55)', fontStyle: 'italic', marginBottom: 24, fontFamily: 'EB Garamond,serif' }}>
+            {"30 saniyede başlayın — detaylı analiz sonra gelir"}
+          </p>
+          <div className="hizli-form" style={{ display: 'flex', gap: 10, marginBottom: 12 }}>
+            <input
+              type="text"
+              value={hizliSikayet}
+              onChange={e => setHizliSikayet(e.target.value)}
+              onKeyDown={e => { if (e.key === 'Enter') handleHizliGiris() }}
+              placeholder="Örn: sürekli yorgunluk, baş ağrısı..."
+              style={{
+                flex: 1,
+                background: '#FAF6EF',
+                border: '1.5px solid #2A5C3F',
+                borderRadius: 10,
+                padding: '14px 18px',
+                fontSize: 16,
+                minHeight: 48,
+                color: '#1A1208',
+                outline: 'none',
+                fontFamily: 'Roboto,sans-serif',
+              }}
+            />
+            <button
+              onClick={handleHizliGiris}
+              style={{
+                background: '#C9A84C',
+                color: '#1B4332',
+                border: 'none',
+                borderRadius: 10,
+                padding: '14px 28px',
+                fontFamily: 'Cormorant Garamond,serif',
+                fontSize: 13,
+                fontWeight: 700,
+                letterSpacing: 1.5,
+                cursor: 'pointer',
+                whiteSpace: 'nowrap' as const,
+                minHeight: 48,
+              }}
+            >
+              {"Analizi Başlat →"}
+            </button>
+          </div>
+          <div style={{ fontSize: 10, color: 'rgba(245,237,224,0.35)', letterSpacing: 0.5 }}>
+            {"🔒 Bilgileriniz güvende · KVKK kapsamında korunur"}
+          </div>
+        </div>
+      </section>
+
       {/* Wave */}
-      <div style={{ position: 'relative' as const, height: 52, background: '#1C3A26' }}>
+      <div style={{ position: 'relative' as const, height: 52, background: '#1B4332' }}>
         <div style={{ position: 'absolute' as const, bottom: 0, left: 0, right: 0, height: 52, background: '#FAF6EF', clipPath: 'ellipse(55% 100% at 50% 100%)' }} />
       </div>
 
@@ -355,6 +417,8 @@ export default function LandingClient() {
         }
         @media (max-width: 600px) {
           .stats-grid { grid-template-columns: 1fr 1fr !important; }
+          .hizli-form { flex-direction: column !important; }
+          .hizli-form button { width: 100% !important; }
         }
       `}</style>
     </div>

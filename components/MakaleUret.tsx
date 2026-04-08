@@ -1,488 +1,241 @@
 'use client'
+import { useState, useEffect } from 'react'
 
-import { useState } from 'react'
+interface Kaynak {
+  kaynak_kodu: string
+  eser_adi: string
+  hekim_adi: string
+  kayit_sayisi: number
+}
+
+interface KonuOneri {
+  konu: string
+  kategori: string
+  kaynak_kodu: string
+  aciklama: string
+}
+
+type Sekme = 'uret' | 'oneri'
+type Durum = 'bos' | 'uretiliyor' | 'onizleme' | 'kaydedildi' | 'hata'
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+type Onizleme = any
 
 const KATEGORILER = [
-  'TEMEL KAVRAMLAR',
-  'NABIZ ILMI',
-  'ECZACILIK',
-  'TEDAVI YONTEMLERI',
-  'BESLENME',
-  'RUHANI TIP',
-  'CERRAHI',
-  'KADIN SAGLIGI',
-  'COCUK SAGLIGI',
+  'TEMEL KAVRAMLAR', 'NABIZ İLMİ', 'BESİN İLMİ', 'CERRAHİ',
+  'DEVÂ İLMİ', 'RUHSAL SAĞLIK', 'MEVSİM TEDAVİSİ',
+  'BİTKİ REHBERİ', 'HEKİM BİYOGRAFİSİ', 'HASTALIK TEŞHİSİ'
 ]
-
-const KAYNAKLAR = [
-  { kod: 'SRC-001', etiket: 'El-Kanun' },
-  { kod: 'SRC-002', etiket: 'Kitab el-Havi' },
-  { kod: 'SRC-003', etiket: 'Tibb-i Nebevi' },
-  { kod: 'SRC-006', etiket: 'el-Mufredat' },
-  { kod: 'SRC-007', etiket: 'et-Tasrif' },
-  { kod: 'SRC-010', etiket: 'Kamil es-Sinaa' },
-]
-
-interface MakaleOnizleme {
-  baslik: string
-  baslik_ar: string
-  ozet: string
-  icerik: string
-}
-
-interface MakaleKayit {
-  id: string
-  baslik: string
-  slug: string
-  yayinda: boolean
-}
 
 export default function MakaleUret() {
+  const [sekme, setSekme] = useState<Sekme>('uret')
+  const [kaynaklar, setKaynaklar] = useState<Kaynak[]>([])
+  const [konuOnerileri, setKonuOnerileri] = useState<KonuOneri[]>([])
+  const [oneriYukleniyor, setOneriYukleniyor] = useState(false)
   const [konu, setKonu] = useState('')
   const [kategori, setKategori] = useState(KATEGORILER[0])
   const [seciliKaynaklar, setSeciliKaynaklar] = useState<string[]>([])
-  const [yukleniyor, setYukleniyor] = useState(false)
-  const [onizleme, setOnizleme] = useState<MakaleOnizleme | null>(null)
-  const [makale, setMakale] = useState<MakaleKayit | null>(null)
-  const [yayinlandi, setYayinlandi] = useState(false)
+  const [durum, setDurum] = useState<Durum>('bos')
+  const [onizleme, setOnizleme] = useState<Onizleme>(null)
   const [hata, setHata] = useState('')
 
-  const kaynakToggle = (kod: string) => {
+  useEffect(() => {
+    fetch('/api/kaynaklar')
+      .then(r => r.json())
+      .then(d => { if (d.kaynaklar) setKaynaklar(d.kaynaklar) })
+      .catch(() => {})
+  }, [])
+
+  const toggleKaynak = (kod: string) => {
     setSeciliKaynaklar(prev =>
-      prev.includes(kod)
-        ? prev.filter(k => k !== kod)
-        : [...prev, kod]
+      prev.includes(kod) ? prev.filter(k => k !== kod) : [...prev, kod]
     )
   }
 
-  const makaleUret = async () => {
-    if (!konu.trim()) {
-      setHata('Lutfen bir konu giriniz')
-      return
+  const oneriUret = async () => {
+    setOneriYukleniyor(true)
+    setKonuOnerileri([])
+    try {
+      const res = await fetch('/api/makale/oneri', { method: 'POST' })
+      const d = await res.json()
+      if (d.oneriler) setKonuOnerileri(d.oneriler)
+    } catch (e) {
+      console.error(e)
     }
+    setOneriYukleniyor(false)
+  }
 
-    setYukleniyor(true)
+  const konuSec = (o: KonuOneri) => {
+    setKonu(o.konu)
+    setKategori(o.kategori)
+    setSeciliKaynaklar([o.kaynak_kodu])
+    setSekme('uret')
+  }
+
+  const uret = async () => {
+    if (!konu.trim()) return
+    setDurum('uretiliyor')
     setHata('')
-    setOnizleme(null)
-    setMakale(null)
-    setYayinlandi(false)
-
     try {
       const res = await fetch('/api/makale', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          konu: konu.trim(),
-          kategori,
-          kaynak_kodlar: seciliKaynaklar.length > 0 ? seciliKaynaklar : undefined,
-        }),
+        body: JSON.stringify({ konu: konu.trim(), kategori, kaynak_kodlar: seciliKaynaklar })
       })
-
       const data = await res.json()
-
-      if (!res.ok) {
-        setHata(data.error || 'Makale uretilemedi')
-        return
-      }
-
-      setOnizleme(data.preview)
-      setMakale(data.makale)
-    } catch {
-      setHata('Baglanti hatasi olustu')
-    } finally {
-      setYukleniyor(false)
+      if (!res.ok) throw new Error(data.error || 'Bilinmeyen hata')
+      setOnizleme(data)
+      setDurum('onizleme')
+    } catch (e) {
+      setHata(e instanceof Error ? e.message : String(e))
+      setDurum('hata')
     }
   }
 
   const yayinla = async () => {
-    if (!makale) return
-
-    setYukleniyor(true)
-    setHata('')
-
+    if (!onizleme?.makale?.id) return
     try {
-      const res = await fetch('/api/makale', {
+      await fetch('/api/makale', {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ id: makale.id, yayinda: true }),
+        body: JSON.stringify({ id: onizleme.makale.id, yayinda: true })
       })
-
-      const data = await res.json()
-
-      if (!res.ok) {
-        setHata(data.error || 'Yayinlama basarisiz')
-        return
-      }
-
-      setYayinlandi(true)
-    } catch {
-      setHata('Baglanti hatasi olustu')
-    } finally {
-      setYukleniyor(false)
-    }
+      setDurum('kaydedildi')
+    } catch (e) { setHata(e instanceof Error ? e.message : String(e)) }
   }
 
-  const sifirla = () => {
-    setKonu('')
-    setKategori(KATEGORILER[0])
-    setSeciliKaynaklar([])
-    setOnizleme(null)
-    setMakale(null)
-    setYayinlandi(false)
-    setHata('')
+  const sifirla = () => { setKonu(''); setOnizleme(null); setDurum('bos'); setHata('') }
+
+  const s = {
+    kart: { background: '#1A2E1E', borderRadius: 16, padding: 32, border: '1px solid rgba(212,168,67,0.12)' } as React.CSSProperties,
+    label: { fontFamily: 'Cormorant Garamond,serif', fontSize: 9, letterSpacing: 2, color: 'rgba(212,168,67,0.5)', display: 'block' as const, marginBottom: 8 } as React.CSSProperties,
+    input: { width: '100%', padding: '12px 16px', background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(212,168,67,0.2)', borderRadius: 10, color: '#F5EAD4', fontFamily: 'EB Garamond,serif', fontSize: 17, outline: 'none' } as React.CSSProperties,
   }
 
   return (
-    <div style={{ maxWidth: 900, margin: '0 auto', padding: '60px 24px' }}>
-      <div style={{
-        background: '#1A2E1E',
-        borderRadius: 20,
-        padding: '48px 40px',
-        border: '1px solid rgba(212,168,67,0.15)',
-      }}>
-        <h2 style={{
-          fontFamily: 'Cormorant Garamond, serif',
-          fontSize: 28,
-          fontWeight: 700,
-          color: '#F5EAD4',
-          marginBottom: 8,
-          textAlign: 'center' as const,
-        }}>
-          {"Makale Uretici"}
-        </h2>
-        <p style={{
-          fontSize: 15,
-          color: 'rgba(245,234,212,0.5)',
-          textAlign: 'center' as const,
-          marginBottom: 40,
-        }}>
-          {"Klasik kaynaklardan derlenmiş makale üretimi"}
-        </p>
+    <div style={s.kart}>
+      <div style={{ fontFamily: 'Cormorant Garamond,serif', fontSize: 9, letterSpacing: 3, color: 'rgba(212,168,67,0.5)', marginBottom: 6 }}>YAPAY ZEKA İLE</div>
+      <div style={{ fontFamily: 'Cormorant Garamond,serif', fontSize: 22, fontWeight: 600, color: '#F5EAD4', marginBottom: 24 }}>Makale Üret</div>
 
-        {/* Basari Durumu */}
-        {yayinlandi && (
-          <div style={{
-            background: 'rgba(76,175,80,0.12)',
-            border: '1px solid rgba(76,175,80,0.3)',
-            borderRadius: 12,
-            padding: '32px 24px',
-            textAlign: 'center' as const,
-            marginBottom: 32,
-          }}>
-            <div style={{ fontSize: 24, marginBottom: 12 }}>{"\u2713"}</div>
-            <div style={{
-              fontFamily: 'Cormorant Garamond, serif',
-              fontSize: 20,
-              fontWeight: 700,
-              color: '#4CAF50',
-              marginBottom: 8,
-            }}>
-              {"Makale Yayinlandi"}
-            </div>
-            <p style={{ fontSize: 14, color: 'rgba(245,234,212,0.6)', marginBottom: 20 }}>
-              {makale ? `"${makale.baslik}" basariyla yayinlandi.` : 'Makale basariyla yayinlandi.'}
-            </p>
-            <button
-              onClick={sifirla}
-              style={{
-                background: '#D4A843',
-                color: '#1A2E1E',
-                border: 'none',
-                borderRadius: 8,
-                padding: '12px 32px',
-                fontFamily: 'Cormorant Garamond, serif',
-                fontSize: 13,
-                fontWeight: 700,
-                letterSpacing: 2,
-                cursor: 'pointer',
-              }}
-            >
-              {"YENI MAKALE URET"}
-            </button>
-          </div>
-        )}
-
-        {/* Form */}
-        {!yayinlandi && !onizleme && (
-          <div>
-            {/* Konu */}
-            <div style={{ marginBottom: 28 }}>
-              <label style={{
-                display: 'block',
-                fontSize: 12,
-                fontWeight: 700,
-                letterSpacing: 2,
-                color: '#D4A843',
-                marginBottom: 10,
-                fontFamily: 'Cormorant Garamond, serif',
-              }}>
-                {"KONU"}
-              </label>
-              <input
-                type="text"
-                value={konu}
-                onChange={(e) => setKonu(e.target.value)}
-                placeholder="Ornegin: Mizac teorisi ve beslenme iliskisi"
-                style={{
-                  width: '100%',
-                  background: 'rgba(245,234,212,0.05)',
-                  border: '1px solid rgba(245,234,212,0.15)',
-                  borderRadius: 10,
-                  padding: '14px 18px',
-                  fontSize: 16,
-                  color: '#F5EAD4',
-                  outline: 'none',
-                  boxSizing: 'border-box' as const,
-                }}
-              />
-            </div>
-
-            {/* Kategori */}
-            <div style={{ marginBottom: 28 }}>
-              <label style={{
-                display: 'block',
-                fontSize: 12,
-                fontWeight: 700,
-                letterSpacing: 2,
-                color: '#D4A843',
-                marginBottom: 10,
-                fontFamily: 'Cormorant Garamond, serif',
-              }}>
-                {"KATEGORI"}
-              </label>
-              <select
-                value={kategori}
-                onChange={(e) => setKategori(e.target.value)}
-                style={{
-                  width: '100%',
-                  background: 'rgba(245,234,212,0.05)',
-                  border: '1px solid rgba(245,234,212,0.15)',
-                  borderRadius: 10,
-                  padding: '14px 18px',
-                  fontSize: 15,
-                  color: '#F5EAD4',
-                  outline: 'none',
-                  boxSizing: 'border-box' as const,
-                }}
-              >
-                {KATEGORILER.map(k => (
-                  <option key={k} value={k} style={{ background: '#1A2E1E' }}>{k}</option>
-                ))}
-              </select>
-            </div>
-
-            {/* Kaynaklar */}
-            <div style={{ marginBottom: 36 }}>
-              <label style={{
-                display: 'block',
-                fontSize: 12,
-                fontWeight: 700,
-                letterSpacing: 2,
-                color: '#D4A843',
-                marginBottom: 10,
-                fontFamily: 'Cormorant Garamond, serif',
-              }}>
-                {"KAYNAKLAR (OPSIYONEL)"}
-              </label>
-              <div style={{ display: 'flex', flexWrap: 'wrap' as const, gap: 10 }}>
-                {KAYNAKLAR.map(k => {
-                  const secili = seciliKaynaklar.includes(k.kod)
-                  return (
-                    <button
-                      key={k.kod}
-                      onClick={() => kaynakToggle(k.kod)}
-                      style={{
-                        background: secili ? 'rgba(212,168,67,0.2)' : 'rgba(245,234,212,0.05)',
-                        border: `1px solid ${secili ? '#D4A843' : 'rgba(245,234,212,0.12)'}`,
-                        borderRadius: 8,
-                        padding: '10px 18px',
-                        fontSize: 13,
-                        color: secili ? '#D4A843' : 'rgba(245,234,212,0.6)',
-                        cursor: 'pointer',
-                        fontWeight: secili ? 700 : 400,
-                        transition: 'all 0.2s',
-                      }}
-                    >
-                      {k.etiket}
-                    </button>
-                  )
-                })}
-              </div>
-            </div>
-
-            {/* Hata */}
-            {hata && (
-              <div style={{
-                background: 'rgba(244,67,54,0.1)',
-                border: '1px solid rgba(244,67,54,0.3)',
-                borderRadius: 8,
-                padding: '12px 16px',
-                marginBottom: 20,
-                fontSize: 14,
-                color: '#F44336',
-              }}>
-                {hata}
-              </div>
-            )}
-
-            {/* Uret Butonu */}
-            <button
-              onClick={makaleUret}
-              disabled={yukleniyor}
-              style={{
-                width: '100%',
-                background: yukleniyor ? 'rgba(212,168,67,0.3)' : '#D4A843',
-                color: yukleniyor ? 'rgba(26,46,30,0.5)' : '#1A2E1E',
-                border: 'none',
-                borderRadius: 10,
-                padding: '16px 24px',
-                fontFamily: 'Cormorant Garamond, serif',
-                fontSize: 15,
-                fontWeight: 700,
-                letterSpacing: 3,
-                cursor: yukleniyor ? 'not-allowed' : 'pointer',
-                transition: 'background 0.3s',
-              }}
-            >
-              {yukleniyor ? 'MAKALE URETILIYOR...' : 'MAKALE URET'}
-            </button>
-          </div>
-        )}
-
-        {/* Onizleme */}
-        {onizleme && !yayinlandi && (
-          <div>
-            <div style={{
-              fontSize: 12,
-              fontWeight: 700,
-              letterSpacing: 2,
-              color: '#D4A843',
-              marginBottom: 20,
-              fontFamily: 'Cormorant Garamond, serif',
-              textAlign: 'center' as const,
-            }}>
-              {"ONIZLEME"}
-            </div>
-
-            <div style={{
-              background: 'rgba(245,234,212,0.03)',
-              borderRadius: 14,
-              padding: '32px 28px',
-              border: '1px solid rgba(245,234,212,0.08)',
-              marginBottom: 28,
-            }}>
-              {onizleme.baslik_ar && (
-                <div style={{
-                  fontFamily: "'Amiri', serif",
-                  fontSize: 24,
-                  color: '#D4A843',
-                  textAlign: 'right' as const,
-                  direction: 'rtl' as const,
-                  marginBottom: 10,
-                  lineHeight: 1.5,
-                }}>
-                  {onizleme.baslik_ar}
-                </div>
-              )}
-
-              <h3 style={{
-                fontFamily: 'Cormorant Garamond, serif',
-                fontSize: 24,
-                fontWeight: 700,
-                color: '#F5EAD4',
-                marginBottom: 16,
-                lineHeight: 1.3,
-              }}>
-                {onizleme.baslik}
-              </h3>
-
-              <div style={{
-                height: 1,
-                background: 'rgba(212,168,67,0.2)',
-                marginBottom: 20,
-              }} />
-
-              <blockquote style={{
-                borderLeft: '3px solid #D4A843',
-                paddingLeft: 20,
-                marginBottom: 24,
-                fontStyle: 'italic' as const,
-                fontSize: 16,
-                color: 'rgba(245,234,212,0.75)',
-                lineHeight: 1.7,
-              }}>
-                {onizleme.ozet}
-              </blockquote>
-
-              <div style={{
-                fontSize: 15,
-                color: 'rgba(245,234,212,0.8)',
-                lineHeight: 1.8,
-                maxHeight: 400,
-                overflow: 'auto',
-                whiteSpace: 'pre-wrap' as const,
-              }}>
-                {onizleme.icerik}
-              </div>
-            </div>
-
-            {/* Hata */}
-            {hata && (
-              <div style={{
-                background: 'rgba(244,67,54,0.1)',
-                border: '1px solid rgba(244,67,54,0.3)',
-                borderRadius: 8,
-                padding: '12px 16px',
-                marginBottom: 20,
-                fontSize: 14,
-                color: '#F44336',
-              }}>
-                {hata}
-              </div>
-            )}
-
-            <div style={{ display: 'flex', gap: 16 }}>
-              <button
-                onClick={sifirla}
-                style={{
-                  flex: 1,
-                  background: 'transparent',
-                  border: '1px solid rgba(245,234,212,0.2)',
-                  borderRadius: 10,
-                  padding: '14px 24px',
-                  color: 'rgba(245,234,212,0.6)',
-                  fontSize: 13,
-                  fontWeight: 700,
-                  letterSpacing: 2,
-                  cursor: 'pointer',
-                  fontFamily: 'Cormorant Garamond, serif',
-                }}
-              >
-                {"IPTAL"}
-              </button>
-              <button
-                onClick={yayinla}
-                disabled={yukleniyor}
-                style={{
-                  flex: 2,
-                  background: yukleniyor ? 'rgba(212,168,67,0.3)' : '#D4A843',
-                  color: '#1A2E1E',
-                  border: 'none',
-                  borderRadius: 10,
-                  padding: '14px 24px',
-                  fontFamily: 'Cormorant Garamond, serif',
-                  fontSize: 13,
-                  fontWeight: 700,
-                  letterSpacing: 2,
-                  cursor: yukleniyor ? 'not-allowed' : 'pointer',
-                }}
-              >
-                {"YAYINLA"}
-              </button>
-            </div>
-          </div>
-        )}
+      <div style={{ display: 'flex', gap: 8, marginBottom: 28 }}>
+        {(['uret', 'oneri'] as Sekme[]).map(sk => (
+          <button key={sk} onClick={() => { setSekme(sk); if (sk === 'oneri' && konuOnerileri.length === 0) oneriUret() }}
+            style={{ fontFamily: 'Cormorant Garamond,serif', fontSize: 10, letterSpacing: 2, padding: '8px 20px', borderRadius: 8, cursor: 'pointer', border: '1px solid',
+              borderColor: sekme === sk ? 'rgba(212,168,67,0.6)' : 'rgba(212,168,67,0.2)',
+              background: sekme === sk ? 'rgba(212,168,67,0.12)' : 'transparent',
+              color: sekme === sk ? '#D4A843' : 'rgba(245,234,212,0.4)' }}>
+            {sk === 'uret' ? 'MAKALE ÜRET' : 'KONU ÖNERİLERİ'}
+          </button>
+        ))}
       </div>
+
+      {sekme === 'oneri' && (
+        <div>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 20 }}>
+            <div style={{ fontFamily: 'EB Garamond,serif', fontSize: 15, color: 'rgba(245,234,212,0.5)', fontStyle: 'italic' }}>
+              Veritabanındaki metinlerden otomatik üretilen konu önerileri
+            </div>
+            <button onClick={oneriUret} disabled={oneriYukleniyor}
+              style={{ fontFamily: 'Cormorant Garamond,serif', fontSize: 9, letterSpacing: 2, color: '#D4A843', background: 'transparent', border: '1px solid rgba(212,168,67,0.3)', padding: '7px 16px', borderRadius: 8, cursor: 'pointer' }}>
+              {oneriYukleniyor ? 'YENİLENİYOR...' : 'YENİLE'}
+            </button>
+          </div>
+          {oneriYukleniyor && (
+            <div style={{ textAlign: 'center', padding: '32px 0', color: 'rgba(212,168,67,0.4)', fontFamily: 'Cormorant Garamond,serif', fontSize: 12, letterSpacing: 2 }}>
+              VERİTABANINDAN KONULAR ÜRETİLİYOR...
+            </div>
+          )}
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+            {konuOnerileri.map((o, i) => (
+              <div key={i} onClick={() => konuSec(o)}
+                style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(212,168,67,0.1)', borderRadius: 10, padding: '16px 20px', cursor: 'pointer', transition: 'all 0.2s' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 6 }}>
+                  <div style={{ fontFamily: 'Cormorant Garamond,serif', fontSize: 15, fontWeight: 600, color: '#F5EAD4', flex: 1 }}>{o.konu}</div>
+                  <div style={{ fontFamily: 'Cormorant Garamond,serif', fontSize: 8, letterSpacing: 2, color: '#D4A843', padding: '3px 10px', border: '1px solid rgba(212,168,67,0.25)', borderRadius: 20, marginLeft: 12, whiteSpace: 'nowrap' as const }}>{o.kategori}</div>
+                </div>
+                <div style={{ fontFamily: 'EB Garamond,serif', fontSize: 13, color: 'rgba(245,234,212,0.4)', fontStyle: 'italic', marginBottom: 8 }}>{o.aciklama}</div>
+                <div style={{ fontFamily: 'Cormorant Garamond,serif', fontSize: 8, color: 'rgba(212,168,67,0.35)', letterSpacing: 1 }}>
+                  KAYNAK: {o.kaynak_kodu} · Seç →
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {sekme === 'uret' && durum === 'kaydedildi' && (
+        <div style={{ textAlign: 'center' as const, padding: '32px 0' }}>
+          <div style={{ fontSize: 32, marginBottom: 12 }}>{"\u2705"}</div>
+          <div style={{ fontFamily: 'Cormorant Garamond,serif', fontSize: 16, color: '#F5EAD4', marginBottom: 8 }}>Makale yayınlandı!</div>
+          <button onClick={sifirla} style={{ fontFamily: 'Cormorant Garamond,serif', fontSize: 10, letterSpacing: 2, color: '#D4A843', background: 'transparent', border: '1px solid rgba(212,168,67,0.25)', padding: '10px 24px', borderRadius: 8, cursor: 'pointer', marginTop: 12 }}>
+            YENİ MAKALE ÜRET
+          </button>
+        </div>
+      )}
+
+      {sekme === 'uret' && durum === 'onizleme' && onizleme && (
+        <div>
+          <div style={{ background: 'rgba(212,168,67,0.04)', border: '1px solid rgba(212,168,67,0.15)', borderRadius: 12, padding: 24, marginBottom: 20 }}>
+            <div style={{ fontFamily: 'Cormorant Garamond,serif', fontSize: 9, letterSpacing: 2, color: 'rgba(212,168,67,0.4)', marginBottom: 8 }}>ÖNİZLEME</div>
+            {onizleme.onizleme?.baslik_ar && (
+              <div style={{ fontFamily: 'serif', fontSize: 16, color: 'rgba(212,168,67,0.4)', direction: 'rtl' as const, marginBottom: 6 }}>{onizleme.onizleme.baslik_ar}</div>
+            )}
+            <div style={{ fontFamily: 'Cormorant Garamond,serif', fontSize: 18, fontWeight: 600, color: '#F5EAD4', marginBottom: 12 }}>{onizleme.onizleme?.baslik}</div>
+            <div style={{ fontFamily: 'EB Garamond,serif', fontSize: 15, fontStyle: 'italic', color: 'rgba(245,234,212,0.5)', lineHeight: 1.7, marginBottom: 16 }}>{onizleme.onizleme?.ozet}</div>
+            <div style={{ fontFamily: 'EB Garamond,serif', fontSize: 14, color: 'rgba(245,234,212,0.4)', lineHeight: 1.7, maxHeight: 200, overflow: 'auto' }}>
+              {onizleme.onizleme?.icerik?.substring(0, 600)}...
+            </div>
+          </div>
+          <div style={{ display: 'flex', gap: 12 }}>
+            <button onClick={yayinla} style={{ flex: 1, fontFamily: 'Cormorant Garamond,serif', fontSize: 10, letterSpacing: 2, fontWeight: 700, color: '#1A2E1E', background: '#D4A843', border: 'none', padding: 14, borderRadius: 10, cursor: 'pointer' }}>YAYINLA</button>
+            <button onClick={sifirla} style={{ fontFamily: 'Cormorant Garamond,serif', fontSize: 10, letterSpacing: 2, color: 'rgba(245,234,212,0.4)', background: 'transparent', border: '1px solid rgba(245,234,212,0.1)', padding: '14px 24px', borderRadius: 10, cursor: 'pointer' }}>İPTAL</button>
+          </div>
+        </div>
+      )}
+
+      {sekme === 'uret' && !['kaydedildi', 'onizleme'].includes(durum) && (
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
+          <div>
+            <label style={s.label}>KONU</label>
+            <input value={konu} onChange={e => setKonu(e.target.value)}
+              placeholder="ör: Safravî mizaçta baş ağrısı tedavisi"
+              style={s.input} />
+          </div>
+          <div>
+            <label style={s.label}>KATEGORİ</label>
+            <select value={kategori} onChange={e => setKategori(e.target.value)} style={s.input}>
+              {KATEGORILER.map(k => <option key={k} value={k}>{k}</option>)}
+            </select>
+          </div>
+          <div>
+            <label style={s.label}>KAYNAKLAR — VERİTABANINDAKİ ESERLER</label>
+            <div style={{ display: 'flex', flexWrap: 'wrap' as const, gap: 8 }}>
+              {kaynaklar.length === 0 && (
+                <div style={{ fontFamily: 'EB Garamond,serif', fontSize: 13, color: 'rgba(245,234,212,0.3)', fontStyle: 'italic' }}>Kaynaklar yükleniyor...</div>
+              )}
+              {kaynaklar.map(k => (
+                <button key={k.kaynak_kodu} onClick={() => toggleKaynak(k.kaynak_kodu)}
+                  style={{ fontFamily: 'Cormorant Garamond,serif', fontSize: 9, letterSpacing: 1, padding: '6px 14px', borderRadius: 20, cursor: 'pointer', border: '1px solid',
+                    borderColor: seciliKaynaklar.includes(k.kaynak_kodu) ? 'rgba(212,168,67,0.6)' : 'rgba(212,168,67,0.15)',
+                    background: seciliKaynaklar.includes(k.kaynak_kodu) ? 'rgba(212,168,67,0.15)' : 'transparent',
+                    color: seciliKaynaklar.includes(k.kaynak_kodu) ? '#D4A843' : 'rgba(245,234,212,0.4)' }}>
+                  {k.hekim_adi} — {k.eser_adi} ({k.kayit_sayisi.toLocaleString('tr-TR')})
+                </button>
+              ))}
+            </div>
+          </div>
+          {hata && (
+            <div style={{ color: '#EF5350', fontFamily: 'EB Garamond,serif', fontSize: 14, padding: '10px 16px', background: 'rgba(239,83,80,0.08)', borderRadius: 8 }}>{hata}</div>
+          )}
+          <button onClick={uret} disabled={!konu.trim() || durum === 'uretiliyor'}
+            style={{ fontFamily: 'Cormorant Garamond,serif', fontSize: 11, letterSpacing: 3, fontWeight: 700,
+              color: !konu.trim() ? 'rgba(26,46,30,0.5)' : '#1A2E1E',
+              background: !konu.trim() ? 'rgba(212,168,67,0.3)' : '#D4A843',
+              border: 'none', padding: 16, borderRadius: 10, cursor: 'pointer', opacity: durum === 'uretiliyor' ? 0.7 : 1 }}>
+            {durum === 'uretiliyor' ? '⟳ MAKALE ÜRETİLİYOR...' : '✦ MAKALE ÜRET'}
+          </button>
+        </div>
+      )}
     </div>
   )
 }

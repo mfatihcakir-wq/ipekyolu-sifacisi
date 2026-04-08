@@ -2,11 +2,17 @@ import Anthropic from '@anthropic-ai/sdk'
 import { NextRequest, NextResponse } from 'next/server'
 import { createClient } from '@supabase/supabase-js'
 
-const anthropic = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY! })
-const sb = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-)
+export const dynamic = 'force-dynamic'
+
+function getClients() {
+  return {
+    anthropic: new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY! }),
+    sb: createClient(
+      process.env.NEXT_PUBLIC_SUPABASE_URL!,
+      process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+    )
+  }
+}
 
 function slugOlustur(baslik: string): string {
   return baslik
@@ -20,6 +26,7 @@ function slugOlustur(baslik: string): string {
 
 export async function POST(req: NextRequest) {
   try {
+    const { sb, anthropic } = getClients()
     const body = await req.json()
     const { konu, kategori, kaynak_kodlar } = body
 
@@ -145,9 +152,10 @@ KURALLAR:
 
     return NextResponse.json({ makale, preview: makaleData })
   } catch (err) {
-    console.error('Makale uretim hatasi:', err)
+    const detay = err instanceof Error ? err.message : JSON.stringify(err)
+    console.error('Makale uretim hatasi detay:', detay, err)
     return NextResponse.json(
-      { error: 'Makale uretilirken hata olustu' },
+      { error: detay },
       { status: 500 }
     )
   }
@@ -155,6 +163,7 @@ KURALLAR:
 
 export async function PATCH(req: NextRequest) {
   try {
+    const { sb } = getClients()
     const body = await req.json()
     const { id, yayinda } = body
 
