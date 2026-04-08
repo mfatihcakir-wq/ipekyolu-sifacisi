@@ -172,7 +172,7 @@ export default function MakalelerSection() {
 
         <div style={{display:'grid',gridTemplateColumns:'repeat(auto-fill,minmax(180px,1fr))',gap:14,maxWidth:1100,margin:'0 auto'}}>
           {hekimler.map((h,i) => (
-            <div key={h.id} style={{background:'rgba(255,255,255,0.05)',border:'1px solid rgba(212,168,67,0.25)',borderRadius:14,padding:'24px 16px',textAlign:'center' as const}}>
+            <Link key={h.id} href={`/hekim/${h.slug}`} style={{background:'rgba(255,255,255,0.05)',border:'1px solid rgba(212,168,67,0.25)',borderRadius:14,padding:'24px 16px',textAlign:'center' as const,textDecoration:'none',display:'block'}}>
               <div style={{width:60,height:60,margin:'0 auto 12px',position:'relative'}}>
                 <div style={{position:'absolute',inset:0,borderRadius:'50%',border:'1px solid rgba(212,168,67,0.4)',animation:'gentlePulse 3s ease-in-out infinite',animationDelay:`${i*0.4}s`}}/>
                 <div style={{width:'100%',height:'100%',borderRadius:'50%',background:'rgba(212,168,67,0.12)',border:'1px solid rgba(212,168,67,0.35)',display:'flex',alignItems:'center',justifyContent:'center',fontFamily:'serif',fontSize:13,color:'#D4A843',lineHeight:1.3}}>{h.isim_ar?.split(' ').slice(-1)[0]||'—'}</div>
@@ -181,7 +181,7 @@ export default function MakalelerSection() {
               <div style={{fontFamily:'Cormorant Garamond,serif',fontSize:12,fontWeight:600,color:'#F5EAD4',marginBottom:4,lineHeight:1.3}}>{h.isim}</div>
               <div style={{fontFamily:'EB Garamond,serif',fontSize:12,color:'rgba(245,234,212,.55)',fontStyle:'italic',marginBottom:6}}>{h.dogum_olum}</div>
               <div style={{fontFamily:'Cormorant Garamond,serif',fontSize:8,color:'rgba(212,168,67,0.55)',letterSpacing:1}}>{h.eserler?.[0]?.toUpperCase().substring(0,25)}</div>
-            </div>
+            </Link>
           ))}
         </div>
       </div>
