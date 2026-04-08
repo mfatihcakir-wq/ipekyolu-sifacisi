@@ -131,7 +131,7 @@ export default function LandingClient() {
           <div style={{ width: 56, height: 56, borderRadius: '50%', overflow: 'hidden', border: '1.5px solid rgba(184,134,11,0.18)', marginBottom: 12, background: 'rgba(184,134,11,0.1)' }}>
             <Image src="/danisan.jpg" alt="M. Fatih Çakır" width={56} height={56} style={{ objectFit: 'cover', width: 56, height: 56, borderRadius: '50%' }} />
           </div>
-          <div style={{ fontFamily: 'Cinzel,serif', fontSize: 13, fontWeight: 600, color: '#F5EDE0', marginBottom: 3 }}>{"M. Fatih Çakır"}</div>
+          <div style={{ fontFamily: 'Cinzel,serif', fontSize: 12, fontWeight: 600, color: '#F5EDE0', marginBottom: 3 }}>{"M. Fatih Çakır"}</div>
           <div style={{ fontSize: 12, color: 'rgba(245,237,224,0.38)', fontStyle: 'italic', marginBottom: 14, lineHeight: 1.4 }}>{"Klasik İslam Tıbbı Araştırmacısı"}</div>
           <div style={{ height: 1, background: 'rgba(184,134,11,0.08)', marginBottom: 12 }} />
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 6 }}>
@@ -159,9 +159,9 @@ export default function LandingClient() {
           { n: statsVisible ? count9 : 0, l: 'NABIZ SIFATI', s: 'İbn Sînâ metodolojisi' },
         ].map(({ n, l, s }, i, arr) => (
           <div key={l} style={{ textAlign: 'center' as const, padding: '40px 20px', borderRight: i < arr.length - 1 ? '1px solid #DEB887' : 'none' }}>
-            <div style={{ fontFamily: 'Cinzel,serif', fontSize: 42, fontWeight: 700, color: '#1C3A26', lineHeight: 1, marginBottom: 8 }}>{n}</div>
+            <div style={{ fontFamily: 'Cinzel,serif', fontSize: 38, fontWeight: 700, color: '#1C3A26', lineHeight: 1, marginBottom: 8 }}>{n}</div>
             <div style={{ fontFamily: 'Cinzel,serif', fontSize: 10, color: '#9B8060', letterSpacing: 2.5, marginBottom: 4 }}>{l}</div>
-            <div style={{ fontSize: 13, color: '#9B8060', fontStyle: 'italic' }}>{s}</div>
+            <div style={{ fontSize: 12, color: '#9B8060', fontStyle: 'italic' }}>{s}</div>
           </div>
         ))}
       </section>

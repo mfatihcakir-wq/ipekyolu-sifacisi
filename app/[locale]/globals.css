@@ -38,16 +38,18 @@
   --font-baslik:      'Cinzel', Georgia, serif;
   --font-govde:       'EB Garamond', Georgia, serif;
   --font-arapca:      'Noto Naskh Arabic', serif;
-  --fs-xs:    11px;
-  --fs-sm:    13px;
-  --fs-base:  18px;
-  --fs-md:    20px;
-  --fs-lg:    24px;
-  --fs-xl:    32px;
-  --fs-2xl:   42px;
-  --fs-3xl:   56px;
-  --lh-base:  1.8;
+  /* Typography Scale — İpek Yolu Şifacısı */
+  --fs-xs:    10px;   /* etiket, badge, letter-spacing'li küçük metin */
+  --fs-sm:    12px;   /* ikincil açıklama */
+  --fs-base:  16px;   /* gövde metin */
+  --fs-md:    18px;   /* büyük gövde, alt başlık */
+  --fs-lg:    22px;   /* section alt başlık */
+  --fs-xl:    28px;   /* section h2 */
+  --fs-2xl:   38px;   /* büyük section başlık */
+  --fs-3xl:   52px;   /* hero h1 */
   --lh-tight: 1.15;
+  --lh-base:  1.7;
+  --lh-loose: 1.9;
 
   --background: #FAF6EF;
   --foreground: #1A1208;
