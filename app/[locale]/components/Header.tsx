@@ -20,7 +20,6 @@ const NAV_LINKS = [
   { href: '/bitkiler', label: 'Bitkiler' },
   { href: '/karakter', label: 'Kalp Şehri' },
   { href: '/hakkimizda', label: 'Hakkımızda' },
-  { href: '/admin', label: 'YÖNETİM' },
 ]
 
 // Dil secici kaldirildi — sadece TR
@@ -43,6 +42,7 @@ export default function Header() {
   }, [])
 
   const isDanisман = user?.email === DANISМАН_EMAIL
+  const navLinks = isDanisман ? [...NAV_LINKS, { href: '/admin', label: 'YÖNETİM' }] : NAV_LINKS
   const isActive = (href: string) => pathname === href || (href !== '/' && pathname.startsWith(href))
 
   async function cikisYap() {
@@ -67,7 +67,7 @@ export default function Header() {
 
           {/* ORTA: Desktop Nav */}
           <nav className="header-desktop-nav" style={{ display: 'flex', gap: 4, alignItems: 'center' }}>
-            {NAV_LINKS.map(link => (
+            {navLinks.map(link => (
               <button
                 key={link.href}
                 onClick={() => router.push(link.href)}
@@ -142,7 +142,7 @@ export default function Header() {
         {/* Mobil Menu */}
         {menuAcik && (
           <div style={{ background: C.primary, borderTop: '1px solid rgba(255,255,255,0.1)', padding: '16px', left: 0, right: 0, width: '100%', overflowX: 'hidden' as const, boxSizing: 'border-box' as const }}>
-            {NAV_LINKS.map(link => (
+            {navLinks.map(link => (
               <button key={link.href} onClick={() => { setMenuAcik(false); router.push(link.href) }}
                 style={{ display: 'block', width: '100%', padding: '10px 0', border: 'none', background: 'none', color: isActive(link.href) ? C.gold : 'rgba(255,255,255,0.7)', fontSize: 13, cursor: 'pointer', textAlign: 'left', fontFamily: cinzel.style.fontFamily, letterSpacing: 1, borderBottom: '1px solid rgba(255,255,255,0.05)' }}>
                 {link.label}
