@@ -360,6 +360,6 @@ export default function LandingClient() {
           .stats-grid { grid-template-columns: 1fr 1fr !important; }
         }
       `}</style>
-    </main>
+    </div>
   )
 }
