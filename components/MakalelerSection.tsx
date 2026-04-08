@@ -1,5 +1,6 @@
 "use client"
 import { useEffect, useState } from 'react'
+import Link from 'next/link'
 
 interface KaynakRef { hekim?: string; eser?: string }
 interface Makale {
@@ -110,9 +111,9 @@ export default function MakalelerSection() {
           <div style={{display:'inline-block',background:'rgba(212,168,67,0.08)',border:'1px solid rgba(212,168,67,0.15)',borderRadius:20,padding:'6px 16px',fontFamily:'Cormorant Garamond,serif',fontSize:8,color:'rgba(212,168,67,0.5)',letterSpacing:2}}>✦ KLASİK METİNLERDEN DERLENDİ · KAYNAK GÖSTERİMLİ</div>
         </div>
 
-        <div style={{display:'grid',gridTemplateColumns:'repeat(auto-fit,minmax(280px,1fr))',gap:18,maxWidth:1100,margin:'0 auto 40px'}}>
+        <div className="makale-grid" style={{display:'grid',gridTemplateColumns:'repeat(auto-fit,minmax(280px,1fr))',gap:18,maxWidth:1100,margin:'0 auto 40px'}}>
           {featured && (
-            <div style={{background:'rgba(212,168,67,0.04)',border:'1px solid rgba(212,168,67,0.2)',borderRadius:16,padding:28,gridColumn:'span 2',display:'grid',gridTemplateColumns:'130px 1fr',gap:24,alignItems:'center'}}>
+            <Link href={`/makale/${featured.slug}`} className="makale-featured" style={{background:'rgba(212,168,67,0.04)',border:'1px solid rgba(212,168,67,0.2)',borderRadius:16,padding:28,gridColumn:'span 2',display:'grid',gridTemplateColumns:'130px 1fr',gap:24,alignItems:'center',textDecoration:'none'}}>
               <div style={{display:'flex',alignItems:'center',justifyContent:'center'}}>
                 <svg width="110" height="110" viewBox="0 0 140 140" fill="none">
                   <circle cx="70" cy="70" r="65" stroke="#D4A843" strokeWidth="0.5" strokeOpacity="0.2"/>
@@ -136,10 +137,10 @@ export default function MakalelerSection() {
                   <div style={{marginLeft:'auto',fontFamily:'Cormorant Garamond,serif',fontSize:9,color:'rgba(212,168,67,0.4)'}}>DEVAMI →</div>
                 </div>
               </div>
-            </div>
+            </Link>
           )}
           {rest.map(m => (
-            <div key={m.id} style={{background:'rgba(255,255,255,0.03)',border:'1px solid rgba(212,168,67,0.1)',borderRadius:16,padding:26}}>
+            <Link key={m.id} href={`/makale/${m.slug}`} style={{background:'rgba(255,255,255,0.03)',border:'1px solid rgba(212,168,67,0.1)',borderRadius:16,padding:26,textDecoration:'none',display:'block'}}>
               <div style={{fontFamily:'Cormorant Garamond,serif',fontSize:7,letterSpacing:3,color:'#D4A843',padding:'4px 10px',border:'1px solid rgba(212,168,67,0.2)',borderRadius:20,display:'inline-block',marginBottom:12}}>{m.kategori||'MAKALE'}</div>
               {m.baslik_ar && (<div style={{fontFamily:'serif',fontSize:13,color:'rgba(212,168,67,0.4)',marginBottom:6,direction:'rtl' as const,textAlign:'right' as const}}>{m.baslik_ar}</div>)}
               <div style={{fontFamily:'Cormorant Garamond,serif',fontSize:14,fontWeight:600,color:'#F5EAD4',lineHeight:1.35,marginBottom:10}}>{m.baslik}</div>
@@ -149,7 +150,7 @@ export default function MakalelerSection() {
                 <div style={{fontFamily:'Cormorant Garamond,serif',fontSize:8,color:'rgba(212,168,67,0.4)',letterSpacing:1}}>{m.kaynak_metinler?.[0]?.hekim?.toUpperCase()}</div>
                 <div style={{marginLeft:'auto',fontFamily:'Cormorant Garamond,serif',fontSize:9,color:'rgba(212,168,67,0.4)'}}>→</div>
               </div>
-            </div>
+            </Link>
           ))}
         </div>
 
