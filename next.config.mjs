@@ -7,16 +7,6 @@ const nextConfig = {
   typescript: {
     ignoreBuildErrors: false,
   },
-  async headers() {
-    return [
-      {
-        source: '/(.*)',
-        headers: [
-          { key: 'Content-Type', value: 'text/html; charset=utf-8' },
-        ],
-      },
-    ]
-  },
   webpack: (config) => {
     config.module.rules.push({
       test: /supabase\/functions\//,
