@@ -31,11 +31,37 @@ export default function LandingClient() {
   const [yorumlar, setYorumlar] = useState<any[]>([])
   const kayitSayisi = '46.000+'
   const [hizliSikayet, setHizliSikayet] = useState('')
+  const [hizliYukleniyor, setHizliYukleniyor] = useState(false)
+  const [hizliYanit, setHizliYanit] = useState<string | null>(null)
 
-  function handleHizliGiris() {
+  async function handleHizliGiris() {
     if (!hizliSikayet.trim()) return
-    localStorage.setItem('hizliGiris', JSON.stringify({ sikayet: hizliSikayet.trim(), tarih: new Date().toISOString() }))
-    router.push('/analiz')
+    setHizliYukleniyor(true)
+    try {
+      const res = await fetch('/api/hizli-on-analiz', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ sikayet: hizliSikayet.trim() })
+      })
+      const data = await res.json()
+      if (data.onBilgi) {
+        setHizliYanit(data.onBilgi)
+        localStorage.setItem('hizliGiris', JSON.stringify({
+          sikayet: hizliSikayet.trim(),
+          tarih: new Date().toISOString()
+        }))
+      } else {
+        localStorage.setItem('hizliGiris', JSON.stringify({
+          sikayet: hizliSikayet.trim(),
+          tarih: new Date().toISOString()
+        }))
+        router.push('/analiz')
+      }
+    } catch {
+      router.push('/analiz')
+    } finally {
+      setHizliYukleniyor(false)
+    }
   }
 
   // Stats count-up
@@ -183,8 +209,9 @@ export default function LandingClient() {
             />
             <button
               onClick={handleHizliGiris}
+              disabled={hizliYukleniyor}
               style={{
-                background: '#C9A84C',
+                background: hizliYukleniyor ? '#9B8060' : '#C9A84C',
                 color: '#1B4332',
                 border: 'none',
                 borderRadius: 10,
@@ -193,15 +220,61 @@ export default function LandingClient() {
                 fontSize: 13,
                 fontWeight: 700,
                 letterSpacing: 1.5,
-                cursor: 'pointer',
+                cursor: hizliYukleniyor ? 'not-allowed' : 'pointer',
                 whiteSpace: 'nowrap' as const,
                 minHeight: 48,
               }}
             >
-              {"Analizi Başlat →"}
+              {hizliYukleniyor ? 'Analiz ediliyor...' : 'Analizi Başlat →'}
             </button>
           </div>
-          <div style={{ fontSize: 10, color: 'rgba(245,237,224,0.35)', letterSpacing: 0.5 }}>
+
+          {hizliYanit && (
+            <div style={{
+              background: 'rgba(245,239,230,0.06)',
+              border: '1px solid rgba(201,168,76,0.3)',
+              borderRadius: 12,
+              padding: 20,
+              marginTop: 16,
+              textAlign: 'left' as const,
+            }}>
+              <div style={{
+                fontFamily: 'Cormorant Garamond,serif',
+                fontSize: 10,
+                color: '#C9A84C',
+                letterSpacing: 2,
+                marginBottom: 10,
+              }}>KLASİK TIP PERSPEKTİFİ</div>
+              <p style={{
+                fontFamily: 'Cormorant Garamond,serif',
+                fontSize: 16,
+                color: '#F5EDE0',
+                lineHeight: 1.8,
+                margin: 0,
+              }}>{hizliYanit}</p>
+              <button
+                onClick={() => router.push('/analiz')}
+                style={{
+                  width: '100%',
+                  background: '#C9A84C',
+                  color: '#1B4332',
+                  border: 'none',
+                  borderRadius: 10,
+                  padding: 14,
+                  fontFamily: 'Cormorant Garamond,serif',
+                  fontSize: 14,
+                  fontWeight: 700,
+                  marginTop: 16,
+                  cursor: 'pointer',
+                  letterSpacing: 1.5,
+                }}
+              >
+                {"Tam Analizinizi Başlatın →"}
+              </button>
+            </div>
+          )}
+
+          <div style={{ fontSize: 10, color: 'rgba(245,237,224,0.35)', letterSpacing: 0.5, marginTop: hizliYanit ? 12 : 0 }}>
             {"🔒 Bilgileriniz güvende · KVKK kapsamında korunur"}
           </div>
         </div>
