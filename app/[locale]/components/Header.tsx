@@ -14,6 +14,8 @@ const C = {
 }
 
 
+const ADMIN_EMAIL = 'm.fatih.cakir@gmail.com'
+
 const NAV_LINKS = [
   { href: '/#nasil-calisir', label: 'Nasıl Çalışır' },
   { href: '/bitkiler', label: 'Bitkiler' },
@@ -29,6 +31,7 @@ interface HeaderUser {
 
 export default function Header() {
   const [user, setUser] = useState<HeaderUser | null>(null)
+  const [isAdmin, setIsAdmin] = useState(false)
   const [menuAcik, setMenuAcik] = useState(false)
   const [profilAcik, setProfilAcik] = useState(false)
   const router = useRouter()
@@ -36,11 +39,15 @@ export default function Header() {
   const supabase = createClient()
 
   useEffect(() => {
-    supabase.auth.getUser().then(({ data }) => setUser(data.user as HeaderUser | null))
+    supabase.auth.getUser().then(({ data }) => {
+      const u = data.user as HeaderUser | null
+      setUser(u)
+      if (u?.email === ADMIN_EMAIL) setIsAdmin(true)
+    })
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  const navLinks = NAV_LINKS
+  const navLinks = isAdmin ? [...NAV_LINKS, { href: '/dashboard', label: 'YÖNETİM' }] : NAV_LINKS
   const isActive = (href: string) => pathname === href || (href !== '/' && pathname.startsWith(href))
 
   async function cikisYap() {
@@ -104,7 +111,13 @@ export default function Header() {
                 </button>
               </div>
             ) : (
-              <div style={{ position: 'relative' }}>
+              <div style={{ position: 'relative', display: 'flex', alignItems: 'center', gap: 8 }}>
+                {isAdmin && (
+                  <button onClick={() => router.push('/dashboard')}
+                    style={{ background: C.gold, border: 'none', color: C.primary, borderRadius: 6, padding: '6px 14px', fontSize: 11, cursor: 'pointer', fontFamily: cinzel.style.fontFamily, fontWeight: 600, letterSpacing: 1 }}>
+                    {"Panel"}
+                  </button>
+                )}
                 <button onClick={() => setProfilAcik(!profilAcik)}
                   style={{ background: 'rgba(255,255,255,0.1)', border: '1px solid rgba(255,255,255,0.2)', color: 'white', borderRadius: 6, padding: '6px 12px', fontSize: 11, cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 4 }}>
                   {"Profilim"} <span style={{ fontSize: 8 }}>{'\u25BC'}</span>
