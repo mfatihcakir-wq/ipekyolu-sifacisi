@@ -105,7 +105,7 @@ export default function LandingClient() {
             ))}
           </div>
 
-          <div style={{ fontFamily: 'Cinzel,serif', fontSize: 9, color: 'rgba(184,134,11,0.3)', letterSpacing: 2.5, paddingBottom: 48 }}>{"38 KLASİK ESER · "}{kayitSayisi}{" METİN KAYDI · 1.180 BİTKİ"}</div>
+          <div style={{ fontFamily: 'Cinzel,serif', fontSize: 11, color: 'rgba(184,134,11,0.3)', letterSpacing: 2.5, paddingBottom: 48 }}>{"38 KLASİK ESER · "}{kayitSayisi}{" METİN KAYDI · 1.180 BİTKİ"}</div>
         </div>
 
         {/* ORTA: Büyük hareketli logo */}
@@ -127,7 +127,7 @@ export default function LandingClient() {
 
         {/* SAĞ: Danışman kartı */}
         <div className="hero-dan-col" style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(184,134,11,0.1)', borderRadius: 20, padding: 24, position: 'relative' as const, zIndex: 1 }}>
-          <div style={{ fontFamily: 'Cinzel,serif', fontSize: 8, color: 'rgba(184,134,11,0.45)', letterSpacing: 2, marginBottom: 14 }}>{"DANIŞMAN"}</div>
+          <div style={{ fontFamily: 'Cinzel,serif', fontSize: 10, color: 'rgba(184,134,11,0.45)', letterSpacing: 2, marginBottom: 14 }}>{"DANIŞMAN"}</div>
           <div style={{ width: 56, height: 56, borderRadius: '50%', overflow: 'hidden', border: '1.5px solid rgba(184,134,11,0.18)', marginBottom: 12, background: 'rgba(184,134,11,0.1)' }}>
             <Image src="/danisan.jpg" alt="M. Fatih Çakır" width={56} height={56} style={{ objectFit: 'cover', width: 56, height: 56, borderRadius: '50%' }} />
           </div>
@@ -160,7 +160,7 @@ export default function LandingClient() {
         ].map(({ n, l, s }, i, arr) => (
           <div key={l} style={{ textAlign: 'center' as const, padding: '40px 20px', borderRight: i < arr.length - 1 ? '1px solid #DEB887' : 'none' }}>
             <div style={{ fontFamily: 'Cinzel,serif', fontSize: 42, fontWeight: 700, color: '#1C3A26', lineHeight: 1, marginBottom: 8 }}>{n}</div>
-            <div style={{ fontFamily: 'Cinzel,serif', fontSize: 8, color: '#9B8060', letterSpacing: 2.5, marginBottom: 4 }}>{l}</div>
+            <div style={{ fontFamily: 'Cinzel,serif', fontSize: 10, color: '#9B8060', letterSpacing: 2.5, marginBottom: 4 }}>{l}</div>
             <div style={{ fontSize: 13, color: '#9B8060', fontStyle: 'italic' }}>{s}</div>
           </div>
         ))}
@@ -233,7 +233,7 @@ export default function LandingClient() {
           {/* BİR KEŞİF DAHA */}
           <div style={{ display: 'flex', alignItems: 'center', gap: 14, margin: '40px 0 32px' }}>
             <span style={{ flex: 1, height: 1, background: 'rgba(184,134,11,0.1)', display: 'block' }} />
-            <span style={{ fontFamily: 'Cinzel,serif', fontSize: 9, color: 'rgba(184,134,11,0.35)', letterSpacing: 3, whiteSpace: 'nowrap' as const }}>{"BİR KEŞİF DAHA"}</span>
+            <span style={{ fontFamily: 'Cinzel,serif', fontSize: 11, color: 'rgba(184,134,11,0.35)', letterSpacing: 3, whiteSpace: 'nowrap' as const }}>{"BİR KEŞİF DAHA"}</span>
             <span style={{ flex: 1, height: 1, background: 'rgba(184,134,11,0.1)', display: 'block' }} />
           </div>
           <p style={{ fontSize: 18, color: 'rgba(245,237,224,0.68)', lineHeight: 1.95, marginBottom: 22, fontFamily: 'EB Garamond,serif' }}>
@@ -246,7 +246,7 @@ export default function LandingClient() {
           {/* BURADAN ORAYA */}
           <div style={{ display: 'flex', alignItems: 'center', gap: 14, margin: '40px 0 32px' }}>
             <span style={{ flex: 1, height: 1, background: 'rgba(184,134,11,0.1)', display: 'block' }} />
-            <span style={{ fontFamily: 'Cinzel,serif', fontSize: 9, color: 'rgba(184,134,11,0.35)', letterSpacing: 3, whiteSpace: 'nowrap' as const }}>{"BURADAN ORAYA"}</span>
+            <span style={{ fontFamily: 'Cinzel,serif', fontSize: 11, color: 'rgba(184,134,11,0.35)', letterSpacing: 3, whiteSpace: 'nowrap' as const }}>{"BURADAN ORAYA"}</span>
             <span style={{ flex: 1, height: 1, background: 'rgba(184,134,11,0.1)', display: 'block' }} />
           </div>
           <p style={{ fontSize: 18, color: 'rgba(245,237,224,0.68)', lineHeight: 1.95, marginBottom: 22, fontFamily: 'EB Garamond,serif' }}>
@@ -285,7 +285,7 @@ export default function LandingClient() {
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12, marginBottom: 24 }} className="akademik-grid">
               {[{ l: 'DOKTORA', v: 'FSM Fuat Sezgin Enstitüsü' }, { l: 'YÜKSEK LİSANS', v: 'Tıp Tarihi, Kocaeli Üniversitesi' }, { l: 'YAYINLAR', v: '8 Kitap, 7 Çeviri' }, { l: 'UZMANLIK', v: 'Klasik İslam ve Osmanlı Tıbbı' }].map(({ l, v }) => (
                 <div key={l} style={{ background: 'white', border: '1px solid #DEB887', borderRadius: 10, padding: '14px 16px' }}>
-                  <div style={{ fontFamily: 'Cinzel,serif', fontSize: 8, color: '#9B8060', letterSpacing: 2, marginBottom: 5 }}>{l}</div>
+                  <div style={{ fontFamily: 'Cinzel,serif', fontSize: 10, color: '#9B8060', letterSpacing: 2, marginBottom: 5 }}>{l}</div>
                   <div style={{ fontSize: 15, color: '#1A1208' }}>{v}</div>
                 </div>
               ))}
@@ -334,7 +334,7 @@ export default function LandingClient() {
             style={{ fontFamily: 'Cinzel,serif', fontSize: 14, fontWeight: 700, color: '#1C3A26', background: '#B8860B', padding: '20px 48px', borderRadius: 12, letterSpacing: 2.5, border: 'none', cursor: 'pointer', boxShadow: '0 8px 32px rgba(184,134,11,0.25)' }}>
             {"ANALİZİMİ BAŞLAT →"}
           </button>
-          <div style={{ marginTop: 24, fontFamily: 'Cinzel,serif', fontSize: 9, color: 'rgba(184,134,11,0.4)', letterSpacing: 2 }}>
+          <div style={{ marginTop: 24, fontFamily: 'Cinzel,serif', fontSize: 11, color: 'rgba(184,134,11,0.4)', letterSpacing: 2 }}>
             {"38 KLASİK ESER · 46.000+ KAYIT · 1.180 BİTKİ"}
           </div>
         </div>
@@ -347,16 +347,13 @@ export default function LandingClient() {
           .hero-logo-col { order: -1; display: flex !important; justify-content: center; }
           .hero-logo-col svg { width: 140px !important; height: 140px !important; }
           .hero-dan-col { order: 3; }
-          .features-grid { grid-template-columns: 1fr 1fr !important; }
           .stats-grid { grid-template-columns: 1fr 1fr !important; }
           .steps-grid { grid-template-columns: 1fr !important; gap: 32px !important; }
           .danisman-grid { grid-template-columns: 1fr !important; gap: 32px !important; }
-          .pricing-grid { grid-template-columns: 1fr !important; }
           .yorumlar-grid { grid-template-columns: 1fr !important; }
           .akademik-grid { grid-template-columns: 1fr !important; }
         }
         @media (max-width: 600px) {
-          .features-grid { grid-template-columns: 1fr !important; }
           .stats-grid { grid-template-columns: 1fr 1fr !important; }
         }
       `}</style>
