@@ -13,7 +13,6 @@ const C = {
   secondary: '#6B5744', border: '#DEB887', white: '#FFFFFF',
 }
 
-const DANISМАН_EMAIL = 'm.fatih.cakir@gmail.com'
 
 const NAV_LINKS = [
   { href: '/#nasil-calisir', label: 'Nasıl Çalışır' },
@@ -41,8 +40,7 @@ export default function Header() {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  const isDanisман = user?.email === DANISМАН_EMAIL
-  const navLinks = isDanisман ? [...NAV_LINKS, { href: '/admin', label: 'YÖNETİM' }] : NAV_LINKS
+  const navLinks = NAV_LINKS
   const isActive = (href: string) => pathname === href || (href !== '/' && pathname.startsWith(href))
 
   async function cikisYap() {
@@ -105,11 +103,6 @@ export default function Header() {
                   {"Ücretsiz Başla \u2192"}
                 </button>
               </div>
-            ) : isDanisман ? (
-              <button onClick={() => router.push('/dashboard')}
-                style={{ background: C.gold, border: 'none', color: C.primary, borderRadius: 6, padding: '6px 14px', fontSize: 11, cursor: 'pointer', fontFamily: cinzel.style.fontFamily, fontWeight: 600, letterSpacing: 1 }}>
-                {"Panel"}
-              </button>
             ) : (
               <div style={{ position: 'relative' }}>
                 <button onClick={() => setProfilAcik(!profilAcik)}

@@ -25,7 +25,7 @@ export default function Footer() {
 
         {/* Kolon 1: Logo */}
         <div>
-          <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 12 }}>
+          <a href="/" style={{ textDecoration: 'none', display: 'flex', alignItems: 'center', gap: 8, marginBottom: 12 }}>
             <svg width="24" height="24" viewBox="0 0 64 64" fill="none">
               <ellipse cx="32" cy="37" rx="13" ry="11" fill="none" stroke="#B8860B" strokeWidth="1.5"/>
               <path d="M22 37 Q22 25 32 23 Q42 25 42 37" fill="none" stroke="#B8860B" strokeWidth="1.5"/>
@@ -33,7 +33,7 @@ export default function Footer() {
               <circle cx="32" cy="32" r="2.8" fill="#EF5350"/>
             </svg>
             <span style={{ fontFamily: cinzel.style.fontFamily, color: C.gold, fontSize: 12, fontWeight: 600, letterSpacing: 2 }}>{"İPEK YOLU ŞİFACISI"}</span>
-          </div>
+          </a>
           <p style={{ fontSize: 13, lineHeight: 1.7, maxWidth: 260 }}>
             {"Bin yıllık şifa geleneği, modern danışmanlık."}
           </p>
