@@ -1,10 +1,11 @@
 "use client"
 import { useState } from 'react'
-import { useRouter } from 'next/navigation'
+import { useRouter, useSearchParams } from 'next/navigation'
 import { createClient } from '@/lib/supabase'
 
 export default function GirisPage() {
   const router = useRouter()
+  const searchParams = useSearchParams()
   const supabase = createClient()
   const [email, setEmail] = useState('')
   const [sifre, setSifre] = useState('')
@@ -17,7 +18,8 @@ export default function GirisPage() {
     const { error } = await supabase.auth.signInWithPassword({ email, password: sifre })
     setYukleniyor(false)
     if (error) { setHata('E-posta veya sifre hatali.'); return }
-    router.push('/hasta')
+    const callbackUrl = searchParams.get('callbackUrl') || '/hasta'
+    router.push(callbackUrl)
   }
 
   return (
