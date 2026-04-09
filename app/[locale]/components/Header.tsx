@@ -73,9 +73,9 @@ export default function Header() {
           {/* ORTA: Desktop Nav */}
           <nav className="header-desktop-nav" style={{ display: 'flex', gap: 4, alignItems: 'center' }}>
             {navLinks.map(link => (
-              <button
+              <a
                 key={link.href}
-                onClick={() => router.push(link.href)}
+                href={link.href}
                 style={{
                   background: 'none',
                   border: 'none',
@@ -87,11 +87,12 @@ export default function Header() {
                   padding: '6px 12px',
                   borderRadius: 6,
                   cursor: 'pointer',
+                  textDecoration: 'none',
                   borderBottom: isActive(link.href) ? `2px solid ${C.gold}` : '2px solid transparent',
                 }}
               >
                 {link.label}
-              </button>
+              </a>
             ))}
           </nav>
 
@@ -109,10 +110,10 @@ export default function Header() {
             ) : (
               <div style={{ position: 'relative', display: 'flex', alignItems: 'center', gap: 8 }}>
                 {isAdmin && (
-                  <button onClick={() => router.push('/dashboard')}
-                    style={{ background: C.gold, border: 'none', color: C.primary, borderRadius: 6, padding: '6px 14px', fontSize: 11, cursor: 'pointer', fontFamily: cinzel.style.fontFamily, fontWeight: 600, letterSpacing: 1 }}>
+                  <a href="/dashboard"
+                    style={{ background: C.gold, border: 'none', color: C.primary, borderRadius: 6, padding: '6px 14px', fontSize: 11, cursor: 'pointer', fontFamily: cinzel.style.fontFamily, fontWeight: 600, letterSpacing: 1, textDecoration: 'none' }}>
                     {"Panel"}
-                  </button>
+                  </a>
                 )}
                 <button onClick={() => setProfilAcik(!profilAcik)}
                   style={{ background: 'rgba(255,255,255,0.1)', border: '1px solid rgba(255,255,255,0.2)', color: 'white', borderRadius: 6, padding: '6px 12px', fontSize: 11, cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 4 }}>
