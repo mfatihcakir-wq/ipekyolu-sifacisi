@@ -384,15 +384,15 @@ export default function DashboardPage() {
 
   ${analiz.ozet ? `<div class="section"><div class="section-title">Genel Degerlendirme</div><div class="ozet-metin">${safeStr(analiz.ozet)}</div></div>` : ''}
 
-  ${analiz.bitki_recetesi?.length > 0 ? `<div class="section"><div class="section-title">Bitkisel Protokol</div>${analiz.bitki_recetesi.map((b: {bitki?:string,bitki_ar?:string,doz?:string,zaman?:string,sure?:string,etki?:string,kaynak?:string}) => `<div class="bitki-kart"><div class="bitki-ad">${safeStr(b.bitki)}</div>${b.bitki_ar ? `<div class="bitki-ar">${safeStr(b.bitki_ar)}</div>` : ''}<div class="bitki-detay"><strong>Doz:</strong> ${safeStr(b.doz)}<br><strong>Zaman:</strong> ${safeStr(b.zaman)} | <strong>Sure:</strong> ${safeStr(b.sure)}${b.etki ? `<br>${safeStr(b.etki)}` : ''}</div>${b.kaynak ? `<div class="bitki-kaynak">${safeStr(b.kaynak)}</div>` : ''}</div>`).join('')}</div>` : ''}
+  ${analiz.bitki_recetesi?.length > 0 ? `<div class="section"><div class="section-title">Bitkisel Protokol</div>${(Array.isArray(analiz.bitki_recetesi)?analiz.bitki_recetesi:[]).map((b: {bitki?:string,bitki_ar?:string,doz?:string,zaman?:string,sure?:string,etki?:string,kaynak?:string}) => `<div class="bitki-kart"><div class="bitki-ad">${safeStr(b.bitki)}</div>${b.bitki_ar ? `<div class="bitki-ar">${safeStr(b.bitki_ar)}</div>` : ''}<div class="bitki-detay"><strong>Doz:</strong> ${safeStr(b.doz)}<br><strong>Zaman:</strong> ${safeStr(b.zaman)} | <strong>Sure:</strong> ${safeStr(b.sure)}${b.etki ? `<br>${safeStr(b.etki)}` : ''}</div>${b.kaynak ? `<div class="bitki-kaynak">${safeStr(b.kaynak)}</div>` : ''}</div>`).join('')}</div>` : ''}
 
   ${analiz.gunluk_rutin ? `<div class="section"><div class="section-title">Gunluk Rutin</div>${analiz.gunluk_rutin.sabah?.length ? `<div class="rutin-blok sabah-blok"><div class="rutin-baslik">Sabah</div>${analiz.gunluk_rutin.sabah.map((i: string) => `<div class="rutin-item">${safeStr(i)}</div>`).join('')}</div>` : ''}${analiz.gunluk_rutin.ogle?.length ? `<div class="rutin-blok ogle-blok"><div class="rutin-baslik">Ogle</div>${analiz.gunluk_rutin.ogle.map((i: string) => `<div class="rutin-item">${safeStr(i)}</div>`).join('')}</div>` : ''}${analiz.gunluk_rutin.aksam?.length ? `<div class="rutin-blok aksam-blok"><div class="rutin-baslik">Aksam</div>${analiz.gunluk_rutin.aksam.map((i: string) => `<div class="rutin-item">${safeStr(i)}</div>`).join('')}</div>` : ''}</div>` : ''}
 
-  ${analiz.beslenme_onerileri ? `<div class="section"><div class="section-title">Beslenme</div>${typeof analiz.beslenme_onerileri === 'string' ? `<div class="ozet-metin">${safeStr(analiz.beslenme_onerileri)}</div>` : `${analiz.beslenme_onerileri.temel_ilke ? `<div style="font-style:italic;color:#1C3A26;font-weight:500;margin-bottom:10px;">${safeStr(analiz.beslenme_onerileri.temel_ilke)}</div>` : ''}<div class="beslenme-grid">${analiz.beslenme_onerileri.onerililer?.length ? `<div class="beslenme-oneri"><div class="beslenme-baslik oneri-baslik">Onerilen</div>${analiz.beslenme_onerileri.onerililer.map((g: string) => `<div class="liste-item">${safeStr(g)}</div>`).join('')}</div>` : ''}${analiz.beslenme_onerileri.kacinilacaklar?.length ? `<div class="beslenme-kacin"><div class="beslenme-baslik kacin-baslik">Kacinilacak</div>${analiz.beslenme_onerileri.kacinilacaklar.map((g: string) => `<div class="liste-item">${safeStr(g)}</div>`).join('')}</div>` : ''}</div>`}</div>` : ''}
+  ${analiz.beslenme_onerileri ? `<div class="section"><div class="section-title">Beslenme</div>${typeof analiz.beslenme_onerileri === 'string' ? `<div class="ozet-metin">${safeStr(analiz.beslenme_onerileri)}</div>` : `${analiz.beslenme_onerileri.temel_ilke ? `<div style="font-style:italic;color:#1C3A26;font-weight:500;margin-bottom:10px;">${safeStr(analiz.beslenme_onerileri.temel_ilke)}</div>` : ''}<div class="beslenme-grid">${analiz.beslenme_onerileri.onerililer?.length ? `<div class="beslenme-oneri"><div class="beslenme-baslik oneri-baslik">Onerilen</div>${(Array.isArray(analiz.beslenme_onerileri?.onerililer)?analiz.beslenme_onerileri.onerililer:[]).map((g: string) => `<div class="liste-item">${safeStr(g)}</div>`).join('')}</div>` : ''}${analiz.beslenme_onerileri.kacinilacaklar?.length ? `<div class="beslenme-kacin"><div class="beslenme-baslik kacin-baslik">Kacinilacak</div>${(Array.isArray(analiz.beslenme_onerileri?.kacinilacaklar)?analiz.beslenme_onerileri.kacinilacaklar:[]).map((g: string) => `<div class="liste-item">${safeStr(g)}</div>`).join('')}</div>` : ''}</div>`}</div>` : ''}
 
   ${analiz.hikmet ? `<div class="section"><div class="hikmet-kart"><div class="label-sm" style="color:rgba(255,255,255,.4);letter-spacing:2px;margin-bottom:10px;">HIKMET</div>${analiz.hikmet.arapca ? `<div class="hikmet-ar">${safeStr(analiz.hikmet.arapca)}</div>` : ''}${analiz.hikmet.turkce ? `<div class="hikmet-tr">${safeStr(analiz.hikmet.turkce)}</div>` : ''}${analiz.hikmet.kaynak ? `<div class="hikmet-kaynak">- ${safeStr(analiz.hikmet.kaynak)}</div>` : ''}</div></div>` : ''}
 
-  ${analiz.kaynaklar?.length > 0 ? `<div class="section"><div class="section-title">Kullanilan Kaynaklar</div><div class="kaynaklar">${analiz.kaynaklar.map((k: string) => `<span class="kaynak-pill">${safeStr(k)}</span>`).join('')}</div></div>` : ''}
+  ${analiz.kaynaklar?.length > 0 ? `<div class="section"><div class="section-title">Kullanilan Kaynaklar</div><div class="kaynaklar">${(Array.isArray(analiz.kaynaklar)?analiz.kaynaklar:[]).map((k: string) => `<span class="kaynak-pill">${safeStr(k)}</span>`).join('')}</div></div>` : ''}
 
   <div class="uyari">Bu analiz klasik Islam tibbi gelenegine dayanmaktadir. Modern tibbin yerini tutmaz. Ciddi sikayetlerde mutlaka uzman hekime basvurunuz.</div>
 
@@ -762,7 +762,7 @@ export default function DashboardPage() {
                     <div style={{ marginBottom: 14 }}>
                       <div style={{ fontFamily: cinzel.style.fontFamily, fontSize: 11, color: C.gold, letterSpacing: 2, marginBottom: 10, textTransform: 'uppercase' as const }}>Klinik Gozlemler</div>
                       {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
-                      {analiz.klinik_gozlemler.map((g: any, i: number) => (
+                      {(Array.isArray(analiz.klinik_gozlemler)?analiz.klinik_gozlemler:[]).map((g: any, i: number) => (
                         <div key={i} style={{ display: 'flex', gap: 10, padding: '8px 0', borderBottom: `1px solid ${C.border}` }}>
                           <div style={{ width: 28, height: 28, background: '#E3F2FD', borderRadius: 6, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 14, flexShrink: 0 }}>🔬</div>
                           <div>
@@ -779,7 +779,7 @@ export default function DashboardPage() {
                     <div style={{ marginBottom: 14 }}>
                       <div style={{ fontFamily: cinzel.style.fontFamily, fontSize: 11, color: C.gold, letterSpacing: 2, marginBottom: 10, textTransform: 'uppercase' as const }}>Bitkisel Protokol</div>
                       {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
-                      {analiz.bitki_recetesi.map((b: any, i: number) => (
+                      {(Array.isArray(analiz.bitki_recetesi)?analiz.bitki_recetesi:[]).map((b: any, i: number) => (
                         <div key={i} style={{ background: C.surface, borderRadius: 8, padding: '12px 14px', marginBottom: 8 }}>
                           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 6 }}>
                             <div>
@@ -805,7 +805,7 @@ export default function DashboardPage() {
                       {analiz.bilesik_formul.bilesenler?.length > 0 && (
                         <div style={{ marginBottom: 8 }}>
                           {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
-                          {analiz.bilesik_formul.bilesenler.map((b: any, i: number) => (
+                          {(Array.isArray(analiz.bilesik_formul?.bilesenler)?analiz.bilesik_formul.bilesenler:[]).map((b: any, i: number) => (
                             <div key={i} style={{ display: 'flex', gap: 8, fontSize: 12, padding: '3px 0', borderBottom: '1px solid rgba(184,146,42,0.2)' }}>
                               <span style={{ fontWeight: 600, minWidth: 120, color: C.primary }}>{b.madde}</span>
                               <span style={{ color: C.gold, minWidth: 60 }}>{b.miktar}</span>
@@ -856,7 +856,7 @@ export default function DashboardPage() {
                           {analiz.beslenme_onerileri.onerililer?.length > 0 && (
                             <div style={{ marginBottom: 8 }}>
                               <div style={{ fontSize: 10, color: '#2E7D32', fontWeight: 600, marginBottom: 4 }}>ONERILEN GIDALAR</div>
-                              {analiz.beslenme_onerileri.onerililer.map((g: string, i: number) => (
+                              {(Array.isArray(analiz.beslenme_onerileri?.onerililer)?analiz.beslenme_onerileri.onerililer:[]).map((g: string, i: number) => (
                                 <div key={i} style={{ fontSize: 11, color: C.dark, padding: '1px 0' }}>{'\u2713'} {g}</div>
                               ))}
                             </div>
@@ -864,7 +864,7 @@ export default function DashboardPage() {
                           {analiz.beslenme_onerileri.kacinilacaklar?.length > 0 && (
                             <div style={{ marginBottom: 8 }}>
                               <div style={{ fontSize: 10, color: '#C62828', fontWeight: 600, marginBottom: 4 }}>KACINILACAKLAR</div>
-                              {analiz.beslenme_onerileri.kacinilacaklar.map((g: string, i: number) => (
+                              {(Array.isArray(analiz.beslenme_onerileri?.kacinilacaklar)?analiz.beslenme_onerileri.kacinilacaklar:[]).map((g: string, i: number) => (
                                 <div key={i} style={{ fontSize: 11, color: C.dark, padding: '1px 0' }}>{'\u2717'} {g}</div>
                               ))}
                             </div>
@@ -911,7 +911,7 @@ export default function DashboardPage() {
                       {analiz.sebep_analizi.muid?.length > 0 && (
                         <div style={{ marginBottom: 6 }}>
                           <div style={{ fontSize: 10, fontWeight: 600, color: '#1565C0', marginBottom: 4 }}>UZAK SEBEPLER:</div>
-                          {analiz.sebep_analizi.muid.map((m: string, i: number) => (
+                          {(Array.isArray(analiz.sebep_analizi?.muid)?analiz.sebep_analizi.muid:[]).map((m: string, i: number) => (
                             <div key={i} style={{ fontSize: 11, color: C.dark, padding: '1px 0' }}>{'\u2192'} {m}</div>
                           ))}
                         </div>
@@ -929,7 +929,7 @@ export default function DashboardPage() {
                     <div style={{ background: '#F3E5F5', borderRadius: 10, padding: '12px 14px', marginBottom: 12 }}>
                       <div style={{ fontSize: 10, color: '#6A1B9A', fontWeight: 600, letterSpacing: 1, marginBottom: 8, textTransform: 'uppercase' as const }}>Alternatif Bitkiler (el-Ebdal)</div>
                       {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
-                      {analiz.alternatif_bitkiler.map((a: any, i: number) => (
+                      {(Array.isArray(analiz.alternatif_bitkiler)?analiz.alternatif_bitkiler:[]).map((a: any, i: number) => (
                         <div key={i} style={{ fontSize: 11, color: C.dark, padding: '3px 0' }}>
                           {'\u2194'} <strong>{a.asil}</strong> bulunamazsa {'\u2192'} {a.alternatif} {a.doz ? `(${a.doz})` : ''}
                           {a.kaynak && <span style={{ color: '#999', fontStyle: 'italic' }}> — {a.kaynak}</span>}
@@ -943,7 +943,7 @@ export default function DashboardPage() {
                     <div style={{ background: '#FFF3E0', border: '1px solid #FFCC80', borderRadius: 10, padding: '12px 14px', marginBottom: 12 }}>
                       <div style={{ fontSize: 10, color: '#E65100', fontWeight: 600, letterSpacing: 1, marginBottom: 8, textTransform: 'uppercase' as const }}>Ilac-Bitki Etkilesimleri</div>
                       {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
-                      {analiz.ilac_etkilesimleri.map((e: any, i: number) => (
+                      {(Array.isArray(analiz.ilac_etkilesimleri)?analiz.ilac_etkilesimleri:[]).map((e: any, i: number) => (
                         <div key={i} style={{ display: 'flex', gap: 8, padding: '4px 0', alignItems: 'flex-start' }}>
                           <div style={{ width: 8, height: 8, borderRadius: '50%', background: e.risk === 'red' ? '#C62828' : '#F57C00', marginTop: 4, flexShrink: 0 }} />
                           <div>
@@ -960,7 +960,7 @@ export default function DashboardPage() {
                     <div style={{ background: '#FFF3E0', border: '1px solid #FFCC80', borderRadius: 10, padding: '12px 14px', marginBottom: 12 }}>
                       <div style={{ fontSize: 10, color: '#E65100', fontWeight: 600, letterSpacing: 1, marginBottom: 6, textTransform: 'uppercase' as const }}>Kacinilacaklar</div>
                       {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
-                      {analiz.kacinilacaklar.map((k: any, i: number) => (
+                      {(Array.isArray(analiz.kacinilacaklar)?analiz.kacinilacaklar:[]).map((k: any, i: number) => (
                         <div key={i} style={{ fontSize: 12, color: C.dark, marginBottom: 3 }}>- {k}</div>
                       ))}
                     </div>
@@ -973,7 +973,7 @@ export default function DashboardPage() {
                       {analiz.sonraki_kontrol.amac && <div style={{ fontSize: 12, color: C.dark, marginBottom: 6 }}>{analiz.sonraki_kontrol.amac}</div>}
                       {analiz.sonraki_kontrol.takip_parametreleri?.length > 0 && (
                         <div style={{ display: 'flex', flexWrap: 'wrap', gap: 4 }}>
-                          {analiz.sonraki_kontrol.takip_parametreleri.map((p: string, i: number) => (
+                          {(Array.isArray(analiz.sonraki_kontrol?.takip_parametreleri)?analiz.sonraki_kontrol.takip_parametreleri:[]).map((p: string, i: number) => (
                             <span key={i} style={{ fontSize: 10, background: 'white', color: '#1565C0', padding: '2px 8px', borderRadius: 10, border: '1px solid #90CAF9' }}>📍 {p}</span>
                           ))}
                         </div>
@@ -995,7 +995,7 @@ export default function DashboardPage() {
                   {analiz.kaynaklar?.length > 0 && (
                     <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6, marginBottom: 14 }}>
                       {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
-                      {analiz.kaynaklar.map((k: any, i: number) => (
+                      {(Array.isArray(analiz.kaynaklar)?analiz.kaynaklar:[]).map((k: any, i: number) => (
                         <span key={i} style={{ fontSize: 10, background: '#E8F5E9', color: C.primary, padding: '3px 8px', borderRadius: 20, fontStyle: 'italic' }}>{k}</span>
                       ))}
                     </div>
