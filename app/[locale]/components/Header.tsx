@@ -102,10 +102,10 @@ export default function Header() {
             {/* Auth Butonlari */}
             {!user ? (
               <div className="header-auth-btns" style={{ display: 'flex', gap: 6 }}>
-                <button onClick={() => router.push('/giris')}
-                  style={{ background: 'rgba(255,255,255,0.1)', border: '1px solid rgba(255,255,255,0.2)', color: 'white', borderRadius: 6, padding: '6px 14px', fontSize: 11, cursor: 'pointer', fontFamily: cinzel.style.fontFamily, letterSpacing: 1 }}>
+                <a href="/giris"
+                  style={{ background: 'rgba(255,255,255,0.1)', border: '1px solid rgba(255,255,255,0.2)', color: 'white', borderRadius: 6, padding: '6px 14px', fontSize: 11, cursor: 'pointer', fontFamily: cinzel.style.fontFamily, letterSpacing: 1, textDecoration: 'none' }}>
                   {"Giriş"}
-                </button>
+                </a>
               </div>
             ) : (
               <div style={{ position: 'relative', display: 'flex', alignItems: 'center', gap: 8 }}>
@@ -121,10 +121,10 @@ export default function Header() {
                 </button>
                 {profilAcik && (
                   <div style={{ position: 'absolute', top: 36, right: 0, background: 'white', borderRadius: 8, boxShadow: '0 4px 16px rgba(0,0,0,0.15)', overflow: 'hidden', minWidth: 160, zIndex: 200 }}>
-                    <button onClick={() => { setProfilAcik(false); router.push('/analizlerim') }}
-                      style={{ display: 'block', width: '100%', padding: '10px 16px', border: 'none', background: 'white', cursor: 'pointer', fontSize: 13, color: C.primary, textAlign: 'left' }}>
+                    <a href="/hasta" onClick={() => setProfilAcik(false)}
+                      style={{ display: 'block', width: '100%', padding: '10px 16px', border: 'none', background: 'white', cursor: 'pointer', fontSize: 13, color: C.primary, textAlign: 'left' as const, textDecoration: 'none' }}>
                       {"Analizlerim"}
-                    </button>
+                    </a>
                     <button onClick={cikisYap}
                       style={{ display: 'block', width: '100%', padding: '10px 16px', border: 'none', background: 'white', cursor: 'pointer', fontSize: 13, color: '#C62828', textAlign: 'left', borderTop: '1px solid #eee' }}>
                       {"Çıkış Yap"}
@@ -146,10 +146,10 @@ export default function Header() {
         {menuAcik && (
           <div style={{ background: C.primary, borderTop: '1px solid rgba(255,255,255,0.1)', padding: '16px', left: 0, right: 0, width: '100%', overflowX: 'hidden' as const, boxSizing: 'border-box' as const }}>
             {navLinks.map(link => (
-              <button key={link.href} onClick={() => { setMenuAcik(false); router.push(link.href) }}
-                style={{ display: 'block', width: '100%', padding: '10px 0', border: 'none', background: 'none', color: isActive(link.href) ? C.gold : 'rgba(255,255,255,0.7)', fontSize: 13, cursor: 'pointer', textAlign: 'left', fontFamily: cinzel.style.fontFamily, letterSpacing: 1, borderBottom: '1px solid rgba(255,255,255,0.05)' }}>
+              <a key={link.href} href={link.href} onClick={() => setMenuAcik(false)}
+                style={{ display: 'block', width: '100%', padding: '10px 0', border: 'none', background: 'none', color: isActive(link.href) ? C.gold : 'rgba(255,255,255,0.7)', fontSize: 13, cursor: 'pointer', textAlign: 'left' as const, fontFamily: cinzel.style.fontFamily, letterSpacing: 1, borderBottom: '1px solid rgba(255,255,255,0.05)', textDecoration: 'none' }}>
                 {link.label}
-              </button>
+              </a>
             ))}
           </div>
         )}

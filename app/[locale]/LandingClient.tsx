@@ -122,7 +122,7 @@ export default function LandingClient() {
           </p>
 
           {/* Ana CTA */}
-          <button onClick={() => router.push('/analiz')} style={{ fontFamily: 'Cormorant Garamond,serif', fontSize: 11, fontWeight: 700, color: '#1C3A26', background: '#B8860B', padding: '16px 36px', borderRadius: 11, letterSpacing: 2, border: 'none', cursor: 'pointer', marginBottom: 20, display: 'block' }}>{"ANALİZİMİ BAŞLAT"}</button>
+          <a href="/analiz" style={{ fontFamily: 'Cormorant Garamond,serif', fontSize: 11, fontWeight: 700, color: '#1C3A26', background: '#B8860B', padding: '16px 36px', borderRadius: 11, letterSpacing: 2, border: 'none', cursor: 'pointer', marginBottom: 20, display: 'inline-block', textDecoration: 'none' }}>{"ANALİZİMİ BAŞLAT"}</a>
 
           {/* Sekme butonları */}
           <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' as const, marginBottom: 32 }}>
@@ -132,9 +132,9 @@ export default function LandingClient() {
               { label: 'Cilt Bakımı', href: '/hasta/cilt' },
               { label: 'Hakkımızda', href: '/hakkimizda' },
             ].map(t => (
-              <button key={t.label} onClick={() => router.push(t.href)} style={{ background: 'transparent', border: '1.5px solid rgba(245,237,224,0.15)', borderRadius: 9, padding: '14px 20px', fontFamily: 'Cormorant Garamond,serif', fontSize: 10, color: 'rgba(245,237,224,0.55)', letterSpacing: 1.5, cursor: 'pointer', minHeight: 44 }}>
+              <a key={t.label} href={t.href} style={{ background: 'transparent', border: '1.5px solid rgba(245,237,224,0.15)', borderRadius: 9, padding: '14px 20px', fontFamily: 'Cormorant Garamond,serif', fontSize: 10, color: 'rgba(245,237,224,0.55)', letterSpacing: 1.5, cursor: 'pointer', minHeight: 44, textDecoration: 'none', display: 'inline-flex', alignItems: 'center' }}>
                 {t.label}
-              </button>
+              </a>
             ))}
           </div>
 
@@ -252,9 +252,10 @@ export default function LandingClient() {
                 lineHeight: 1.8,
                 margin: 0,
               }}>{hizliYanit}</p>
-              <button
-                onClick={() => router.push('/analiz')}
+              <a
+                href="/analiz"
                 style={{
+                  display: 'block',
                   width: '100%',
                   background: '#C9A84C',
                   color: '#1B4332',
@@ -267,10 +268,13 @@ export default function LandingClient() {
                   marginTop: 16,
                   cursor: 'pointer',
                   letterSpacing: 1.5,
+                  textAlign: 'center' as const,
+                  textDecoration: 'none',
+                  boxSizing: 'border-box' as const,
                 }}
               >
                 {"Tam Analizinizi Başlatın →"}
-              </button>
+              </a>
             </div>
           )}
 
@@ -306,10 +310,10 @@ export default function LandingClient() {
         <p style={{ fontFamily: 'Cormorant Garamond,serif', fontSize: 18, marginBottom: 20, color: '#1C3A26', letterSpacing: 0.5 }}>
           {"Bin yıllık birikimle hazırlanan analiziniz sizi bekliyor."}
         </p>
-        <button onClick={() => router.push('/analiz')}
-          style={{ fontFamily: 'Cormorant Garamond,serif', fontSize: 12, fontWeight: 700, color: '#1C3A26', background: '#B8860B', padding: '16px 36px', borderRadius: 11, letterSpacing: 2, border: 'none', cursor: 'pointer' }}>
+        <a href="/analiz"
+          style={{ fontFamily: 'Cormorant Garamond,serif', fontSize: 12, fontWeight: 700, color: '#1C3A26', background: '#B8860B', padding: '16px 36px', borderRadius: 11, letterSpacing: 2, border: 'none', cursor: 'pointer', textDecoration: 'none', display: 'inline-block' }}>
           {"ANALİZİMİ BAŞLAT →"}
-        </button>
+        </a>
       </section>
 
       <MakalelerSection />
@@ -465,10 +469,10 @@ export default function LandingClient() {
           <p style={{ fontSize: 18, color: 'rgba(245,237,224,0.6)', fontStyle: 'italic', marginBottom: 36, lineHeight: 1.7 }}>
             {"Ücretsiz analizinizi şimdi başlatın."}
           </p>
-          <button onClick={() => router.push('/analiz')}
-            style={{ fontFamily: 'Cormorant Garamond,serif', fontSize: 14, fontWeight: 700, color: '#1C3A26', background: '#B8860B', padding: '20px 48px', borderRadius: 12, letterSpacing: 2.5, border: 'none', cursor: 'pointer', boxShadow: '0 8px 32px rgba(184,134,11,0.25)' }}>
+          <a href="/analiz"
+            style={{ fontFamily: 'Cormorant Garamond,serif', fontSize: 14, fontWeight: 700, color: '#1C3A26', background: '#B8860B', padding: '20px 48px', borderRadius: 12, letterSpacing: 2.5, border: 'none', cursor: 'pointer', boxShadow: '0 8px 32px rgba(184,134,11,0.25)', textDecoration: 'none', display: 'inline-block' }}>
             {"ANALİZİMİ BAŞLAT →"}
-          </button>
+          </a>
           <div style={{ marginTop: 24, fontFamily: 'Cormorant Garamond,serif', fontSize: 11, color: 'rgba(184,134,11,0.4)', letterSpacing: 2 }}>
             {"38 KLASİK ESER · 46.000+ KAYIT · 1.180 BİTKİ"}
           </div>
