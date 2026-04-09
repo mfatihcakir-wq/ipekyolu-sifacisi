@@ -553,9 +553,13 @@ export default function DashboardPage() {
                   const tip = (f as any)._tip || 'genel'
                   const isCilt = tip === 'cilt'
                   const tarih = new Date(f.created_at).toLocaleDateString('tr-TR', { day: '2-digit', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' })
+                  const highlightId = searchParams.get('form_id')
+                  const isHighlighted = highlightId === f.id
                   return (
-                    <div key={f.id} onClick={() => { if (isCilt) { router.push(`/dashboard/cilt/${f.id}`) } else { setSecili(f); setAnaliz(null) } }}
-                      style={{ background: secili?.id === f.id ? '#E8F5E9' : C.white, border: `1px solid ${secili?.id === f.id ? C.primary : C.border}`, borderRadius: 12, padding: '14px 16px', cursor: 'pointer', borderLeft: isCilt ? '3px solid #AB47BC' : undefined }}>
+                    <div key={f.id}
+                      ref={el => { if (isHighlighted && el) { setTimeout(() => el.scrollIntoView({ behavior: 'smooth', block: 'center' }), 200) } }}
+                      onClick={() => { if (isCilt) { router.push(`/dashboard/cilt/${f.id}`) } else { setSecili(f); setAnaliz(null) } }}
+                      style={{ background: isHighlighted ? '#FFF8E7' : (secili?.id === f.id ? '#E8F5E9' : C.white), border: isHighlighted ? '2px solid #B8860B' : `1px solid ${secili?.id === f.id ? C.primary : C.border}`, borderRadius: 12, padding: '14px 16px', cursor: 'pointer', borderLeft: isHighlighted ? '4px solid #B8860B' : (isCilt ? '3px solid #AB47BC' : undefined), boxShadow: isHighlighted ? '0 4px 12px rgba(184,134,11,0.18)' : undefined }}>
                       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 6 }}>
                         <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
                           <div style={{ fontWeight: 600, fontSize: 14, color: C.dark }}>{f.tam_ad}</div>
