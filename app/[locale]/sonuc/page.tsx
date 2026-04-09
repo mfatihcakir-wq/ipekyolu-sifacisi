@@ -40,13 +40,15 @@ export default function SonucPage() {
 
         // Abonelik kontrol
         if (user) {
-          const { data: abonelik } = await supabase
-            .from('abonelikler')
-            .select('durum')
-            .eq('kullanici_id', user.id)
-            .eq('durum', 'aktif')
-            .single()
-          setIsAbone(!!abonelik)
+          try {
+            const { data: abonelik } = await supabase
+              .from('abonelikler')
+              .select('durum')
+              .eq('kullanici_id', user.id)
+              .eq('durum', 'aktif')
+              .single()
+            setIsAbone(!!abonelik)
+          } catch { /* abonelikler tablosu yoksa sessizce gec */ }
         }
 
         const { data, error } = await supabase

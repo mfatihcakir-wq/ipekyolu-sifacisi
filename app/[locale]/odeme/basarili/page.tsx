@@ -35,18 +35,20 @@ function BasariliIcerik() {
     async function yukle() {
       const { data: { user } } = await supabase.auth.getUser()
       if (user) {
-        const { data: ab } = await supabase
-          .from('abonelikler')
-          .select('plan, bitis')
-          .eq('kullanici_id', user.id)
-          .eq('durum', 'aktif')
-          .order('created_at', { ascending: false })
-          .limit(1)
-          .single()
-        if (ab) {
-          setPlan(ab.plan)
-          setBitis(new Date(ab.bitis).toLocaleDateString('tr-TR', { day: 'numeric', month: 'long', year: 'numeric' }))
-        }
+        try {
+          const { data: ab } = await supabase
+            .from('abonelikler')
+            .select('plan, bitis')
+            .eq('kullanici_id', user.id)
+            .eq('durum', 'aktif')
+            .order('created_at', { ascending: false })
+            .limit(1)
+            .single()
+          if (ab) {
+            setPlan(ab.plan)
+            setBitis(new Date(ab.bitis).toLocaleDateString('tr-TR', { day: 'numeric', month: 'long', year: 'numeric' }))
+          }
+        } catch { /* abonelikler tablosu yoksa sessizce gec */ }
       }
       setLoading(false)
     }

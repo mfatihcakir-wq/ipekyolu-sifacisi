@@ -102,8 +102,10 @@ export default function KarakterAnaliziPage() {
       const { data } = await supabase.from('analyses').select('sonuc_json').order('created_at', { ascending: false }).limit(1).single()
       if (data?.sonuc_json?.mizac_tipi || data?.sonuc_json?.mizac) setFizikselMizac(data.sonuc_json.mizac_tipi || data.sonuc_json.mizac || '')
       // Abonelik kontrol
-      const { data: ab } = await supabase.from('abonelikler').select('durum').eq('kullanici_id', user.id).eq('durum', 'aktif').single()
-      setIsAbone(!!ab)
+      try {
+        const { data: ab } = await supabase.from('abonelikler').select('durum').eq('kullanici_id', user.id).eq('durum', 'aktif').single()
+        setIsAbone(!!ab)
+      } catch { /* abonelikler tablosu yoksa sessizce gec */ }
     })
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])

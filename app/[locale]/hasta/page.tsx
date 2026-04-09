@@ -55,13 +55,15 @@ export default function HastaPage() {
         .limit(20)
       setAnalizler(forms || [])
 
-      const { data: abone } = await supabase
-        .from('abonelikler')
-        .select('plan, bitis')
-        .eq('kullanici_id', user.id)
-        .eq('durum', 'aktif')
-        .single()
-      setAbonelik(abone)
+      try {
+        const { data: abone } = await supabase
+          .from('abonelikler')
+          .select('plan, bitis')
+          .eq('kullanici_id', user.id)
+          .eq('durum', 'aktif')
+          .single()
+        if (abone) setAbonelik(abone)
+      } catch { /* abonelikler tablosu yoksa sessizce gec */ }
 
       setLoading(false)
     }

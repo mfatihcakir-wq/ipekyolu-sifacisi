@@ -49,8 +49,10 @@ export default function AyarlarPage() {
         if (profil.bildirim_tercihleri) setBildirimler(prev => ({ ...prev, ...profil.bildirim_tercihleri }))
       }
 
-      const { data: ab } = await supabase.from('abonelikler').select('plan, bitis').eq('kullanici_id', user.id).eq('durum', 'aktif').single()
-      setÜyelik(ab)
+      try {
+        const { data: ab } = await supabase.from('abonelikler').select('plan, bitis').eq('kullanici_id', user.id).eq('durum', 'aktif').single()
+        if (ab) setÜyelik(ab)
+      } catch { /* abonelikler tablosu yoksa sessizce gec */ }
 
       setLoading(false)
     }
@@ -96,7 +98,9 @@ export default function AyarlarPage() {
     if (!user) return
     await supabase.from('profiles').upsert({ id: user.id, iptal_talep_edildi: true, iptal_tarihi: new Date().toISOString() })
     // Abonelik durumunu guncelle
-    await supabase.from('abonelikler').update({ durum: 'iptal_talep' }).eq('kullanici_id', user.id).eq('durum', 'aktif')
+    try {
+      await supabase.from('abonelikler').update({ durum: 'iptal_talep' }).eq('kullanici_id', user.id).eq('durum', 'aktif')
+    } catch { /* abonelikler tablosu yoksa sessizce gec */ }
     setIptalOnay(false)
     showToast('Iptal talebi alindi. Ekibimiz sizinle iletisime gececektir.')
     setIptalSaving(false)
