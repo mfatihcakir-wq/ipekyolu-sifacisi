@@ -154,46 +154,33 @@ export default function SonucPage() {
               )}
             </div>
 
-            {/* ABONE DEGIL — Blur + Plan kartlari */}
+            {/* ANALİZ İLETİLDİ BİLDİRİMİ */}
             {!isAbone && (
               <div>
-                {/* Bulanik analiz onizleme */}
-                <div style={{ background: C.white, borderRadius: 16, border: `1px solid ${C.border}`, padding: '24px', marginBottom: 20, position: 'relative' as const, overflow: 'hidden' }}>
-                  <div style={{ filter: 'blur(6px)', pointerEvents: 'none', userSelect: 'none' }}>
-                    <div style={{ fontFamily: cinzel.style.fontFamily, fontSize: 14, color: C.primary, marginBottom: 8 }}>MIZAC ANALIZI</div>
-                    <div style={{ height: 20, background: '#FFE8E8', borderRadius: 4, marginBottom: 8, width: '70%' }} />
-                    <div style={{ height: 14, background: C.surface, borderRadius: 4, marginBottom: 6, width: '100%' }} />
-                    <div style={{ height: 14, background: C.surface, borderRadius: 4, marginBottom: 6, width: '85%' }} />
-                    <div style={{ height: 14, background: C.surface, borderRadius: 4, width: '60%' }} />
-                  </div>
-                  <div style={{ position: 'absolute' as const, inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'rgba(255,255,255,0.6)' }}>
-                    <div style={{ textAlign: 'center' }}>
-                      <div style={{ fontSize: 32, marginBottom: 8 }}>🔒</div>
-                      <div style={{ fontFamily: cinzel.style.fontFamily, fontSize: 13, color: C.primary, letterSpacing: 1 }}>Analiz Sonucu</div>
-                      <div style={{ fontSize: 12, color: C.secondary }}>Üyelik ile goruntulenebilir</div>
+                <div style={{ background: '#E8F5E9', border: '1px solid #A5D6A7', borderRadius: 14, padding: '24px 28px', marginBottom: 20 }}>
+                  <div style={{ display: 'flex', alignItems: 'flex-start', gap: 14, marginBottom: 12 }}>
+                    <div style={{ width: 36, height: 36, borderRadius: '50%', background: '#2D6A4F', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+                      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5"><path d="M20 6L9 17l-5-5"/></svg>
+                    </div>
+                    <div>
+                      <div style={{ fontFamily: cinzel.style.fontFamily, fontSize: 14, fontWeight: 600, color: '#1B4332', marginBottom: 6, letterSpacing: 0.5 }}>{"Analiziniz Alındı"}</div>
+                      <p style={{ fontSize: 14, color: '#1B4332', lineHeight: 1.7, margin: 0 }}>
+                        {"Analiziniz danışmanınıza iletildi. 24-48 saat içinde WhatsApp üzerinden protokolünüz ve ücretlendirme bilgisi iletilecektir."}
+                      </p>
                     </div>
                   </div>
                 </div>
 
-                {/* Plan kartlari */}
-                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(160px, 1fr))', gap: 10, marginBottom: 16 }}>
-                  {[
-                    { ad: 'Aylik', fiyat: '890', birim: '/ay' },
-                    { ad: 'Yillik', fiyat: '590', birim: '/ay', popular: true },
-                    { ad: 'Tek Seferlik', fiyat: '1.290', birim: '' },
-                  ].map(p => (
-                    <div key={p.ad} style={{ background: C.white, borderRadius: 10, padding: '16px', border: `1px solid ${p.popular ? C.gold : C.border}`, textAlign: 'center', position: 'relative' as const }}>
-                      {p.popular && <div style={{ position: 'absolute' as const, top: -8, left: '50%', transform: 'translateX(-50%)', background: C.gold, color: C.primary, fontSize: 8, fontWeight: 600, padding: '2px 8px', borderRadius: 8, letterSpacing: 1 }}>POPULER</div>}
-                      <div style={{ fontSize: 11, color: C.secondary, marginBottom: 4 }}>{p.ad}</div>
-                      <div style={{ fontSize: 22, fontWeight: 600, color: C.dark }}>{p.fiyat}{'\u20BA'}<span style={{ fontSize: 11, fontWeight: 400, color: C.secondary }}>{p.birim}</span></div>
-                    </div>
-                  ))}
+                <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap' as const }}>
+                  <a href="https://wa.me/905331687226" target="_blank" rel="noopener noreferrer"
+                    style={{ flex: 1, minWidth: 200, padding: '14px 20px', background: '#25D366', border: 'none', borderRadius: 12, fontFamily: cinzel.style.fontFamily, fontSize: 13, fontWeight: 700, color: 'white', letterSpacing: 1, cursor: 'pointer', textDecoration: 'none', textAlign: 'center' as const }}>
+                    {"DANIŞMANA SOR →"}
+                  </a>
+                  <button onClick={() => router.push('/')}
+                    style={{ flex: 1, minWidth: 200, padding: '14px 20px', background: 'transparent', border: `1px solid ${C.border}`, borderRadius: 12, fontFamily: cinzel.style.fontFamily, fontSize: 13, fontWeight: 600, color: C.primary, letterSpacing: 1, cursor: 'pointer' }}>
+                    {"ANA SAYFA"}
+                  </button>
                 </div>
-
-                <button onClick={() => router.push('/odeme')}
-                  style={{ width: '100%', padding: 16, background: C.gold, border: 'none', borderRadius: 12, fontFamily: cinzel.style.fontFamily, fontSize: 14, fontWeight: 600, color: C.primary, letterSpacing: 1, cursor: 'pointer', marginBottom: 12 }}>
-                  Uye Ol ve Sonucu Gor
-                </button>
               </div>
             )}
 

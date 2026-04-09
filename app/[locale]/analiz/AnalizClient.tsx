@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation'
 import { Cormorant_Garamond as Cinzel, EB_Garamond } from 'next/font/google'
 import Header from '../components/Header'
 import Footer from '../components/Footer'
+import { createClient } from '@/lib/supabase'
 
 
 const cinzel = Cinzel({ display: 'swap', preload: false, subsets: ['latin', 'latin-ext'], weight: ['400', '500', '600'] })
@@ -36,6 +37,7 @@ const s = {
 
 export default function AnalizClient() {
   const router = useRouter()
+  const [authState, setAuthState] = useState<'kontrol' | 'misafir' | 'uye'>('kontrol')
   const [adim, setAdim] = useState(1)
   const [toast, setToast] = useState<{mesaj: string, tip: 'hata' | 'basari'} | null>(null)
   function gosterToast(mesaj: string, tip: 'hata' | 'basari' = 'hata') {
@@ -523,6 +525,14 @@ export default function AnalizClient() {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dyFotolar])
 
+  // Session kontrolü
+  useEffect(() => {
+    const supabase = createClient()
+    supabase.auth.getUser().then(({ data }) => {
+      setAuthState(data.user ? 'uye' : 'misafir')
+    })
+  }, [])
+
   // Cleanup effect
   useEffect(() => {
     return () => {
@@ -542,6 +552,41 @@ export default function AnalizClient() {
     localStorage.setItem('ipekyolu_analiz_form', JSON.stringify(form))
     localStorage.setItem('ipekyolu_secili_plan', 'yearly')
     router.push('/sonuc')
+  }
+
+  if (authState === 'kontrol') {
+    return (
+      <div style={{ background: C.cream, minHeight: '100vh', fontFamily: garamond.style.fontFamily }}>
+        <Header />
+        <div style={{ padding: 80, textAlign: 'center', color: C.secondary }}>{"Yükleniyor..."}</div>
+      </div>
+    )
+  }
+
+  if (authState === 'misafir') {
+    return (
+      <div style={{ background: C.cream, minHeight: '100vh', fontFamily: garamond.style.fontFamily }}>
+        <Header />
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', minHeight: 'calc(100vh - 64px)', padding: 24 }}>
+          <div style={{ background: 'white', border: `1px solid ${C.border}`, borderRadius: 16, padding: '48px 40px', maxWidth: 480, width: '100%', textAlign: 'center' as const }}>
+            <div style={{ fontFamily: cinzel.style.fontFamily, fontSize: 22, fontWeight: 600, color: C.primary, marginBottom: 14 }}>{"Üyelik Gerekli"}</div>
+            <p style={{ fontSize: 16, color: C.secondary, lineHeight: 1.75, marginBottom: 32 }}>
+              {"Analizinizi görmek için önce kayıt olun."}
+            </p>
+            <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap' as const, justifyContent: 'center' }}>
+              <button onClick={() => router.push('/kayit')}
+                style={{ flex: 1, minWidth: 140, padding: '14px 28px', background: '#B8860B', border: 'none', borderRadius: 11, fontFamily: cinzel.style.fontFamily, fontSize: 12, fontWeight: 700, color: C.primary, letterSpacing: 1.5, cursor: 'pointer' }}>
+                {"KAYIT OL"}
+              </button>
+              <button onClick={() => router.push('/giris')}
+                style={{ flex: 1, minWidth: 140, padding: '14px 28px', background: 'transparent', border: `1.5px solid ${C.primary}`, borderRadius: 11, fontFamily: cinzel.style.fontFamily, fontSize: 12, fontWeight: 600, color: C.primary, letterSpacing: 1.5, cursor: 'pointer' }}>
+                {"GİRİŞ YAP"}
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    )
   }
 
   return (
