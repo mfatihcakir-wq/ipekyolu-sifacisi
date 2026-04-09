@@ -19,7 +19,7 @@ export default function GirisPage() {
     setYukleniyor(false)
     if (error) { setHata('E-posta veya sifre hatali.'); return }
     const callbackUrl = searchParams.get('callbackUrl') || '/hasta'
-    router.push(callbackUrl)
+    window.location.href = callbackUrl
   }
 
   return (

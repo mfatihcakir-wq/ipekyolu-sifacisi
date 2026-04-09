@@ -109,12 +109,6 @@ export default function Header() {
               </div>
             ) : (
               <div style={{ position: 'relative', display: 'flex', alignItems: 'center', gap: 8 }}>
-                {isAdmin && (
-                  <a href="/dashboard"
-                    style={{ background: C.gold, border: 'none', color: C.primary, borderRadius: 6, padding: '6px 14px', fontSize: 11, cursor: 'pointer', fontFamily: cinzel.style.fontFamily, fontWeight: 600, letterSpacing: 1, textDecoration: 'none' }}>
-                    {"Panel"}
-                  </a>
-                )}
                 <button onClick={() => setProfilAcik(!profilAcik)}
                   style={{ background: 'rgba(255,255,255,0.1)', border: '1px solid rgba(255,255,255,0.2)', color: 'white', borderRadius: 6, padding: '6px 12px', fontSize: 11, cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 4 }}>
                   {"Profilim"} <span style={{ fontSize: 8 }}>{'\u25BC'}</span>
