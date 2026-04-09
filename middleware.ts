@@ -41,7 +41,10 @@ export async function middleware(request: NextRequest) {
       loginUrl.searchParams.set('callbackUrl', pathname + request.nextUrl.search)
       return NextResponse.redirect(loginUrl)
     }
-    return response
+    // intl middleware'i de calistir, supabase cookie'lerini merge et
+    const intlResponse = intlMiddleware(request)
+    response.cookies.getAll().forEach(c => intlResponse.cookies.set(c.name, c.value, c))
+    return intlResponse
   }
 
   return intlMiddleware(request)
