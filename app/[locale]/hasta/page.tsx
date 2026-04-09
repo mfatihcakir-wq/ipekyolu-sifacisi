@@ -19,6 +19,8 @@ interface Analiz {
   created_at: string
   durum: string
   tum_form_verisi: Record<string, string>
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  analiz_sonucu?: any
 }
 
 const SIDEBAR_ITEMS = [
@@ -47,7 +49,7 @@ export default function HastaPage() {
 
       const { data: forms } = await supabase
         .from('detailed_forms')
-        .select('id, created_at, durum, tum_form_verisi')
+        .select('id, created_at, durum, tum_form_verisi, analiz_sonucu')
         .eq('user_id', user.id)
         .order('created_at', { ascending: false })
         .limit(20)
@@ -229,18 +231,25 @@ export default function HastaPage() {
                 const tarih = new Date(a.created_at).toLocaleDateString('tr-TR', { day: 'numeric', month: 'short', year: 'numeric' })
                 return (
                   <div key={a.id} style={{ background: C.white, borderRadius: 12, border: `1px solid ${C.border}`, padding: '14px 18px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap' as const, gap: 8 }}>
-                    <div>
+                    <div style={{ flex: 1, minWidth: 200 }}>
                       <div style={{ fontSize: 14, color: C.dark, fontWeight: 500 }}>{form.ad_soyad || 'Analiz'}</div>
                       <div style={{ fontSize: 12, color: C.secondary, marginTop: 2 }}>
                         {tarih} · {form.symptoms?.slice(0, 50) || 'Sikayet belirtilmemis'}{form.symptoms?.length > 50 ? '...' : ''}
                       </div>
                     </div>
-                    <div style={{
-                      padding: '4px 12px', borderRadius: 20, fontSize: 10, fontWeight: 600,
-                      background: a.durum === 'tamamlandi' ? '#E8F5E9' : a.durum === 'bekliyor' ? '#FFF8E7' : C.surface,
-                      color: a.durum === 'tamamlandi' ? '#2E7D32' : a.durum === 'bekliyor' ? '#E65100' : C.secondary,
-                    }}>
-                      {a.durum === 'tamamlandi' ? 'Tamamlandi' : a.durum === 'bekliyor' ? 'Bekliyor' : a.durum}
+                    <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+                      <div style={{
+                        padding: '4px 12px', borderRadius: 20, fontSize: 10, fontWeight: 600,
+                        background: (a.durum === 'tamamlandi' || a.durum === 'onaylandi') ? '#E8F5E9' : a.durum === 'bekliyor' ? '#FFF8E7' : C.surface,
+                        color: (a.durum === 'tamamlandi' || a.durum === 'onaylandi') ? '#2E7D32' : a.durum === 'bekliyor' ? '#E65100' : C.secondary,
+                      }}>
+                        {a.durum === 'onaylandi' ? 'Onaylandı' : a.durum === 'tamamlandi' ? 'Tamamlandi' : a.durum === 'bekliyor' ? 'Bekliyor' : a.durum}
+                      </div>
+                      {a.durum === 'onaylandi' && a.analiz_sonucu && (
+                        <a href={`/hasta/analiz/${a.id}`} style={{ padding: '6px 14px', background: '#B8860B', color: '#1C3A26', borderRadius: 8, fontSize: 11, fontWeight: 700, textDecoration: 'none', letterSpacing: 0.5 }}>
+                          {"Analizi Görüntüle →"}
+                        </a>
+                      )}
                     </div>
                   </div>
                 )

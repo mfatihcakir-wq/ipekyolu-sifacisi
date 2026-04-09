@@ -214,6 +214,29 @@ export default function DashboardPage() {
     setAnalizYukleniyor(false)
   }
 
+  async function onaylaVeGonder() {
+    if (!secili || !analiz) { gosterToast('Önce analiz yapın'); return }
+    try {
+      const hastaEmail = secili.tum_form_verisi?.email || ''
+      const res = await fetch('/api/onayla', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          form_id: secili.id,
+          analiz_sonucu: analiz,
+          hasta_email: hastaEmail,
+          hasta_adi: secili.tam_ad,
+        }),
+      })
+      const data = await res.json()
+      if (!res.ok) throw new Error(data.error || 'Onay başarısız')
+      gosterToast(data.mailGonderildi ? 'Onaylandı ve maille gönderildi.' : 'Onaylandı (mail adresi yok).', 'basari')
+      formlariYukle()
+    } catch (e) {
+      gosterToast('Hata: ' + (e instanceof Error ? e.message : 'bilinmeyen'))
+    }
+  }
+
   async function tamamlandiIsaretle() {
     if (!secili) return
     await supabase.from('detailed_forms')
@@ -998,6 +1021,11 @@ export default function DashboardPage() {
                     </a>
                   </div>
                   <div style={{ fontSize: 10, color: '#999', marginTop: 4, textAlign: 'center' as const }}>{"Rapora ek yorum veya soru sormak icin"}</div>
+
+                  <button onClick={onaylaVeGonder}
+                    style={{ width: '100%', marginTop: 12, padding: 14, background: '#B8860B', border: 'none', borderRadius: 10, cursor: 'pointer', fontSize: 13, fontWeight: 700, color: '#1C3A26', fontFamily: cinzel.style.fontFamily, letterSpacing: 1.5 }}>
+                    {"✓ ONAYLA VE HASTAYA GÖNDER"}
+                  </button>
 
                   <button onClick={analizYap}
                     style={{ width: '100%', marginTop: 8, padding: 10, background: 'transparent', border: `1px solid ${C.border}`, borderRadius: 8, cursor: 'pointer', fontSize: 12, color: C.secondary, fontFamily: cinzel.style.fontFamily }}>
