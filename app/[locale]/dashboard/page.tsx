@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import { useRouter, usePathname } from 'next/navigation'
+import { useRouter, usePathname, useSearchParams } from 'next/navigation'
 import Link from 'next/link'
 import { Cormorant_Garamond as Cinzel, EB_Garamond } from 'next/font/google'
 import { createClient } from '@/lib/supabase'
@@ -45,10 +45,25 @@ export default function DashboardPage() {
   const [gecmisYukleniyor, setGecmisYukleniyor] = useState(false)
   const router = useRouter()
   const pathname = usePathname()
+  const searchParams = useSearchParams()
   const supabase = createClient()
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => { formlariYukle() }, [])
+
+  // URL'den form_id varsa o formu otomatik ac
+  useEffect(() => {
+    const formId = searchParams.get('form_id')
+    if (!formId || forms.length === 0) return
+    const hedef = forms.find(f => f.id === formId)
+    if (hedef && (!secili || secili.id !== formId)) {
+      setSecili(hedef)
+      setAnaliz(null)
+      // Smooth scroll to top of content
+      setTimeout(() => window.scrollTo({ top: 0, behavior: 'smooth' }), 100)
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [forms, searchParams])
 
   useEffect(() => {
     if (!secili) { setGecmisAnalizler([]); return }
