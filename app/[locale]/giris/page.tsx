@@ -1,10 +1,9 @@
 "use client"
 import { useState } from 'react'
-import { useRouter, useSearchParams } from 'next/navigation'
+import { useSearchParams } from 'next/navigation'
 import { createClient } from '@/lib/supabase'
 
 export default function GirisPage() {
-  const router = useRouter()
   const searchParams = useSearchParams()
   const supabase = createClient()
   const [email, setEmail] = useState('')
