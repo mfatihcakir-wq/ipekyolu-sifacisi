@@ -76,7 +76,8 @@ export default function DashboardPage() {
           .select('id, mizac_tipi, created_at, sonuc_verisi')
           .eq('detailed_form_id', formId)
           .order('created_at', { ascending: false })
-        setGecmisAnalizler(data || [])
+        const list = Array.isArray(data) ? data : []
+        setGecmisAnalizler(list)
       } catch {
         setGecmisAnalizler([])
       }
@@ -125,14 +126,13 @@ export default function DashboardPage() {
 
     // Onceki analizi kontrol et
     try {
-      const { data: eskiAnaliz } = await supabase
+      const { data: eskiList } = await supabase
         .from('analyses')
         .select('sonuc_verisi')
         .eq('detailed_form_id', secili.id)
         .order('created_at', { ascending: false })
         .limit(1)
-        .single()
-
+      const eskiAnaliz = Array.isArray(eskiList) && eskiList.length > 0 ? eskiList[0] : null
       if (eskiAnaliz?.sonuc_verisi) {
         setAnaliz(eskiAnaliz.sonuc_verisi)
         setAnalizYukleniyor(false)
