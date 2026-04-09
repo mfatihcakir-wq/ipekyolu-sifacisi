@@ -533,6 +533,18 @@ export default function AnalizClient() {
     })
   }, [])
 
+  // Hizli giris prefill
+  useEffect(() => {
+    try {
+      const hizliGiris = localStorage.getItem('hizliGiris')
+      if (hizliGiris) {
+        const { sikayet } = JSON.parse(hizliGiris)
+        if (sikayet) setForm(prev => ({ ...prev, symptoms: sikayet }))
+        localStorage.removeItem('hizliGiris')
+      }
+    } catch { /* ignore */ }
+  }, [])
+
   // Cleanup effect
   useEffect(() => {
     return () => {
