@@ -1,7 +1,7 @@
 import { serve } from 'https://deno.land/std@0.168.0/http/server.ts'
 
 const RESEND_API_KEY = Deno.env.get('RESEND_API_KEY') ?? ''
-const DANISМАН_EMAIL = Deno.env.get('DANISМАН_EMAIL') ?? 'm.fatih.cakir@gmail.com'
+const DANISMAN_EMAIL = Deno.env.get('DANISMAN_EMAIL') ?? 'm.fatih.cakir@gmail.com'
 
 serve(async (req) => {
   try {
@@ -44,7 +44,7 @@ serve(async (req) => {
       },
       body: JSON.stringify({
         from: 'İpek Yolu Şifacısı <onboarding@resend.dev>',
-        to: DANISМАН_EMAIL,
+        to: DANISMAN_EMAIL,
         subject: `Yeni Form: ${record.tam_ad}`,
         html,
       }),
