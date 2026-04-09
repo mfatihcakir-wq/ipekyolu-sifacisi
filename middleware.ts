@@ -20,7 +20,7 @@ export async function middleware(request: NextRequest) {
   // Dashboard auth kontrolü
   const isDashboard = pathname.includes('/dashboard')
   if (isDashboard) {
-    let response = NextResponse.next({ request })
+    const cookiesToSetForResponse: Array<{ name: string; value: string; options?: Record<string, unknown> }> = []
     const supabase = createServerClient(
       process.env.NEXT_PUBLIC_SUPABASE_URL!,
       process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
@@ -28,9 +28,10 @@ export async function middleware(request: NextRequest) {
         cookies: {
           getAll() { return request.cookies.getAll() },
           setAll(cookiesToSet) {
-            cookiesToSet.forEach(({ name, value }) => request.cookies.set(name, value))
-            response = NextResponse.next({ request })
-            cookiesToSet.forEach(({ name, value, options }) => response.cookies.set(name, value, options))
+            cookiesToSet.forEach(({ name, value, options }) => {
+              request.cookies.set(name, value)
+              cookiesToSetForResponse.push({ name, value, options })
+            })
           },
         },
       }
@@ -41,9 +42,9 @@ export async function middleware(request: NextRequest) {
       loginUrl.searchParams.set('callbackUrl', pathname + request.nextUrl.search)
       return NextResponse.redirect(loginUrl)
     }
-    // intl middleware'i de calistir, supabase cookie'lerini merge et
+    // intl middleware'i calistir, supabase cookie'lerini ekle
     const intlResponse = intlMiddleware(request)
-    response.cookies.getAll().forEach(c => intlResponse.cookies.set(c.name, c.value, c))
+    cookiesToSetForResponse.forEach(c => intlResponse.cookies.set(c.name, c.value, c.options))
     return intlResponse
   }
 
