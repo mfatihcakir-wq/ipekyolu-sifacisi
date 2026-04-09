@@ -42,11 +42,12 @@ export async function POST(request: NextRequest) {
 
     // Admin'e de bildirim
     try {
+      const dashboardUrl = `https://www.ipekyolusifacisi.com/dashboard${kayit_no ? `?form_id=${kayit_no}` : ''}`
       await resend.emails.send({
         from: `İpek Yolu Şifacısı <${FROM_EMAIL}>`,
         to: [ADMIN_EMAIL],
         subject: `[Rapor Gonderildi] ${hasta_adi} — ${type}`,
-        html: `<p><strong>${hasta_adi}</strong> icin ${type} raporu gonderildi.</p><p>Alici: ${to}</p><p>Kayit: ${kayit_no}</p>`,
+        html: `<p><strong>${hasta_adi}</strong> icin ${type} raporu gonderildi.</p><p>Alici: ${to}</p><p>Kayit: ${kayit_no}</p><p style="margin-top:16px"><a href="${dashboardUrl}" style="display:inline-block;background:#1C3A26;color:#B8860B;padding:12px 24px;border-radius:8px;text-decoration:none;font-weight:600">Panelde İncele → ${kayit_no ? `Form #${kayit_no}` : 'Dashboard'}</a></p>`,
       })
     } catch { /* admin bildirimi opsiyonel */ }
 

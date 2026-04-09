@@ -31,7 +31,7 @@ serve(async (req) => {
             <div style="font-size:11px;color:#999;text-transform:uppercase;letter-spacing:1px;margin-bottom:8px">Şikayetler</div>
             <div style="color:#1C3A26">${fv.symptoms || 'Belirtilmemiş'}</div>
           </div>
-          <a href="https://ipekyolu-sifacisi.vercel.app/dashboard" style="display:block;background:#1C3A26;color:#8B6914;text-align:center;padding:14px;border-radius:8px;text-decoration:none;font-weight:600">Panelde İncele →</a>
+          <a href="https://www.ipekyolusifacisi.com/dashboard?form_id=${record.id}" style="display:block;background:#1C3A26;color:#B8860B;text-align:center;padding:14px;border-radius:8px;text-decoration:none;font-weight:600">Panelde İncele → Form #${record.id}</a>
         </div>
       </div>
     `
