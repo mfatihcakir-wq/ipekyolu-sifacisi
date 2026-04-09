@@ -73,8 +73,8 @@ export default function DashboardPage() {
       try {
         const { data } = await supabase
           .from('analyses')
-          .select('id, mizac, durum, created_at, sonuc_json')
-          .eq('form_id', formId)
+          .select('id, mizac_tipi, created_at, sonuc_verisi')
+          .eq('detailed_form_id', formId)
           .order('created_at', { ascending: false })
         setGecmisAnalizler(data || [])
       } catch {
@@ -127,14 +127,14 @@ export default function DashboardPage() {
     try {
       const { data: eskiAnaliz } = await supabase
         .from('analyses')
-        .select('sonuc_json')
-        .eq('form_id', secili.id)
+        .select('sonuc_verisi')
+        .eq('detailed_form_id', secili.id)
         .order('created_at', { ascending: false })
         .limit(1)
         .single()
 
-      if (eskiAnaliz?.sonuc_json) {
-        setAnaliz(eskiAnaliz.sonuc_json)
+      if (eskiAnaliz?.sonuc_verisi) {
+        setAnaliz(eskiAnaliz.sonuc_verisi)
         setAnalizYukleniyor(false)
         return
       }
@@ -197,11 +197,10 @@ export default function DashboardPage() {
 
       try {
         await supabase.from('analyses').insert({
-          hasta_id: secili.user_id || null,
-          form_id: secili.id,
-          mizac: parsed.mizac || '',
-          sonuc_json: parsed,
-          durum: 'tamamlandi',
+          detailed_form_id: secili.id,
+          mizac_tipi: parsed.mizac || '',
+          sonuc_verisi: parsed,
+          recete: parsed.bitki_recetesi || null,
         })
       } catch {
       }
@@ -1044,18 +1043,16 @@ export default function DashboardPage() {
                         {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
                         {gecmisAnalizler.map((ga: any) => {
                           const gTarih = new Date(ga.created_at).toLocaleDateString('tr-TR', { day: '2-digit', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' })
-                          const gMizac = ga.mizac || '-'
+                          const gMizac = ga.mizac_tipi || '-'
                           const gMr = (() => {
-                            const ml = (ga.mizac || '').toLowerCase()
+                            const ml = (ga.mizac_tipi || '').toLowerCase()
                             if (ml.includes('safra')) return { bg: '#FFF8E7', color: '#B8860B' }
                             if (ml.includes('dem')) return { bg: '#FFE8E8', color: '#C62828' }
                             if (ml.includes('balgam')) return { bg: '#E3F2FD', color: '#1565C0' }
                             if (ml.includes('sevda')) return { bg: '#F3E5F5', color: '#6A1B9A' }
                             return { bg: '#E8F5E9', color: '#1B5E20' }
                           })()
-                          const gDurum = ga.durum === 'tamamlandi'
-                            ? { bg: '#E8F5E9', color: '#1B5E20', text: 'Tamamlandı' }
-                            : { bg: '#FFF8E7', color: '#92400E', text: ga.durum || 'Bekliyor' }
+                          const gDurum = { bg: '#E8F5E9', color: '#1B5E20', text: 'Tamamlandı' }
                           return (
                             <div key={ga.id} style={{ background: C.surface, borderRadius: 8, padding: '8px 12px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 8 }}>
                               <div style={{ fontSize: 11, color: '#999', minWidth: 100 }}>{gTarih}</div>

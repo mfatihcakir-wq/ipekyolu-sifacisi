@@ -99,8 +99,8 @@ export default function KarakterAnaliziPage() {
       if (!user) return
       setIsLoggedIn(true)
       // Fiziksel mizac
-      const { data } = await supabase.from('analyses').select('sonuc_json').order('created_at', { ascending: false }).limit(1).single()
-      if (data?.sonuc_json?.mizac_tipi || data?.sonuc_json?.mizac) setFizikselMizac(data.sonuc_json.mizac_tipi || data.sonuc_json.mizac || '')
+      const { data } = await supabase.from('analyses').select('sonuc_verisi, mizac_tipi').order('created_at', { ascending: false }).limit(1).single()
+      if (data?.mizac_tipi || data?.sonuc_verisi?.mizac) setFizikselMizac(data.mizac_tipi || data.sonuc_verisi?.mizac || '')
       // Abonelik kontrol
       try {
         const { data: ab } = await supabase.from('abonelikler').select('durum').eq('kullanici_id', user.id).eq('durum', 'aktif').single()
