@@ -243,9 +243,10 @@ ZORUNLU JSON ÇIKTISI (başka format kabul edilmez):
 export async function POST(request: NextRequest) {
   try {
     const {
-      ad_soyad, cinsiyet, sikayet, mevsim, yas_grubu, kronik,
+      ad_soyad, cinsiyet, sikayet, mevsim, yas_grubu, kronik, sikayet_suresi,
       nabiz, dil, yuz, idrar, diski, vucut, yasam, notlar,
       height, weight, sweating, chillhot, sleep, digestion, appetite,
+      exercise_habit, mood_detail, diet_type,
       hgb, ferritin, crp, alt, ast, ggt, tsh, uric_acid, glucose, hba1c, vit_d, b12,
       fitri_sac, fitri_cilt, fitri_beden, fitri_uyku, fitri_sindirim,
       fitri_mizac_ruh, fitri_terleme, fitri_isi_hassas, fitri_mevsim, fitri_kilo, fitri_enerji,
@@ -338,7 +339,7 @@ NOT: Mûid sebepleri ortadan kaldırmadan bâdî tedavisi kalıcı olmaz.
 
 ${notlar ? `EK NOTLAR / İLAÇ KULLANIMI: ${notlar}` : ''}
 
-${klasikBaglam ? `---\nKLASİK KAYNAKLARDAN İLGİLİ METİNLER:\n${klasikBaglam}\n---\nYukarıdaki kaynak metinlerini analiz temelinde kullan. Kaynak belirtilemeyen bilgiyi verme.` : 'UYARI: Klasik kaynak bulunamadı. Analiz yapma, hata dondur.'}`
+${klasikBaglam && klasikBaglam !== 'Klasik kaynaklarda esleme bulunamadi.' ? `---\nKLASIK KAYNAKLARDAN ILGILI METINLER:\n${klasikBaglam}\n---\nYukaridaki kaynak metinlerini analiz temelinde kullan.` : '---\nVeritabaninda bu semptom icin net kayit bulunamadi. Mevcut klinik verilerden (nabiz, dil, idrar, lab) analiz yap. Kaynak alanlarina bu durumu belirt.'}`
 
     const message = await anthropic.messages.create({
       model: 'claude-sonnet-4-20250514',
