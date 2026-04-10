@@ -1,7 +1,7 @@
 {
   "functions": {
     "api/analiz": {
-      "maxDuration": 60
+      "maxDuration": 300
     }
   }
 }
