@@ -60,7 +60,7 @@ async function klasikKaynaklariGetir(sikayetler: string, sb: SupabaseClient<any,
 
     const tumKelimeler = Array.from(new Set(
       kelimeler.flatMap(w => kelimeKokleri(w.toLowerCase()))
-    )).slice(0, 10)
+    )).slice(0, 6)
 
     // 2. Arapca kopru kelimeleri
     const arapcaKelimeler = trdenArapcaKelimeler(sikayetler)
@@ -74,7 +74,7 @@ async function klasikKaynaklariGetir(sikayetler: string, sb: SupabaseClient<any,
           .textSearch('icerik_tr', kw, { type: 'plain', config: 'simple' })
           .gte('oncelik', 5)
           .order('oncelik', { ascending: false })
-          .limit(15)
+          .limit(8)
 
         data?.forEach((r: Record<string, string>) => {
           const key = r.kaynak_kodu + r.bolum
@@ -93,7 +93,7 @@ async function klasikKaynaklariGetir(sikayetler: string, sb: SupabaseClient<any,
           .ilike('icerik_tr', `%${kw}%`)
           .gte('oncelik', 5)
           .order('oncelik', { ascending: false })
-          .limit(10)
+          .limit(6)
 
         data?.forEach((r: Record<string, string>) => {
           const key = r.kaynak_kodu + r.bolum
@@ -132,7 +132,7 @@ async function klasikKaynaklariGetir(sikayetler: string, sb: SupabaseClient<any,
         .select(fields)
         .gte('oncelik', 7)
         .order('oncelik', { ascending: false })
-        .limit(10)
+        .limit(6)
       fallback?.forEach((r: Record<string, string>) => {
         const key = r.kaynak_kodu + r.bolum
         if (!tumSonuclar.has(key)) tumSonuclar.set(key, r)
