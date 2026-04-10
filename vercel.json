@@ -2,15 +2,6 @@
   "functions": {
     "app/api/analiz/route.ts": {
       "maxDuration": 300
-    },
-    "app/api/makale/route.ts": {
-      "maxDuration": 300
-    },
-    "app/api/makale/oneri/route.ts": {
-      "maxDuration": 300
-    },
-    "app/api/karakter/route.ts": {
-      "maxDuration": 300
     }
   }
 }
