@@ -142,10 +142,10 @@ async function klasikKaynaklariGetir(sikayetler: string, sb: SupabaseClient<any,
     // 8. Sirala ve baglam metni olustur
     const sirali = Array.from(tumSonuclar.values())
       .sort((a, b) => skorla(b) - skorla(a))
-      .slice(0, 20)
+      .slice(0, 8)
 
     let baglamMetni = ''
-    const tokenBudget = 6000
+    const tokenBudget = 2000
 
     for (const k of sirali) {
       const parca = `\n[${k.kaynak_kodu}] ${k.kitap_adi} — ${k.bolum}\n${(k.icerik_tr || '').slice(0, 400)}\n`
@@ -433,7 +433,7 @@ ${klasikBaglam ? `---\nKLASİK KAYNAKLARDAN İLGİLİ METİNLER:\n${klasikBaglam
 
     const message = await anthropic.messages.create({
       model: 'claude-sonnet-4-6',
-      max_tokens: 8192,
+      max_tokens: 2000,
       system: [
         {
           type: 'text',
