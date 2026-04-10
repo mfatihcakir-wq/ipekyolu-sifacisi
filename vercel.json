@@ -1,6 +1,6 @@
 {
   "functions": {
-    "app/api/analiz/route.ts": {
+    "api/analiz": {
       "maxDuration": 60
     }
   }
