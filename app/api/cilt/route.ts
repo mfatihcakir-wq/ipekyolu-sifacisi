@@ -399,7 +399,7 @@ ${ek_aciklama ? `EK ACIKLAMA: ${ek_aciklama}` : ''}
 ${klasikBaglam ? `---\nKLASIK KAYNAKLARDAN ILGILI METINLER:\n${klasikBaglam}\n---\nYukaridaki kaynak metinlerini analiz temelinde kullan. Kaynak belirtilemeyen bilgiyi verme.` : 'UYARI: Klasik kaynak bulunamadi. Genel cilt bakimi onerileri ver ama kaynak gosterme.'}`
 
     const message = await anthropic.messages.create({
-      model: 'claude-sonnet-4-6',
+      model: 'claude-sonnet-4-20250514',
       max_tokens: 8000,
       system: [
         {

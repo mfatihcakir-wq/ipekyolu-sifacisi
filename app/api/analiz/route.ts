@@ -432,7 +432,7 @@ ${notlar ? `EK NOTLAR / İLAÇ KULLANIMI: ${notlar}` : ''}
 ${klasikBaglam ? `---\nKLASİK KAYNAKLARDAN İLGİLİ METİNLER:\n${klasikBaglam}\n---\nYukarıdaki kaynak metinlerini analiz temelinde kullan. Kaynak belirtilemeyen bilgiyi verme.` : 'UYARI: Klasik kaynak bulunamadı. Analiz yapma, hata dondur.'}`
 
     const message = await anthropic.messages.create({
-      model: 'claude-sonnet-4-6',
+      model: 'claude-sonnet-4-20250514',
       max_tokens: 2000,
       system: [
         {
