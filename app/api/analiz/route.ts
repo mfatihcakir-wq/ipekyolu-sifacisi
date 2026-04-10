@@ -243,13 +243,12 @@ ZORUNLU JSON ÇIKTISI (başka format kabul edilmez):
 export async function POST(request: NextRequest) {
   try {
     const {
-      ad_soyad, cinsiyet, sikayet, mevsim, yas_grubu, kronik, sikayet_suresi,
+      ad_soyad, cinsiyet, sikayet, mevsim, yas_grubu, kronik,
       nabiz, dil, yuz, idrar, diski, vucut, yasam, notlar,
       height, weight, sweating, chillhot, sleep, digestion, appetite,
       hgb, ferritin, crp, alt, ast, ggt, tsh, uric_acid, glucose, hba1c, vit_d, b12,
       fitri_sac, fitri_cilt, fitri_beden, fitri_uyku, fitri_sindirim,
       fitri_mizac_ruh, fitri_terleme, fitri_isi_hassas, fitri_mevsim, fitri_kilo, fitri_enerji,
-      exercise_habit, mood_detail, diet_type,
     } = await request.json()
 
     if (!sikayet) {
@@ -309,6 +308,31 @@ Uyku eğilimi: ${fitri_uyku || '-'} | Sindirim: ${fitri_sindirim || '-'}
 Ruh hali: ${fitri_mizac_ruh || '-'} | Terleme: ${fitri_terleme || '-'}
 Isı hassasiyeti: ${fitri_isi_hassas || '-'} | Mevsim tercihi: ${fitri_mevsim || '-'}
 Kilo eğilimi: ${fitri_kilo || '-'} | Enerji düzeyi: ${fitri_enerji || '-'}` : 'FITRİ MİZAÇ: Girilmemiş'}
+
+[MEVSİM-MİZAÇ KORELASYON]
+İLKBAHAR → Dem hıltı artar → Kan açma/tasfiye mevsimi
+YAZ → Sarı safra artar → Soğutucu/nemlendirici
+SONBAHAR → Kara safra artar → Isıtıcı/neşelendirici
+KIŞ → Balgam artar → Kurutucu/ısıtıcı
+Hastanın mevsimi: ${mevsim || 'belirtilmemiş'}
+
+[TAKSİM — AKUT/KRONİK]
+Şikayet süresi: ${sikayet_suresi || 'belirtilmemiş'}
+${sikayet_suresi?.includes('akut') ? 'AKUT HASTALIK — Hızlı müdahale, yüksek doz kısa süre' : sikayet_suresi?.includes('kronik') ? 'KRONİK HASTALIK — Yavaş iyileştirme, kök sebebe in' : 'Süre belirtilmemiş — verilere göre değerlendir'}
+
+[3 KANAL UYUM]
+KANAL 1 NABIZ: Büyüklük=${nabiz?.buyukluk || '-'} | Kuvvet=${nabiz?.kuvvet || '-'} | Hız=${nabiz?.hiz || '-'}
+KANAL 2 DİL: Renk=${dil?.renk || '-'} | Kaplama=${dil?.kaplama || '-'}
+KANAL 3 İDRAR: Renk=${idrar?.renk || '-'} | Kıvam=${idrar?.berraklik || '-'}
+Kanallar örtüşüyorsa teşhis güvenilir. Ayrışıyorsa gözleme güven.
+
+[SEBEP ANALİZİ — İbn Rüşd Yöntemi]
+BÂDİ SEBEP (yakın/şimdiki): ${sikayet}
+MÛİD SEBEPLER (uzak/alışkanlık — tedavide ele al):
+  Gıda: ${diet_type || yasam?.beslenme || '-'} | Sindirim: ${digestion || '-'}
+  Hareket: ${exercise_habit || yasam?.egzersiz || '-'}
+  Uyku: ${sleep || '-'} | Ruh hali: ${mood_detail || yasam?.ruh || '-'}
+NOT: Mûid sebepleri ortadan kaldırmadan bâdî tedavisi kalıcı olmaz.
 
 ŞİKAYETLER: ${sikayet}
 
