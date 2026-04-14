@@ -613,140 +613,373 @@ export default function DashboardPage() {
   }
 
   function pdfIndir() {
-    if (!analiz || !secili) return
-    const f = secili.tum_form_verisi || {}
-
-    const printWindow = window.open('', '_blank')
-    if (!printWindow) return
-
+    if (!analiz) return;
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const safeStr = (v: any) => String(v || '').replace(/'/g, '').replace(/"/g, '&quot;')
+    const r: any = analiz;
+    const hasta = secili;
+    const tarih = new Date().toLocaleDateString('tr-TR',{day:'2-digit',month:'long',year:'numeric'});
 
-    const html = `<!DOCTYPE html>
-<html lang="tr">
-<head>
+    const mizac = typeof r.mizac === 'object' ? r.mizac : { tip: r.mizac || '', tam_tanim: r.mizac || '' };
+    const hiltlar = r.hiltlar || r.hilt_dengesi || {};
+    const bitkiler = r.bitki_recetesi || r.bitkisel_recete || r.bitkiler || [];
+    const terkib = r.terkib_recetesi || [];
+    const klinik = r.klinik_gozlemler || r.gozlemler || [];
+    const beslenme = r.beslenme_recetesi || (typeof r.beslenme_onerileri === 'object' ? r.beslenme_onerileri : null);
+    const egzersiz = r.egzersiz_recetesi || {};
+    const gunlukRutin = r.gunluk_rutin || {};
+    const uyum = mizac?.uyum_skoru || 0;
+
+    const hNames: Record<string,string> = { dem:'Dem — Kan Hıltı', balgam:'Balgam Hıltı', sari_safra:'Sarı Safra', kara_safra:'Kara Safra' };
+    const hColors: Record<string,string> = { dem:'#E53935', balgam:'#2196F3', sari_safra:'#FF8F00', kara_safra:'#5D4037' };
+    const hAr: Record<string,string> = { dem:'الدم', balgam:'البلغم', sari_safra:'المرّة الصفراء', kara_safra:'السوداء' };
+    const dColors: Record<string,string> = { normal:'#2D6A4F', fazla:'#C0392B', eksik:'#D97706' };
+    const dLabels: Record<string,string> = { normal:'Dengeli ✓', fazla:'Fazla ↑', eksik:'Eksik ↓' };
+    const dBg: Record<string,string> = { normal:'#D8F3DC', fazla:'#FDECEA', eksik:'#FEF3C7' };
+
+    const html = `<!DOCTYPE html><html lang="tr"><head>
 <meta charset="UTF-8">
-<title>Kisisel Mizac Recetesi - ${safeStr(secili.tam_ad)}</title>
+<title>İpek Yolu Şifacısı — Analiz Raporu</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Noto+Naskh+Arabic:wght@400;500;600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600&family=EB+Garamond:ital,wght@0,400;0,500;1,400&display=swap');
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-  body { font-family: 'EB Garamond', serif; font-size: 13px; color: #1C1C1C; background: white; }
-  .page { max-width: 800px; margin: 0 auto; padding: 40px; }
-  .header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 32px; padding-bottom: 20px; border-bottom: 2px solid #1C3A26; }
-  .logo-area { display: flex; flex-direction: column; gap: 4px; }
-  .logo-title { font-family: 'Cormorant Garamond', serif; font-size: 18px; font-weight: 600; color: #1C3A26; letter-spacing: 3px; }
-  .logo-ar { font-size: 14px; color: #B8860B; }
-  .meta { text-align: right; font-size: 11px; color: #999; line-height: 1.8; }
-  .hasta-baslik { background: #1C3A26; color: #B8860B; font-family: 'Cormorant Garamond', serif; font-size: 22px; font-weight: 600; padding: 16px 24px; border-radius: 8px; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 2px; }
-  .hasta-alt { font-size: 12px; color: #6B5744; margin-bottom: 24px; }
-  .section { margin-bottom: 20px; page-break-inside: avoid; }
-  .section-title { font-family: 'Cormorant Garamond', serif; font-size: 11px; font-weight: 600; color: #B8860B; letter-spacing: 3px; text-transform: uppercase; margin-bottom: 10px; padding-bottom: 4px; border-bottom: 1px solid #DEB887; }
-  .mizac-kart { background: #1C3A26; color: white; border-radius: 8px; padding: 16px 20px; margin-bottom: 16px; }
-  .mizac-buyuk { font-family: 'Cormorant Garamond', serif; font-size: 18px; color: #B8860B; margin-bottom: 12px; }
-  .hilt-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 16px; }
-  .hilt-kart { border-radius: 6px; padding: 8px 12px; border-left: 3px solid; }
-  .hilt-dem { border-color: #EF5350; background: #FFF8F8; }
-  .hilt-balgam { border-color: #42A5F5; background: #F0F8FF; }
-  .hilt-safra { border-color: #FFA726; background: #FFFAF0; }
-  .hilt-karasafra { border-color: #AB47BC; background: #F8F0FF; }
-  .hilt-yuzde { font-size: 18px; font-weight: 600; float: right; }
-  .ozet-metin { font-size: 13px; line-height: 1.8; color: #2C1A00; background: #FAF6EF; border-radius: 6px; padding: 14px; margin-bottom: 16px; }
-  .bitki-kart { background: #FAF6EF; border-radius: 6px; padding: 12px; margin-bottom: 8px; border-left: 3px solid #1C3A26; }
-  .bitki-ad { font-family: 'Cormorant Garamond', serif; font-size: 14px; font-weight: 600; color: #1C3A26; }
-  .bitki-ar { font-size: 13px; color: #B8860B; margin-bottom: 6px; }
-  .bitki-detay { font-size: 11px; color: #6B5744; line-height: 1.6; }
-  .bitki-kaynak { font-size: 10px; color: #999; font-style: italic; margin-top: 4px; border-top: 1px solid #DEB887; padding-top: 4px; }
-  .rutin-blok { border-radius: 6px; padding: 10px 14px; margin-bottom: 8px; }
-  .sabah-blok { background: #FFF8E7; }
-  .ogle-blok { background: #F0FDF4; }
-  .aksam-blok { background: #EDE7F6; }
-  .rutin-baslik { font-family: 'Cormorant Garamond', serif; font-size: 11px; font-weight: 600; color: #1C3A26; margin-bottom: 6px; }
-  .rutin-item { font-size: 11px; color: #2C1A00; padding: 2px 0; border-bottom: 1px solid rgba(0,0,0,0.05); }
-  .beslenme-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-  .beslenme-oneri { background: #F0FDF4; border-radius: 6px; padding: 10px; }
-  .beslenme-kacin { background: #FFF3E0; border-radius: 6px; padding: 10px; }
-  .beslenme-baslik { font-size: 10px; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 6px; }
-  .oneri-baslik { color: #1B5E20; }
-  .kacin-baslik { color: #E65100; }
-  .liste-item { font-size: 11px; color: #2C1A00; padding: 1px 0; }
-  .hikmet-kart { background: #1C3A26; color: white; border-radius: 8px; padding: 20px; text-align: center; margin-bottom: 16px; }
-  .hikmet-ar { font-size: 20px; color: #B8860B; line-height: 1.8; margin-bottom: 8px; }
-  .hikmet-tr { font-size: 13px; color: rgba(255,255,255,0.7); font-style: italic; }
-  .hikmet-kaynak { font-size: 10px; color: rgba(255,255,255,0.4); margin-top: 8px; }
-  .kaynaklar { display: flex; flex-wrap: wrap; gap: 6px; }
-  .kaynak-pill { font-size: 10px; background: #E8F5E9; color: #1C3A26; padding: 3px 10px; border-radius: 20px; font-style: italic; }
-  .footer { margin-top: 32px; padding-top: 16px; border-top: 1px solid #DEB887; text-align: center; font-size: 10px; color: #999; line-height: 1.8; }
-  .uyari { background: #FFF8E7; border: 1px solid #B8860B; border-radius: 6px; padding: 10px 14px; font-size: 11px; color: #6B5744; margin-bottom: 16px; }
-  .label-sm { font-size: 9px; color: #999; text-transform: uppercase; letter-spacing: 1px; }
-  .val-sm { font-size: 12px; font-weight: 600; color: #1C1C1C; }
-  .info-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-bottom: 16px; }
-  .info-kart { background: #FAF6EF; border-radius: 6px; padding: 8px 10px; }
-  @media print {
-    body { print-color-adjust: exact; -webkit-print-color-adjust: exact; }
-    .page { padding: 20px; }
-  }
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Plus Jakarta Sans', sans-serif; background: #f5f5f5; padding: 20px; }
+.card { max-width: 780px; margin: 0 auto; background: white; border-radius: 16px; overflow: hidden; box-shadow: 0 8px 40px rgba(0,0,0,0.15); }
+.brand-header { background: linear-gradient(135deg,#0F2A1A,#1B4332,#2D5A3D); padding: 28px; }
+.brand-logo { display: flex; align-items: center; gap: 12px; margin-bottom: 20px; }
+.brand-icon { width:46px;height:46px;background:linear-gradient(135deg,#F4A823,#B5840C);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:22px; }
+.brand-name { font-family:'Cinzel',serif;font-size:13px;font-weight:900;color:#F4A823;letter-spacing:3px; }
+.brand-sub { font-family:'EB Garamond',serif;font-size:11px;color:rgba(255,255,255,0.55);letter-spacing:1.5px;font-style:italic; }
+.card-ar { font-family:'Noto Naskh Arabic',serif;font-size:15px;color:rgba(212,175,55,0.6);margin-bottom:6px; }
+.card-title { font-family:'Cinzel',serif;font-size:20px;font-weight:900;color:#fff;letter-spacing:2px;text-transform:uppercase; }
+.hasta-box { margin-top:14px;background:rgba(244,168,35,0.1);border:1px solid rgba(244,168,35,0.25);border-radius:8px;padding:10px 16px; }
+.hasta-label { font-family:'EB Garamond',serif;font-size:11px;color:rgba(255,255,255,0.45);letter-spacing:2px;text-transform:uppercase;margin-bottom:4px; }
+.hasta-ad { font-family:'Cinzel',serif;font-size:15px;color:#F4A823;font-weight:700; }
+.divider { width:100%;height:1px;background:linear-gradient(90deg,rgba(212,175,55,0.5),rgba(82,183,136,0.3),transparent);margin-top:16px; }
+.mizac-block { background:linear-gradient(135deg,#1B4332,#2D6A4F);padding:24px 28px; }
+.mizac-inner { display:flex;align-items:flex-start;justify-content:space-between;gap:16px; }
+.mizac-eyebrow { font-family:'Cinzel',serif;font-size:10px;color:rgba(255,255,255,0.5);letter-spacing:3px;text-transform:uppercase;margin-bottom:6px; }
+.mizac-tip { font-family:'Cinzel',serif;font-size:22px;font-weight:900;color:#F4A823;margin-bottom:4px; }
+.mizac-ar { font-family:'Noto Naskh Arabic',serif;font-size:18px;color:rgba(255,255,255,0.65);margin-bottom:14px; }
+.mizac-badges { display:flex;gap:8px;flex-wrap:wrap; }
+.mizac-badge { background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.18);border-radius:6px;padding:6px 12px; }
+.badge-label { font-size:9px;color:rgba(255,255,255,0.45);letter-spacing:2px;display:block;margin-bottom:2px; }
+.badge-val { font-size:13px;font-weight:600;color:white; }
+.uyum-ring { width:84px;height:84px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Cinzel',serif;font-size:18px;font-weight:900;color:#F4A823;border:8px solid rgba(244,168,35,0.3);flex-shrink:0; }
+.mizac-desc { margin-top:16px;font-family:'EB Garamond',serif;font-size:16px;color:rgba(255,255,255,0.78);font-style:italic;line-height:1.7; }
+.section { padding:22px 28px;border-top:1px solid #EDE7DC; }
+.section-white { background:white; }
+.section-cream { background:#FFFDF8; }
+.section-title { font-family:'Cinzel',serif;font-size:10px;color:#2D6A4F;letter-spacing:3px;text-transform:uppercase;margin-bottom:14px;padding-bottom:8px;border-bottom:1px solid #EDE7DC; }
+.hilt-grid { display:grid;grid-template-columns:1fr 1fr;gap:10px; }
+.hilt-card { background:white;border:1.5px solid #E8E0D0;border-radius:10px;padding:14px; }
+.hilt-card.dom { border-color:#B5840C; }
+.hilt-name { font-weight:700;font-size:12px;color:#1C1C1C; }
+.hilt-ar { font-family:'Noto Naskh Arabic',serif;font-size:15px; }
+.hilt-bar-bg { height:6px;background:#F0EBE0;border-radius:3px;overflow:hidden;margin:8px 0; }
+.hilt-bar { height:100%;border-radius:3px; }
+.hilt-foot { display:flex;align-items:center;justify-content:space-between; }
+.hilt-pct { font-size:12px;font-weight:700;color:#4A4A4A; }
+.hilt-st { font-size:10px;font-weight:700;padding:2px 8px;border-radius:20px; }
+.hilt-yorum { margin-top:8px;font-family:'EB Garamond',serif;font-size:13px;color:#666;font-style:italic;line-height:1.5; }
+.fitri-grid { display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px; }
+.fitri-box { background:white;border:1px solid #E8D5F5;border-radius:8px;padding:12px; }
+.fitri-label { font-size:10px;color:#6A1B9A;letter-spacing:1px;margin-bottom:4px; }
+.fitri-val { font-size:14px;font-weight:600; }
+.kg-item { display:flex;gap:12px;align-items:flex-start;padding:12px 0;border-bottom:1px solid #F0EBE0; }
+.kg-icon { width:34px;height:34px;border-radius:8px;background:#D8F3DC;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0; }
+.kg-body { flex:1; }
+.kg-title { font-size:11px;font-weight:700;color:#2D6A4F;letter-spacing:1px;text-transform:uppercase;margin-bottom:3px; }
+.kg-text { font-family:'EB Garamond',serif;font-size:15px;color:#1C1C1C;line-height:1.6; }
+.kg-src { font-size:11px;color:#888;font-style:italic;margin-top:3px;font-family:'EB Garamond',serif; }
+.bitki-item { background:#F7FBF8;border:1px solid #C8E6C9;border-radius:10px;padding:16px;margin-bottom:10px; }
+.bitki-head { display:flex;align-items:center;gap:12px;margin-bottom:12px; }
+.bitki-badge { background:#2D6A4F;border-radius:8px;padding:8px 12px;text-align:center;flex-shrink:0;min-width:72px; }
+.bitki-ar { font-family:'Noto Naskh Arabic',serif;font-size:16px;color:#A5D6A7;display:block;margin-bottom:2px; }
+.bitki-tr { font-family:'Cinzel',serif;font-size:9px;color:#F4A823;letter-spacing:1px; }
+.bitki-name { font-size:14px;font-weight:700;color:#1C1C1C;margin-bottom:2px; }
+.bitki-grid { display:grid;grid-template-columns:1fr 1fr;gap:8px; }
+.bitki-field { background:white;border-radius:6px;padding:8px 10px;border:1px solid #E0F0E0; }
+.bf-label { font-size:9px;font-weight:700;color:#2D6A4F;letter-spacing:1px;margin-bottom:3px; }
+.bf-val { font-size:12px; }
+.terkib-item { background:#FFF8F0;border:1px solid #FFE0B2;border-radius:10px;padding:16px;margin-bottom:10px; }
+.terkib-name { font-size:14px;font-weight:700;color:#E65100;margin-bottom:4px; }
+.terkib-bilesen { font-size:12px;padding:3px 0;border-bottom:1px solid #FFE0B2; }
+.beslenme-cols { display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px; }
+.beslenme-box { padding:14px;border-radius:8px; }
+.beslenme-label { font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;margin-bottom:8px; }
+.beslenme-list { list-style:none; }
+.beslenme-list li { font-family:'EB Garamond',serif;font-size:14px;color:#333;padding:2px 0;line-height:1.5; }
+.rutin-item { margin-bottom:8px;padding:10px 14px;background:white;border-radius:8px;border:1px solid #E8E0D0;border-left:3px solid #2D6A4F; }
+.rutin-time { font-size:11px;font-weight:700;color:#2D6A4F;letter-spacing:1px;margin-bottom:4px; }
+.rutin-text { font-family:'EB Garamond',serif;font-size:14px;color:#333;line-height:1.6; }
+.egz-card { background:linear-gradient(135deg,#EEF7EE,#D8F3DC);border:1.5px solid #52B788;border-radius:10px;padding:16px; }
+.egz-row { display:flex;gap:10px;flex-wrap:wrap;margin-bottom:12px; }
+.egz-badge { background:white;border-radius:6px;padding:7px 12px;border:1px solid #C8E6C9;text-align:center; }
+.egz-label { font-size:9px;color:#2D6A4F;letter-spacing:1px;display:block;margin-bottom:2px; }
+.egz-val { font-size:13px;font-weight:700; }
+.egz-ozel { font-family:'EB Garamond',serif;font-size:15px;color:#1C1C1C;line-height:1.6;margin-bottom:10px; }
+.sebep-box { background:#F3F4F6;padding:22px 28px;border-top:1px solid #EDE7DC;border-left:4px solid #6B7280; }
+.hikmet-box { background:linear-gradient(135deg,#FDF6E3,#FEF3C7);border:1px solid #D4AF37;border-radius:14px;padding:22px 24px;margin:0 28px 16px; }
+.hikmet-label { font-size:10px;font-family:'Cinzel',serif;color:#8B6914;letter-spacing:3px;text-transform:uppercase;margin-bottom:14px; }
+.hikmet-ar { font-family:'Noto Naskh Arabic',serif;font-size:22px;color:#5D4037;direction:rtl;text-align:right;line-height:1.9;margin-bottom:12px; }
+.hikmet-tr { font-family:'EB Garamond',serif;font-size:18px;color:#3E2723;line-height:1.7;margin-bottom:10px; }
+.hikmet-kaynak { font-size:12px;color:#8B6914;font-family:'Cinzel',serif;letter-spacing:1px; }
+.ozet-block { background:linear-gradient(135deg,#1B4332,#2D6A4F);padding:22px 28px; }
+.ozet-label { font-family:'Cinzel',serif;font-size:10px;color:rgba(255,255,255,0.5);letter-spacing:3px;text-transform:uppercase;margin-bottom:10px; }
+.ozet-text { font-family:'EB Garamond',serif;font-size:16px;color:rgba(255,255,255,0.85);line-height:1.8;font-style:italic; }
+.uyari-item { display:flex;gap:10px;align-items:flex-start;background:#FFFDE7;border-radius:7px;padding:10px 12px;border-left:3px solid #F4A823;margin-bottom:6px; }
+.card-footer { background:#0F2A1A;padding:16px 28px;display:flex;align-items:center;justify-content:space-between; }
+.footer-brand { font-family:'Cinzel',serif;font-size:12px;color:rgba(212,175,55,0.7);letter-spacing:3px; }
+.footer-disc { font-family:'EB Garamond',serif;font-size:11px;color:rgba(255,255,255,0.3);font-style:italic;max-width:340px;text-align:right;line-height:1.5; }
+@media print { body{background:white;padding:0;} .card{box-shadow:none;} }
 </style>
-</head>
-<body>
-<div class="page">
-  <div class="header">
-    <div class="logo-area">
-      <div class="logo-title">İPEK YOLU ŞİFACISI</div>
-      <div class="logo-ar">\u0637\u0631\u064a\u0642 \u0627\u0644\u062d\u0631\u064a\u0631 \u0627\u0644\u0634\u0627\u0641\u064a</div>
-      <div style="font-size:10px;color:#999;margin-top:4px;">Klasik İslam Tıbbı Danismanligi</div>
+</head><body>
+<div class="card">
+
+  <div class="brand-header">
+    <div class="brand-logo">
+      <div class="brand-icon">🏺</div>
+      <div>
+        <div class="brand-name">İPEK YOLU ŞİFACISI</div>
+        <div class="brand-sub">ipek yolu şifacısı · الطب الكلاسيكي الإسلامي</div>
+      </div>
+      <div style="margin-left:auto;font-family:'Cinzel',serif;font-size:11px;color:rgba(255,255,255,0.4);letter-spacing:2px;text-align:right;">${tarih}</div>
     </div>
-    <div class="meta">
-      <div style="font-family:'Cormorant Garamond',serif;font-size:13px;font-weight:600;color:#1C3A26;">KISISEL MIZAC RECETESI</div>
-      <div>${new Date().toLocaleDateString('tr-TR', { day: '2-digit', month: 'long', year: 'numeric' })}</div>
-      <div>MZ-${Date.now().toString().slice(-8)}</div>
+    <div class="card-ar">تقرير تحليل المزاج والأخلاط الشخصي</div>
+    <div class="card-title">KİŞİSEL MİZAÇ & SAĞLIK REÇETESİ</div>
+    ${hasta ? `<div class="hasta-box"><div class="hasta-label">Düzenlendiği Kişi</div><div class="hasta-ad">Sayın ${hasta.tam_ad || 'Hasta'}</div></div>` : ''}
+    <div class="divider"></div>
+  </div>
+
+  <div class="mizac-block">
+    <div class="mizac-inner">
+      <div>
+        <div class="mizac-eyebrow">Tespit Edilen Mizaç</div>
+        <div class="mizac-tip">${mizac?.tam_tanim || mizac?.tip || ''}</div>
+        <div class="mizac-ar">${mizac?.tip_ar || ''}</div>
+        <div class="mizac-badges">
+          ${mizac?.ana_element ? `<div class="mizac-badge"><span class="badge-label">ANA ELEMENT</span><div class="badge-val">${mizac.ana_element}</div></div>` : ''}
+          ${mizac?.alt_mizac ? `<div class="mizac-badge"><span class="badge-label">ALT MİZAÇ</span><div class="badge-val">${mizac.alt_mizac}</div></div>` : ''}
+          <div class="mizac-badge"><span class="badge-label">UYUM SKORU</span><div class="badge-val">${uyum}%</div></div>
+        </div>
+        ${mizac?.mevsim_etkisi ? `<div style="margin-top:10px;background:rgba(255,255,255,0.08);border-radius:6px;padding:8px 12px;font-size:13px;color:rgba(255,255,255,0.7);">🌿 ${mizac.mevsim_etkisi}</div>` : ''}
+      </div>
+    </div>
+    ${mizac?.sure ? `<div class="mizac-desc">${mizac.sure}</div>` : ''}
+    ${mizac?.kaynak ? `<div style="margin-top:10px;font-family:'EB Garamond',serif;font-size:13px;color:rgba(255,255,255,0.4);font-style:italic;">📖 ${mizac.kaynak}</div>` : ''}
+  </div>
+
+  ${r.fitri_hali?.sapma ? `
+  <div class="section section-cream" style="background:#F3EFF8;border-left:4px solid #6A1B9A;">
+    <div class="section-title" style="color:#6A1B9A;">🔮 Fıtrî-Hâlî Karşılaştırması</div>
+    <div class="fitri-grid">
+      <div class="fitri-box"><div class="fitri-label">FITRİ MİZAÇ</div><div class="fitri-val">${r.fitri_hali.fitri_mizac || 'Belirlenmedi'}</div></div>
+      <div class="fitri-box"><div class="fitri-label">HÂLİ MİZAÇ</div><div class="fitri-val">${r.fitri_hali.hali_mizac || '—'}</div></div>
+    </div>
+    <div class="fitri-box" style="margin-bottom:8px;"><div class="fitri-label">SAPMA</div><div style="font-family:'EB Garamond',serif;font-size:14px;font-style:italic;">${r.fitri_hali.sapma}</div></div>
+    ${r.fitri_hali.tedavi_hedefi ? `<div style="background:#EDE7F6;border-radius:8px;padding:10px 12px;font-size:13px;color:#4A148C;">🎯 Tedavi Hedefi: ${r.fitri_hali.tedavi_hedefi}</div>` : ''}
+  </div>` : ''}
+
+  ${Object.keys(hiltlar).length > 0 ? `
+  <div class="section section-cream">
+    <div class="section-title">⚗️ Hılt Dengesi — الأخلاط الأربعة</div>
+    <div class="hilt-grid">
+      ${Object.entries(hiltlar).map(([k, hRaw]) => {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        const h: any = typeof hRaw === 'object' && hRaw !== null ? hRaw : {oran: hRaw, durum:'normal', aciklama:''};
+        const isDom = r.baskin_hilt === k;
+        return `<div class="hilt-card ${isDom?'dom':''}">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;">
+            <div>
+              <div class="hilt-name">${hNames[k] || k}</div>
+              <div class="hilt-ar" style="color:${hColors[k]}">${hAr[k]}</div>
+            </div>
+            ${isDom ? '<span style="font-size:9px;background:#FEF3C7;border:1px solid #B5840C;border-radius:20px;padding:2px 8px;color:#B5840C;font-weight:700;">BASKIN</span>' : ''}
+          </div>
+          <div class="hilt-bar-bg"><div class="hilt-bar" style="width:${h.oran}%;background:${hColors[k]};"></div></div>
+          <div class="hilt-foot">
+            <div class="hilt-pct">%${h.oran}</div>
+            <div class="hilt-st" style="background:${dBg[h.durum||'normal']};color:${dColors[h.durum||'normal']}">${dLabels[h.durum||'normal']}</div>
+          </div>
+          ${h.aciklama ? `<div class="hilt-yorum">${h.aciklama}</div>` : ''}
+        </div>`;
+      }).join('')}
+    </div>
+  </div>` : ''}
+
+  ${r.sebep_analizi?.badi_sebep && r.sebep_analizi.badi_sebep !== 'Yakın/Mevcut sebep' ? `
+  <div class="sebep-box">
+    <div class="section-title" style="color:#374151;">🔍 Sebep Analizi — İbn Rüşd (el-Külliyyât)</div>
+    <div style="font-size:13px;margin-bottom:6px;"><strong>Yakın Sebep (Bâdî):</strong> ${r.sebep_analizi.badi_sebep}</div>
+    ${(r.sebep_analizi.muid_sebepler||[]).map((s: string) => `<div style="font-size:12px;padding:2px 0;color:#6B7280;">→ ${s}</div>`).join('')}
+    ${r.sebep_analizi.kok_mudahale ? `<div style="font-size:12px;margin-top:6px;color:#059669;">Kök Müdahale: ${r.sebep_analizi.kok_mudahale}</div>` : ''}
+  </div>` : ''}
+
+  ${klinik.length > 0 ? `
+  <div class="section section-white">
+    <div class="section-title">🔬 Klinik Gözlemler — الملاحظات السريرية</div>
+    ${klinik.map((g: unknown) => {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const obs: any = typeof g === 'string' ? {baslik:g, icerik:'', kaynak:''} : g;
+      return `<div class="kg-item">
+        <div class="kg-icon">🔬</div>
+        <div class="kg-body">
+          <div class="kg-title">${obs.baslik||''}</div>
+          <div class="kg-text">${obs.icerik||''}</div>
+          ${obs.kaynak ? `<div class="kg-src">📖 ${obs.kaynak}</div>` : ''}
+        </div>
+      </div>`;
+    }).join('')}
+  </div>` : ''}
+
+  ${bitkiler.length > 0 ? `
+  <div class="section section-cream">
+    <div class="section-title">🌿 Bitkisel Reçete — وصفة الأعشاب الطبية</div>
+    ${bitkiler.map((b: Record<string,string>) => `
+    <div class="bitki-item">
+      <div class="bitki-head">
+        <div class="bitki-badge">
+          <span class="bitki-ar">${b.ar||''}</span>
+          <span class="bitki-tr">${b.ad||b.bitki||''}</span>
+        </div>
+        <div>
+          <div class="bitki-name">${b.bitki||b.ad||b.isim||''}</div>
+          ${b.endikasyon ? `<div style="font-size:12px;color:#555;margin-top:2px;">${b.endikasyon}</div>` : ''}
+        </div>
+      </div>
+      <div class="bitki-grid">
+        ${b.doz ? `<div class="bitki-field"><div class="bf-label">DOZ</div><div class="bf-val">${b.doz}</div></div>` : ''}
+        ${b.hazirlanis ? `<div class="bitki-field" style="grid-column:1/-1"><div class="bf-label">HAZIRLANIS</div><div class="bf-val">${b.hazirlanis}</div></div>` : ''}
+      </div>
+      ${b.kontrendikasyon ? `<div style="margin-top:8px;background:#FFF3E0;border-radius:6px;padding:6px 10px;font-size:11px;color:#E65100;">⚠ ${b.kontrendikasyon}</div>` : ''}
+      ${b.kaynak ? `<div style="margin-top:6px;font-size:11px;color:#888;font-style:italic;">📖 ${b.kaynak}</div>` : ''}
+    </div>`).join('')}
+  </div>` : ''}
+
+  ${terkib.length > 0 ? `
+  <div class="section section-white">
+    <div class="section-title">⚗️ Bileşik Formül (Terkib)</div>
+    ${terkib.map((t: Record<string, unknown>) => `
+    <div class="terkib-item">
+      <div class="terkib-name">${t.isim||''}</div>
+      ${t.tur ? `<div style="font-size:11px;color:#888;margin-bottom:8px;">${t.tur}</div>` : ''}
+      ${(Array.isArray(t.bilesenler) ? t.bilesenler : []).map((bl: Record<string,string>) => `<div class="terkib-bilesen">• ${bl.ad} — ${bl.miktar}</div>`).join('')}
+      ${t.uygulama ? `<div style="margin-top:8px;font-size:13px;font-family:'EB Garamond',serif;">${t.uygulama}</div>` : ''}
+      ${t.kaynak ? `<div style="margin-top:6px;font-size:11px;color:#888;font-style:italic;">📖 ${t.kaynak}</div>` : ''}
+    </div>`).join('')}
+  </div>` : ''}
+
+  ${(gunlukRutin.sabah || gunlukRutin.oglen || gunlukRutin.aksam) ? `
+  <div class="section section-cream">
+    <div class="section-title">🕐 Günlük Rutin</div>
+    ${['sabah','oglen','aksam'].map(vakit => {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const items = (gunlukRutin as any)[vakit];
+      if (!items) return '';
+      const list = Array.isArray(items) ? items : [items];
+      const labels: Record<string,string> = {sabah:'🌅 Sabah', oglen:'☀️ Öğle', aksam:'🌆 Akşam'};
+      return `<div class="rutin-item"><div class="rutin-time">${labels[vakit]}</div>${list.map((x: string) => `<div class="rutin-text">${x}</div>`).join('')}</div>`;
+    }).join('')}
+  </div>` : ''}
+
+  ${beslenme ? `
+  <div class="section section-cream">
+    <div class="section-title">🍽️ Beslenme Reçetesi — التغذية الطبية</div>
+    ${beslenme.ilke ? `<div style="background:linear-gradient(135deg,#1B4332,#2D6A4F);border-radius:8px;padding:12px 16px;margin-bottom:14px;"><div style="font-size:10px;letter-spacing:2px;color:rgba(255,255,255,0.55);text-transform:uppercase;margin-bottom:4px;">TEMEL İLKE</div><div style="font-size:15px;color:rgba(255,255,255,0.9);">${beslenme.ilke}</div></div>` : ''}
+    <div class="beslenme-cols">
+      <div class="beslenme-box" style="background:#D8F3DC;border:1px solid #52B788;">
+        <div class="beslenme-label" style="color:#2D6A4F;">Önerilen Gıdalar</div>
+        <ul class="beslenme-list">${(Array.isArray(beslenme.onerililer)?beslenme.onerililer:[]).map((x: string)=>`<li>• ${x}</li>`).join('')}</ul>
+      </div>
+      <div class="beslenme-box" style="background:#FDECEA;border:1px solid #EF9A9A;">
+        <div class="beslenme-label" style="color:#C0392B;">Kaçınılacaklar</div>
+        <ul class="beslenme-list">${(Array.isArray(beslenme.kacinilacaklar)?beslenme.kacinilacaklar:[]).map((x: string)=>`<li>• ${x}</li>`).join('')}</ul>
+      </div>
+    </div>
+    ${beslenme.ozel_tavsiyeler ? `<div style="margin-top:12px;background:#FEF3C7;border-radius:8px;padding:12px;border:1px solid #F4A823;font-family:'EB Garamond',serif;font-size:15px;color:#333;line-height:1.6;">${beslenme.ozel_tavsiyeler}</div>` : ''}
+  </div>` : ''}
+
+  ${egzersiz.tur || egzersiz.ozel ? `
+  <div class="section section-white">
+    <div class="section-title">🏃 Egzersiz Reçetesi</div>
+    <div class="egz-card">
+      <div class="egz-row">
+        ${egzersiz.tur ? `<div class="egz-badge"><span class="egz-label">TÜR</span><div class="egz-val">${egzersiz.tur}</div></div>` : ''}
+        ${egzersiz.zaman ? `<div class="egz-badge"><span class="egz-label">ZAMAN</span><div class="egz-val">${egzersiz.zaman}</div></div>` : ''}
+        ${egzersiz.sure ? `<div class="egz-badge"><span class="egz-label">SÜRE</span><div class="egz-val">${egzersiz.sure}</div></div>` : ''}
+        ${egzersiz.siddet ? `<div class="egz-badge"><span class="egz-label">YOĞUNLUK</span><div class="egz-val">${egzersiz.siddet}</div></div>` : ''}
+      </div>
+      ${egzersiz.ozel ? `<div class="egz-ozel">${egzersiz.ozel}</div>` : ''}
+      ${egzersiz.kacinilacaklar ? `<div style="background:white;border-radius:6px;padding:10px 12px;border-left:3px solid #EF5350;"><div style="font-size:10px;font-weight:700;color:#C0392B;letter-spacing:1px;margin-bottom:4px;">⚠ Kaçınılacak</div><div style="font-family:'EB Garamond',serif;font-size:14px;">${egzersiz.kacinilacaklar}</div></div>` : ''}
+      ${egzersiz.kaynak ? `<div style="margin-top:10px;font-size:12px;color:#666;font-family:'EB Garamond',serif;font-style:italic;">📖 ${egzersiz.kaynak}</div>` : ''}
+    </div>
+  </div>` : ''}
+
+  ${(r.ilac_etkilesimleri||[]).length > 0 ? `
+  <div class="section" style="background:#FFF3E0;border-left:4px solid #FF8F00;">
+    <div class="section-title" style="color:#E65100;">💊 İlaç-Bitki Etkileşim Uyarıları</div>
+    ${r.ilac_etkilesimleri.map((e: string) => `<div style="padding:6px 0;font-size:13px;border-bottom:1px solid #FFE0B2;">⚡ ${e}</div>`).join('')}
+  </div>` : ''}
+
+  ${(r.alternatif_bitkiler||[]).length > 0 ? `
+  <div class="section" style="background:#E8F5E9;border-left:4px solid #43A047;">
+    <div class="section-title" style="color:#2E7D32;">🔄 Alternatifler (el-Ebdâl)</div>
+    ${r.alternatif_bitkiler.map((a: string) => `<div style="padding:4px 0;font-size:13px;">↔ ${a}</div>`).join('')}
+  </div>` : ''}
+
+  ${r.hasta_yasina_gore_not ? `
+  <div class="section" style="background:#EDE7F6;border-left:4px solid #7B1FA2;">
+    <div class="section-title" style="color:#6A1B9A;">👤 Yaş/Durum Özel Notu</div>
+    <div style="font-size:13px;line-height:1.7;">${r.hasta_yasina_gore_not}</div>
+  </div>` : ''}
+
+  ${r.sonraki_kontrol?.sure ? `
+  <div class="section" style="background:#E3F2FD;border-left:4px solid #1976D2;">
+    <div class="section-title" style="color:#0D47A1;">📅 Sonraki Kontrol — ${r.sonraki_kontrol.sure}</div>
+    ${r.sonraki_kontrol.amac ? `<div style="font-size:13px;margin-bottom:6px;">${r.sonraki_kontrol.amac}</div>` : ''}
+    ${(r.sonraki_kontrol.odak_parametreler||[]).length > 0 ? `<div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:6px;">${r.sonraki_kontrol.odak_parametreler.map((p: string)=>`<span style="background:#BBDEFB;border-radius:12px;padding:3px 10px;font-size:11px;color:#0D47A1;">📍 ${p}</span>`).join('')}</div>` : ''}
+  </div>` : ''}
+
+  ${r.hikmetli_soz?.metin ? `
+  <div class="hikmet-box">
+    <div class="hikmet-label">Hikmet — حكمة</div>
+    ${r.hikmetli_soz.metin_ar ? `<div class="hikmet-ar">${r.hikmetli_soz.metin_ar}</div>` : ''}
+    <div class="hikmet-tr">${r.hikmetli_soz.metin}</div>
+    ${r.hikmetli_soz.kaynak ? `<div class="hikmet-kaynak">— ${r.hikmetli_soz.kaynak}</div>` : ''}
+  </div>` : ''}
+
+  ${(r.uyarilar||[]).length > 0 ? `
+  <div class="section section-white">
+    <div class="section-title">⚠️ Uyarılar</div>
+    ${r.uyarilar.map((u: string) => `<div class="uyari-item"><span style="font-size:15px;">⚠️</span><div style="font-family:'EB Garamond',serif;font-size:14px;color:#333;line-height:1.5;">${u}</div></div>`).join('')}
+  </div>` : ''}
+
+  ${r.ozet ? `
+  <div class="ozet-block">
+    <div class="ozet-label">Genel Değerlendirme — التقييم العام</div>
+    <div class="ozet-text">${r.ozet}</div>
+  </div>` : ''}
+
+  <div style="padding:12px 28px 16px;background:#F8F9FA;border-top:2px solid #E0E0E0;">
+    <div style="font-size:10px;color:#9E9E9E;line-height:1.6;text-align:center;">
+      ⚕️ <strong>Bilgilendirme Amaçlıdır</strong> — Bu analiz klasik İslam tıbbı geleneğine dayanmaktadır. Modern tıbbın tanı ve tedavilerinin yerini tutmaz.
     </div>
   </div>
 
-  <div class="hasta-baslik">${safeStr(secili.tam_ad)}</div>
-  <div class="hasta-alt">
-    ${safeStr(secili.telefon)} | Yas: ${safeStr(f.age_group)} | Cinsiyet: ${safeStr(f.gender)} | Mevsim: ${safeStr(f.season)}
+  <div class="card-footer">
+    <div class="footer-brand">⚗️ İPEK YOLU ŞİFACISI</div>
+    <div class="footer-disc">Bu kart klasik İslam tıbbı çerçevesinde bilgilendirme amaçlıdır. Tıbbi teşhis yerine geçmez.</div>
   </div>
 
-  <div class="info-grid">
-    <div class="info-kart"><div class="label-sm">Sikayet Suresi</div><div class="val-sm">${safeStr(f.sikayet_suresi)}</div></div>
-    <div class="info-kart"><div class="label-sm">Kronik</div><div class="val-sm">${safeStr(f.chronic) || 'Yok'}</div></div>
-    <div class="info-kart"><div class="label-sm">Nabiz</div><div class="val-sm">${safeStr(f.nb_buyukluk)}</div></div>
-    <div class="info-kart"><div class="label-sm">Dil Renk</div><div class="val-sm">${safeStr(f.dil_renk)}</div></div>
-  </div>
-
-  <div style="background:#FAF6EF;border-radius:6px;padding:10px 14px;margin-bottom:16px;font-size:12px;color:#2C1A00;line-height:1.6;">
-    <strong>Sikayetler:</strong> ${safeStr(f.symptoms)}
-  </div>
-
-  ${analiz.mizac ? `<div class="section"><div class="mizac-kart"><div class="label-sm" style="color:rgba(255,255,255,.4);letter-spacing:2px;">TESPIT EDILEN MIZAC</div><div class="mizac-buyuk">${safeStr(typeof analiz.mizac === 'object' ? (analiz.mizac?.tip || '') : (analiz.mizac || ''))}</div>${analiz.fitri_hali ? `<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;"><div style="background:rgba(255,255,255,.08);border-radius:6px;padding:8px;"><div class="label-sm" style="color:rgba(255,255,255,.4);">FITRI</div><div style="font-size:12px;color:white;margin-top:2px;">${safeStr(analiz.fitri_hali.fitri_mizac)}</div></div><div style="background:rgba(255,255,255,.08);border-radius:6px;padding:8px;"><div class="label-sm" style="color:rgba(255,255,255,.4);">HALI</div><div style="font-size:12px;color:white;margin-top:2px;">${safeStr(analiz.fitri_hali.hali_mizac)}</div></div></div>${analiz.fitri_hali.tedavi_hedefi ? `<div style="background:rgba(184,146,42,.15);border-radius:6px;padding:8px;margin-top:8px;"><div class="label-sm" style="color:#B8860B;">TEDAVI HEDEFI</div><div style="font-size:12px;color:rgba(255,255,255,.85);margin-top:2px;">${safeStr(analiz.fitri_hali.tedavi_hedefi)}</div></div>` : ''}` : ''}</div></div>` : ''}
-
-  ${analiz.hilt_dengesi ? `<div class="section"><div class="section-title">Hilt Dengesi</div><div class="hilt-grid">${analiz.hilt_dengesi.dem ? `<div class="hilt-kart hilt-dem"><div style="font-weight:600;font-size:12px;">Dem</div><div class="hilt-yuzde" style="color:#EF5350;">${analiz.hilt_dengesi.dem.yuzde}%</div><div style="font-size:10px;color:#6B5744;margin-top:4px;">${safeStr(analiz.hilt_dengesi.dem.yorum)}</div></div>` : ''}${analiz.hilt_dengesi.balgam ? `<div class="hilt-kart hilt-balgam"><div style="font-weight:600;font-size:12px;">Balgam</div><div class="hilt-yuzde" style="color:#42A5F5;">${analiz.hilt_dengesi.balgam.yuzde}%</div><div style="font-size:10px;color:#6B5744;margin-top:4px;">${safeStr(analiz.hilt_dengesi.balgam.yorum)}</div></div>` : ''}${analiz.hilt_dengesi.safra ? `<div class="hilt-kart hilt-safra"><div style="font-weight:600;font-size:12px;">Safra</div><div class="hilt-yuzde" style="color:#FFA726;">${analiz.hilt_dengesi.safra.yuzde}%</div><div style="font-size:10px;color:#6B5744;margin-top:4px;">${safeStr(analiz.hilt_dengesi.safra.yorum)}</div></div>` : ''}${analiz.hilt_dengesi.kara_safra ? `<div class="hilt-kart hilt-karasafra"><div style="font-weight:600;font-size:12px;">Kara Safra</div><div class="hilt-yuzde" style="color:#AB47BC;">${analiz.hilt_dengesi.kara_safra.yuzde}%</div><div style="font-size:10px;color:#6B5744;margin-top:4px;">${safeStr(analiz.hilt_dengesi.kara_safra.yorum)}</div></div>` : ''}</div></div>` : ''}
-
-  ${analiz.ozet ? `<div class="section"><div class="section-title">Genel Degerlendirme</div><div class="ozet-metin">${safeStr(analiz.ozet)}</div></div>` : ''}
-
-  ${analiz.bitki_recetesi?.length > 0 ? `<div class="section"><div class="section-title">Bitkisel Protokol</div>${(Array.isArray(analiz.bitki_recetesi)?analiz.bitki_recetesi:[]).map((b: {bitki?:string,bitki_ar?:string,doz?:string,zaman?:string,sure?:string,etki?:string,kaynak?:string}) => `<div class="bitki-kart"><div class="bitki-ad">${safeStr(b.bitki)}</div>${b.bitki_ar ? `<div class="bitki-ar">${safeStr(b.bitki_ar)}</div>` : ''}<div class="bitki-detay"><strong>Doz:</strong> ${safeStr(b.doz)}<br><strong>Zaman:</strong> ${safeStr(b.zaman)} | <strong>Sure:</strong> ${safeStr(b.sure)}${b.etki ? `<br>${safeStr(b.etki)}` : ''}</div>${b.kaynak ? `<div class="bitki-kaynak">${safeStr(b.kaynak)}</div>` : ''}</div>`).join('')}</div>` : ''}
-
-  ${analiz.gunluk_rutin ? `<div class="section"><div class="section-title">Gunluk Rutin</div>${(Array.isArray(analiz.gunluk_rutin?.sabah) ? analiz.gunluk_rutin.sabah : typeof analiz.gunluk_rutin?.sabah === 'string' ? [analiz.gunluk_rutin.sabah] : []).length ? `<div class="rutin-blok sabah-blok"><div class="rutin-baslik">Sabah</div>${(Array.isArray(analiz.gunluk_rutin.sabah) ? analiz.gunluk_rutin.sabah : [analiz.gunluk_rutin.sabah]).map((i: string) => `<div class="rutin-item">${safeStr(i)}</div>`).join('')}</div>` : ''}${(Array.isArray(analiz.gunluk_rutin?.ogle) ? analiz.gunluk_rutin.ogle : typeof analiz.gunluk_rutin?.ogle === 'string' ? [analiz.gunluk_rutin.ogle] : []).length ? `<div class="rutin-blok ogle-blok"><div class="rutin-baslik">Ogle</div>${(Array.isArray(analiz.gunluk_rutin.ogle) ? analiz.gunluk_rutin.ogle : [analiz.gunluk_rutin.ogle]).map((i: string) => `<div class="rutin-item">${safeStr(i)}</div>`).join('')}</div>` : ''}${(Array.isArray(analiz.gunluk_rutin?.aksam) ? analiz.gunluk_rutin.aksam : typeof analiz.gunluk_rutin?.aksam === 'string' ? [analiz.gunluk_rutin.aksam] : []).length ? `<div class="rutin-blok aksam-blok"><div class="rutin-baslik">Aksam</div>${(Array.isArray(analiz.gunluk_rutin.aksam) ? analiz.gunluk_rutin.aksam : [analiz.gunluk_rutin.aksam]).map((i: string) => `<div class="rutin-item">${safeStr(i)}</div>`).join('')}</div>` : ''}</div>` : ''}
-
-  ${analiz.beslenme_onerileri ? `<div class="section"><div class="section-title">Beslenme</div>${typeof analiz.beslenme_onerileri === 'string' ? `<div class="ozet-metin">${safeStr(analiz.beslenme_onerileri)}</div>` : `${analiz.beslenme_onerileri.temel_ilke ? `<div style="font-style:italic;color:#1C3A26;font-weight:500;margin-bottom:10px;">${safeStr(analiz.beslenme_onerileri.temel_ilke)}</div>` : ''}<div class="beslenme-grid">${analiz.beslenme_onerileri.onerililer?.length ? `<div class="beslenme-oneri"><div class="beslenme-baslik oneri-baslik">Onerilen</div>${(Array.isArray(analiz.beslenme_onerileri?.onerililer)?analiz.beslenme_onerileri.onerililer:[]).map((g: string) => `<div class="liste-item">${safeStr(g)}</div>`).join('')}</div>` : ''}${analiz.beslenme_onerileri.kacinilacaklar?.length ? `<div class="beslenme-kacin"><div class="beslenme-baslik kacin-baslik">Kacinilacak</div>${(Array.isArray(analiz.beslenme_onerileri?.kacinilacaklar)?analiz.beslenme_onerileri.kacinilacaklar:[]).map((g: string) => `<div class="liste-item">${safeStr(g)}</div>`).join('')}</div>` : ''}</div>`}</div>` : ''}
-
-  ${analiz.hikmet ? `<div class="section"><div class="hikmet-kart"><div class="label-sm" style="color:rgba(255,255,255,.4);letter-spacing:2px;margin-bottom:10px;">HIKMET</div>${analiz.hikmet.arapca ? `<div class="hikmet-ar">${safeStr(analiz.hikmet.arapca)}</div>` : ''}${analiz.hikmet.turkce ? `<div class="hikmet-tr">${safeStr(analiz.hikmet.turkce)}</div>` : ''}${analiz.hikmet.kaynak ? `<div class="hikmet-kaynak">- ${safeStr(analiz.hikmet.kaynak)}</div>` : ''}</div></div>` : ''}
-
-  ${analiz.kaynaklar?.length > 0 ? `<div class="section"><div class="section-title">Kullanilan Kaynaklar</div><div class="kaynaklar">${(Array.isArray(analiz.kaynaklar)?analiz.kaynaklar:[]).map((k: string) => `<span class="kaynak-pill">${safeStr(k)}</span>`).join('')}</div></div>` : ''}
-
-  <div class="uyari">Bu analiz klasik Islam tibbi gelenegine dayanmaktadir. Modern tibbin yerini tutmaz. Ciddi sikayetlerde mutlaka uzman hekime basvurunuz.</div>
-
-  <div class="footer">
-    İpek Yolu Şifacısı - Klasik İslam Tıbbı Danismanligi<br>
-    Bu protokol yalnizca ${safeStr(secili.tam_ad)} icin hazirlanmistir.
-  </div>
 </div>
-<script>window.onload = function() { window.print(); }<\/script>
-</body>
-</html>`
+<script>window.onload = function(){ window.print(); }<\/script>
+</body></html>`;
 
-    printWindow.document.write(html)
-    printWindow.document.close()
+    const printWindow = window.open('', '_blank');
+    if (printWindow) {
+      printWindow.document.write(html);
+      printWindow.document.close();
+    }
   }
 
   const durumRenk = (d: string) => {
