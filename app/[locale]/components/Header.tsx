@@ -115,8 +115,12 @@ export default function Header() {
                 </button>
                 {profilAcik && (
                   <div style={{ position: 'absolute', top: 36, right: 0, background: 'white', borderRadius: 8, boxShadow: '0 4px 16px rgba(0,0,0,0.15)', overflow: 'hidden', minWidth: 160, zIndex: 200 }}>
-                    <a href="/hasta" onClick={() => setProfilAcik(false)}
+                    <a href="/profil" onClick={() => setProfilAcik(false)}
                       style={{ display: 'block', width: '100%', padding: '10px 16px', border: 'none', background: 'white', cursor: 'pointer', fontSize: 13, color: C.primary, textAlign: 'left' as const, textDecoration: 'none' }}>
+                      {"Profilim"}
+                    </a>
+                    <a href="/hasta" onClick={() => setProfilAcik(false)}
+                      style={{ display: 'block', width: '100%', padding: '10px 16px', border: 'none', background: 'white', cursor: 'pointer', fontSize: 13, color: C.primary, textAlign: 'left' as const, textDecoration: 'none', borderTop: '1px solid #eee' }}>
                       {"Analizlerim"}
                     </a>
                     <button onClick={cikisYap}
