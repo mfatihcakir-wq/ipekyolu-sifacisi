@@ -34,9 +34,6 @@ export default function AyarlarPage() {
   const [yeniSifre, setYeniSifre] = useState('')
   const [sifreTekrar, setSifreTekrar] = useState('')
   const [sifreSaving, setSifreSaving] = useState(false)
-  const [iptalOnay, setIptalOnay] = useState(false)
-  const [iptalSaving, setIptalSaving] = useState(false)
-  const [uyelik, setÜyelik] = useState<{ plan: string; bitis: string } | null>(null)
 
   useEffect(() => {
     async function yukle() {
@@ -48,11 +45,6 @@ export default function AyarlarPage() {
         if (profil.fitri_mizac) setFitriMizac(profil.fitri_mizac)
         if (profil.bildirim_tercihleri) setBildirimler(prev => ({ ...prev, ...profil.bildirim_tercihleri }))
       }
-
-      try {
-        const { data: ab } = await supabase.from('abonelikler').select('plan, bitis').eq('kullanici_id', user.id).eq('durum', 'aktif').single()
-        if (ab) setÜyelik(ab)
-      } catch { /* abonelikler tablosu yoksa sessizce gec */ }
 
       setLoading(false)
     }
@@ -90,20 +82,6 @@ export default function AyarlarPage() {
     if (error) showToast('Hata: ' + error.message)
     else { showToast('Sifre basariyla degistirildi'); setYeniSifre(''); setSifreTekrar('') }
     setSifreSaving(false)
-  }
-
-  async function uyelikIptal() {
-    setIptalSaving(true)
-    const { data: { user } } = await supabase.auth.getUser()
-    if (!user) return
-    await supabase.from('profiles').upsert({ id: user.id, iptal_talep_edildi: true, iptal_tarihi: new Date().toISOString() })
-    // Abonelik durumunu guncelle
-    try {
-      await supabase.from('abonelikler').update({ durum: 'iptal_talep' }).eq('kullanici_id', user.id).eq('durum', 'aktif')
-    } catch { /* abonelikler tablosu yoksa sessizce gec */ }
-    setIptalOnay(false)
-    showToast('Iptal talebi alindi. Ekibimiz sizinle iletisime gececektir.')
-    setIptalSaving(false)
   }
 
   if (loading) {
@@ -200,51 +178,6 @@ export default function AyarlarPage() {
             style={{ padding: '10px 20px', background: C.primary, border: 'none', borderRadius: 8, color: C.gold, fontFamily: cinzel.style.fontFamily, fontSize: 12, cursor: sifreSaving ? 'not-allowed' : 'pointer', opacity: !yeniSifre ? 0.5 : 1 }}>
             {sifreSaving ? 'Kaydediliyor...' : 'Sifreyi Degistir'}
           </button>
-        </div>
-
-        {/* UYELIK YONETIMI */}
-        <div style={{ background: C.white, borderRadius: 14, border: `1px solid ${C.border}`, padding: '20px 24px', marginBottom: 16 }}>
-          <div style={{ fontFamily: cinzel.style.fontFamily, fontSize: 10, color: C.primary, letterSpacing: 2, marginBottom: 14 }}>UYELIK YONETIMI</div>
-          {uyelik ? (
-            <>
-              <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 8 }}>
-                <span style={{ fontSize: 13, color: C.secondary }}>Plan</span>
-                <span style={{ fontSize: 13, color: C.dark, fontWeight: 600 }}>{uyelik.plan}</span>
-              </div>
-              <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 16 }}>
-                <span style={{ fontSize: 13, color: C.secondary }}>Gecerlilik</span>
-                <span style={{ fontSize: 13, color: C.dark }}>{new Date(uyelik.bitis).toLocaleDateString('tr-TR')}</span>
-              </div>
-              {!iptalOnay ? (
-                <button onClick={() => setIptalOnay(true)}
-                  style={{ padding: '10px 20px', background: 'transparent', border: '1px solid #C62828', borderRadius: 8, color: '#C62828', fontSize: 12, cursor: 'pointer' }}>
-                  Uyeligi Iptal Et
-                </button>
-              ) : (
-                <div style={{ background: '#fef2f2', border: '1px solid #fecaca', borderRadius: 10, padding: '14px 16px' }}>
-                  <p style={{ fontSize: 13, color: '#C62828', marginBottom: 10 }}>Uyeliginizi iptal etmek istediginize emin misiniz? Donem sonuna kadar kullanimaya devam edebilirsiniz.</p>
-                  <div style={{ display: 'flex', gap: 8 }}>
-                    <button onClick={uyelikIptal} disabled={iptalSaving}
-                      style={{ padding: '8px 16px', background: '#C62828', border: 'none', borderRadius: 6, color: 'white', fontSize: 12, cursor: 'pointer' }}>
-                      {iptalSaving ? 'Isleniyor...' : 'Evet, Iptal Et'}
-                    </button>
-                    <button onClick={() => setIptalOnay(false)}
-                      style={{ padding: '8px 16px', background: 'transparent', border: `1px solid ${C.border}`, borderRadius: 6, color: C.secondary, fontSize: 12, cursor: 'pointer' }}>
-                      Vazgec
-                    </button>
-                  </div>
-                </div>
-              )}
-            </>
-          ) : (
-            <div>
-              <p style={{ fontSize: 13, color: C.secondary, marginBottom: 12 }}>Aktif uyeliginiz bulunmuyor.</p>
-              <button onClick={() => router.push('/odeme')}
-                style={{ padding: '10px 20px', background: C.gold, border: 'none', borderRadius: 8, color: C.primary, fontFamily: cinzel.style.fontFamily, fontSize: 12, cursor: 'pointer', fontWeight: 600 }}>
-                Uye Ol
-              </button>
-            </div>
-          )}
         </div>
 
         {/* CIKIS */}

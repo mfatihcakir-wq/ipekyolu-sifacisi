@@ -83,11 +83,10 @@ export default function KarakterAnaliziPage() {
   const [cevaplar, setCevaplar] = useState<Record<string, number>>({})
   const [fizikselMizac, setFizikselMizac] = useState('')
   const [yukleniyor, setYukleniyor] = useState(false)
-  const [gorunum, setGorunum] = useState<'harita' | 'form' | 'sonuc' | 'paywall'>('harita')
+  const [gorunum, setGorunum] = useState<'harita' | 'form' | 'sonuc'>('harita')
   const [toast, setToast] = useState<{ mesaj: string, tip: 'hata' | 'basari' } | null>(null)
   const formRef = useRef<HTMLDivElement>(null)
   const [isLoggedIn, setIsLoggedIn] = useState(false)
-  const [isAbone, setIsAbone] = useState(false)
   const [authModal, setAuthModal] = useState(false)
 
   function gosterToast(mesaj: string, tip: 'hata' | 'basari' = 'hata') {
@@ -101,11 +100,6 @@ export default function KarakterAnaliziPage() {
       // Fiziksel mizac
       const { data } = await supabase.from('analyses').select('sonuc_verisi, mizac_tipi').order('created_at', { ascending: false }).limit(1).single()
       if (data?.mizac_tipi || data?.sonuc_verisi?.mizac) setFizikselMizac(data.mizac_tipi || data.sonuc_verisi?.mizac || '')
-      // Abonelik kontrol
-      try {
-        const { data: ab } = await supabase.from('abonelikler').select('durum').eq('kullanici_id', user.id).eq('durum', 'aktif').single()
-        setIsAbone(!!ab)
-      } catch { /* abonelikler tablosu yoksa sessizce gec */ }
     })
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
@@ -121,7 +115,7 @@ export default function KarakterAnaliziPage() {
     if (soruIndex < toplamSoru - 1) {
       setTimeout(() => { setSoruIndex(soruIndex + 1); formRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' }) }, 300)
     } else {
-      setGorunum(isAbone ? 'sonuc' : 'paywall')
+      setGorunum('sonuc')
     }
   }
 
@@ -472,47 +466,6 @@ export default function KarakterAnaliziPage() {
             <button onClick={() => { setGorunum('form'); setSoruIndex(0) }}
               style={{ width: '100%', marginTop: 8, padding: '10px', background: 'transparent', border: '1px solid rgba(255,255,255,0.1)', borderRadius: 6, cursor: 'pointer', fontSize: 12, color: 'rgba(255,255,255,0.35)' }}>
               Cevaplari duzenle
-            </button>
-          </div>
-        </div>
-      )}
-
-      {/* ============ VIEW 4: PAYWALL ============ */}
-      {gorunum === 'paywall' && (
-        <div style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '40px 20px' }}>
-          <div style={{ maxWidth: 520, width: '100%', textAlign: 'center' }}>
-            <div style={{ background: 'rgba(255,255,255,0.03)', borderRadius: 16, border: '1px solid rgba(255,255,255,0.06)', padding: '40px 32px', marginBottom: 20 }}>
-              {/* Blurred preview */}
-              <div style={{ filter: 'blur(6px)', pointerEvents: 'none', userSelect: 'none', marginBottom: 20 }}>
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12 }}>
-                  {CEPHELER.map(c => {
-                    const meta = CEPHE_META[c.id]
-                    return (
-                      <div key={c.id} style={{ background: 'rgba(255,255,255,0.04)', borderRadius: 10, padding: 16 }}>
-                        <div style={{ fontSize: 13, color: '#F5EAD4', fontWeight: 600 }}>{meta.name}</div>
-                        <div style={{ fontSize: 24, color: meta.renk, fontWeight: 600, marginTop: 4 }}>{cepheSkoru(c.id)}%</div>
-                      </div>
-                    )
-                  })}
-                </div>
-              </div>
-              <div style={{ position: 'relative', marginTop: -60, paddingTop: 20, background: 'rgba(26,46,30,0.85)', borderRadius: 12 }}>
-                <div style={{ fontSize: 36, marginBottom: 12 }}>{'\uD83D\uDD12'}</div>
-                <div style={{ fontFamily: cinzel.style.fontFamily, fontSize: 20, color: '#F5EAD4', marginBottom: 8 }}>Sonuclari Gormek Icin Plan Secin</div>
-                <p style={{ fontSize: 14, color: 'rgba(255,255,255,0.4)', lineHeight: 1.6, marginBottom: 24, maxWidth: 400, margin: '0 auto 24px' }}>
-                  Sorulari tamamladiniz. Detayli karakter analizi sonuclarinizi ve kisisel tavsiyeleri gormek icin uyelik plani secin.
-                </p>
-                <div style={{ display: 'flex', gap: 10, justifyContent: 'center', flexWrap: 'wrap' as const }}>
-                  <button onClick={() => router.push('/odeme')}
-                    style={{ padding: '14px 32px', background: '#D4A843', border: 'none', borderRadius: 10, fontFamily: cinzel.style.fontFamily, fontSize: 14, fontWeight: 600, color: '#1A2E1E', cursor: 'pointer', letterSpacing: 1 }}>
-                    Plan Sec — 590{'\u20BA'}/ay
-                  </button>
-                </div>
-              </div>
-            </div>
-            <button onClick={() => { setGorunum('form'); setSoruIndex(0) }}
-              style={{ padding: '10px 20px', background: 'transparent', border: '1px solid rgba(255,255,255,0.1)', borderRadius: 8, fontSize: 12, color: 'rgba(255,255,255,0.35)', cursor: 'pointer' }}>
-              Cevaplari Duzenle
             </button>
           </div>
         </div>

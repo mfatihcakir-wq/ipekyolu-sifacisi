@@ -45,7 +45,6 @@ export default function Footer() {
           <div style={{ display: 'flex', flexDirection: 'column', gap: 8, fontSize: 13 }}>
             <a href="/analiz" style={{ color: 'rgba(255,255,255,0.6)', textDecoration: 'none' }}>{"Analiz Başlat"}</a>
             <a href="/bitkiler" style={{ color: 'rgba(255,255,255,0.6)', textDecoration: 'none' }}>{"Bitki Atlası"}</a>
-            <a href="/odeme" style={{ color: 'rgba(255,255,255,0.6)', textDecoration: 'none' }}>{"Üyelik Planları"}</a>
           </div>
         </div>
 

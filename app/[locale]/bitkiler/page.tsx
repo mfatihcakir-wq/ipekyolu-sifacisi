@@ -47,8 +47,6 @@ export default function BitkilerPage() {
   const [kaynakF, setKaynakF] = useState('')
   const [sayfa, setSayfa] = useState(1)
   const [expandedId, setExpandedId] = useState<string | null>(null)
-  const [isAbone, setIsAbone] = useState(false)
-  const [aboneUyari, setAboneUyari] = useState(false)
   useEffect(() => {
     async function yukle() {
       setLoading(true)
@@ -69,22 +67,7 @@ export default function BitkilerPage() {
       }
       setLoading(false)
     }
-    async function aboneKontrol() {
-      try {
-        const { data: { user } } = await supabase.auth.getUser()
-        if (!user) return
-        const { data: ab } = await supabase
-          .from('abonelikler')
-          .select('durum')
-          .eq('kullanici_id', user.id)
-          .eq('durum', 'aktif')
-          .single()
-        setIsAbone(!!ab)
-      } catch { /* abonelik tablosu yoksa sessizce gec */ }
-    }
     yukle()
-    aboneKontrol()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   // Unique organlar ve kaynaklar
@@ -251,10 +234,7 @@ export default function BitkilerPage() {
                 const hasKontrendikasyon = b.kaynak_metin && (b.kaynak_metin.toLowerCase().includes('dikkat') || b.kaynak_metin.toLowerCase().includes('kontrendike') || b.kaynak_metin.toLowerCase().includes('zararl'))
                 return (
                   <div key={b.id}
-                    onClick={() => {
-                      if (!isAbone) { setAboneUyari(true); return }
-                      setExpandedId(expanded ? null : b.id)
-                    }}
+                    onClick={() => setExpandedId(expanded ? null : b.id)}
                     style={{
                       background: C.white, borderRadius: 12, padding: '16px 18px',
                       border: `1px solid ${C.border}`, borderTop: `3px solid ${borderTopColor(b)}`,
@@ -266,19 +246,13 @@ export default function BitkilerPage() {
                     {b.ad_lat && <div style={{ fontSize: 11, color: '#999', fontStyle: 'italic', marginBottom: 6 }}>{b.ad_lat}</div>}
 
                     {/* Mizac chip */}
-                    {b.mizac_sicaklik && b.mizac_sicaklik !== 'bilinmiyor' ? (
-                      isAbone ? (
-                        <div style={{ display: 'inline-flex', gap: 4, marginBottom: 8 }}>
-                          <span style={{ fontSize: 10, padding: '2px 8px', borderRadius: 10, background: `${MIZAC_RENK[b.mizac_sicaklik]}15`, color: MIZAC_RENK[b.mizac_sicaklik], fontWeight: 600 }}>
-                            {b.mizac_sicaklik} {b.mizac_nem && b.mizac_nem !== 'bilinmiyor' ? `\u00B7 ${b.mizac_nem}` : ''} {b.mizac_derece ? `\u00B7 ${b.mizac_derece}. derece` : ''}
-                          </span>
-                        </div>
-                      ) : (
-                        <div style={{ fontSize: 10, color: C.secondary, filter: 'blur(4px)', userSelect: 'none', marginBottom: 8 }}>
-                          sicak \u00B7 kuru \u00B7 2. derece <span style={{ filter: 'none' }}>{'\uD83D\uDD12'}</span>
-                        </div>
-                      )
-                    ) : null}
+                    {b.mizac_sicaklik && b.mizac_sicaklik !== 'bilinmiyor' && (
+                      <div style={{ display: 'inline-flex', gap: 4, marginBottom: 8 }}>
+                        <span style={{ fontSize: 10, padding: '2px 8px', borderRadius: 10, background: `${MIZAC_RENK[b.mizac_sicaklik]}15`, color: MIZAC_RENK[b.mizac_sicaklik], fontWeight: 600 }}>
+                          {b.mizac_sicaklik} {b.mizac_nem && b.mizac_nem !== 'bilinmiyor' ? `\u00B7 ${b.mizac_nem}` : ''} {b.mizac_derece ? `\u00B7 ${b.mizac_derece}. derece` : ''}
+                        </span>
+                      </div>
+                    )}
 
                     {/* Organlar chip (maks 3) */}
                     {b.organlar?.length > 0 && (
@@ -291,7 +265,7 @@ export default function BitkilerPage() {
                     )}
 
                     {/* Faydalar onizleme */}
-                    {isAbone && b.faydalari && !expanded && (
+                    {b.faydalari && !expanded && (
                       <div style={{ fontSize: 12, color: C.dark, lineHeight: 1.5, overflow: 'hidden', display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical' as const }}>{b.faydalari}</div>
                     )}
 
@@ -306,7 +280,7 @@ export default function BitkilerPage() {
                     </div>
 
                     {/* GENISLEME */}
-                    {expanded && isAbone && (
+                    {expanded && (
                       <div style={{ marginTop: 12, borderTop: `1px solid ${C.border}`, paddingTop: 12 }}>
                         {/* Tam faydalar */}
                         {b.faydalari && (
@@ -391,22 +365,6 @@ export default function BitkilerPage() {
         )}
       </div>
 
-      {/* ABONE UYARI MODAL */}
-      {aboneUyari && (
-        <div onClick={() => setAboneUyari(false)} style={{ position: 'fixed', inset: 0, zIndex: 1000, background: 'rgba(0,0,0,0.6)', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 20 }}>
-          <div onClick={e => e.stopPropagation()} style={{ background: C.white, borderRadius: 20, maxWidth: 420, width: '100%', padding: '40px 36px', textAlign: 'center' }}>
-            <div style={{ fontSize: 48, marginBottom: 16 }}>{'\uD83D\uDD12'}</div>
-            <div style={{ fontFamily: cinzel.style.fontFamily, fontSize: 20, color: C.primary, marginBottom: 8 }}>Bu Icerik Abonelere Ozeldir</div>
-            <div style={{ fontSize: 14, color: C.secondary, lineHeight: 1.6, marginBottom: 24 }}>
-              Bitki Ansiklopedisi ne tam erisim icin uyelik gereklidir.
-            </div>
-            <div style={{ display: 'flex', gap: 12, justifyContent: 'center' }}>
-              <a href="/odeme" style={{ textDecoration: 'none', padding: '12px 28px', borderRadius: 10, background: C.primary, color: C.gold, fontFamily: cinzel.style.fontFamily, fontSize: 14, fontWeight: 600, letterSpacing: 1 }}>Abone Ol</a>
-              <button onClick={() => setAboneUyari(false)} style={{ padding: '12px 28px', borderRadius: 10, background: 'transparent', border: `1px solid ${C.border}`, color: C.secondary, fontSize: 14, cursor: 'pointer' }}>Kapat</button>
-            </div>
-          </div>
-        </div>
-      )}
     </div>
   )
 }

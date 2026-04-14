@@ -38,7 +38,6 @@ export default function HastaPage() {
   const [loading, setLoading] = useState(true)
   const [ad, setAd] = useState('')
   const [analizler, setAnalizler] = useState<Analiz[]>([])
-  const [abonelik, setAbonelik] = useState<{ plan: string; bitis: string } | null>(null)
 
   useEffect(() => {
     async function yukle() {
@@ -54,16 +53,6 @@ export default function HastaPage() {
         .order('created_at', { ascending: false })
         .limit(20)
       setAnalizler(forms || [])
-
-      try {
-        const { data: abone } = await supabase
-          .from('abonelikler')
-          .select('plan, bitis')
-          .eq('kullanici_id', user.id)
-          .eq('durum', 'aktif')
-          .single()
-        if (abone) setAbonelik(abone)
-      } catch { /* abonelikler tablosu yoksa sessizce gec */ }
 
       setLoading(false)
     }
@@ -157,28 +146,19 @@ export default function HastaPage() {
             <div style={{ fontSize: 28, fontWeight: 600, color: '#B8860B', fontFamily: cinzel.style.fontFamily }}>{buHafta}</div>
             <div style={{ fontSize: 10, color: '#999', marginTop: 2 }}>/ 1 hak</div>
           </div>
-          <div style={{ background: C.white, borderRadius: 12, border: `1px solid ${C.border}`, padding: '20px', borderTop: `3px solid ${abonelik ? '#2E7D32' : '#C62828'}` }}>
-            <div style={{ fontSize: 10, color: C.secondary, letterSpacing: 1, marginBottom: 6 }}>UYELIK</div>
-            <div style={{ fontSize: 16, fontWeight: 600, color: abonelik ? '#2E7D32' : '#C62828' }}>
-              {abonelik ? `Aktif` : 'Pasif'}
-            </div>
-            {abonelik && <div style={{ fontSize: 11, color: C.secondary, marginTop: 2 }}>{abonelik.plan} · {new Date(abonelik.bitis).toLocaleDateString('tr-TR')}</div>}
-          </div>
         </div>
 
         {/* Haftalik limit cubugu */}
-        {abonelik && (
-          <div style={{ background: C.white, borderRadius: 10, border: `1px solid ${C.border}`, padding: '14px 18px', marginBottom: 20 }}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 6 }}>
-              <span style={{ fontSize: 11, color: C.secondary }}>Haftalik Analiz Hakki</span>
-              <span style={{ fontSize: 11, color: C.dark, fontWeight: 600 }}>{buHafta} / 1</span>
-            </div>
-            <div style={{ height: 6, background: C.surface, borderRadius: 3, overflow: 'hidden' }}>
-              <div style={{ height: '100%', width: `${Math.min(buHafta * 100, 100)}%`, background: buHafta >= 1 ? '#C62828' : C.primary, borderRadius: 3, transition: 'width .3s' }} />
-            </div>
-            {buHafta >= 1 && <div style={{ fontSize: 10, color: '#C62828', marginTop: 4 }}>Bu haftalik hakkiniz kullanildi. Sonraki hafta yenilenir.</div>}
+        <div style={{ background: C.white, borderRadius: 10, border: `1px solid ${C.border}`, padding: '14px 18px', marginBottom: 20 }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 6 }}>
+            <span style={{ fontSize: 11, color: C.secondary }}>Haftalik Analiz Hakki</span>
+            <span style={{ fontSize: 11, color: C.dark, fontWeight: 600 }}>{buHafta} / 1</span>
           </div>
-        )}
+          <div style={{ height: 6, background: C.surface, borderRadius: 3, overflow: 'hidden' }}>
+            <div style={{ height: '100%', width: `${Math.min(buHafta * 100, 100)}%`, background: buHafta >= 1 ? '#C62828' : C.primary, borderRadius: 3, transition: 'width .3s' }} />
+          </div>
+          {buHafta >= 1 && <div style={{ fontSize: 10, color: '#C62828', marginTop: 4 }}>Bu haftalik hakkiniz kullanildi. Sonraki hafta yenilenir.</div>}
+        </div>
 
         {/* Hizli erisim butonlari */}
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(140px, 1fr))', gap: 10, marginBottom: 24 }}>
@@ -259,20 +239,6 @@ export default function HastaPage() {
             </div>
           )}
         </div>
-
-        {/* Üyelik durumu — pasif ise */}
-        {!abonelik && (
-          <div style={{ background: `linear-gradient(135deg, ${C.primary}, #122B1C)`, borderRadius: 16, padding: '28px', textAlign: 'center' }}>
-            <div style={{ fontFamily: cinzel.style.fontFamily, fontSize: 16, color: C.gold, marginBottom: 8, letterSpacing: 1 }}>Uyeliginiz Aktif Degil</div>
-            <p style={{ fontSize: 13, color: 'rgba(255,255,255,0.7)', marginBottom: 20, lineHeight: 1.6 }}>
-              Analiz sonuclarinizi gormek, bitki protokolu almak ve danismaninizla iletisim kurmak icin uye olun.
-            </p>
-            <button onClick={() => router.push('/odeme')}
-              style={{ padding: '14px 32px', background: C.gold, border: 'none', borderRadius: 10, fontFamily: cinzel.style.fontFamily, fontSize: 14, fontWeight: 600, color: C.primary, cursor: 'pointer', letterSpacing: 1 }}>
-              Uye Ol — 590{'\u20BA'}/ay
-            </button>
-          </div>
-        )}
 
         {/* Hikmet */}
         <div style={{ marginTop: 24, background: C.surface, border: `1px solid ${C.border}`, borderRadius: 12, padding: '16px 20px', textAlign: 'center' }}>

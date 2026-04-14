@@ -22,7 +22,6 @@ export default function SonucPage() {
   const [telefon, setTelefon] = useState('')
   const [ad, setAd] = useState('')
   const [kayitNo, setKayitNo] = useState('')
-  const [isAbone, setIsAbone] = useState(false)
   const [kopyalandi, setKopyalandi] = useState(false)
   const supabase = createClient()
 
@@ -37,19 +36,6 @@ export default function SonucPage() {
         setAd(form.ad_soyad || '')
 
         const { data: { user } } = await supabase.auth.getUser()
-
-        // Abonelik kontrol
-        if (user) {
-          try {
-            const { data: abonelik } = await supabase
-              .from('abonelikler')
-              .select('durum')
-              .eq('kullanici_id', user.id)
-              .eq('durum', 'aktif')
-              .single()
-            setIsAbone(!!abonelik)
-          } catch { /* abonelikler tablosu yoksa sessizce gec */ }
-        }
 
         const { data, error } = await supabase
           .from('basic_forms')
@@ -157,8 +143,7 @@ export default function SonucPage() {
             </div>
 
             {/* ANALİZ İLETİLDİ BİLDİRİMİ */}
-            {!isAbone && (
-              <div>
+            <div>
                 <div style={{ background: '#E8F5E9', border: '1px solid #A5D6A7', borderRadius: 14, padding: '24px 28px', marginBottom: 20 }}>
                   <div style={{ display: 'flex', alignItems: 'flex-start', gap: 14, marginBottom: 12 }}>
                     <div style={{ width: 36, height: 36, borderRadius: '50%', background: '#2D6A4F', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
@@ -184,33 +169,6 @@ export default function SonucPage() {
                   </button>
                 </div>
               </div>
-            )}
-
-            {/* ABONE — Tam icerik */}
-            {isAbone && (
-              <div>
-                <div style={{ background: C.white, borderRadius: 16, border: `1px solid ${C.border}`, padding: '24px 28px', marginBottom: 16 }}>
-                  <div style={{ fontFamily: cinzel.style.fontFamily, fontSize: 13, color: C.gold, letterSpacing: 2, marginBottom: 12 }}>SONRAKI ADIMLAR</div>
-                  {[
-                    'Danismaniniz formunuzu klasik Islam tibbi kaynaklari ile analiz eder.',
-                    'Mizac tipiniz, hilt dengeniz ve etkilenen organlar belirlenir.',
-                    'Size ozel bitkisel protokol hazirlanir.',
-                    'WhatsApp uzerinden sonuclariniz ve onerileriniz iletilir.',
-                  ].map((text, i) => (
-                    <div key={i} style={{ display: 'flex', gap: 14, marginBottom: 12, alignItems: 'flex-start' }}>
-                      <div style={{ width: 28, height: 28, background: C.primary, borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, fontFamily: cinzel.style.fontFamily, fontSize: 13, color: C.gold, fontWeight: 600 }}>{i + 1}</div>
-                      <p style={{ fontSize: 14, color: C.secondary, lineHeight: 1.6, margin: 0, paddingTop: 3 }}>{text}</p>
-                    </div>
-                  ))}
-                </div>
-
-                <div style={{ background: C.surface, border: `1px solid ${C.border}`, borderRadius: 12, padding: '14px 18px', marginBottom: 16 }}>
-                  <p style={{ fontSize: 13, color: C.secondary, fontStyle: 'italic', lineHeight: 1.6, margin: 0 }}>
-                    &ldquo;Beden, ancak mizaci bilindiginde tedavi edilebilir.&rdquo; — el-Kânûn fi&apos;t-Tib
-                  </p>
-                </div>
-              </div>
-            )}
 
             {/* Butonlar */}
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10 }}>
