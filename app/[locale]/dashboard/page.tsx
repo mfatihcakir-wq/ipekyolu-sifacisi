@@ -214,7 +214,7 @@ function AnalizKart({ analiz, hasta }: { analiz: any, hasta: any }) {
               <div style={{fontSize:14,fontWeight:700,color:'#E65100',marginBottom:4}}>{t.isim}</div>
               {t.tur && <div style={{fontSize:11,color:'#888',marginBottom:8}}>{t.tur}</div>}
               {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
-              {(t.bilesenler||[]).map((bl: any, j: number) => <div key={j} style={{fontSize:12,padding:'3px 0',borderBottom:'1px solid #FFE0B2'}}>• {bl.ad} — {bl.miktar}</div>)}
+              {(Array.isArray(t.bilesenler) ? t.bilesenler : []).map((bl: any, j: number) => <div key={j} style={{fontSize:12,padding:'3px 0',borderBottom:'1px solid #FFE0B2'}}>• {bl.ad} — {bl.miktar}</div>)}
               {t.uygulama && <div style={{marginTop:8,fontSize:13,fontFamily:"'EB Garamond',serif"}}>{t.uygulama}</div>}
               {t.kaynak && <div style={{marginTop:6,fontSize:11,color:'#888',fontStyle:'italic'}}>📖 {t.kaynak}</div>}
             </div>
