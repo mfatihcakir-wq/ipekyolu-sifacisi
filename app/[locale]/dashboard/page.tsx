@@ -26,6 +26,346 @@ interface DetailedForm {
   user_id: string
 }
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+function AnalizKart({ analiz, hasta }: { analiz: any, hasta: any }) {
+  if (!analiz) return null;
+  const r = analiz;
+  const hNames: Record<string,string> = { dem:'Dem — Kan Hıltı', balgam:'Balgam Hıltı', sari_safra:'Sarı Safra', kara_safra:'Kara Safra' };
+  const hAr: Record<string,string> = { dem:'الدم', balgam:'البلغم', sari_safra:'المرّة الصفراء', kara_safra:'السوداء' };
+  const hColors: Record<string,string> = { dem:'#E53935', balgam:'#2196F3', sari_safra:'#FF8F00', kara_safra:'#5D4037' };
+  const dColors: Record<string,string> = { normal:'#2D6A4F', fazla:'#C0392B', eksik:'#D97706' };
+  const dLabels: Record<string,string> = { normal:'Dengeli ✓', fazla:'Fazla ↑', eksik:'Eksik ↓' };
+  const dBg: Record<string,string> = { normal:'#D8F3DC', fazla:'#FDECEA', eksik:'#FEF3C7' };
+  const tarih = new Date().toLocaleDateString('tr-TR',{day:'2-digit',month:'long',year:'numeric'});
+  const mizac = typeof r.mizac === 'object' ? r.mizac : { tip: r.mizac || '', tam_tanim: r.mizac || '' };
+  const hiltlar = r.hiltlar || r.hilt_dengesi || {};
+  const bitkiler = r.bitki_recetesi || r.bitkisel_recete || r.bitkiler || [];
+  const terkib = r.terkib_recetesi || [];
+  const klinik = r.klinik_gozlemler || r.gozlemler || [];
+  const beslenme = r.beslenme_recetesi || (typeof r.beslenme_onerileri === 'object' ? r.beslenme_onerileri : null);
+  const egzersiz = r.egzersiz_recetesi || {};
+  const gunlukRutin = r.gunluk_rutin || {};
+  const uyum = mizac?.uyum_skoru || 0;
+
+  return (
+    <div style={{borderRadius:16,boxShadow:'0 8px 40px rgba(0,0,0,0.15)',overflow:'hidden',width:'100%',fontFamily:"'Plus Jakarta Sans',sans-serif"}}>
+
+      {/* MARKA BAŞLIĞI */}
+      <div style={{background:'linear-gradient(135deg,#0F2A1A 0%,#1B4332 50%,#2D5A3D 100%)',padding:'28px 28px 22px',position:'relative',overflow:'hidden'}}>
+        <div style={{display:'flex',alignItems:'center',justifyContent:'space-between',marginBottom:20}}>
+          <div style={{display:'flex',alignItems:'center',gap:12}}>
+            <div style={{width:46,height:46,background:'linear-gradient(135deg,#F4A823,#B5840C)',borderRadius:12,display:'flex',alignItems:'center',justifyContent:'center',fontSize:22}}>🏺</div>
+            <div>
+              <div style={{fontFamily:"'Cinzel',serif",fontSize:13,fontWeight:900,color:'#F4A823',letterSpacing:3}}>İPEK YOLU ŞİFACISI</div>
+              <div style={{fontFamily:"'EB Garamond',serif",fontSize:11,color:'rgba(255,255,255,0.55)',letterSpacing:1.5,fontStyle:'italic'}}>ipek yolu şifacısı · الطب الكلاسيكي الإسلامي</div>
+            </div>
+          </div>
+          <div style={{textAlign:'right',fontFamily:"'Cinzel',serif",fontSize:11,color:'rgba(255,255,255,0.4)',letterSpacing:2}}>
+            <div>{tarih}</div>
+          </div>
+        </div>
+        <div style={{fontFamily:"'Noto Naskh Arabic',serif",fontSize:15,color:'rgba(212,175,55,0.6)',marginBottom:6}}>تقرير تحليل المزاج والأخلاط الشخصي</div>
+        <div style={{fontFamily:"'Cinzel',serif",fontSize:20,fontWeight:900,color:'#fff',letterSpacing:2,textTransform:'uppercase' as const}}>KİŞİSEL MİZAÇ & SAĞLIK REÇETESİ</div>
+        {hasta && (
+          <div style={{marginTop:14,background:'rgba(244,168,35,0.10)',border:'1px solid rgba(244,168,35,0.25)',borderRadius:8,padding:'10px 16px'}}>
+            <div style={{fontFamily:"'EB Garamond',serif",fontSize:11,color:'rgba(255,255,255,0.45)',letterSpacing:2,textTransform:'uppercase' as const,marginBottom:4}}>Düzenlendiği Kişi</div>
+            <div style={{fontFamily:"'Cinzel',serif",fontSize:15,color:'#F4A823',fontWeight:700}}>Sayın {hasta.tam_ad || 'Hasta'}</div>
+          </div>
+        )}
+        <div style={{width:'100%',height:1,background:'linear-gradient(90deg,rgba(212,175,55,0.5),rgba(82,183,136,0.3),transparent)',marginTop:16}}/>
+      </div>
+
+      {/* MİZAÇ BLOKU */}
+      <div style={{background:'linear-gradient(135deg,#1B4332,#2D6A4F)',padding:'24px 28px',position:'relative',overflow:'hidden'}}>
+        <div style={{display:'flex',alignItems:'flex-start',justifyContent:'space-between',gap:16}}>
+          <div style={{flex:1}}>
+            <div style={{fontFamily:"'Cinzel',serif",fontSize:10,color:'rgba(255,255,255,0.5)',letterSpacing:3,textTransform:'uppercase' as const,marginBottom:6}}>Tespit Edilen Mizaç</div>
+            <div style={{fontFamily:"'Cinzel',serif",fontSize:22,fontWeight:900,color:'#F4A823',marginBottom:4,lineHeight:1.2}}>{mizac?.tam_tanim || mizac?.tip || ''}</div>
+            <div style={{fontFamily:"'Noto Naskh Arabic',serif",fontSize:18,color:'rgba(255,255,255,0.65)',marginBottom:14}}>{mizac?.tip_ar || ''}</div>
+            <div style={{display:'flex',gap:8,flexWrap:'wrap' as const}}>
+              {mizac?.ana_element && <div style={{background:'rgba(255,255,255,0.1)',border:'1px solid rgba(255,255,255,0.18)',borderRadius:6,padding:'6px 12px'}}><span style={{fontSize:9,color:'rgba(255,255,255,0.45)',letterSpacing:2,display:'block',marginBottom:2}}>ANA ELEMENT</span><div style={{fontSize:13,fontWeight:600,color:'white'}}>{mizac.ana_element}</div></div>}
+              {mizac?.alt_mizac && <div style={{background:'rgba(255,255,255,0.1)',border:'1px solid rgba(255,255,255,0.18)',borderRadius:6,padding:'6px 12px'}}><span style={{fontSize:9,color:'rgba(255,255,255,0.45)',letterSpacing:2,display:'block',marginBottom:2}}>ALT MİZAÇ</span><div style={{fontSize:13,fontWeight:600,color:'white'}}>{mizac.alt_mizac}</div></div>}
+            </div>
+            {mizac?.mevsim_etkisi && <div style={{marginTop:10,background:'rgba(255,255,255,0.08)',borderRadius:6,padding:'8px 12px',fontSize:13,color:'rgba(255,255,255,0.7)'}}>🌿 {mizac.mevsim_etkisi}</div>}
+          </div>
+          <div style={{display:'flex',flexDirection:'column' as const,alignItems:'center',gap:8}}>
+            <div style={{width:84,height:84,borderRadius:'50%',background:`conic-gradient(#F4A823 ${uyum*3.6}deg,rgba(255,255,255,0.1) 0)`,display:'flex',alignItems:'center',justifyContent:'center',fontFamily:"'Cinzel',serif",fontSize:19,fontWeight:900,color:'#F4A823',position:'relative' as const}}>
+              <div style={{position:'absolute' as const,inset:6,background:'#2D6A4F',borderRadius:'50%'}}/>
+              <span style={{position:'relative' as const,zIndex:1}}>{uyum}%</span>
+            </div>
+            <div style={{fontSize:9,color:'rgba(255,255,255,0.4)',letterSpacing:1,textTransform:'uppercase' as const,textAlign:'center' as const}}>Uyum<br/>Skoru</div>
+          </div>
+        </div>
+        {mizac?.sure && <div style={{marginTop:16,fontFamily:"'EB Garamond',serif",fontSize:16,color:'rgba(255,255,255,0.78)',fontStyle:'italic',lineHeight:1.7}}>{mizac.sure}</div>}
+        {mizac?.kaynak && <div style={{marginTop:10,fontFamily:"'EB Garamond',serif",fontSize:13,color:'rgba(255,255,255,0.4)',fontStyle:'italic'}}>📖 {mizac.kaynak}</div>}
+      </div>
+
+      {/* FITRİ-HÂLİ */}
+      {r.fitri_hali?.sapma && (
+        <div style={{background:'#F3EFF8',padding:'22px 28px',borderTop:'1px solid #EDE7DC'}}>
+          <div style={{display:'flex',alignItems:'center',gap:10,fontFamily:"'Cinzel',serif",fontSize:10,color:'#6A1B9A',letterSpacing:3,textTransform:'uppercase' as const,marginBottom:14}}>🔮 Fıtrî-Hâlî Karşılaştırması</div>
+          <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:10}}>
+            <div style={{background:'white',border:'1px solid #E8D5F5',borderRadius:8,padding:12}}><div style={{fontSize:10,color:'#6A1B9A',letterSpacing:1,marginBottom:4}}>FITRİ MİZAÇ</div><div style={{fontSize:14,fontWeight:600}}>{r.fitri_hali.fitri_mizac || 'Belirlenmedi'}</div></div>
+            <div style={{background:'white',border:'1px solid #E8D5F5',borderRadius:8,padding:12}}><div style={{fontSize:10,color:'#6A1B9A',letterSpacing:1,marginBottom:4}}>HÂLİ MİZAÇ</div><div style={{fontSize:14,fontWeight:600}}>{r.fitri_hali.hali_mizac || '—'}</div></div>
+          </div>
+          <div style={{marginTop:10,background:'white',border:'1px solid #E8D5F5',borderRadius:8,padding:12}}><div style={{fontSize:10,color:'#6A1B9A',letterSpacing:1,marginBottom:4}}>SAPMA</div><div style={{fontFamily:"'EB Garamond',serif",fontSize:14,fontStyle:'italic'}}>{r.fitri_hali.sapma}</div></div>
+          {r.fitri_hali.tedavi_hedefi && <div style={{marginTop:8,background:'#EDE7F6',borderRadius:8,padding:'10px 12px',fontSize:13,color:'#4A148C'}}>🎯 Tedavi Hedefi: {r.fitri_hali.tedavi_hedefi}</div>}
+        </div>
+      )}
+
+      {/* HILTLAR */}
+      {Object.keys(hiltlar).length > 0 && (
+        <div style={{background:'#FFFDF8',padding:'22px 28px',borderTop:'1px solid #EDE7DC'}}>
+          <div style={{display:'flex',alignItems:'center',gap:10,fontFamily:"'Cinzel',serif",fontSize:10,color:'#2D6A4F',letterSpacing:3,textTransform:'uppercase' as const,marginBottom:14}}>⚗️ Hılt Dengesi — الأخلاط الأربعة<div style={{flex:1,height:1,background:'linear-gradient(90deg,#C8C0B0,transparent)',marginLeft:10}}/></div>
+          <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:10}}>
+            {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
+            {Object.entries(hiltlar).map(([k, hRaw]: [string, any]) => {
+              const h = typeof hRaw === 'object' && hRaw !== null ? hRaw : {oran: hRaw, durum:'normal', aciklama:''};
+              const isDom = r.baskin_hilt === k;
+              return (
+                <div key={k} style={{background:'white',border:`1.5px solid ${isDom ? '#B5840C' : '#E8E0D0'}`,borderRadius:10,padding:14,boxShadow:isDom ? '0 4px 16px rgba(181,132,12,0.15)' : '0 2px 8px rgba(0,0,0,0.05)'}}>
+                  <div style={{display:'flex',alignItems:'center',justifyContent:'space-between',marginBottom:8}}>
+                    <div>
+                      <div style={{fontWeight:700,fontSize:12,color:'#1C1C1C'}}>{hNames[k] || k}</div>
+                      <div style={{fontFamily:"'Noto Naskh Arabic',serif",fontSize:15,color:hColors[k]}}>{hAr[k]}</div>
+                    </div>
+                    {isDom && <span style={{fontSize:9,background:'#FEF3C7',border:'1px solid #B5840C',borderRadius:20,padding:'2px 8px',color:'#B5840C',fontFamily:"'Cinzel',serif",letterSpacing:1,fontWeight:700}}>BASKIN</span>}
+                  </div>
+                  <div style={{height:6,background:'#F0EBE0',borderRadius:3,overflow:'hidden',marginBottom:7}}><div style={{height:'100%',width:`${h.oran}%`,background:hColors[k],borderRadius:3}}/></div>
+                  <div style={{display:'flex',alignItems:'center',justifyContent:'space-between'}}>
+                    <div style={{fontSize:12,fontWeight:700,color:'#4A4A4A'}}>%{h.oran}</div>
+                    <div style={{fontSize:10,fontWeight:700,padding:'2px 8px',borderRadius:20,background:dBg[h.durum||'normal'],color:dColors[h.durum||'normal']}}>{dLabels[h.durum||'normal']}</div>
+                  </div>
+                  {h.aciklama && <div style={{marginTop:8,fontFamily:"'EB Garamond',serif",fontSize:13,color:'#666',fontStyle:'italic',lineHeight:1.5}}>{h.aciklama}</div>}
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      )}
+
+      {/* SEBEP ANALİZİ */}
+      {r.sebep_analizi?.badi_sebep && r.sebep_analizi.badi_sebep !== 'Yakın/Mevcut sebep' && (
+        <div style={{background:'#F3F4F6',padding:'22px 28px',borderTop:'1px solid #EDE7DC',borderLeft:'4px solid #6B7280'}}>
+          <div style={{display:'flex',alignItems:'center',gap:10,fontFamily:"'Cinzel',serif",fontSize:10,color:'#374151',letterSpacing:3,textTransform:'uppercase' as const,marginBottom:14}}>🔍 Sebep Analizi — İbn Rüşd (el-Külliyyât)</div>
+          <div style={{fontSize:13,marginBottom:6}}><strong>Yakın Sebep (Bâdî):</strong> {r.sebep_analizi.badi_sebep}</div>
+          {(r.sebep_analizi.muid_sebepler||[]).map((s: string, i: number) => <div key={i} style={{fontSize:12,padding:'2px 0',color:'#6B7280'}}>→ {s}</div>)}
+          {r.sebep_analizi.kok_mudahale && <div style={{fontSize:12,marginTop:6,color:'#059669'}}>Kök Müdahale: {r.sebep_analizi.kok_mudahale}</div>}
+        </div>
+      )}
+
+      {/* KLİNİK GÖZLEMLER */}
+      {klinik.length > 0 && (
+        <div style={{background:'white',padding:'22px 28px',borderTop:'1px solid #EDE7DC'}}>
+          <div style={{display:'flex',alignItems:'center',gap:10,fontFamily:"'Cinzel',serif",fontSize:10,color:'#2D6A4F',letterSpacing:3,textTransform:'uppercase' as const,marginBottom:14}}>🔬 Klinik Gözlemler — الملاحظات السريرية<div style={{flex:1,height:1,background:'linear-gradient(90deg,#C8C0B0,transparent)',marginLeft:10}}/></div>
+          {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
+          {klinik.map((g: any, i: number) => {
+            const obs = typeof g === 'string' ? {baslik: g, icerik:'', kaynak:''} : g;
+            return (
+              <div key={i} style={{display:'flex',gap:12,alignItems:'flex-start',padding:'12px 0',borderBottom:'1px solid #F0EBE0'}}>
+                <div style={{width:34,height:34,borderRadius:8,background:'#D8F3DC',display:'flex',alignItems:'center',justifyContent:'center',fontSize:16,flexShrink:0}}>🔬</div>
+                <div style={{flex:1}}>
+                  <div style={{fontSize:11,fontWeight:700,color:'#2D6A4F',letterSpacing:1,textTransform:'uppercase' as const,marginBottom:3}}>{obs.baslik}</div>
+                  <div style={{fontFamily:"'EB Garamond',serif",fontSize:15,color:'#1C1C1C',lineHeight:1.6}}>{obs.icerik}</div>
+                  {obs.kaynak && <div style={{fontSize:11,color:'#888',fontStyle:'italic',marginTop:3,fontFamily:"'EB Garamond',serif"}}>📖 {obs.kaynak}</div>}
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      )}
+
+      {/* BİTKİSEL REÇETE */}
+      {bitkiler.length > 0 && (
+        <div style={{background:'#FFFDF8',padding:'22px 28px',borderTop:'1px solid #EDE7DC'}}>
+          <div style={{display:'flex',alignItems:'center',gap:10,fontFamily:"'Cinzel',serif",fontSize:10,color:'#2D6A4F',letterSpacing:3,textTransform:'uppercase' as const,marginBottom:14}}>🌿 Bitkisel Reçete — وصفة الأعشاب الطبية<div style={{flex:1,height:1,background:'linear-gradient(90deg,#C8C0B0,transparent)',marginLeft:10}}/></div>
+          {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
+          {bitkiler.map((b: any, i: number) => (
+            <div key={i} style={{background:'#F7FBF8',border:'1px solid #C8E6C9',borderRadius:10,padding:16,marginBottom:10}}>
+              <div style={{display:'flex',alignItems:'center',gap:12,marginBottom:12}}>
+                <div style={{background:'#2D6A4F',borderRadius:8,padding:'8px 12px',textAlign:'center' as const,flexShrink:0,minWidth:72}}>
+                  <div style={{fontFamily:"'Noto Naskh Arabic',serif",fontSize:16,color:'#A5D6A7',display:'block',marginBottom:2}}>{b.ar}</div>
+                  <div style={{fontFamily:"'Cinzel',serif",fontSize:9,color:'#F4A823',letterSpacing:1}}>{b.ad || b.bitki}</div>
+                </div>
+                <div style={{flex:1}}>
+                  <div style={{fontSize:14,fontWeight:700,color:'#1C1C1C',marginBottom:2}}>{b.bitki || b.ad || b.isim}</div>
+                  {b.mizac && <div style={{fontSize:11,color:'#2D6A4F',fontStyle:'italic'}}>Mizaç: {b.mizac}</div>}
+                  {b.endikasyon && <div style={{fontSize:12,color:'#555',marginTop:2}}>{b.endikasyon}</div>}
+                </div>
+              </div>
+              <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:8}}>
+                {b.doz && <div style={{background:'white',borderRadius:6,padding:'8px 10px',border:'1px solid #E0F0E0'}}><div style={{fontSize:9,fontWeight:700,color:'#2D6A4F',letterSpacing:1,marginBottom:3}}>DOZ</div><div style={{fontSize:12}}>{b.doz}</div></div>}
+                {b.hazirlanis && <div style={{background:'white',borderRadius:6,padding:'8px 10px',border:'1px solid #E0F0E0',gridColumn:'1/-1'}}><div style={{fontSize:9,fontWeight:700,color:'#2D6A4F',letterSpacing:1,marginBottom:3}}>HAZIRLANIS</div><div style={{fontSize:12}}>{b.hazirlanis}</div></div>}
+              </div>
+              {b.kontrendikasyon && <div style={{marginTop:8,background:'#FFF3E0',borderRadius:6,padding:'6px 10px',fontSize:11,color:'#E65100'}}>⚠ {b.kontrendikasyon}</div>}
+              {b.kaynak && <div style={{marginTop:6,fontSize:11,color:'#888',fontStyle:'italic',fontFamily:"'EB Garamond',serif"}}>📖 {b.kaynak}</div>}
+            </div>
+          ))}
+        </div>
+      )}
+
+      {/* TERKİB REÇETESİ */}
+      {terkib.length > 0 && (
+        <div style={{background:'white',padding:'22px 28px',borderTop:'1px solid #EDE7DC'}}>
+          <div style={{display:'flex',alignItems:'center',gap:10,fontFamily:"'Cinzel',serif",fontSize:10,color:'#2D6A4F',letterSpacing:3,textTransform:'uppercase' as const,marginBottom:14}}>⚗️ Bileşik Formül (Terkib) — الأدوية المركبة<div style={{flex:1,height:1,background:'linear-gradient(90deg,#C8C0B0,transparent)',marginLeft:10}}/></div>
+          {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
+          {terkib.map((t: any, i: number) => (
+            <div key={i} style={{background:'#FFF8F0',border:'1px solid #FFE0B2',borderRadius:10,padding:16,marginBottom:10}}>
+              <div style={{fontSize:14,fontWeight:700,color:'#E65100',marginBottom:4}}>{t.isim}</div>
+              {t.tur && <div style={{fontSize:11,color:'#888',marginBottom:8}}>{t.tur}</div>}
+              {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
+              {(t.bilesenler||[]).map((bl: any, j: number) => <div key={j} style={{fontSize:12,padding:'3px 0',borderBottom:'1px solid #FFE0B2'}}>• {bl.ad} — {bl.miktar}</div>)}
+              {t.uygulama && <div style={{marginTop:8,fontSize:13,fontFamily:"'EB Garamond',serif"}}>{t.uygulama}</div>}
+              {t.kaynak && <div style={{marginTop:6,fontSize:11,color:'#888',fontStyle:'italic'}}>📖 {t.kaynak}</div>}
+            </div>
+          ))}
+        </div>
+      )}
+
+      {/* GÜNLÜK RUTİN */}
+      {(gunlukRutin.sabah || gunlukRutin.oglen || gunlukRutin.aksam) && (
+        <div style={{background:'#FFFDF8',padding:'22px 28px',borderTop:'1px solid #EDE7DC'}}>
+          <div style={{display:'flex',alignItems:'center',gap:10,fontFamily:"'Cinzel',serif",fontSize:10,color:'#2D6A4F',letterSpacing:3,textTransform:'uppercase' as const,marginBottom:14}}>🕐 Günlük Rutin — الروتين اليومي<div style={{flex:1,height:1,background:'linear-gradient(90deg,#C8C0B0,transparent)',marginLeft:10}}/></div>
+          {(['sabah','oglen','aksam'] as const).map((vakit) => {
+            const items = gunlukRutin[vakit];
+            if (!items) return null;
+            const list = Array.isArray(items) ? items : [items];
+            const labels: Record<string,string> = {sabah:'🌅 Sabah', oglen:'☀️ Öğle', aksam:'🌆 Akşam'};
+            return (
+              <div key={vakit} style={{marginBottom:8,padding:'10px 14px',background:'white',borderRadius:8,border:'1px solid #E8E0D0',borderLeft:'3px solid #2D6A4F'}}>
+                <div style={{fontSize:11,fontWeight:700,color:'#2D6A4F',letterSpacing:1,marginBottom:4}}>{labels[vakit]}</div>
+                {list.map((item: string, i: number) => <div key={i} style={{fontFamily:"'EB Garamond',serif",fontSize:14,color:'#333',lineHeight:1.6}}>{item}</div>)}
+              </div>
+            );
+          })}
+        </div>
+      )}
+
+      {/* BESLENME */}
+      {beslenme && (
+        <div style={{background:'#FFFDF8',padding:'22px 28px',borderTop:'1px solid #EDE7DC'}}>
+          <div style={{display:'flex',alignItems:'center',gap:10,fontFamily:"'Cinzel',serif",fontSize:10,color:'#2D6A4F',letterSpacing:3,textTransform:'uppercase' as const,marginBottom:14}}>🍽️ Beslenme Reçetesi — التغذية الطبية<div style={{flex:1,height:1,background:'linear-gradient(90deg,#C8C0B0,transparent)',marginLeft:10}}/></div>
+          {beslenme.ilke && <div style={{background:'linear-gradient(135deg,#1B4332,#2D6A4F)',borderRadius:8,padding:'12px 16px',marginBottom:14}}><div style={{fontSize:10,letterSpacing:2,color:'rgba(255,255,255,0.55)',textTransform:'uppercase' as const,marginBottom:4}}>TEMEL İLKE</div><div style={{fontSize:15,color:'rgba(255,255,255,0.9)'}}>{beslenme.ilke}</div></div>}
+          <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:12}}>
+            <div style={{background:'#D8F3DC',border:'1px solid #52B788',borderRadius:8,padding:14}}>
+              <div style={{fontSize:10,fontWeight:700,letterSpacing:2,textTransform:'uppercase' as const,color:'#2D6A4F',marginBottom:8}}>Önerilen Gıdalar</div>
+              <ul style={{listStyle:'none',margin:0,padding:0}}>
+                {(Array.isArray(beslenme.onerililer) ? beslenme.onerililer : []).map((x: string, i: number) => <li key={i} style={{fontFamily:"'EB Garamond',serif",fontSize:14,color:'#333',padding:'2px 0',lineHeight:1.5}}>• {x}</li>)}
+              </ul>
+            </div>
+            <div style={{background:'#FDECEA',border:'1px solid #EF9A9A',borderRadius:8,padding:14}}>
+              <div style={{fontSize:10,fontWeight:700,letterSpacing:2,textTransform:'uppercase' as const,color:'#C0392B',marginBottom:8}}>Kaçınılacaklar</div>
+              <ul style={{listStyle:'none',margin:0,padding:0}}>
+                {(Array.isArray(beslenme.kacinilacaklar) ? beslenme.kacinilacaklar : []).map((x: string, i: number) => <li key={i} style={{fontFamily:"'EB Garamond',serif",fontSize:14,color:'#333',padding:'2px 0',lineHeight:1.5}}>• {x}</li>)}
+              </ul>
+            </div>
+          </div>
+          {(beslenme.pisirime_yontemi || beslenme.ozel_tavsiyeler) && (
+            <div style={{marginTop:12,background:'#FEF3C7',borderRadius:8,padding:12,border:'1px solid #F4A823',fontFamily:"'EB Garamond',serif",fontSize:15,color:'#333',lineHeight:1.6}}>
+              {beslenme.pisirime_yontemi && <><strong style={{color:'#B5840C'}}>Pişirme:</strong> {beslenme.pisirime_yontemi}<br/></>}
+              {beslenme.ozel_tavsiyeler}
+              {beslenme.kaynak && <div style={{marginTop:8,fontSize:13,color:'#888'}}>{beslenme.kaynak}</div>}
+            </div>
+          )}
+        </div>
+      )}
+
+      {/* EGZERSİZ */}
+      {(egzersiz.tur || egzersiz.ozel) && (
+        <div style={{background:'white',padding:'22px 28px',borderTop:'1px solid #EDE7DC'}}>
+          <div style={{display:'flex',alignItems:'center',gap:10,fontFamily:"'Cinzel',serif",fontSize:10,color:'#2D6A4F',letterSpacing:3,textTransform:'uppercase' as const,marginBottom:14}}>🏃 Egzersiz Reçetesi — التمارين الرياضية<div style={{flex:1,height:1,background:'linear-gradient(90deg,#C8C0B0,transparent)',marginLeft:10}}/></div>
+          <div style={{background:'linear-gradient(135deg,#EEF7EE,#D8F3DC)',border:'1.5px solid #52B788',borderRadius:10,padding:16}}>
+            <div style={{display:'flex',gap:10,flexWrap:'wrap' as const,marginBottom:12}}>
+              {egzersiz.tur && <div style={{background:'white',borderRadius:6,padding:'7px 12px',border:'1px solid #C8E6C9',textAlign:'center' as const}}><span style={{fontSize:9,color:'#2D6A4F',letterSpacing:1,display:'block',marginBottom:2}}>TÜR</span><div style={{fontSize:13,fontWeight:700}}>{egzersiz.tur}</div></div>}
+              {egzersiz.zaman && <div style={{background:'white',borderRadius:6,padding:'7px 12px',border:'1px solid #C8E6C9',textAlign:'center' as const}}><span style={{fontSize:9,color:'#2D6A4F',letterSpacing:1,display:'block',marginBottom:2}}>ZAMAN</span><div style={{fontSize:13,fontWeight:700}}>{egzersiz.zaman}</div></div>}
+              {egzersiz.sure && <div style={{background:'white',borderRadius:6,padding:'7px 12px',border:'1px solid #C8E6C9',textAlign:'center' as const}}><span style={{fontSize:9,color:'#2D6A4F',letterSpacing:1,display:'block',marginBottom:2}}>SÜRE</span><div style={{fontSize:13,fontWeight:700}}>{egzersiz.sure}</div></div>}
+              {egzersiz.siddet && <div style={{background:'white',borderRadius:6,padding:'7px 12px',border:'1px solid #C8E6C9',textAlign:'center' as const}}><span style={{fontSize:9,color:'#2D6A4F',letterSpacing:1,display:'block',marginBottom:2}}>YOĞUNLUK</span><div style={{fontSize:13,fontWeight:700}}>{egzersiz.siddet}</div></div>}
+            </div>
+            {egzersiz.ozel && <div style={{fontFamily:"'EB Garamond',serif",fontSize:15,color:'#1C1C1C',lineHeight:1.6,marginBottom:10}}>{egzersiz.ozel}</div>}
+            {egzersiz.kacinilacaklar && <div style={{background:'white',borderRadius:6,padding:'10px 12px',borderLeft:'3px solid #EF5350'}}><div style={{fontSize:10,fontWeight:700,color:'#C0392B',letterSpacing:1,marginBottom:4}}>⚠ Kaçınılacak</div><div style={{fontFamily:"'EB Garamond',serif",fontSize:14,color:'#333'}}>{egzersiz.kacinilacaklar}</div></div>}
+            {egzersiz.kaynak && <div style={{marginTop:10,fontSize:12,color:'#666',fontFamily:"'EB Garamond',serif",fontStyle:'italic'}}>📖 {egzersiz.kaynak}</div>}
+          </div>
+        </div>
+      )}
+
+      {/* İLAÇ ETKİLEŞİMLERİ */}
+      {(r.ilac_etkilesimleri||[]).length > 0 && (
+        <div style={{background:'#FFF3E0',padding:'22px 28px',borderTop:'1px solid #EDE7DC',borderLeft:'4px solid #FF8F00'}}>
+          <div style={{display:'flex',alignItems:'center',gap:10,fontFamily:"'Cinzel',serif",fontSize:10,color:'#E65100',letterSpacing:3,textTransform:'uppercase' as const,marginBottom:14}}>💊 İlaç-Bitki Etkileşim Uyarıları</div>
+          {r.ilac_etkilesimleri.map((e: string, i: number) => <div key={i} style={{padding:'6px 0',fontSize:13,borderBottom:'1px solid #FFE0B2'}}>⚡ {e}</div>)}
+        </div>
+      )}
+
+      {/* ALTERNATİF BİTKİLER */}
+      {(r.alternatif_bitkiler||[]).length > 0 && (
+        <div style={{background:'#E8F5E9',padding:'22px 28px',borderTop:'1px solid #EDE7DC',borderLeft:'4px solid #43A047'}}>
+          <div style={{display:'flex',alignItems:'center',gap:10,fontFamily:"'Cinzel',serif",fontSize:10,color:'#2E7D32',letterSpacing:3,textTransform:'uppercase' as const,marginBottom:14}}>🔄 Alternatifler (el-Ebdâl)</div>
+          {r.alternatif_bitkiler.map((a: string, i: number) => <div key={i} style={{padding:'4px 0',fontSize:13}}>↔ {a}</div>)}
+        </div>
+      )}
+
+      {/* HASTA YAŞI NOTU */}
+      {r.hasta_yasina_gore_not && (
+        <div style={{background:'#EDE7F6',padding:'22px 28px',borderTop:'1px solid #EDE7DC',borderLeft:'4px solid #7B1FA2'}}>
+          <div style={{fontFamily:"'Cinzel',serif",fontSize:10,color:'#6A1B9A',letterSpacing:3,textTransform:'uppercase' as const,marginBottom:10}}>👤 Yaş/Durum Özel Notu</div>
+          <div style={{fontSize:13,lineHeight:1.7}}>{r.hasta_yasina_gore_not}</div>
+        </div>
+      )}
+
+      {/* SONRAKİ KONTROL */}
+      {r.sonraki_kontrol?.sure && (
+        <div style={{background:'#E3F2FD',padding:'22px 28px',borderTop:'1px solid #EDE7DC',borderLeft:'4px solid #1976D2'}}>
+          <div style={{fontFamily:"'Cinzel',serif",fontSize:10,color:'#0D47A1',letterSpacing:3,textTransform:'uppercase' as const,marginBottom:10}}>📅 Sonraki Kontrol — {r.sonraki_kontrol.sure}</div>
+          {r.sonraki_kontrol.amac && <div style={{fontSize:13,marginBottom:6}}>{r.sonraki_kontrol.amac}</div>}
+          {(r.sonraki_kontrol.odak_parametreler||[]).length > 0 && (
+            <div style={{display:'flex',flexWrap:'wrap' as const,gap:6,marginTop:6}}>
+              {r.sonraki_kontrol.odak_parametreler.map((p: string, i: number) => <span key={i} style={{background:'#BBDEFB',borderRadius:12,padding:'3px 10px',fontSize:11,color:'#0D47A1'}}>📍 {p}</span>)}
+            </div>
+          )}
+        </div>
+      )}
+
+      {/* HİKMETLİ SÖZ */}
+      {r.hikmetli_soz?.metin && (
+        <div style={{background:'linear-gradient(135deg,#FDF6E3,#FEF3C7)',border:'1px solid #D4AF37',padding:'22px 24px',margin:'0 0 2px'}}>
+          <div style={{fontFamily:"'Cinzel',serif",fontSize:10,color:'#8B6914',letterSpacing:3,textTransform:'uppercase' as const,marginBottom:14}}>Hikmet — حكمة</div>
+          {r.hikmetli_soz.metin_ar && <div style={{fontFamily:"'Noto Naskh Arabic',serif",fontSize:22,color:'#5D4037',direction:'rtl' as const,textAlign:'right' as const,lineHeight:1.9,marginBottom:12}}>{r.hikmetli_soz.metin_ar}</div>}
+          <div style={{fontFamily:"'EB Garamond',serif",fontSize:18,color:'#3E2723',lineHeight:1.7,marginBottom:10}}>{r.hikmetli_soz.metin}</div>
+          {r.hikmetli_soz.kaynak && <div style={{fontSize:12,color:'#8B6914',fontFamily:"'Cinzel',serif",letterSpacing:1}}>— {r.hikmetli_soz.kaynak}</div>}
+        </div>
+      )}
+
+      {/* UYARILAR */}
+      {(r.uyarilar||[]).length > 0 && (
+        <div style={{background:'white',padding:'22px 28px',borderTop:'1px solid #EDE7DC'}}>
+          <div style={{display:'flex',alignItems:'center',gap:10,fontFamily:"'Cinzel',serif",fontSize:10,color:'#2D6A4F',letterSpacing:3,textTransform:'uppercase' as const,marginBottom:14}}>⚠️ Uyarılar</div>
+          {r.uyarilar.map((u: string, i: number) => (
+            <div key={i} style={{display:'flex',gap:10,alignItems:'flex-start',background:'#FFFDE7',borderRadius:7,padding:'10px 12px',borderLeft:'3px solid #F4A823',marginBottom:6}}>
+              <span style={{fontSize:15,flexShrink:0}}>⚠️</span>
+              <div style={{fontFamily:"'EB Garamond',serif",fontSize:14,color:'#333',lineHeight:1.5}}>{u}</div>
+            </div>
+          ))}
+        </div>
+      )}
+
+      {/* ÖZET */}
+      {r.ozet && (
+        <div style={{background:'linear-gradient(135deg,#1B4332,#2D6A4F)',padding:'22px 28px'}}>
+          <div style={{fontFamily:"'Cinzel',serif",fontSize:10,color:'rgba(255,255,255,0.5)',letterSpacing:3,textTransform:'uppercase' as const,marginBottom:10}}>Genel Değerlendirme — التقييم العام</div>
+          <div style={{fontFamily:"'EB Garamond',serif",fontSize:16,color:'rgba(255,255,255,0.85)',lineHeight:1.8,fontStyle:'italic'}}>{r.ozet}</div>
+        </div>
+      )}
+
+      {/* FOOTER */}
+      <div style={{background:'#0F2A1A',padding:'16px 28px',borderRadius:'0 0 16px 16px',display:'flex',alignItems:'center',justifyContent:'space-between'}}>
+        <div style={{fontFamily:"'Cinzel',serif",fontSize:12,color:'rgba(212,175,55,0.7)',letterSpacing:3}}>⚗️ İPEK YOLU ŞİFACISI</div>
+        <div style={{fontFamily:"'EB Garamond',serif",fontSize:11,color:'rgba(255,255,255,0.3)',fontStyle:'italic',maxWidth:340,textAlign:'right' as const,lineHeight:1.5}}>Bu kart klasik İslam tıbbı çerçevesinde bilgilendirme amaçlıdır. Tıbbi teşhis yerine geçmez.</div>
+      </div>
+
+    </div>
+  );
+}
+
 export default function DashboardPage() {
   const [forms, setForms] = useState<DetailedForm[]>([])
   const [secili, setSecili] = useState<DetailedForm | null>(null)
@@ -681,326 +1021,7 @@ export default function DashboardPage() {
               {analiz && (
                 <div style={{ background: C.white, borderRadius: 14, border: `1px solid ${C.border}`, padding: '20px 24px' }}>
 
-                  {/* MİZAÇ KARTI */}
-                  <div style={{ background: C.primary, borderRadius: 12, padding: '16px 20px', marginBottom: 14 }}>
-                    <div style={{ fontSize: 10, color: 'rgba(255,255,255,0.5)', letterSpacing: 2, textTransform: 'uppercase' as const, marginBottom: 4 }}>Baskin Mizac</div>
-                    <div style={{ fontFamily: cinzel.style.fontFamily, fontSize: 20, color: C.gold, marginBottom: 8 }}>{typeof analiz.mizac === 'object' ? (analiz.mizac?.tip || '') : (analiz.mizac || '')}</div>
-                    {analiz.fitri_hali && (
-                      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 8, marginTop: 8 }}>
-                        <div style={{ background: 'rgba(255,255,255,0.08)', borderRadius: 8, padding: '8px 10px' }}>
-                          <div style={{ fontSize: 9, color: 'rgba(255,255,255,0.4)', letterSpacing: 1 }}>FITRI</div>
-                          <div style={{ fontSize: 12, color: 'white', marginTop: 2 }}>{analiz.fitri_hali.fitri_mizac}</div>
-                        </div>
-                        <div style={{ background: 'rgba(255,255,255,0.08)', borderRadius: 8, padding: '8px 10px' }}>
-                          <div style={{ fontSize: 9, color: 'rgba(255,255,255,0.4)', letterSpacing: 1 }}>HALI</div>
-                          <div style={{ fontSize: 12, color: 'white', marginTop: 2 }}>{analiz.fitri_hali.hali_mizac}</div>
-                        </div>
-                        {analiz.fitri_hali.sapma && (
-                          <div style={{ gridColumn: '1/-1', background: 'rgba(255,255,255,0.06)', borderRadius: 8, padding: '8px 10px' }}>
-                            <div style={{ fontSize: 9, color: 'rgba(255,255,255,0.4)', letterSpacing: 1 }}>SAPMA</div>
-                            <div style={{ fontSize: 11, color: 'rgba(255,255,255,0.7)', marginTop: 2 }}>{analiz.fitri_hali.sapma}</div>
-                          </div>
-                        )}
-                        {analiz.fitri_hali.tedavi_hedefi && (
-                          <div style={{ gridColumn: '1/-1', background: 'rgba(184,146,42,0.15)', borderRadius: 8, padding: '8px 10px' }}>
-                            <div style={{ fontSize: 9, color: C.gold, letterSpacing: 1 }}>TEDAVI HEDEFI</div>
-                            <div style={{ fontSize: 12, color: 'rgba(255,255,255,0.85)', marginTop: 2 }}>{analiz.fitri_hali.tedavi_hedefi}</div>
-                          </div>
-                        )}
-                      </div>
-                    )}
-                  </div>
-
-                  {/* HILT DENGESİ */}
-                  {analiz.hilt_dengesi && (
-                    <div style={{ marginBottom: 14 }}>
-                      <div style={{ fontFamily: cinzel.style.fontFamily, fontSize: 11, color: C.gold, letterSpacing: 2, marginBottom: 10, textTransform: 'uppercase' as const }}>Hilt Dengesi</div>
-                      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 8 }}>
-                        {[
-                          { key: 'dem', label: 'Dem — Kan', ar: 'الدم', color: '#EF5350' },
-                          { key: 'balgam', label: 'Balgam', ar: 'البلغم', color: '#42A5F5' },
-                          { key: 'safra', label: 'Sari Safra', ar: 'الصفراء', color: '#FFA726' },
-                          { key: 'kara_safra', label: 'Kara Safra', ar: 'السوداء', color: '#AB47BC' },
-                        ].map(h => {
-                          // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                          const d = (analiz.hilt_dengesi as any)[h.key]
-                          if (!d) return null
-                          const durum = d.durum === 'fazla' ? 'Fazla \u2191' : d.durum === 'eksik' ? 'Eksik \u2193' : 'Normal'
-                          const durumColor = d.durum === 'fazla' ? '#C62828' : d.durum === 'eksik' ? '#1565C0' : '#2E7D32'
-                          return (
-                            <div key={h.key} style={{ background: C.surface, borderRadius: 8, padding: '10px 12px', borderLeft: `3px solid ${h.color}` }}>
-                              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 4 }}>
-                                <div>
-                                  <div style={{ fontSize: 11, fontWeight: 600, color: C.dark }}>{h.label}</div>
-                                  <div style={{ fontSize: 10, color: '#999' }}>{h.ar}</div>
-                                </div>
-                                <div style={{ textAlign: 'right' }}>
-                                  <div style={{ fontSize: 18, fontWeight: 600, color: h.color }}>{d.yuzde}%</div>
-                                  <div style={{ fontSize: 9, color: durumColor, fontWeight: 600 }}>{durum}</div>
-                                </div>
-                              </div>
-                              <div style={{ height: 4, background: '#eee', borderRadius: 2, overflow: 'hidden' }}>
-                                <div style={{ height: '100%', width: `${d.yuzde}%`, background: h.color, borderRadius: 2 }} />
-                              </div>
-                              {d.yorum && <div style={{ fontSize: 10, color: C.secondary, marginTop: 4 }}>{d.yorum}</div>}
-                            </div>
-                          )
-                        })}
-                      </div>
-                    </div>
-                  )}
-
-                  {/* ÖZET */}
-                  {analiz.ozet && (
-                    <div style={{ background: C.surface, borderRadius: 10, padding: '14px 16px', marginBottom: 12, fontSize: 13, color: C.dark, lineHeight: 1.8 }}>
-                      {analiz.ozet}
-                    </div>
-                  )}
-
-                  {/* KLİNİK GÖZLEMLER */}
-                  {analiz.klinik_gozlemler?.length > 0 && (
-                    <div style={{ marginBottom: 14 }}>
-                      <div style={{ fontFamily: cinzel.style.fontFamily, fontSize: 11, color: C.gold, letterSpacing: 2, marginBottom: 10, textTransform: 'uppercase' as const }}>Klinik Gozlemler</div>
-                      {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
-                      {(Array.isArray(analiz.klinik_gozlemler)?analiz.klinik_gozlemler:[]).map((g: any, i: number) => (
-                        <div key={i} style={{ display: 'flex', gap: 10, padding: '8px 0', borderBottom: `1px solid ${C.border}` }}>
-                          <div style={{ width: 28, height: 28, background: '#E3F2FD', borderRadius: 6, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 14, flexShrink: 0 }}>🔬</div>
-                          <div>
-                            <div style={{ fontSize: 12, color: C.dark, lineHeight: 1.6 }}>{g.gozlem}</div>
-                            {g.kaynak && <div style={{ fontSize: 10, color: '#999', fontStyle: 'italic', marginTop: 2 }}>{g.kaynak}</div>}
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-                  )}
-
-                  {/* BİTKİ PROTOKOLÜ */}
-                  {analiz.bitki_recetesi?.length > 0 && (
-                    <div style={{ marginBottom: 14 }}>
-                      <div style={{ fontFamily: cinzel.style.fontFamily, fontSize: 11, color: C.gold, letterSpacing: 2, marginBottom: 10, textTransform: 'uppercase' as const }}>Bitkisel Protokol</div>
-                      {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
-                      {(Array.isArray(analiz.bitki_recetesi)?analiz.bitki_recetesi:[]).map((b: any, i: number) => (
-                        <div key={i} style={{ background: C.surface, borderRadius: 8, padding: '12px 14px', marginBottom: 8 }}>
-                          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 6 }}>
-                            <div>
-                              <div style={{ fontWeight: 600, fontSize: 13, color: C.primary }}>🌿 {b.bitki}</div>
-                              {b.bitki_ar && <div style={{ fontSize: 12, color: C.gold, fontFamily: 'serif' }}>{b.bitki_ar}</div>}
-                            </div>
-                            {b.sure && <div style={{ fontSize: 10, background: '#E8F5E9', color: '#1B5E20', padding: '2px 8px', borderRadius: 10 }}>{b.sure}</div>}
-                          </div>
-                          <div style={{ fontSize: 12, color: C.secondary, marginBottom: 4 }}>{b.doz}</div>
-                          <div style={{ fontSize: 11, color: '#777', marginBottom: 4 }}>🕐 {b.zaman}</div>
-                          {b.etki && <div style={{ fontSize: 11, color: C.dark, lineHeight: 1.5, marginBottom: 4 }}>{b.etki}</div>}
-                          {b.kaynak && <div style={{ fontSize: 10, color: '#999', fontStyle: 'italic', borderTop: `1px solid ${C.border}`, paddingTop: 6, marginTop: 4 }}>📖 {b.kaynak}</div>}
-                        </div>
-                      ))}
-                    </div>
-                  )}
-
-                  {/* BİLEŞİK FORMÜL */}
-                  {analiz.bilesik_formul?.ad && (
-                    <div style={{ background: '#FFF8E7', border: `1px solid ${C.gold}`, borderRadius: 10, padding: '14px 16px', marginBottom: 14 }}>
-                      <div style={{ fontFamily: cinzel.style.fontFamily, fontSize: 11, color: C.gold, letterSpacing: 2, marginBottom: 8, textTransform: 'uppercase' as const }}>🏺 Bilesik Formul</div>
-                      <div style={{ fontWeight: 600, fontSize: 14, color: C.primary, marginBottom: 8 }}>{analiz.bilesik_formul.ad}</div>
-                      {analiz.bilesik_formul.bilesenler?.length > 0 && (
-                        <div style={{ marginBottom: 8 }}>
-                          {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
-                          {(Array.isArray(analiz.bilesik_formul?.bilesenler)?analiz.bilesik_formul.bilesenler:[]).map((b: any, i: number) => (
-                            <div key={i} style={{ display: 'flex', gap: 8, fontSize: 12, padding: '3px 0', borderBottom: '1px solid rgba(184,146,42,0.2)' }}>
-                              <span style={{ fontWeight: 600, minWidth: 120, color: C.primary }}>{b.madde}</span>
-                              <span style={{ color: C.gold, minWidth: 60 }}>{b.miktar}</span>
-                              <span style={{ color: C.secondary }}>{b.etki}</span>
-                            </div>
-                          ))}
-                        </div>
-                      )}
-                      {analiz.bilesik_formul.hazirlama && <div style={{ fontSize: 12, color: C.dark, lineHeight: 1.6, marginBottom: 6 }}>{analiz.bilesik_formul.hazirlama}</div>}
-                      {analiz.bilesik_formul.doz && <div style={{ fontSize: 12, color: C.secondary }}>Doz: {analiz.bilesik_formul.doz}</div>}
-                      {analiz.bilesik_formul.kaynak && <div style={{ fontSize: 10, color: '#999', fontStyle: 'italic', marginTop: 6 }}>📖 {analiz.bilesik_formul.kaynak}</div>}
-                    </div>
-                  )}
-
-                  {/* GÜNLÜK RUTİN */}
-                  {analiz.gunluk_rutin && (
-                    <div style={{ marginBottom: 14 }}>
-                      <div style={{ fontFamily: cinzel.style.fontFamily, fontSize: 11, color: C.gold, letterSpacing: 2, marginBottom: 10, textTransform: 'uppercase' as const }}>Gunluk Rutin</div>
-                      {[
-                        { key: 'sabah', label: 'Sabah', icon: '🌅', color: '#FFF8E7' },
-                        { key: 'ogle', label: 'Ogle', icon: '☀️', color: '#F0FDF4' },
-                        { key: 'aksam', label: 'Aksam', icon: '🌆', color: '#EDE7F6' },
-                      ].map(t => {
-                        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                        const raw = (analiz.gunluk_rutin as any)[t.key]
-                        const items = Array.isArray(raw) ? raw : typeof raw === 'string' ? [raw] : []
-                        if (!items.length) return null
-                        return (
-                          <div key={t.key} style={{ background: t.color, borderRadius: 8, padding: '10px 12px', marginBottom: 8 }}>
-                            <div style={{ fontSize: 11, fontWeight: 600, color: C.primary, marginBottom: 6 }}>{t.icon} {t.label}</div>
-                            {items.map((item: string, i: number) => (
-                              <div key={i} style={{ fontSize: 11, color: C.dark, padding: '2px 0', borderBottom: i < items.length-1 ? '1px solid rgba(0,0,0,0.05)' : 'none' }}>{item}</div>
-                            ))}
-                          </div>
-                        )
-                      })}
-                    </div>
-                  )}
-
-                  {/* BESLENME */}
-                  {analiz.beslenme_onerileri && (
-                    <div style={{ background: '#F0FDF4', border: '1px solid #A5D6A7', borderRadius: 10, padding: '12px 14px', marginBottom: 12 }}>
-                      <div style={{ fontSize: 10, color: '#1B5E20', fontWeight: 600, letterSpacing: 1, marginBottom: 8, textTransform: 'uppercase' as const }}>Beslenme</div>
-                      {typeof analiz.beslenme_onerileri === 'string' ? (
-                        <div style={{ fontSize: 13, color: C.dark, lineHeight: 1.6 }}>{analiz.beslenme_onerileri}</div>
-                      ) : (
-                        <>
-                          {analiz.beslenme_onerileri.temel_ilke && <div style={{ fontSize: 12, fontStyle: 'italic', color: C.primary, marginBottom: 8, fontWeight: 500 }}>{analiz.beslenme_onerileri.temel_ilke}</div>}
-                          {analiz.beslenme_onerileri.onerililer?.length > 0 && (
-                            <div style={{ marginBottom: 8 }}>
-                              <div style={{ fontSize: 10, color: '#2E7D32', fontWeight: 600, marginBottom: 4 }}>ONERILEN GIDALAR</div>
-                              {(Array.isArray(analiz.beslenme_onerileri?.onerililer)?analiz.beslenme_onerileri.onerililer:[]).map((g: string, i: number) => (
-                                <div key={i} style={{ fontSize: 11, color: C.dark, padding: '1px 0' }}>{'\u2713'} {g}</div>
-                              ))}
-                            </div>
-                          )}
-                          {analiz.beslenme_onerileri.kacinilacaklar?.length > 0 && (
-                            <div style={{ marginBottom: 8 }}>
-                              <div style={{ fontSize: 10, color: '#C62828', fontWeight: 600, marginBottom: 4 }}>KACINILACAKLAR</div>
-                              {(Array.isArray(analiz.beslenme_onerileri?.kacinilacaklar)?analiz.beslenme_onerileri.kacinilacaklar:[]).map((g: string, i: number) => (
-                                <div key={i} style={{ fontSize: 11, color: C.dark, padding: '1px 0' }}>{'\u2717'} {g}</div>
-                              ))}
-                            </div>
-                          )}
-                          {analiz.beslenme_onerileri.pisirme_notu && <div style={{ fontSize: 11, color: C.secondary, fontStyle: 'italic' }}>{analiz.beslenme_onerileri.pisirme_notu}</div>}
-                        </>
-                      )}
-                    </div>
-                  )}
-
-                  {/* EGZERSİZ */}
-                  {analiz.egzersiz_recetesi && (
-                    <div style={{ background: '#E8F5E9', border: '1px solid #A5D6A7', borderRadius: 10, padding: '12px 14px', marginBottom: 12 }}>
-                      <div style={{ fontSize: 10, color: '#1B5E20', fontWeight: 600, letterSpacing: 1, marginBottom: 8, textTransform: 'uppercase' as const }}>Egzersiz Recetesi</div>
-                      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr 1fr', gap: 8, marginBottom: 8 }}>
-                        {[
-                          { label: 'Tur', val: analiz.egzersiz_recetesi.tur },
-                          { label: 'Zaman', val: analiz.egzersiz_recetesi.zaman },
-                          { label: 'Sure', val: analiz.egzersiz_recetesi.sure },
-                          { label: 'Siddet', val: analiz.egzersiz_recetesi.siddet },
-                        ].map(e => e.val ? (
-                          <div key={e.label} style={{ background: 'white', borderRadius: 6, padding: '6px 8px', textAlign: 'center' as const }}>
-                            <div style={{ fontSize: 9, color: '#999', textTransform: 'uppercase' as const }}>{e.label}</div>
-                            <div style={{ fontSize: 11, fontWeight: 600, color: C.primary, marginTop: 2 }}>{e.val}</div>
-                          </div>
-                        ) : null)}
-                      </div>
-                      {analiz.egzersiz_recetesi.aciklama && <div style={{ fontSize: 11, color: C.dark, lineHeight: 1.5, marginBottom: 4 }}>{analiz.egzersiz_recetesi.aciklama}</div>}
-                      {analiz.egzersiz_recetesi.kacinilacaklar && <div style={{ fontSize: 11, color: '#C62828' }}>{'\u26A0'} {analiz.egzersiz_recetesi.kacinilacaklar}</div>}
-                      {analiz.egzersiz_recetesi.kaynak && <div style={{ fontSize: 10, color: '#999', fontStyle: 'italic', marginTop: 4 }}>📖 {analiz.egzersiz_recetesi.kaynak}</div>}
-                    </div>
-                  )}
-
-                  {/* SEBEP ANALİZİ */}
-                  {analiz.sebep_analizi && (
-                    <div style={{ background: C.surface, borderRadius: 10, padding: '12px 14px', marginBottom: 12, border: `1px solid ${C.border}` }}>
-                      <div style={{ fontSize: 10, color: C.secondary, fontWeight: 600, letterSpacing: 1, marginBottom: 8, textTransform: 'uppercase' as const }}>Sebep Analizi — İbn Rüşd</div>
-                      {analiz.sebep_analizi.badi && (
-                        <div style={{ marginBottom: 6 }}>
-                          <span style={{ fontSize: 10, fontWeight: 600, color: '#C62828' }}>YAKIN SEBEP: </span>
-                          <span style={{ fontSize: 12, color: C.dark }}>{analiz.sebep_analizi.badi}</span>
-                        </div>
-                      )}
-                      {analiz.sebep_analizi.muid?.length > 0 && (
-                        <div style={{ marginBottom: 6 }}>
-                          <div style={{ fontSize: 10, fontWeight: 600, color: '#1565C0', marginBottom: 4 }}>UZAK SEBEPLER:</div>
-                          {(Array.isArray(analiz.sebep_analizi?.muid)?analiz.sebep_analizi.muid:[]).map((m: string, i: number) => (
-                            <div key={i} style={{ fontSize: 11, color: C.dark, padding: '1px 0' }}>{'\u2192'} {m}</div>
-                          ))}
-                        </div>
-                      )}
-                      {analiz.sebep_analizi.kok_mudahale && (
-                        <div style={{ fontSize: 11, color: C.primary, fontStyle: 'italic', borderTop: `1px solid ${C.border}`, paddingTop: 6, marginTop: 6 }}>
-                          Kok Mudahale: {analiz.sebep_analizi.kok_mudahale}
-                        </div>
-                      )}
-                    </div>
-                  )}
-
-                  {/* ALTERNATİF BİTKİLER */}
-                  {analiz.alternatif_bitkiler?.length > 0 && (
-                    <div style={{ background: '#F3E5F5', borderRadius: 10, padding: '12px 14px', marginBottom: 12 }}>
-                      <div style={{ fontSize: 10, color: '#6A1B9A', fontWeight: 600, letterSpacing: 1, marginBottom: 8, textTransform: 'uppercase' as const }}>Alternatif Bitkiler (el-Ebdal)</div>
-                      {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
-                      {(Array.isArray(analiz.alternatif_bitkiler)?analiz.alternatif_bitkiler:[]).map((a: any, i: number) => (
-                        <div key={i} style={{ fontSize: 11, color: C.dark, padding: '3px 0' }}>
-                          {'\u2194'} <strong>{a.asil}</strong> bulunamazsa {'\u2192'} {a.alternatif} {a.doz ? `(${a.doz})` : ''}
-                          {a.kaynak && <span style={{ color: '#999', fontStyle: 'italic' }}> — {a.kaynak}</span>}
-                        </div>
-                      ))}
-                    </div>
-                  )}
-
-                  {/* İLAÇ ETKİLEŞİMLERİ */}
-                  {analiz.ilac_etkilesimleri?.length > 0 && (
-                    <div style={{ background: '#FFF3E0', border: '1px solid #FFCC80', borderRadius: 10, padding: '12px 14px', marginBottom: 12 }}>
-                      <div style={{ fontSize: 10, color: '#E65100', fontWeight: 600, letterSpacing: 1, marginBottom: 8, textTransform: 'uppercase' as const }}>Ilac-Bitki Etkilesimleri</div>
-                      {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
-                      {(Array.isArray(analiz.ilac_etkilesimleri)?analiz.ilac_etkilesimleri:[]).map((e: any, i: number) => (
-                        <div key={i} style={{ display: 'flex', gap: 8, padding: '4px 0', alignItems: 'flex-start' }}>
-                          <div style={{ width: 8, height: 8, borderRadius: '50%', background: e.risk === 'red' ? '#C62828' : '#F57C00', marginTop: 4, flexShrink: 0 }} />
-                          <div>
-                            <div style={{ fontSize: 11, fontWeight: 600, color: C.dark }}>{e.ilac} — {e.bitki}</div>
-                            <div style={{ fontSize: 11, color: C.secondary }}>{e.uyari}</div>
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-                  )}
-
-                  {/* KAÇINILACAKLAR */}
-                  {analiz.kacinilacaklar?.length > 0 && (
-                    <div style={{ background: '#FFF3E0', border: '1px solid #FFCC80', borderRadius: 10, padding: '12px 14px', marginBottom: 12 }}>
-                      <div style={{ fontSize: 10, color: '#E65100', fontWeight: 600, letterSpacing: 1, marginBottom: 6, textTransform: 'uppercase' as const }}>Kacinilacaklar</div>
-                      {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
-                      {(Array.isArray(analiz.kacinilacaklar)?analiz.kacinilacaklar:[]).map((k: any, i: number) => (
-                        <div key={i} style={{ fontSize: 12, color: C.dark, marginBottom: 3 }}>- {k}</div>
-                      ))}
-                    </div>
-                  )}
-
-                  {/* SONRAKI KONTROL */}
-                  {analiz.sonraki_kontrol && (
-                    <div style={{ background: '#E3F2FD', borderRadius: 10, padding: '12px 14px', marginBottom: 12 }}>
-                      <div style={{ fontSize: 10, color: '#1565C0', fontWeight: 600, letterSpacing: 1, marginBottom: 6, textTransform: 'uppercase' as const }}>Sonraki Kontrol — {analiz.sonraki_kontrol.sure}</div>
-                      {analiz.sonraki_kontrol.amac && <div style={{ fontSize: 12, color: C.dark, marginBottom: 6 }}>{analiz.sonraki_kontrol.amac}</div>}
-                      {analiz.sonraki_kontrol.takip_parametreleri?.length > 0 && (
-                        <div style={{ display: 'flex', flexWrap: 'wrap', gap: 4 }}>
-                          {(Array.isArray(analiz.sonraki_kontrol?.takip_parametreleri)?analiz.sonraki_kontrol.takip_parametreleri:[]).map((p: string, i: number) => (
-                            <span key={i} style={{ fontSize: 10, background: 'white', color: '#1565C0', padding: '2px 8px', borderRadius: 10, border: '1px solid #90CAF9' }}>📍 {p}</span>
-                          ))}
-                        </div>
-                      )}
-                    </div>
-                  )}
-
-                  {/* HİKMET */}
-                  {analiz.hikmet && (
-                    <div style={{ background: C.primary, borderRadius: 10, padding: '16px 20px', marginBottom: 14, textAlign: 'center' as const }}>
-                      <div style={{ fontSize: 9, color: 'rgba(255,255,255,0.4)', letterSpacing: 2, marginBottom: 10, textTransform: 'uppercase' as const }}>Hikmet</div>
-                      {analiz.hikmet.arapca && <div style={{ fontSize: 18, color: C.gold, fontFamily: 'serif', marginBottom: 8, lineHeight: 1.8 }}>{analiz.hikmet.arapca}</div>}
-                      {analiz.hikmet.turkce && <div style={{ fontSize: 12, color: 'rgba(255,255,255,0.7)', fontStyle: 'italic', marginBottom: 6 }}>{analiz.hikmet.turkce}</div>}
-                      {analiz.hikmet.kaynak && <div style={{ fontSize: 10, color: 'rgba(255,255,255,0.4)' }}>— {analiz.hikmet.kaynak}</div>}
-                    </div>
-                  )}
-
-                  {/* KAYNAKLAR */}
-                  {analiz.kaynaklar?.length > 0 && (
-                    <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6, marginBottom: 14 }}>
-                      {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
-                      {(Array.isArray(analiz.kaynaklar)?analiz.kaynaklar:[]).map((k: any, i: number) => (
-                        <span key={i} style={{ fontSize: 10, background: '#E8F5E9', color: C.primary, padding: '3px 8px', borderRadius: 20, fontStyle: 'italic' }}>{k}</span>
-                      ))}
-                    </div>
-                  )}
+                  <AnalizKart analiz={analiz} hasta={secili} />
 
                   {/* PDF BUTONU */}
                   <button onClick={pdfIndir}
