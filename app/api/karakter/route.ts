@@ -1,6 +1,52 @@
 import Anthropic from '@anthropic-ai/sdk'
 import { NextRequest, NextResponse } from 'next/server'
 import { createClient, type SupabaseClient } from '@supabase/supabase-js'
+import { createServerClient } from '@supabase/ssr'
+import { cookies } from 'next/headers'
+
+const ADMIN_EMAIL = 'm.fatih.cakir@gmail.com'
+
+async function haftalikKontrol() {
+  const cookieStore = await cookies()
+  const userSupabase = createServerClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+    {
+      cookies: {
+        getAll() { return cookieStore.getAll() },
+        setAll(list) { list.forEach(({ name, value, options }) => cookieStore.set(name, value, options)) },
+      },
+    }
+  )
+  const { data: { user } } = await userSupabase.auth.getUser()
+  if (!user) return { user: null, userSupabase, limitResp: NextResponse.json({ error: 'Giriş gerekli' }, { status: 401 }) }
+
+  if (user.email === ADMIN_EMAIL) return { user, userSupabase, limitResp: null }
+
+  const { data: profile } = await userSupabase
+    .from('profiles')
+    .select('last_karakter_at')
+    .eq('id', user.id)
+    .single()
+
+  if (profile?.last_karakter_at) {
+    const sonAnaliz = new Date(profile.last_karakter_at)
+    const simdi = new Date()
+    const fark = (simdi.getTime() - sonAnaliz.getTime()) / (1000 * 60 * 60 * 24)
+    if (fark < 7) {
+      const kalanGun = Math.ceil(7 - fark)
+      return {
+        user,
+        userSupabase,
+        limitResp: NextResponse.json({
+          error: `Bu hafta karakter analizinizi kullandınız. ${kalanGun} gün sonra tekrar analiz yapabilirsiniz.`,
+          kalan_gun: kalanGun
+        }, { status: 429 })
+      }
+    }
+  }
+  return { user, userSupabase, limitResp: null }
+}
 
 const anthropic = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY! })
 const supabase = createClient(
@@ -205,6 +251,9 @@ async function karakterKaynaklariGetir(aktifAskerler: string[], fizikselMizac: s
 
 export async function POST(request: NextRequest) {
   try {
+    const { user, userSupabase, limitResp } = await haftalikKontrol()
+    if (limitResp) return limitResp
+
     const { form_cevaplari, fiziksel_mizac, aktif_askerler } = await request.json()
 
     if (!form_cevaplari && !aktif_askerler) {
@@ -289,6 +338,13 @@ ${klasikBaglam ? `---\nKLASIK KAYNAKLARDAN ILGILI METINLER:\n${klasikBaglam}\n--
       } catch {
         return NextResponse.json({ error: 'JSON parse basarisiz. Tekrar deneyin.' }, { status: 500 })
       }
+    }
+
+    if (user && user.email !== ADMIN_EMAIL) {
+      await userSupabase
+        .from('profiles')
+        .update({ last_karakter_at: new Date().toISOString() })
+        .eq('id', user.id)
     }
 
     return NextResponse.json({

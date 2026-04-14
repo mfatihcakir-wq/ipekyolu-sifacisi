@@ -1,6 +1,10 @@
 import Anthropic from '@anthropic-ai/sdk'
 import { NextRequest, NextResponse } from 'next/server'
 import { createClient, type SupabaseClient } from '@supabase/supabase-js'
+import { createServerClient } from '@supabase/ssr'
+import { cookies } from 'next/headers'
+
+const ADMIN_EMAIL = 'm.fatih.cakir@gmail.com'
 
 export const maxDuration = 300
 export const runtime = 'nodejs'
@@ -240,8 +244,53 @@ ZORUNLU JSON ÇIKTISI (başka format kabul edilmez):
 {"fitri_hali":{"fitri_mizac":"","hali_mizac":"","sapma":"","tedavi_hedefi":""},"mizac":{"tip":"","tip_ar":"","tam_tanim":"","ana_element":"","alt_mizac":"","mevsim_etkisi":"","uyum_skoru":0,"sure":"","kaynak":""},"hiltlar":{"dem":{"oran":25,"durum":"normal","aciklama":""},"balgam":{"oran":25,"durum":"normal","aciklama":""},"sari_safra":{"oran":25,"durum":"normal","aciklama":""},"kara_safra":{"oran":25,"durum":"normal","aciklama":""}},"baskin_hilt":"","klinik_gozlemler":[],"bitki_recetesi":[{"bitki":"","ar":"","doz":"","hazirlanis":"","endikasyon":"","kaynak":"","kontrendikasyon":""}],"terkib_recetesi":[],"gunluk_rutin":{"sabah":[],"oglen":[],"aksam":[]},"beslenme_recetesi":{"ilke":"","onerililer":[],"kacinilacaklar":[],"pisirime_yontemi":"","ozel_tavsiyeler":"","kaynak":""},"egzersiz_recetesi":{"tur":"","zaman":"","sure":"","siddet":"","ozel":"","kacinilacaklar":"","kaynak":""},"kontrol_takvimi":[],"uyarilar":[],"hikmetli_soz":{"metin":"","metin_ar":"","kaynak":""},"ozet":"","ilac_etkilesimleri":[],"alternatif_bitkiler":[],"hasta_yasina_gore_not":"","sonraki_kontrol":{"sure":"4 hafta","amac":"","odak_parametreler":[]},"sebep_analizi":{"badi_sebep":"","muid_sebepler":[],"kok_mudahale":""},"akut_kronik":"akut","etkilenen_sistem":""}
 `
 
+async function haftalikKontrol() {
+  const cookieStore = await cookies()
+  const userSupabase = createServerClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+    {
+      cookies: {
+        getAll() { return cookieStore.getAll() },
+        setAll(list) { list.forEach(({ name, value, options }) => cookieStore.set(name, value, options)) },
+      },
+    }
+  )
+  const { data: { user } } = await userSupabase.auth.getUser()
+  if (!user) return { user: null, userSupabase, limitResp: NextResponse.json({ error: 'Giriş gerekli' }, { status: 401 }) }
+
+  if (user.email === ADMIN_EMAIL) return { user, userSupabase, limitResp: null }
+
+  const { data: profile } = await userSupabase
+    .from('profiles')
+    .select('last_analysis_at')
+    .eq('id', user.id)
+    .single()
+
+  if (profile?.last_analysis_at) {
+    const sonAnaliz = new Date(profile.last_analysis_at)
+    const simdi = new Date()
+    const fark = (simdi.getTime() - sonAnaliz.getTime()) / (1000 * 60 * 60 * 24)
+    if (fark < 7) {
+      const kalanGun = Math.ceil(7 - fark)
+      return {
+        user,
+        userSupabase,
+        limitResp: NextResponse.json({
+          error: `Bu hafta analizinizi kullandınız. ${kalanGun} gün sonra tekrar analiz yapabilirsiniz.`,
+          kalan_gun: kalanGun
+        }, { status: 429 })
+      }
+    }
+  }
+  return { user, userSupabase, limitResp: null }
+}
+
 export async function POST(request: NextRequest) {
   try {
+    const { user, userSupabase, limitResp } = await haftalikKontrol()
+    if (limitResp) return limitResp
+
     const {
       ad_soyad, cinsiyet, sikayet, mevsim, yas_grubu, kronik, sikayet_suresi,
       nabiz, dil, yuz, idrar, diski, vucut, yasam, notlar,
@@ -403,6 +452,13 @@ ${klasikBaglam && klasikBaglam !== 'Klasik kaynaklarda esleme bulunamadi.' ? `--
       } catch {
         return NextResponse.json({ error: 'JSON parse basarisiz. Tekrar deneyin.' }, { status: 500 })
       }
+    }
+
+    if (user && user.email !== ADMIN_EMAIL) {
+      await userSupabase
+        .from('profiles')
+        .update({ last_analysis_at: new Date().toISOString() })
+        .eq('id', user.id)
     }
 
     return NextResponse.json({
