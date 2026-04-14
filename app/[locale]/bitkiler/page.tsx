@@ -39,6 +39,7 @@ const PER_PAGE = 20
 
 export default function BitkilerPage() {
   const [bitkiler, setBitkiler] = useState<Bitki[]>([])
+  const [totalCount, setTotalCount] = useState(0)
   const [loading, setLoading] = useState(true)
   const [arama, setArama] = useState('')
   const [mizacF, setMizacF] = useState('')
@@ -52,16 +53,18 @@ export default function BitkilerPage() {
       setLoading(true)
       try {
         // Supabase REST API'nin server-side max_rows: 1000 limiti var
-        // Iki ayri sorgu ile 2000+ kaydi cekiyoruz
-        const [p1, p2] = await Promise.all([
+        // Iki ayri sorgu ile 2000+ kaydi cekiyoruz; + ayrica gercek toplam sayiyi cek
+        const [p1, p2, countRes] = await Promise.all([
           supabase.from('bitkiler').select('*').order('ad_tr', { ascending: true }).range(0, 999),
           supabase.from('bitkiler').select('*').order('ad_tr', { ascending: true }).range(1000, 1999),
+          supabase.from('bitkiler').select('id', { count: 'exact', head: true }),
         ])
         const combined = [...(p1.data || []), ...(p2.data || [])]
-        console.log('[Bitkiler]', { toplam: combined.length, p1: p1.data?.length, p2: p2.data?.length, err: p1.error?.message || p2.error?.message })
+        console.log('[Bitkiler]', { toplam: combined.length, db_total: countRes.count, p1: p1.data?.length, p2: p2.data?.length, err: p1.error?.message || p2.error?.message })
         if (p1.error) console.error('bitkiler p1 error:', p1.error)
         if (p2.error) console.error('bitkiler p2 error:', p2.error)
         setBitkiler(combined)
+        setTotalCount(countRes.count || combined.length)
       } catch (e) {
         console.error('bitkiler exception:', e)
       }
@@ -114,11 +117,11 @@ export default function BitkilerPage() {
 
   // Istatistikler
   const stats = useMemo(() => ({
-    toplam: bitkiler.length,
+    toplam: totalCount || bitkiler.length,
     sicak: bitkiler.filter(b => b.mizac_sicaklik === 'sıcak').length,
     soguk: bitkiler.filter(b => b.mizac_sicaklik === 'soğuk').length,
     kaynak: uniqueKaynaklar.length,
-  }), [bitkiler, uniqueKaynaklar])
+  }), [bitkiler, uniqueKaynaklar, totalCount])
 
   const borderTopColor = (b: Bitki) => MIZAC_RENK[b.mizac_sicaklik] || MIZAC_RENK['bilinmiyor']
 
@@ -249,7 +252,7 @@ export default function BitkilerPage() {
                     {b.mizac_sicaklik && b.mizac_sicaklik !== 'bilinmiyor' && (
                       <div style={{ display: 'inline-flex', gap: 4, marginBottom: 8 }}>
                         <span style={{ fontSize: 10, padding: '2px 8px', borderRadius: 10, background: `${MIZAC_RENK[b.mizac_sicaklik]}15`, color: MIZAC_RENK[b.mizac_sicaklik], fontWeight: 600 }}>
-                          {b.mizac_sicaklik} {b.mizac_nem && b.mizac_nem !== 'bilinmiyor' ? `\u00B7 ${b.mizac_nem}` : ''} {b.mizac_derece ? `\u00B7 ${b.mizac_derece}. derece` : ''}
+                          {b.mizac_sicaklik} {b.mizac_nem && b.mizac_nem !== 'bilinmiyor' ? `\u00B7 ${b.mizac_nem}` : ''} {b.mizac_derece && b.mizac_derece !== 'bilinmiyor' ? `\u00B7 ${b.mizac_derece}. derece` : ''}
                         </span>
                       </div>
                     )}
