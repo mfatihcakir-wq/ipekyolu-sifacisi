@@ -1,6 +1,17 @@
+import { redirect } from 'next/navigation'
+import { createServerSupabaseClient } from '@/lib/supabase-server'
 import MakaleUret from '@/components/MakaleUret'
 
-export default function AdminPage() {
+const ADMIN_EMAIL = 'm.fatih.cakir@gmail.com'
+
+export default async function AdminPage() {
+  const supabase = createServerSupabaseClient()
+  const { data: { user } } = await supabase.auth.getUser()
+
+  if (!user || user.email !== ADMIN_EMAIL) {
+    redirect('/giris')
+  }
+
   return (
     <main style={{
       background: '#122518',

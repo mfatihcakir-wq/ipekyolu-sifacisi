@@ -983,7 +983,7 @@ export default function AnalizClient() {
           {nabizMod === 'manuel' && (
             <>
               <div style={{ ...s.tip, marginTop: 12 }}>{"Asagidaki 8 nabiz sifatini el ile secin. Her sifatin Arapca adi ve ipucu bilgisi verilmistir."}</div>
-              <div style={s.grid2}>
+              <div style={s.grid2} className="analiz-grid2">
                 {/* Buyukluk */}
                 <div style={s.card}>
                   <label style={s.label}>{"BUYUKLUK"}</label>
@@ -1184,7 +1184,7 @@ export default function AnalizClient() {
           {/* Kamera Mode */}
           {dyMod === 'kamera' && (
             <>
-              <div style={s.grid2}>
+              <div style={s.grid2} className="analiz-grid2">
                 {/* Dil Photo */}
                 <div style={s.card}>
                   <label style={s.label}>{"DIL FOTOGRAFI"}</label>
@@ -1260,7 +1260,7 @@ export default function AnalizClient() {
                   {dyAnalizSonucu.yorum && (
                     <div style={{ fontSize: 13, color: C.secondary, lineHeight: 1.6, marginBottom: 12, fontStyle: 'italic' }}>{dyAnalizSonucu.yorum}</div>
                   )}
-                  <div style={s.grid2}>
+                  <div style={s.grid2} className="analiz-grid2">
                     {dyAnalizSonucu.dil_renk && <div style={{ fontSize: 12 }}><strong>{"Dil Renk: "}</strong>{dyAnalizSonucu.dil_renk}</div>}
                     {dyAnalizSonucu.dil_kaplama && <div style={{ fontSize: 12 }}><strong>{"Dil Kaplama: "}</strong>{dyAnalizSonucu.dil_kaplama}</div>}
                     {dyAnalizSonucu.dil_nem && <div style={{ fontSize: 12 }}><strong>{"Dil Nem: "}</strong>{dyAnalizSonucu.dil_nem}</div>}
@@ -1285,7 +1285,7 @@ export default function AnalizClient() {
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M12 22c5.52 0 10-4.48 10-10S17.52 2 12 2 2 6.48 2 12s4.48 10 10 10z"/></svg>
                 {"Dil Gozlemi"}
               </div>
-              <div style={s.grid2}>
+              <div style={s.grid2} className="analiz-grid2">
                 <div style={s.card}>
                   <label style={s.label}>{"DIL RENGI"}</label>
                   <div style={{ fontSize: 11, color: '#999', marginBottom: 8 }}>{"Dilin genel renk tonu"}</div>
@@ -1361,7 +1361,7 @@ export default function AnalizClient() {
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="8" r="5"/><path d="M20 21a8 8 0 10-16 0"/></svg>
                 {"Yuz Gozlemi"}
               </div>
-              <div style={s.grid2}>
+              <div style={s.grid2} className="analiz-grid2">
                 <div style={s.card}>
                   <label style={s.label}>{"TEN RENGI"}</label>
                   <div style={{ fontSize: 11, color: '#999', marginBottom: 8 }}>{"Yuzun genel renk tonu"}</div>
