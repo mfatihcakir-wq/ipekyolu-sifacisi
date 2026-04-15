@@ -231,6 +231,25 @@ BESLENME KURALI:
 - EN AZ 8 önerilen gıda, EN AZ 5 kaçınılacak gıda.
 - AZ YEMEK temeldir. En fazla 2 ana öğün.
 
+TERKİB REÇETESİ (sadece gıda + tek bitki yetmediğinde doldur; yoksa boş bırak):
+terkib_recetesi: [{
+  "isim": "formülün klasik adı (örn: Cüvâriş-i Kebîr, Dehnü'l-Benefsec)",
+  "tur": "macun|şerbet|şurup|yağ|toz|hap|merhem|buhur",
+  "bilesenler": [{"ad":"bitki/madde adı","miktar":"10g veya dirhem"}],
+  "uygulama": "günde 2 kez, aç karına; 7 gün",
+  "kaynak": "el-Kânûn Cüz 5 — Fasılası... veya el-Hâvî Cilt 7 Bileşik İlaçlar..."
+}]
+
+TERKİB DOZAJ FORMLARI:
+- Macun (ma'cûn): katı/yoğun, uzun süreli kullanım — el-Kânûn "Edviye-i Mürekkebe"
+- Şerbet: sulu, içime hazır — akut tedavide hızlı etki
+- Şurup (şarâb): yoğun/tatlı, akut durumlar, 7-14 gün
+- Yağ (duhn): harici kullanım — masaj, merhem tabanı
+- Toz (sefûf): şifa suyu veya bal ile alınır
+- Hap (habb): standart dozaj, zarlı mide için uygun
+- Merhem: topikal — yara, cilt, eklem
+- Buhur: inhalasyon — sinüs, göğüs, baş ağrısı
+
 HASTA YAŞ PROTOKOLÜ:
 - 0-7 yaş: Doz 1/4. Güçlü bitkiler yasak.
 - 7-14 yaş: Doz 1/2.
