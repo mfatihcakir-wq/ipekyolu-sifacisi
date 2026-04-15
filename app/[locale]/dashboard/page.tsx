@@ -383,6 +383,7 @@ export default function DashboardPage() {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [gecmisAnalizler, setGecmisAnalizler] = useState<any[]>([])
   const [gecmisYukleniyor, setGecmisYukleniyor] = useState(false)
+  const [userEmail, setUserEmail] = useState<string>('')
   const router = useRouter()
   const pathname = usePathname()
   const searchParams = useSearchParams()
@@ -390,6 +391,13 @@ export default function DashboardPage() {
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => { formlariYukle() }, [])
+
+  useEffect(() => {
+    supabase.auth.getUser().then(({ data: { user } }) => {
+      if (user?.email) setUserEmail(user.email)
+    })
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   // URL'den form_id varsa o formu otomatik ac
   useEffect(() => {
@@ -1010,6 +1018,9 @@ body { font-family: 'Plus Jakarta Sans', sans-serif; background: #f5f5f5; paddin
         <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap' as const }}>
           <button onClick={() => router.push('/dashboard/hastalar')} style={{ background: 'rgba(255,255,255,0.1)', border: '1px solid rgba(255,255,255,0.2)', color: 'white', borderRadius: 8, padding: '7px 14px', fontSize: 12, cursor: 'pointer' }}>Hastalar</button>
           <button onClick={() => router.push('/dashboard/arsiv')} style={{ background: 'rgba(255,255,255,0.1)', border: '1px solid rgba(255,255,255,0.2)', color: 'white', borderRadius: 8, padding: '7px 14px', fontSize: 12, cursor: 'pointer' }}>Arsiv</button>
+          {userEmail === 'm.fatih.cakir@gmail.com' && (
+            <button onClick={() => router.push('/admin')} style={{ background: 'rgba(212,168,67,0.15)', border: '1px solid rgba(212,168,67,0.4)', color: '#D4A843', borderRadius: 8, padding: '7px 14px', fontSize: 12, cursor: 'pointer' }}>Makale Üret</button>
+          )}
           <button onClick={formlariYukle} style={{ background: 'rgba(255,255,255,0.1)', border: '1px solid rgba(255,255,255,0.2)', color: 'white', borderRadius: 8, padding: '7px 14px', fontSize: 12, cursor: 'pointer' }}>Yenile</button>
           <button onClick={() => { supabase.auth.signOut(); router.push('/login') }} style={{ background: 'rgba(255,255,255,0.1)', border: '1px solid rgba(255,255,255,0.2)', color: 'white', borderRadius: 8, padding: '7px 14px', fontSize: 12, cursor: 'pointer' }}>Cikis</button>
         </div>
