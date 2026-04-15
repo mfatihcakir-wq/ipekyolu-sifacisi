@@ -16,7 +16,7 @@ export default function Footer() {
         <div style={{ fontFamily: cinzel.style.fontFamily, fontSize: 22, color: 'white', fontWeight: 600, marginBottom: 8 }}>{"Bedeninizi Tanımaya Hazır mısınız?"}</div>
         <div style={{ fontSize: 15, color: 'rgba(255,255,255,0.5)', fontStyle: 'italic', marginBottom: 24 }}>{"Ücretsiz analizinizi şimdi başlatın."}</div>
         <a href="/analiz" style={{ display: 'inline-block', background: '#059669', color: 'white', borderRadius: 10, padding: '14px 32px', fontFamily: cinzel.style.fontFamily, fontSize: 13, fontWeight: 600, textDecoration: 'none', letterSpacing: 1 }}>
-          {"Ücretsiz Analizi Başlat \u2192"}
+          {"Analizi Başlat \u2192"}
         </a>
       </div>
     </div>
