@@ -60,14 +60,14 @@ const router = useRouter()
       <div style={{ maxWidth: 800, margin: '0 auto', padding: '48px 24px' }}>
         <h1 style={{ fontFamily: cinzel.style.fontFamily, fontSize: 32, color: C.primary, marginBottom: 16, fontWeight: 500 }}>{"Hakkımızda"}</h1>
         <p style={{ fontSize: 17, color: C.secondary, lineHeight: 1.8, fontStyle: 'italic', marginBottom: 40 }}>
-          {"İpek Yolu Şifacısı, klasik İslam ve Osmanlı tıbbının bin yıllık birikimini modern dijital danışmanlıkla buluşturan bir sağlık platformudur."}
+          {"İpek Yolu Şifacısı, klasik İslam ve Osmanlı tıbbının bin yıllık birikimini modern dijital danışmanlıkla buluşturan bir klasik tıp danışmanlık platformudur."}
         </p>
 
         {/* MİSYON */}
         <div style={{ marginBottom: 36 }}>
           <h2 style={{ fontFamily: cinzel.style.fontFamily, fontSize: 18, color: C.gold, marginBottom: 12, letterSpacing: 2 }}>{"MİSYON"}</h2>
           <p style={{ fontSize: 15, color: C.secondary, lineHeight: 1.8 }}>
-            {"Klasik İslam tıbbının asırlık gözlem ve tedavi birikimini, modern derleme yöntemleriyle birleştirerek kişiye özel sağlık danışmanlığı sunmak. Her bireyin fıtrî mizacını anlamak ve hâlî dengesizlikleri kaynağında tespit etmek."}
+            {"Klasik İslam tıbbının asırlık gözlem ve tedavi birikimini, modern derleme yöntemleriyle birleştirerek kişiye özel mizaç danışmanlığı sunmak. Her bireyin fıtrî mizacını anlamak ve hâlî dengesizlikleri kaynağında tespit etmek."}
           </p>
         </div>
 
