@@ -81,8 +81,6 @@ export async function POST(req: NextRequest) {
       .map(k => `[${k.kaynak_kodu}] ${k.kitap_adi} - ${k.yazar}\nBolum: ${k.bolum}\n${k.icerik_tr}`)
       .join('\n\n---\n\n')
 
-    const kaynakListesi = Array.from(new Set(kaynaklar.map(k => `${k.kitap_adi} (${k.yazar})`)))
-
     // Claude ile makale uret
     const message = await anthropic.messages.create({
       model: 'claude-sonnet-4-20250514',
@@ -139,7 +137,6 @@ KURALLAR:
         ozet: makaleData.ozet,
         icerik: makaleData.icerik,
         kategori,
-        kaynaklar: kaynakListesi,
         kaynak_kodlar: kaynaklar.map(k => k.kaynak_kodu),
         yayinda: false,
       })
