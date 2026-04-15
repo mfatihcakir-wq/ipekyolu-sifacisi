@@ -564,7 +564,15 @@ export default function DashboardPage() {
   async function onaylaVeGonder() {
     if (!secili || !analiz) { gosterToast('Önce analiz yapın'); return }
     try {
-      const hastaEmail = secili.tum_form_verisi?.email || ''
+      let hastaEmail = secili.tum_form_verisi?.email || ''
+      if (!hastaEmail && secili.user_id) {
+        const { data: prof } = await supabase
+          .from('profiles')
+          .select('email')
+          .eq('id', secili.user_id)
+          .single()
+        hastaEmail = prof?.email || ''
+      }
       const res = await fetch('/api/onayla', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -593,7 +601,15 @@ export default function DashboardPage() {
     // Email gonderimi
     if (analiz && secili.tum_form_verisi) {
       try {
-        const hastaEmail = secili.tum_form_verisi.email || ''
+        let hastaEmail = secili.tum_form_verisi.email || ''
+        if (!hastaEmail && secili.user_id) {
+          const { data: prof } = await supabase
+            .from('profiles')
+            .select('email')
+            .eq('id', secili.user_id)
+            .single()
+          hastaEmail = prof?.email || ''
+        }
         const kayitNo = 'IYS-' + new Date().toISOString().slice(2, 10).replace(/-/g, '')
         if (hastaEmail) {
           await fetch('/api/email/send', {
