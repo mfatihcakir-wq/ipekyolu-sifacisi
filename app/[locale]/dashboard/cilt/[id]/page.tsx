@@ -92,7 +92,7 @@ export default function DashboardCiltDetailPage() {
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
             to: form.hasta_email,
-            hasta_adi: form.hasta_adi || 'Hasta',
+            hasta_adi: form.hasta_adi || 'Danışan',
             type: 'cilt',
             sonuc_verisi: form.sonuc_verisi,
             kayit_no: form.kayit_no || '',

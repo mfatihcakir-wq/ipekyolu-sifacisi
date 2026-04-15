@@ -15,7 +15,7 @@ export default function NotFound() {
           <p style={{ fontSize: 14, color: '#6B5744', fontStyle: 'italic', marginBottom: 32 }}>{"Aradığınız sayfa mevcut değil veya taşınmış olabilir."}</p>
           <div style={{ display: 'flex', gap: 12, justifyContent: 'center' }}>
             <Link href="/" style={{ background: '#1C3A26', color: 'white', borderRadius: 10, padding: '14px 28px', fontSize: 13, fontWeight: 600, textDecoration: 'none', letterSpacing: 1 }}>{"Ana Sayfaya Dön"}</Link>
-            <Link href="/hasta" style={{ background: 'transparent', color: '#1C3A26', border: '1.5px solid #1C3A26', borderRadius: 10, padding: '14px 28px', fontSize: 13, fontWeight: 600, textDecoration: 'none', letterSpacing: 1 }}>{"Hasta Paneline Git"}</Link>
+            <Link href="/hasta" style={{ background: 'transparent', color: '#1C3A26', border: '1.5px solid #1C3A26', borderRadius: 10, padding: '14px 28px', fontSize: 13, fontWeight: 600, textDecoration: 'none', letterSpacing: 1 }}>{"Danışan Paneline Git"}</Link>
           </div>
         </div>
       </div>

@@ -69,7 +69,7 @@ function AnalizKart({ analiz, hasta }: { analiz: any, hasta: any }) {
         {hasta && (
           <div style={{marginTop:14,background:'rgba(244,168,35,0.10)',border:'1px solid rgba(244,168,35,0.25)',borderRadius:8,padding:'10px 16px'}}>
             <div style={{fontFamily:"'EB Garamond',serif",fontSize:11,color:'rgba(255,255,255,0.45)',letterSpacing:2,textTransform:'uppercase' as const,marginBottom:4}}>Düzenlendiği Kişi</div>
-            <div style={{fontFamily:"'Cinzel',serif",fontSize:15,color:'#F4A823',fontWeight:700}}>Sayın {hasta.tam_ad || 'Hasta'}</div>
+            <div style={{fontFamily:"'Cinzel',serif",fontSize:15,color:'#F4A823',fontWeight:700}}>Sayın {hasta.tam_ad || 'Danışan'}</div>
           </div>
         )}
         <div style={{width:'100%',height:1,background:'linear-gradient(90deg,rgba(212,175,55,0.5),rgba(82,183,136,0.3),transparent)',marginTop:16}}/>
@@ -747,7 +747,7 @@ body { font-family: 'Plus Jakarta Sans', sans-serif; background: #f5f5f5; paddin
     </div>
     <div class="card-ar">تقرير تحليل المزاج والأخلاط الشخصي</div>
     <div class="card-title">KİŞİSEL MİZAÇ & SAĞLIK REÇETESİ</div>
-    ${hasta ? `<div class="hasta-box"><div class="hasta-label">Düzenlendiği Kişi</div><div class="hasta-ad">Sayın ${hasta.tam_ad || 'Hasta'}</div></div>` : ''}
+    ${hasta ? `<div class="hasta-box"><div class="hasta-label">Düzenlendiği Kişi</div><div class="hasta-ad">Sayın ${hasta.tam_ad || 'Danışan'}</div></div>` : ''}
     <div class="divider"></div>
   </div>
 

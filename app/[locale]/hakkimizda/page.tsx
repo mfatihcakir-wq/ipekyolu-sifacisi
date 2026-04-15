@@ -110,8 +110,8 @@ const router = useRouter()
             <div style={{ fontFamily: cinzel.style.fontFamily, fontSize: 20, color: C.primary, marginBottom: 4 }}>{"M. Fatih Çakır"}</div>
             <div style={{ fontSize: 13, color: C.gold, marginBottom: 16, fontStyle: 'italic' }}>{"Klasik İslam Tıbbı Araştırmacısı"}</div>
             <div style={{ fontSize: 14, color: C.secondary, lineHeight: 1.8 }}>
-              <p style={{ marginBottom: 12 }}>{"Kocaeli Üniversitesi Tıp Tarihi yüksek lisansı. FSM Vakıf Üniversitesi İslam Bilim Tarihi doktora programı öğrencisi."}</p>
-              <p style={{ marginBottom: 12 }}>{"Osmanlı Türkçesi ve Arapça bilgisiyle birincil kaynaklara doğrudan erişen, Tahbîzü'l-Mathûn üzerinde Türkiye'deki ilk kapsamlı akademik çalışmaları yürüten isimdir."}</p>
+              <p style={{ marginBottom: 12 }}>{"Kocaeli Üniversitesi İslam Tarihi yüksek lisansı. FSM Vakıf Üniversitesi İslam Bilim Tarihi doktora programı öğrencisi."}</p>
+              <p style={{ marginBottom: 12 }}>{"Osmanlı Türkçesi, Arapça ve Farsça bilgisiyle birincil kaynaklara doğrudan erişen, Hekim Ahmet el-Hayâtî'nin Şeceretü't-Tıb adlı yazma eserini ilk kez akademik düzeyde inceleyen araştırmacı."}</p>
               <p>{"Sistemin bilgi tabanının dijitalleştirilmesi, kaynak doğrulama ve analiz algoritmasının geliştirilmesi süreçlerini bizzat yönetmektedir."}</p>
             </div>
           </div>

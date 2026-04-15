@@ -136,7 +136,7 @@ export default function DashboardCiltListPage() {
               fontSize: 10, fontWeight: 700, color: C.primary, letterSpacing: 1.5, textTransform: 'uppercase' as const,
               fontFamily: cinzel.style.fontFamily,
             }}>
-              <span>{"Hasta"}</span>
+              <span>{"Danışan"}</span>
               <span>{"Tarih"}</span>
               <span>{"Sorunlar"}</span>
               <span>{"Durum"}</span>

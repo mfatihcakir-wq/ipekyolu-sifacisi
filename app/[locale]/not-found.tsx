@@ -26,7 +26,7 @@ export default function NotFound() {
             </button>
             <button onClick={() => router.push('/hasta')}
               style={{ background: 'transparent', color: '#1C3A26', border: '1.5px solid #1C3A26', borderRadius: 10, padding: '14px 28px', fontFamily: cinzel.style.fontFamily, fontSize: 13, fontWeight: 600, cursor: 'pointer', letterSpacing: 1 }}>
-              {"Hasta Paneline Git"}
+              {"Danışan Paneline Git"}
             </button>
           </div>
         </div>

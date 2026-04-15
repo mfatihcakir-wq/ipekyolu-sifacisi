@@ -147,7 +147,7 @@ export default function ArsivPage() {
     if (!hekim || !hekimVaka) return
 
     const mizac = hekimVaka.mizac || 'Bilinmiyor'
-    const ad = hekimVaka.detailed_forms?.tam_ad || 'Hasta'
+    const ad = hekimVaka.detailed_forms?.tam_ad || 'Danışan'
     const ozet = hekimVaka.sonuc_json?.ozet || ''
 
     setTimeout(() => {
