@@ -40,6 +40,7 @@ export default function KayitPage() {
     if (data.user) {
       await supabase.from('profiles').upsert({
         id: data.user.id,
+        email: data.user.email,
         ad: ad.split(' ')[0],
         soyad: ad.split(' ').slice(1).join(' '),
         telefon: telefon
