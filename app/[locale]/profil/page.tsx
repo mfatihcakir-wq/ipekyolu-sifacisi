@@ -60,6 +60,7 @@ export default function ProfilPage() {
   const [uyelikTarihi, setUyelikTarihi] = useState('')
   const [profil, setProfil] = useState<Profil>({})
   const [analizler, setAnalizler] = useState<AnalizOzet[]>([])
+  const [toplamAnaliz, setToplamAnaliz] = useState(0)
 
   useEffect(() => {
     async function yukle() {
@@ -84,6 +85,12 @@ export default function ProfilPage() {
         .limit(5)
       setAnalizler((forms || []) as AnalizOzet[])
 
+      const { count } = await supabase
+        .from('detailed_forms')
+        .select('id', { count: 'exact', head: true })
+        .eq('user_id', user.id)
+      setToplamAnaliz(count || 0)
+
       setLoading(false)
     }
     yukle()
@@ -103,6 +110,12 @@ export default function ProfilPage() {
   const mizacBilgi = MIZAC_ETIKET[mizacKey] || MIZAC_ETIKET.belirlenmedi
   const kalanGun = kalanGunHesapla(profil.last_analysis_at)
   const tamAd = [profil.ad, profil.soyad].filter(Boolean).join(' ') || 'İsimsiz Kullanıcı'
+
+  const ilerleme = profil.last_analysis_at ? Math.max(0, Math.min(100, ((7 - kalanGun) / 7) * 100)) : 100
+  const sonrakiAnalizTarihi = profil.last_analysis_at
+    ? new Date(new Date(profil.last_analysis_at).getTime() + 7 * 24 * 60 * 60 * 1000).toLocaleDateString('tr-TR', { day: 'numeric', month: 'long', year: 'numeric' })
+    : 'Hemen yapabilirsiniz'
+  const son3 = analizler.slice(0, 3)
 
   return (
     <div style={{ background: C.cream, minHeight: '100vh', fontFamily: garamond.style.fontFamily }}>
@@ -143,7 +156,7 @@ export default function ProfilPage() {
 
         {/* MIZAC KARTI */}
         <div style={{ background: C.white, borderRadius: 14, border: `1px solid ${C.border}`, padding: '20px 24px', marginBottom: 16, borderTop: `3px solid ${mizacBilgi.renk}` }}>
-          <div style={{ fontFamily: cinzel.style.fontFamily, fontSize: 10, color: C.primary, letterSpacing: 2, marginBottom: 10 }}>FITRİ MİZAÇ</div>
+          <div style={{ fontFamily: cinzel.style.fontFamily, fontSize: 10, color: C.primary, letterSpacing: 2, marginBottom: 10 }}>FITRÎ MİZAÇ</div>
           <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 14 }}>
             <div style={{ width: 14, height: 14, borderRadius: '50%', background: mizacBilgi.renk }} />
             <div style={{ fontSize: 16, color: C.dark, fontWeight: 500 }}>{mizacBilgi.label}</div>
@@ -169,16 +182,80 @@ export default function ProfilPage() {
           )}
         </div>
 
+        {/* ANALIZ TAKIP INFOGRAFIGI */}
+        <div style={{ background: C.white, borderRadius: 14, border: `1px solid ${C.border}`, padding: '20px 24px', marginBottom: 16 }}>
+          <div style={{ fontFamily: cinzel.style.fontFamily, fontSize: 10, color: C.primary, letterSpacing: 2, marginBottom: 16 }}>ANALİZ TAKİBİ</div>
+
+          <div style={{ display: 'grid', gridTemplateColumns: '140px 1fr', gap: 20, alignItems: 'center' }}>
+            {/* Dairesel Progress */}
+            <div style={{ position: 'relative', width: 140, height: 140 }}>
+              <svg width="140" height="140" viewBox="0 0 140 140" style={{ transform: 'rotate(-90deg)' }}>
+                <circle cx="70" cy="70" r="60" fill="none" stroke={C.surface} strokeWidth="10" />
+                <circle
+                  cx="70" cy="70" r="60" fill="none"
+                  stroke={kalanGun > 0 ? C.gold : C.primary}
+                  strokeWidth="10"
+                  strokeDasharray={`${(ilerleme / 100) * 377} 377`}
+                  strokeLinecap="round"
+                />
+              </svg>
+              <div style={{ position: 'absolute', inset: 0, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
+                <div style={{ fontFamily: cinzel.style.fontFamily, fontSize: 28, color: C.primary, fontWeight: 600, lineHeight: 1 }}>
+                  {kalanGun > 0 ? kalanGun : 0}
+                </div>
+                <div style={{ fontSize: 10, color: C.secondary, letterSpacing: 1, marginTop: 4 }}>
+                  {kalanGun > 0 ? 'GÜN KALDI' : 'HAZIR'}
+                </div>
+              </div>
+            </div>
+
+            {/* Sağ Bilgiler */}
+            <div style={{ display: 'grid', gap: 14 }}>
+              <div>
+                <div style={{ fontFamily: cinzel.style.fontFamily, fontSize: 10, color: C.secondary, letterSpacing: 2, marginBottom: 4 }}>TOPLAM ANALİZ</div>
+                <div style={{ fontFamily: cinzel.style.fontFamily, fontSize: 24, color: C.primary, fontWeight: 600 }}>{toplamAnaliz}</div>
+              </div>
+              <div>
+                <div style={{ fontFamily: cinzel.style.fontFamily, fontSize: 10, color: C.secondary, letterSpacing: 2, marginBottom: 4 }}>SONRAKİ ANALİZ</div>
+                <div style={{ fontSize: 13, color: C.dark, fontWeight: 500 }}>{sonrakiAnalizTarihi}</div>
+              </div>
+            </div>
+          </div>
+
+          {son3.length > 0 && (
+            <div style={{ marginTop: 18, paddingTop: 14, borderTop: `1px solid ${C.surface}` }}>
+              <div style={{ fontFamily: cinzel.style.fontFamily, fontSize: 10, color: C.secondary, letterSpacing: 2, marginBottom: 10 }}>SON ANALİZLERİM</div>
+              <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
+                {son3.map(a => {
+                  const t = new Date(a.created_at).toLocaleDateString('tr-TR', { day: 'numeric', month: 'short' })
+                  return (
+                    <span key={a.id} style={{
+                      display: 'inline-flex', alignItems: 'center', gap: 6,
+                      padding: '6px 12px', borderRadius: 20,
+                      background: mizacBilgi.renk + '18',
+                      border: `1px solid ${mizacBilgi.renk}55`,
+                      fontSize: 11, color: C.dark,
+                    }}>
+                      <span style={{ width: 8, height: 8, borderRadius: '50%', background: mizacBilgi.renk }} />
+                      {t}
+                    </span>
+                  )
+                })}
+              </div>
+            </div>
+          )}
+        </div>
+
         {/* SON ANALIZLER */}
         <div style={{ background: C.white, borderRadius: 14, border: `1px solid ${C.border}`, padding: '20px 24px', marginBottom: 16 }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 14 }}>
-            <div style={{ fontFamily: cinzel.style.fontFamily, fontSize: 10, color: C.primary, letterSpacing: 2 }}>SON ANALİZLER</div>
+            <div style={{ fontFamily: cinzel.style.fontFamily, fontSize: 10, color: C.primary, letterSpacing: 2 }}>SON ANALİZLERİM</div>
             <a href="/hasta" style={{ fontSize: 11, color: C.gold, textDecoration: 'none', fontFamily: cinzel.style.fontFamily, letterSpacing: 1 }}>TÜMÜ {'\u2192'}</a>
           </div>
 
           {analizler.length === 0 ? (
             <div style={{ textAlign: 'center', padding: '24px 0' }}>
-              <p style={{ fontSize: 13, color: C.secondary, marginBottom: 12 }}>Henüz analiz yok.</p>
+              <p style={{ fontSize: 13, color: C.secondary, marginBottom: 12 }}>Henüz analiz yapılmamış.</p>
               <button onClick={() => router.push('/analiz')}
                 style={{ padding: '10px 22px', background: C.primary, color: C.gold, border: 'none', borderRadius: 8, fontFamily: cinzel.style.fontFamily, fontSize: 11, cursor: 'pointer', letterSpacing: 1, fontWeight: 600 }}>
                 İlk Analizini Yap

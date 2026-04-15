@@ -37,6 +37,7 @@ export default function CiltFormPage() {
   const supabase = createClient()
   const [loading, setLoading] = useState(false)
   const [durum, setDurum] = useState<'form' | 'gonderildi' | 'hata'>('form')
+  const [hata, setHata] = useState('')
   const [form, setForm] = useState({
     yas_grubu: '', cinsiyet: '', cilt_tipi: '', cilt_rengi: '', hassasiyet: '',
     sorunlar: [] as string[], sorun_suresi: '', sorun_bolge: [] as string[],
@@ -57,13 +58,49 @@ export default function CiltFormPage() {
   }, [])
 
   async function handleSubmit() {
-    if (form.sorunlar.length === 0) return
+    const eksikler: string[] = []
+    if (!form.yas_grubu) eksikler.push('Yaş grubu')
+    if (!form.cinsiyet) eksikler.push('Cinsiyet')
+    if (!form.cilt_tipi) eksikler.push('Cilt tipi')
+    if (form.sorunlar.length === 0) eksikler.push('En az bir cilt sorunu')
+    if (eksikler.length > 0) {
+      setHata(`Lütfen şu alanları doldurun: ${eksikler.join(', ')}`)
+      return
+    }
+    setHata('')
     setLoading(true)
     try {
       const { data: { user } } = await supabase.auth.getUser()
       if (!user) { router.push('/giris'); return }
+
       const { sorunlar, sorun_bolge, ...rest } = form
-      await supabase.from('cilt_forms').insert({ user_id: user.id, sorunlar, sorun_bolge, ...rest, durum: 'bekliyor' })
+      const { data: inserted, error: insertError } = await supabase
+        .from('cilt_forms')
+        .insert({ user_id: user.id, sorunlar, sorun_bolge, ...rest, durum: 'bekliyor' })
+        .select('id')
+        .single()
+      if (insertError || !inserted) throw insertError || new Error('Insert basarisiz')
+
+      const { data: profil } = await supabase
+        .from('profiles')
+        .select('ad, soyad, telefon')
+        .eq('id', user.id)
+        .single()
+      const adSoyad = [profil?.ad, profil?.soyad].filter(Boolean).join(' ').trim() || user.email || 'İsimsiz'
+
+      fetch('/api/bildirim/cilt', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          form_id: inserted.id,
+          ad_soyad: adSoyad,
+          email: user.email,
+          telefon: profil?.telefon || '',
+          cilt_tipi: form.cilt_tipi,
+          sorunlar: form.sorunlar,
+        }),
+      }).catch(() => { /* bildirim hatasi kullaniciyi etkilemesin */ })
+
       setDurum('gonderildi')
     } catch { setDurum('hata') }
     setLoading(false)
@@ -77,7 +114,7 @@ export default function CiltFormPage() {
             <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke={C.primary} strokeWidth="2.5"><polyline points="20 6 9 17 4 12"/></svg>
           </div>
           <h1 style={{ fontFamily: cinzel.style.fontFamily, fontSize: 22, color: C.primary, marginBottom: 8 }}>Formunuz Alindi</h1>
-          <p style={{ fontSize: 14, color: C.secondary, lineHeight: 1.7, marginBottom: 24 }}>24-48 saat icinde cilt receteniz email ile iletilecektir.</p>
+          <p style={{ fontSize: 14, color: C.secondary, lineHeight: 1.7, marginBottom: 24 }}>Formunuz alındı. Danışmanınız inceleyip sizinle iletişime geçecektir.</p>
           <div style={{ display: 'flex', gap: 10, justifyContent: 'center' }}>
             <button onClick={() => router.push('/hasta')} style={{ padding: '12px 24px', background: C.primary, color: C.gold, border: 'none', borderRadius: 8, fontFamily: cinzel.style.fontFamily, fontSize: 12, cursor: 'pointer' }}>Panelim</button>
             <button onClick={() => router.push('/hasta/cilt-analizlerim')} style={{ padding: '12px 24px', background: 'transparent', color: C.primary, border: `1px solid ${C.primary}`, borderRadius: 8, fontFamily: cinzel.style.fontFamily, fontSize: 12, cursor: 'pointer' }}>Analizlerim</button>
@@ -105,7 +142,7 @@ export default function CiltFormPage() {
           <div style={{ fontFamily: cinzel.style.fontFamily, fontSize: 10, color: C.primary, letterSpacing: 2, marginBottom: 12 }}>KISISEL BILGILER</div>
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12 }}>
             <div>
-              <label style={{ fontSize: 11, color: C.secondary, display: 'block', marginBottom: 4 }}>Yas Grubu</label>
+              <label style={{ fontSize: 11, color: C.secondary, display: 'block', marginBottom: 4 }}>Yas Grubu *</label>
               <select value={form.yas_grubu} onChange={e => set('yas_grubu', e.target.value)} style={selectStyle}>
                 <option value="">Secin</option>
                 <option value="18-25">18-25</option><option value="25-35">25-35</option>
@@ -113,7 +150,7 @@ export default function CiltFormPage() {
               </select>
             </div>
             <div>
-              <label style={{ fontSize: 11, color: C.secondary, display: 'block', marginBottom: 4 }}>Cinsiyet</label>
+              <label style={{ fontSize: 11, color: C.secondary, display: 'block', marginBottom: 4 }}>Cinsiyet *</label>
               <select value={form.cinsiyet} onChange={e => set('cinsiyet', e.target.value)} style={selectStyle}>
                 <option value="">Secin</option><option value="erkek">Erkek</option><option value="kadin">Kadin</option>
               </select>
@@ -126,7 +163,7 @@ export default function CiltFormPage() {
           <div style={{ fontFamily: cinzel.style.fontFamily, fontSize: 10, color: C.primary, letterSpacing: 2, marginBottom: 12 }}>CILT PROFILI</div>
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 12 }}>
             <div>
-              <label style={{ fontSize: 11, color: C.secondary, display: 'block', marginBottom: 4 }}>Cilt Tipi</label>
+              <label style={{ fontSize: 11, color: C.secondary, display: 'block', marginBottom: 4 }}>Cilt Tipi *</label>
               <select value={form.cilt_tipi} onChange={e => set('cilt_tipi', e.target.value)} style={selectStyle}>
                 <option value="">Secin</option><option value="kuru">Kuru</option><option value="yagli">Yagli</option>
                 <option value="karma">Karma</option><option value="normal">Normal</option><option value="hassas">Hassas</option>
@@ -221,10 +258,11 @@ export default function CiltFormPage() {
           </div>
         </div>
 
+        {hata && <div style={{ background: '#fef2f2', border: '1px solid #fecaca', color: '#dc2626', padding: '10px 14px', borderRadius: 10, fontSize: 13, marginBottom: 16 }}>{hata}</div>}
         {durum === 'hata' && <div style={{ background: '#fef2f2', border: '1px solid #fecaca', color: '#dc2626', padding: '10px 14px', borderRadius: 10, fontSize: 13, marginBottom: 16 }}>Bir hata olustu. Tekrar deneyin.</div>}
 
-        <button onClick={handleSubmit} disabled={loading || form.sorunlar.length === 0}
-          style={{ width: '100%', padding: 16, background: loading ? '#999' : C.gold, border: 'none', borderRadius: 12, fontFamily: cinzel.style.fontFamily, fontSize: 14, fontWeight: 600, color: C.primary, letterSpacing: 1, cursor: loading ? 'not-allowed' : 'pointer', minHeight: 44, opacity: form.sorunlar.length === 0 ? 0.5 : 1 }}>
+        <button onClick={handleSubmit} disabled={loading}
+          style={{ width: '100%', padding: 16, background: loading ? '#999' : C.gold, border: 'none', borderRadius: 12, fontFamily: cinzel.style.fontFamily, fontSize: 14, fontWeight: 600, color: C.primary, letterSpacing: 1, cursor: loading ? 'not-allowed' : 'pointer', minHeight: 44 }}>
           {loading ? 'Gonderiliyor...' : 'Formu Gonder'}
         </button>
       </div>
