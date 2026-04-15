@@ -37,6 +37,8 @@ interface Bitki {
 
 const PER_PAGE = 20
 
+const FREE_LIMIT = 6
+
 export default function BitkilerPage() {
   const [bitkiler, setBitkiler] = useState<Bitki[]>([])
   const [totalCount, setTotalCount] = useState(0)
@@ -48,23 +50,25 @@ export default function BitkilerPage() {
   const [kaynakF, setKaynakF] = useState('')
   const [sayfa, setSayfa] = useState(1)
   const [expandedId, setExpandedId] = useState<string | null>(null)
+  const [kullanici, setKullanici] = useState<{ id: string } | null>(null)
+
   useEffect(() => {
     async function yukle() {
       setLoading(true)
       try {
-        // Supabase REST API'nin server-side max_rows: 1000 limiti var
-        // Iki ayri sorgu ile 2000+ kaydi cekiyoruz; + ayrica gercek toplam sayiyi cek
-        const [p1, p2, countRes] = await Promise.all([
+        const [p1, p2, countRes, authRes] = await Promise.all([
           supabase.from('bitkiler').select('*').order('ad_tr', { ascending: true }).range(0, 999),
           supabase.from('bitkiler').select('*').order('ad_tr', { ascending: true }).range(1000, 1999),
           supabase.from('bitkiler').select('id', { count: 'exact', head: true }),
+          supabase.auth.getUser(),
         ])
         const combined = [...(p1.data || []), ...(p2.data || [])]
-        console.log('[Bitkiler]', { toplam: combined.length, db_total: countRes.count, p1: p1.data?.length, p2: p2.data?.length, err: p1.error?.message || p2.error?.message })
         if (p1.error) console.error('bitkiler p1 error:', p1.error)
         if (p2.error) console.error('bitkiler p2 error:', p2.error)
         setBitkiler(combined)
         setTotalCount(countRes.count || combined.length)
+        const u = authRes.data.user
+        if (u) setKullanici({ id: u.id })
       } catch (e) {
         console.error('bitkiler exception:', e)
       }
@@ -149,7 +153,7 @@ export default function BitkilerPage() {
         <div style={{ fontSize: 14, color: C.gold, fontFamily: naskh.style.fontFamily }}>الجامع لمفردات الأدوية والأغذية</div>
       </div>
 
-      <div style={{ maxWidth: 1200, margin: '0 auto', padding: '24px 20px' }}>
+      <div style={{ maxWidth: 1200, margin: '0 auto', padding: '24px 20px', paddingBottom: !kullanici ? 120 : 24 }}>
 
         {/* ISTATISTIK KARTLARI */}
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(140px, 1fr))', gap: 10, marginBottom: 20 }}>
@@ -232,16 +236,22 @@ export default function BitkilerPage() {
           <>
             {/* BITKI KARTLARI */}
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))', gap: 12, marginBottom: 24 }}>
-              {paged.map(b => {
-                const expanded = expandedId === b.id
+              {paged.map((b, idx) => {
+                const mutlakIdx = (sayfa - 1) * PER_PAGE + idx
+                const kilitli = !kullanici && mutlakIdx >= FREE_LIMIT
+                const expanded = expandedId === b.id && !kilitli
                 const hasKontrendikasyon = b.kaynak_metin && (b.kaynak_metin.toLowerCase().includes('dikkat') || b.kaynak_metin.toLowerCase().includes('kontrendike') || b.kaynak_metin.toLowerCase().includes('zararl'))
                 return (
                   <div key={b.id}
-                    onClick={() => setExpandedId(expanded ? null : b.id)}
+                    onClick={() => { if (kilitli) return; setExpandedId(expanded ? null : b.id) }}
+                    aria-disabled={kilitli}
                     style={{
                       background: C.white, borderRadius: 12, padding: '16px 18px',
                       border: `1px solid ${C.border}`, borderTop: `3px solid ${borderTopColor(b)}`,
-                      cursor: 'pointer', transition: 'box-shadow .15s',
+                      cursor: kilitli ? 'not-allowed' : 'pointer', transition: 'box-shadow .15s',
+                      filter: kilitli ? 'blur(4px)' : 'none',
+                      pointerEvents: kilitli ? 'none' : 'auto',
+                      userSelect: kilitli ? 'none' : 'auto',
                     }}>
                     {/* UST: Isimler + mizac */}
                     <div style={{ fontFamily: cinzel.style.fontFamily, fontSize: 14, color: C.primary, marginBottom: 2 }}>{b.ad_tr}</div>
@@ -367,6 +377,37 @@ export default function BitkilerPage() {
           </>
         )}
       </div>
+
+      {!kullanici && !loading && (
+        <div style={{
+          position: 'fixed', bottom: 0, left: 0, right: 0, zIndex: 50,
+          background: C.primary, borderTop: `2px solid ${C.gold}`,
+          padding: '16px 20px', boxShadow: '0 -4px 20px rgba(0,0,0,0.25)',
+        }}>
+          <div style={{ maxWidth: 1200, margin: '0 auto', display: 'flex', flexWrap: 'wrap' as const, gap: 16, alignItems: 'center', justifyContent: 'space-between' }}>
+            <div style={{ flex: 1, minWidth: 240 }}>
+              <div style={{ fontFamily: cinzel.style.fontFamily, color: C.gold, fontSize: 14, fontWeight: 600, letterSpacing: 1, marginBottom: 4 }}>
+                Tüm bitki arşivine erişmek için üye olun
+              </div>
+              <div style={{ fontSize: 12, color: 'rgba(255,255,255,0.7)', fontStyle: 'italic' }}>
+                2.000+ bitki, klasik kaynaklarla detay ve faydalar — ücretsiz kayıt.
+              </div>
+            </div>
+            <div style={{ display: 'flex', gap: 10 }}>
+              <a href="/giris" style={{
+                padding: '10px 18px', borderRadius: 8, fontSize: 12,
+                border: '1px solid rgba(255,255,255,0.3)', color: 'white',
+                textDecoration: 'none', fontFamily: cinzel.style.fontFamily, letterSpacing: 1,
+              }}>Giriş</a>
+              <a href="/kayit" style={{
+                padding: '10px 20px', borderRadius: 8, fontSize: 12, fontWeight: 600,
+                background: C.gold, color: C.primary, textDecoration: 'none',
+                fontFamily: cinzel.style.fontFamily, letterSpacing: 1,
+              }}>Üye Ol</a>
+            </div>
+          </div>
+        </div>
+      )}
 
     </div>
   )
