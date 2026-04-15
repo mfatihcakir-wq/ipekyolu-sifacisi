@@ -227,7 +227,7 @@ export default function HastaPage() {
                       }}>
                         {a.durum === 'onaylandi' ? 'Onaylandı' : a.durum === 'tamamlandi' ? 'Tamamlandi' : a.durum === 'bekliyor' ? 'Bekliyor' : a.durum}
                       </div>
-                      {a.durum === 'onaylandi' && a.analiz_sonucu && (
+                      {(a.durum === 'onaylandi' || a.durum === 'tamamlandi') && a.analiz_sonucu && (
                         <a href={`/hasta/analiz/${a.id}`} style={{ padding: '6px 14px', background: '#B8860B', color: '#1C3A26', borderRadius: 8, fontSize: 11, fontWeight: 700, textDecoration: 'none', letterSpacing: 0.5 }}>
                           {"Analizi Görüntüle →"}
                         </a>

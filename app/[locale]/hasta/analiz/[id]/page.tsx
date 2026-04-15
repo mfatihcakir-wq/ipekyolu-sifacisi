@@ -25,7 +25,7 @@ export default function HastaAnalizDetayPage() {
         .single()
 
       if (error || !data) { setHata('Analiz bulunamadı'); setYukleniyor(false); return }
-      if (data.durum !== 'onaylandi' || !data.analiz_sonucu) {
+      if ((data.durum !== 'onaylandi' && data.durum !== 'tamamlandi') || !data.analiz_sonucu) {
         setHata('Bu analiz henüz onaylanmamış')
         setYukleniyor(false)
         return
