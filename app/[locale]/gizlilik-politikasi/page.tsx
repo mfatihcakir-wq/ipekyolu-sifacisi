@@ -1,5 +1,4 @@
 'use client'
-import { useRouter } from 'next/navigation'
 import { Cormorant_Garamond as Cinzel, EB_Garamond } from 'next/font/google'
 import Header from '../components/Header'
 import Footer from '../components/Footer'
@@ -9,21 +8,11 @@ const garamond = EB_Garamond({ display: 'swap', preload: false, subsets: ['latin
 
 const C = { primary: '#1C3A26', gold: '#B8860B', cream: '#FAF6EF', secondary: '#6B5744', border: '#DEB887', white: '#FFFFFF' }
 
-const BOLUMLER = [
-  { baslik: '1. Genel Bilgi', icerik: 'Bu gizlilik politikasi, ipekyolusicifacisi.com adresinde sunulan hizmetlerin kullanicilarina ait kisisel verilerin nasil toplandigi, islendigi ve korundugunun aciklanmasi amaciyla hazirlanmistir.' },
-  { baslik: '2. Toplanan Veriler', icerik: 'Platformumuzda su veriler toplanmaktadir: Ad soyad, telefon numarasi (WhatsApp iletisimi icin), e-posta adresi, yas grubu, cinsiyet, saglik sikayetleri ve semptomlar, yasam tarzi bilgileri (uyku, beslenme, egzersiz), nabiz ve fiziksel gozlem verileri, istege bagli laboratuvar degerleri, fıtrî mizaç bilgileri.' },
-  { baslik: '3. Verilerin Kullanim Amaci', icerik: 'Toplanan veriler yalnizca su amaclarla kullanilmaktadir: Klasik Islam tibbi gelenegine dayali kisisel saglik danışmanlığı sunmak, danismaninizin size ozel protokol hazirlamasi, WhatsApp uzerinden iletisim kurulmasi, hizmet kalitesinin iyilestirilmesi ve analiz motorunun gelistirilmesi.' },
-  { baslik: '4. Veri Paylasimi', icerik: 'Kisisel verileriniz hicbir kosulda reklam amaciyla ucuncu taraflarla paylasilmaz. Verileriniz yalnizca teknik altyapi saglayicilarimizla (Supabase — veritabani, Vercel — hosting, Anthropic — yapay zeka analizi) zorunlu olarak paylasilmaktadir.' },
-  { baslik: '5. Cerez Politikasi', icerik: 'Platformumuz zorunlu oturum cerezleri disminda herhangi bir izleme cerezi veya ucuncu taraf analitik araci kullanmamaktadir. Google Analytics veya benzeri izleme yazilimlari bulunmamaktadir.' },
-  { baslik: '6. Veri Guvenligi', icerik: 'Tum veriler Supabase uzerinde Row Level Security (RLS) ile korunmaktadir. Kimlik dogrulama Supabase Auth altyapisi ile saglanmakta, sifreleriniz sunucularimizda saklanmamaktadir.' },
-  { baslik: '7. Veri Saklama Suresi', icerik: 'Saglik verileriniz hizmet iliskisinin sona ermesinden itibaren 2 yil sureyle saklanmaktadir. Talep etmeniz halinde verileriniz 30 gun icinde kalici olarak silinmektedir.' },
-  { baslik: '8. Haklariniz', icerik: '6698 sayili KVKK kapsaminda su haklara sahipsiniz: Verilerinizin islenip islenmedigini ogrenme, islenen verilere iliskin bilgi talep etme, verilerin duzeltilmesini isteme, silinmesini talep etme, islenmesine itiraz etme. Talepleriniz icin: info@ipekyolusicifacisi.com' },
-  { baslik: '9. Degisiklikler', icerik: 'Bu gizlilik politikasi gerektiginde guncellenebilir. Onemli degisiklikler e-posta veya platform uzerinden bildirilecektir. Son guncelleme: Nisan 2026.' },
-]
+const h2Style = { fontFamily: cinzel.style.fontFamily, fontSize: 16, color: C.primary, marginBottom: 10, fontWeight: 500 as const }
+const pStyle = { fontSize: 14, color: C.secondary, lineHeight: 1.8, marginBottom: 10 }
+const ulStyle = { fontSize: 14, color: C.secondary, lineHeight: 1.8, marginBottom: 10, paddingLeft: 22 }
 
 export default function GizlilikPage() {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-const router = useRouter()
   return (
     <div style={{ background: C.cream, minHeight: '100vh', fontFamily: garamond.style.fontFamily }}>
       <Header />
@@ -32,12 +21,67 @@ const router = useRouter()
         <h1 style={{ fontFamily: cinzel.style.fontFamily, fontSize: 28, color: C.primary, marginBottom: 8, fontWeight: 500 }}>{"Gizlilik Politikası"}</h1>
         <p style={{ fontSize: 13, color: '#999', marginBottom: 32 }}>{"Son güncelleme: Nisan 2026"}</p>
 
-        {BOLUMLER.map(b => (
-          <div key={b.baslik} style={{ marginBottom: 28 }}>
-            <h2 style={{ fontFamily: cinzel.style.fontFamily, fontSize: 16, color: C.primary, marginBottom: 10, fontWeight: 500 }}>{b.baslik}</h2>
-            <p style={{ fontSize: 14, color: C.secondary, lineHeight: 1.8 }}>{b.icerik}</p>
-          </div>
-        ))}
+        <div style={{ marginBottom: 28 }}>
+          <h2 style={h2Style}>{"1. Genel"}</h2>
+          <p style={pStyle}>{"Bu gizlilik politikası, ipekyolusifacisi.com adresinde sunulan hizmetlerin kullanıcılarına ait kişisel verilerin nasıl toplandığı, işlendiği ve korunduğunu açıklamak amacıyla hazırlanmıştır. Ayrıntılı aydınlatma metni için "}<a href="/kvkk" style={{ color: C.primary, textDecoration: 'underline' }}>{"KVKK Aydınlatma Metni"}</a>{" sayfasına bakınız."}</p>
+        </div>
+
+        <div style={{ marginBottom: 28 }}>
+          <h2 style={h2Style}>{"2. Toplanan Veriler"}</h2>
+          <p style={pStyle}>{"Platformumuzda aşağıdaki veriler toplanır:"}</p>
+          <ul style={ulStyle}>
+            <li>{"ad ve soyad"}</li>
+            <li>{"telefon numarası (WhatsApp iletişimi için)"}</li>
+            <li>{"e-posta adresi"}</li>
+            <li>{"yaş grubu, cinsiyet"}</li>
+            <li>{"sağlık şikayetleri ve semptomlar"}</li>
+            <li>{"yaşam tarzı bilgileri (uyku, beslenme, egzersiz)"}</li>
+            <li>{"nabız ve fiziksel gözlem verileri"}</li>
+            <li>{"isteğe bağlı laboratuvar değerleri"}</li>
+            <li>{"fıtrî mizaç bilgileri"}</li>
+          </ul>
+        </div>
+
+        <div style={{ marginBottom: 28 }}>
+          <h2 style={h2Style}>{"3. Kullanım Amacı"}</h2>
+          <p style={pStyle}>{"Toplanan veriler yalnızca şu amaçlarla kullanılır:"}</p>
+          <ul style={ulStyle}>
+            <li>{"klasik İslam tıbbı geleneğine dayalı kişisel danışmanlık sunmak"}</li>
+            <li>{"danışmanınızın size özel bilgi rehberi hazırlaması"}</li>
+            <li>{"WhatsApp üzerinden iletişim kurulması"}</li>
+            <li>{"hizmet kalitesinin iyileştirilmesi ve analiz motorunun geliştirilmesi"}</li>
+          </ul>
+        </div>
+
+        <div style={{ marginBottom: 28 }}>
+          <h2 style={h2Style}>{"4. Veri Paylaşımı"}</h2>
+          <p style={pStyle}>{"Kişisel verileriniz hiçbir koşulda reklam amacıyla üçüncü taraflarla paylaşılmaz. Veriler yalnızca teknik altyapı sağlayıcılarıyla — "}<strong>{"Supabase"}</strong>{" (veritabanı), "}<strong>{"Vercel"}</strong>{" (hosting) ve "}<strong>{"Anthropic"}</strong>{" (yapay zeka analizi) — hizmetin ifası için zorunlu olarak paylaşılır. Anthropic, API çağrıları üzerinden gelen verileri model eğitiminde kullanmaz."}</p>
+        </div>
+
+        <div style={{ marginBottom: 28 }}>
+          <h2 style={h2Style}>{"5. Çerez Politikası"}</h2>
+          <p style={pStyle}>{"Platformumuz yalnızca zorunlu oturum çerezlerini kullanır. İzleme çerezi, reklam çerezi veya üçüncü taraf analitik aracı (Google Analytics vb.) kullanılmamaktadır."}</p>
+        </div>
+
+        <div style={{ marginBottom: 28 }}>
+          <h2 style={h2Style}>{"6. Veri Güvenliği"}</h2>
+          <p style={pStyle}>{"Tüm veriler Supabase üzerinde Row Level Security (RLS) ile korunmaktadır. Kimlik doğrulama Supabase Auth altyapısı ile sağlanır; şifreleriniz sunucularımızda açık biçimde saklanmaz."}</p>
+        </div>
+
+        <div style={{ marginBottom: 28 }}>
+          <h2 style={h2Style}>{"7. Saklama Süresi"}</h2>
+          <p style={pStyle}>{"Sağlık verileriniz, hizmet ilişkisinin sona ermesinden itibaren 2 yıl süreyle saklanır. Silme talebiniz 30 gün içinde yerine getirilir."}</p>
+        </div>
+
+        <div style={{ marginBottom: 28 }}>
+          <h2 style={h2Style}>{"8. Haklarınız"}</h2>
+          <p style={pStyle}>{"KVKK md. 11 kapsamındaki haklarınız ve başvuru yöntemleri için "}<a href="/kvkk" style={{ color: C.primary, textDecoration: 'underline' }}>{"KVKK Aydınlatma Metni"}</a>{" sayfamıza bakınız. İletişim: "}<strong>{"m.fatih.cakir@gmail.com"}</strong></p>
+        </div>
+
+        <div style={{ marginBottom: 28 }}>
+          <h2 style={h2Style}>{"9. Değişiklikler"}</h2>
+          <p style={pStyle}>{"Bu gizlilik politikası gerektiğinde güncellenebilir. Önemli değişiklikler e-posta veya platform üzerinden bildirilir."}</p>
+        </div>
       </div>
       <Footer />
     </div>
