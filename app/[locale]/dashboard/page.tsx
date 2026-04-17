@@ -1072,6 +1072,7 @@ body { font-family: 'Plus Jakarta Sans', sans-serif; background: #f5f5f5; paddin
           <nav style={{ flex: 1, padding: '0 8px', display: 'flex', flexDirection: 'column' as const }}>
             {[
               { label: 'Genel Bakis', href: '/dashboard', icon: '\u229E' },
+              { label: 'Hekim Paneli', href: '/dashboard/hekim/gelen-kutu', icon: '\uD83E\uDE7A' },
               { label: 'Hastalar', href: '/dashboard/hastalar', icon: '\uD83D\uDC65' },
               { label: 'Bekleyen Analizler', href: '/dashboard', icon: '\u23F3' },
               { label: 'Cilt Analizleri', href: '/dashboard/cilt', icon: '\uD83C\uDF38' },

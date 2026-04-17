@@ -42,6 +42,14 @@ export async function middleware(request: NextRequest) {
       loginUrl.searchParams.set('callbackUrl', pathname + request.nextUrl.search)
       return NextResponse.redirect(loginUrl)
     }
+    // Hekim rota koruması: /dashboard/hekim/* sadece rol=hekim JWT'lerine açık
+    const hekimRotasiMi = /\/dashboard\/hekim/.test(pathname)
+    if (hekimRotasiMi) {
+      const rol = (user.app_metadata as { rol?: string } | undefined)?.rol
+      if (rol !== 'hekim') {
+        return NextResponse.redirect(new URL('/', request.url))
+      }
+    }
     // intl middleware'i calistir, supabase cookie'lerini ekle
     const intlResponse = intlMiddleware(request)
     cookiesToSetForResponse.forEach(c => intlResponse.cookies.set(c.name, c.value, c.options))

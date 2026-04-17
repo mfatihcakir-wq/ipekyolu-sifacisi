@@ -40,6 +40,8 @@ export default function AnalizClient() {
   const [authState, setAuthState] = useState<'kontrol' | 'misafir' | 'uye'>('kontrol')
   const [adim, setAdim] = useState(1)
   const [toast, setToast] = useState<{mesaj: string, tip: 'hata' | 'basari'} | null>(null)
+  const [gondermeDurumu, setGondermeDurumu] = useState<'idle' | 'gonderiliyor' | 'basarili' | 'hata'>('idle')
+  const [hataMesaji, setHataMesaji] = useState<string>('')
   function gosterToast(mesaj: string, tip: 'hata' | 'basari' = 'hata') {
     setToast({ mesaj, tip })
     setTimeout(() => setToast(null), 4000)
@@ -47,7 +49,7 @@ export default function AnalizClient() {
 
 
   const [form, setForm] = useState({
-    ad_soyad: '', telefon: '', age_group: '', gender: '', pregnancy: 'hayir',
+    ad_soyad: '', telefon: '', email: '', age_group: '', gender: '', pregnancy: 'hayir',
     sikayet_suresi: '', chronic: 'yok', season: '', climate: '', temp_feel: '', location: '',
     nb_buyukluk: 'orta', nb_kuvvet: 'orta', nb_hiz_sinif: 'orta', nb_dolgunluk: 'orta',
     nb_sertlik: 'orta', nb_isi: 'ilik', nb_ritim: 'muntazam', nb_esitlik: 'esit', nb_sureklitik: 'surekli',
@@ -556,14 +558,118 @@ export default function AnalizClient() {
     }
   }, [])
 
-  const handleSubmit = () => {
-    if (!form.ad_soyad?.trim()) { gosterToast('Ad Soyad alani zorunludur.'); setAdim(1); return }
-    if (!form.telefon?.trim()) { gosterToast('Telefon numarasi zorunludur.'); setAdim(1); return }
+  const handleSubmit = async () => {
+    if (!form.ad_soyad?.trim()) { gosterToast('Ad Soyad alanı zorunludur.'); setAdim(1); return }
+    if (!form.telefon?.trim()) { gosterToast('Telefon numarası zorunludur.'); setAdim(1); return }
     if (!form.symptoms?.trim()) { gosterToast('Şikayetler alanı zorunludur.'); setAdim(8); return }
-    if (!form.kvkk) { gosterToast('KVKK onayi gereklidir.'); return }
-    localStorage.setItem('ipekyolu_analiz_form', JSON.stringify(form))
-    localStorage.setItem('ipekyolu_secili_plan', 'yearly')
-    router.push('/sonuc')
+    if (!form.kvkk) { gosterToast('KVKK onayı gereklidir.'); return }
+
+    setGondermeDurumu('gonderiliyor')
+    setHataMesaji('')
+
+    try {
+      const supabase = createClient()
+      const { data: { user } } = await supabase.auth.getUser()
+
+      const emailDeger = (form.email?.trim() || user?.email || '').toLowerCase()
+      if (!emailDeger) {
+        setHataMesaji('E-posta alanı zorunludur.')
+        setGondermeDurumu('hata')
+        setAdim(1)
+        return
+      }
+
+      const talepVerisi = {
+        user_id: user?.id ?? null,
+        ad_soyad: form.ad_soyad.trim(),
+        telefon: form.telefon?.trim() || null,
+        email: emailDeger,
+        yas_grubu: form.age_group || null,
+        cinsiyet: form.gender || null,
+        sikayetler: form.symptoms.trim(),
+        sikayet_suresi: form.sikayet_suresi || null,
+        kronik_hastaliklar: form.chronic || null,
+        kullanilan_ilaclar: form.notlar?.trim() || null,
+        yasam_tarzi: {
+          pregnancy: form.pregnancy, season: form.season, climate: form.climate,
+          temp_feel: form.temp_feel, location: form.location,
+          skin_type: form.skin_type, mood_detail: form.mood_detail,
+          exercise_habit: form.exercise_habit, diet_type: form.diet_type,
+          sleep: form.sleep, digestion: form.digestion, appetite: form.appetite,
+          sweating: form.sweating, chillhot: form.chillhot,
+        },
+        nabiz: {
+          nb_buyukluk: form.nb_buyukluk, nb_kuvvet: form.nb_kuvvet,
+          nb_hiz_sinif: form.nb_hiz_sinif, nb_dolgunluk: form.nb_dolgunluk,
+          nb_sertlik: form.nb_sertlik, nb_isi: form.nb_isi,
+          nb_ritim: form.nb_ritim, nb_esitlik: form.nb_esitlik,
+          nb_sureklitik: form.nb_sureklitik,
+          ppg_bpm: form.ppg_bpm || null, kamera_tipi: form.kamera_tipi,
+        },
+        dil: {
+          dil_renk: form.dil_renk, dil_kaplama: form.dil_kaplama,
+          dil_nem: form.dil_nem, dil_sekil: form.dil_sekil,
+        },
+        yuz: {
+          yuz_ten: form.yuz_ten, yuz_sekil: form.yuz_sekil,
+          yuz_cilt: form.yuz_cilt, yuz_gozalti: form.yuz_gozalti,
+        },
+        idrar: {
+          urine_color: form.urine_color, urine_amount: form.urine_amount,
+          urine_clarity: form.urine_clarity, urine_foam: form.urine_foam,
+          urine_sediment: form.urine_sediment, urine_smell: form.urine_smell,
+        },
+        diski: {
+          stool_color: form.stool_color, stool_consistency: form.stool_consistency,
+        },
+        fizik_olcum: {
+          body_temp: form.body_temp, extremity_temp: form.extremity_temp,
+          height: form.height, weight: form.weight,
+          labs: {
+            hgb: form.hgb, htc: form.htc, hematokrit: form.hematokrit,
+            ferritin: form.ferritin, crp: form.crp, sedim: form.sedim,
+            alt: form.alt, ast: form.ast, ggt: form.ggt,
+            bilirubin: form.bilirubin, uric_acid: form.uric_acid,
+            tsh: form.tsh, t3: form.t3, t4: form.t4, ft3: form.ft3, ft4: form.ft4,
+            glucose: form.glucose, hba1c: form.hba1c,
+            vit_d: form.vit_d, b12: form.b12,
+          },
+        },
+        fitri_mizac: {
+          fitri_sac: form.fitri_sac, fitri_cilt: form.fitri_cilt,
+          fitri_beden: form.fitri_beden, fitri_uyku: form.fitri_uyku,
+          fitri_sindirim: form.fitri_sindirim, fitri_mizac_ruh: form.fitri_mizac_ruh,
+          fitri_terleme: form.fitri_terleme, fitri_isi_hassas: form.fitri_isi_hassas,
+          fitri_mevsim: form.fitri_mevsim, fitri_isi: form.fitri_isi,
+          fitri_kilo: form.fitri_kilo, fitri_enerji: form.fitri_enerji,
+        },
+        danisan_mesaji: null,
+        durum: 'yeni' as const,
+      }
+
+      const { data, error } = await supabase
+        .from('analiz_talepleri')
+        .insert(talepVerisi)
+        .select()
+        .single()
+
+      if (error) {
+        if (error.message?.includes('Haftalık analiz limiti') || error.message?.includes('haftalik')) {
+          setHataMesaji('Haftada en fazla bir analiz talebi oluşturabilirsiniz. Son talebinizden itibaren 7 gün geçmesini bekleyin.')
+        } else {
+          setHataMesaji('Talep gönderilirken bir hata oluştu: ' + error.message)
+        }
+        setGondermeDurumu('hata')
+        return
+      }
+
+      setGondermeDurumu('basarili')
+      router.push(`/analiz/basarili?talep=${data.id}`)
+    } catch (err: unknown) {
+      const msg = err instanceof Error ? err.message : 'bilinmeyen'
+      setHataMesaji('Beklenmeyen bir hata oluştu: ' + msg)
+      setGondermeDurumu('hata')
+    }
   }
 
   if (authState === 'kontrol') {
@@ -716,6 +822,10 @@ export default function AnalizClient() {
             <div>
               <label style={s.label}>{"Telefon * (WhatsApp)"}</label>
               <input style={s.input} value={form.telefon} onChange={e => set('telefon', e.target.value)} placeholder="+90 555 000 0000" />
+            </div>
+            <div>
+              <label style={s.label}>{"E-posta *"}</label>
+              <input type="email" style={s.input} value={form.email} onChange={e => set('email', e.target.value)} placeholder="ornek@eposta.com" />
             </div>
           </div>
           <div className="analiz-grid3" style={{ ...s.grid3, marginTop: 10 }}>
@@ -1829,10 +1939,17 @@ export default function AnalizClient() {
 
         <button
           onClick={handleSubmit}
-          style={{ width: '100%', padding: '18px', background: C.primary, border: 'none', borderRadius: 14, cursor: 'pointer', fontFamily: cinzel.style.fontFamily, fontSize: 16, fontWeight: 600, color: C.white, letterSpacing: 2, textTransform: 'uppercase' as const, marginTop: 16 }}
+          disabled={gondermeDurumu === 'gonderiliyor'}
+          style={{ width: '100%', padding: '18px', background: C.primary, border: 'none', borderRadius: 14, cursor: gondermeDurumu === 'gonderiliyor' ? 'not-allowed' : 'pointer', fontFamily: cinzel.style.fontFamily, fontSize: 16, fontWeight: 600, color: C.white, letterSpacing: 2, textTransform: 'uppercase' as const, marginTop: 16, opacity: gondermeDurumu === 'gonderiliyor' ? 0.6 : 1 }}
         >
-          {"Formu Danışmana Gönder"}
+          {gondermeDurumu === 'gonderiliyor' ? 'Gönderiliyor...' : 'Formu Danışmana Gönder'}
         </button>
+
+        {hataMesaji && (
+          <div style={{ background: '#FCEBEB', border: '1px solid #F7C1C1', color: '#A32D2D', borderRadius: 10, padding: '12px 16px', fontSize: 13, lineHeight: 1.6, marginTop: 12 }}>
+            {hataMesaji}
+          </div>
+        )}
 
         <p style={{ textAlign: 'center', fontSize: 13, color: '#999', marginTop: 16, fontStyle: 'italic' }}>
           {"Danışmanınız 24-48 saat içinde WhatsApp üzerinden size ulaşacaktır."}
