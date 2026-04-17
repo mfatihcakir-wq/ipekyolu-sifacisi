@@ -64,7 +64,7 @@ export default function CiltAnalizlerimPage() {
         <button onClick={() => router.push('/hasta')} style={{ background: 'none', border: 'none', color: 'rgba(255,255,255,0.6)', cursor: 'pointer', fontSize: 18 }}>{'\u2190'}</button>
         <div style={{ flex: 1 }}>
           <div style={{ fontFamily: cinzel.style.fontFamily, color: C.gold, fontSize: 14, letterSpacing: 3, fontWeight: 600 }}>
-            {"IPEK YOLU SIFACISI"}
+            {"İPEK YOLU ŞİFACISI"}
           </div>
           <div style={{ fontSize: 10, color: 'rgba(255,255,255,0.45)', letterSpacing: 1.5, marginTop: 1 }}>
             {"Cilt Analizlerim"}

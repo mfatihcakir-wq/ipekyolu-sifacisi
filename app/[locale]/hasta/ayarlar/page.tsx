@@ -15,11 +15,11 @@ const C = {
 }
 
 const MIZAC_SECIMLERI = [
-  { val: 'demevi', label: 'Demevi (Sicak-Nemli)', renk: '#EF5350' },
-  { val: 'safravi', label: 'Safravi (Sicak-Kuru)', renk: '#FF9800' },
-  { val: 'balgami', label: 'Balgami (Soguk-Nemli)', renk: '#42A5F5' },
-  { val: 'sevdavi', label: 'Sevdavi (Soguk-Kuru)', renk: '#AB47BC' },
-  { val: 'belirlenmedi', label: 'Henuz Belirlenmedi', renk: '#999' },
+  { val: 'demevi', label: 'Demevî (Sıcak-Nemli)', renk: '#EF5350' },
+  { val: 'safravi', label: 'Safravî (Sıcak-Kuru)', renk: '#FF9800' },
+  { val: 'balgami', label: 'Balgamî (Soğuk-Nemli)', renk: '#42A5F5' },
+  { val: 'sevdavi', label: 'Sevdavî (Soğuk-Kuru)', renk: '#AB47BC' },
+  { val: 'belirlenmedi', label: 'Henüz Belirlenmedi', renk: '#999' },
 ]
 
 export default function AyarlarPage() {
@@ -62,7 +62,7 @@ export default function AyarlarPage() {
     const { data: { user } } = await supabase.auth.getUser()
     if (!user) return
     await supabase.from('profiles').upsert({ id: user.id, fitri_mizac: val })
-    showToast('Fitri mizac kaydedildi')
+    showToast('Fıtrî mizaç kaydedildi')
   }
 
   async function saveBildirimler(key: string, val: boolean) {
@@ -71,16 +71,16 @@ export default function AyarlarPage() {
     const { data: { user } } = await supabase.auth.getUser()
     if (!user) return
     await supabase.from('profiles').upsert({ id: user.id, bildirim_tercihleri: updated })
-    showToast('Bildirim tercihi guncellendi')
+    showToast('Bildirim tercihi güncellendi')
   }
 
   async function sifreDegistir() {
-    if (yeniSifre.length < 6) { showToast('Hata: Sifre en az 6 karakter olmali'); return }
-    if (yeniSifre !== sifreTekrar) { showToast('Hata: Sifreler eslesmiyor'); return }
+    if (yeniSifre.length < 6) { showToast('Hata: Şifre en az 6 karakter olmalı'); return }
+    if (yeniSifre !== sifreTekrar) { showToast('Hata: Şifreler eşleşmiyor'); return }
     setSifreSaving(true)
     const { error } = await supabase.auth.updateUser({ password: yeniSifre })
     if (error) showToast('Hata: ' + error.message)
-    else { showToast('Sifre basariyla degistirildi'); setYeniSifre(''); setSifreTekrar('') }
+    else { showToast('Şifre başarıyla değiştirildi'); setYeniSifre(''); setSifreTekrar('') }
     setSifreSaving(false)
   }
 
@@ -115,8 +115,8 @@ export default function AyarlarPage() {
 
         {/* FITRI MIZAC */}
         <div style={{ background: C.white, borderRadius: 14, border: `1px solid ${C.border}`, padding: '20px 24px', marginBottom: 16 }}>
-          <div style={{ fontFamily: cinzel.style.fontFamily, fontSize: 10, color: C.primary, letterSpacing: 2, marginBottom: 6 }}>FITRI MIZAC</div>
-          <div style={{ fontSize: 12, color: C.secondary, marginBottom: 14 }}>Dogumtan gelen sabit mizaciniz. Analizlerde fitri-hali karsilastirmasi icin kullanilir.</div>
+          <div style={{ fontFamily: cinzel.style.fontFamily, fontSize: 10, color: C.primary, letterSpacing: 2, marginBottom: 6 }}>FITRÎ MİZAÇ</div>
+          <div style={{ fontSize: 12, color: C.secondary, marginBottom: 14 }}>Doğumdan gelen sabit mizacınız. Analizlerde fıtrî-hâlî karşılaştırması için kullanılır.</div>
           <div style={{ display: 'grid', gap: 6 }}>
             {MIZAC_SECIMLERI.map(m => (
               <button key={m.val} onClick={() => saveMizac(m.val)}
@@ -136,12 +136,12 @@ export default function AyarlarPage() {
 
         {/* BILDIRIM TERCIHLERI */}
         <div style={{ background: C.white, borderRadius: 14, border: `1px solid ${C.border}`, padding: '20px 24px', marginBottom: 16 }}>
-          <div style={{ fontFamily: cinzel.style.fontFamily, fontSize: 10, color: C.primary, letterSpacing: 2, marginBottom: 14 }}>BILDIRIM TERCIHLERI</div>
+          <div style={{ fontFamily: cinzel.style.fontFamily, fontSize: 10, color: C.primary, letterSpacing: 2, marginBottom: 14 }}>BİLDİRİM TERCİHLERİ</div>
           {[
-            { key: 'email_analiz', label: 'E-posta: Analiz sonuclari' },
+            { key: 'email_analiz', label: 'E-posta: Analiz sonuçları' },
             { key: 'email_kampanya', label: 'E-posta: Kampanya ve duyurular' },
-            { key: 'whatsapp_bildirim', label: 'WhatsApp: Sonuc bildirimleri' },
-            { key: 'push_bildirim', label: 'Push: Tarayici bildirimleri' },
+            { key: 'whatsapp_bildirim', label: 'WhatsApp: Sonuç bildirimleri' },
+            { key: 'push_bildirim', label: 'Push: Tarayıcı bildirimleri' },
           ].map(b => (
             <div key={b.key} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '10px 0', borderBottom: `1px solid ${C.surface}` }}>
               <span style={{ fontSize: 13, color: C.dark }}>{b.label}</span>
@@ -163,27 +163,27 @@ export default function AyarlarPage() {
 
         {/* SIFRE DEGISTIR */}
         <div style={{ background: C.white, borderRadius: 14, border: `1px solid ${C.border}`, padding: '20px 24px', marginBottom: 16 }}>
-          <div style={{ fontFamily: cinzel.style.fontFamily, fontSize: 10, color: C.primary, letterSpacing: 2, marginBottom: 14 }}>SIFRE DEGISTIR</div>
+          <div style={{ fontFamily: cinzel.style.fontFamily, fontSize: 10, color: C.primary, letterSpacing: 2, marginBottom: 14 }}>ŞİFRE DEĞİŞTİR</div>
           <div style={{ display: 'grid', gap: 12, marginBottom: 12 }}>
             <div>
-              <label style={{ fontSize: 11, color: C.secondary, display: 'block', marginBottom: 4 }}>Yeni Sifre</label>
+              <label style={{ fontSize: 11, color: C.secondary, display: 'block', marginBottom: 4 }}>Yeni Şifre</label>
               <input type="password" value={yeniSifre} onChange={e => setYeniSifre(e.target.value)} placeholder="En az 6 karakter" style={inputSt} />
             </div>
             <div>
-              <label style={{ fontSize: 11, color: C.secondary, display: 'block', marginBottom: 4 }}>Sifre Tekrar</label>
-              <input type="password" value={sifreTekrar} onChange={e => setSifreTekrar(e.target.value)} placeholder="Ayni sifreyi tekrar girin" style={inputSt} />
+              <label style={{ fontSize: 11, color: C.secondary, display: 'block', marginBottom: 4 }}>Şifre Tekrar</label>
+              <input type="password" value={sifreTekrar} onChange={e => setSifreTekrar(e.target.value)} placeholder="Aynı şifreyi tekrar girin" style={inputSt} />
             </div>
           </div>
           <button onClick={sifreDegistir} disabled={sifreSaving || !yeniSifre}
             style={{ padding: '10px 20px', background: C.primary, border: 'none', borderRadius: 8, color: C.gold, fontFamily: cinzel.style.fontFamily, fontSize: 12, cursor: sifreSaving ? 'not-allowed' : 'pointer', opacity: !yeniSifre ? 0.5 : 1 }}>
-            {sifreSaving ? 'Kaydediliyor...' : 'Sifreyi Degistir'}
+            {sifreSaving ? 'Kaydediliyor...' : 'Şifreyi Değiştir'}
           </button>
         </div>
 
         {/* CIKIS */}
         <button onClick={async () => { await supabase.auth.signOut(); router.push('/') }}
           style={{ width: '100%', padding: 14, background: 'transparent', border: `1.5px solid ${C.border}`, borderRadius: 12, color: '#999', fontSize: 13, cursor: 'pointer', fontFamily: cinzel.style.fontFamily, letterSpacing: 1 }}>
-          Cikis Yap
+          Çıkış Yap
         </button>
       </div>
     </div>

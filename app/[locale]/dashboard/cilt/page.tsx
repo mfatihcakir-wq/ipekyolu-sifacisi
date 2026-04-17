@@ -77,10 +77,10 @@ export default function DashboardCiltListPage() {
           <button onClick={() => router.push('/dashboard')} style={{ background: 'none', border: 'none', color: 'rgba(255,255,255,0.6)', cursor: 'pointer', fontSize: 18 }}>{'\u2190'}</button>
           <div>
             <div style={{ fontFamily: cinzel.style.fontFamily, color: C.gold, fontSize: 14, letterSpacing: 3, fontWeight: 600 }}>
-              {"IPEK YOLU SIFACISI"}
+              {"İPEK YOLU ŞİFACISI"}
             </div>
             <div style={{ fontSize: 10, color: 'rgba(255,255,255,0.45)', letterSpacing: 1.5, marginTop: 1 }}>
-              {"Cilt Analizleri Yonetimi"}
+              {"Cilt Analizleri Yönetimi"}
             </div>
           </div>
         </div>
@@ -88,7 +88,7 @@ export default function DashboardCiltListPage() {
           background: 'rgba(255,255,255,0.1)', borderRadius: 20, padding: '4px 14px',
           fontSize: 12, color: C.gold, fontWeight: 600,
         }}>
-          {forms.length} {"kayit"}
+          {forms.length} {"kayıt"}
         </div>
       </header>
 

@@ -961,10 +961,10 @@ export default function AnalizClient() {
             <div style={{ ...s.card, marginTop: 12 }}>
               <label style={s.label}>{"ISI SIFATI"}</label>
               <span style={s.labelAr}>{"حرارة النبض"}</span>
-              <div style={{ fontSize: 11, color: '#999', marginBottom: 8 }}>{"PPG ile olculemez, elle belirleyin."}</div>
+              <div style={{ fontSize: 11, color: '#999', marginBottom: 8 }}>{"PPG ile ölçülemez, elle belirleyin."}</div>
               <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap' as const }}>
                 {[
-                  { v: 'sicak', l: 'Sicak' }, { v: 'ilik', l: 'Ilik' }, { v: 'soguk', l: 'Soguk' }
+                  { v: 'sicak', l: 'Sıcak' }, { v: 'ilik', l: 'Ilık' }, { v: 'soguk', l: 'Soğuk' }
                 ].map(opt => (
                   <button key={opt.v} onClick={() => set('nb_isi', opt.v)}
                     style={{

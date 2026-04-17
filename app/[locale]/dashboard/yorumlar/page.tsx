@@ -70,12 +70,12 @@ export default function YorumlarPage() {
       <header style={{ background: C.primary, padding: '0 24px', height: 64, display: 'flex', alignItems: 'center', justifyContent: 'space-between', position: 'sticky', top: 0, zIndex: 100 }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
           <Link href="/dashboard" style={{ textDecoration: 'none' }}>
-            <span style={{ fontFamily: cinzel.style.fontFamily, color: C.gold, fontSize: 14, fontWeight: 600, letterSpacing: 3 }}>{"IPEK YOLU SIFACISI"}</span>
+            <span style={{ fontFamily: cinzel.style.fontFamily, color: C.gold, fontSize: 14, fontWeight: 600, letterSpacing: 3 }}>{"İPEK YOLU ŞİFACISI"}</span>
           </Link>
           <span style={{ color: 'rgba(255,255,255,0.3)' }}>{"/"}</span>
           <span style={{ fontFamily: cinzel.style.fontFamily, color: 'rgba(255,255,255,0.6)', fontSize: 11, letterSpacing: 2 }}>{"YORUMLAR"}</span>
         </div>
-        <Link href="/dashboard" style={{ fontSize: 12, color: 'rgba(255,255,255,0.5)', textDecoration: 'none' }}>{"Panel'e Don"}</Link>
+        <Link href="/dashboard" style={{ fontSize: 12, color: 'rgba(255,255,255,0.5)', textDecoration: 'none' }}>{"Panel'e Dön"}</Link>
       </header>
 
       <div style={{ maxWidth: 900, margin: '0 auto', padding: '32px 20px' }}>

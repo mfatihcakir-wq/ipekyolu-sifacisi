@@ -138,17 +138,17 @@ export default function BitkilerPage() {
             <div style={{ fontFamily: cinzel.style.fontFamily, color: C.gold, fontSize: 15, fontWeight: 600, letterSpacing: 3 }}>İPEK YOLU ŞİFACISI</div>
           </a>
           <div style={{ color: 'rgba(255,255,255,0.3)' }}>{'\u203A'}</div>
-          <div style={{ fontFamily: cinzel.style.fontFamily, color: 'rgba(255,255,255,0.7)', fontSize: 13, letterSpacing: 2 }}>MUFREDAT</div>
+          <div style={{ fontFamily: cinzel.style.fontFamily, color: 'rgba(255,255,255,0.7)', fontSize: 13, letterSpacing: 2 }}>MÜFREDAT</div>
         </div>
       </header>
 
       {/* HERO */}
       <div style={{ background: C.primary, padding: '40px 24px 36px', textAlign: 'center' }}>
         <div style={{ fontFamily: cinzel.style.fontFamily, fontSize: 'clamp(22px, 4vw, 30px)', color: C.gold, marginBottom: 8, letterSpacing: 2 }}>
-          Klasik İslam Tıbbı Mufredat Ansiklopedisi
+          Klasik İslam Tıbbı Müfredat Ansiklopedisi
         </div>
         <div style={{ fontSize: 15, color: 'rgba(255,255,255,0.6)', fontStyle: 'italic', marginBottom: 6 }}>
-          el-Cami li-Mufredat (İbn Beytâr) kaynakli {stats.toplam} bitki
+          {"el-Câmi\u2019 li-Müfredât (İbn Beytâr) kaynaklı"} {stats.toplam} bitki
         </div>
         <div style={{ fontSize: 14, color: C.gold, fontFamily: naskh.style.fontFamily }}>الجامع لمفردات الأدوية والأغذية</div>
       </div>
@@ -159,8 +159,8 @@ export default function BitkilerPage() {
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(140px, 1fr))', gap: 10, marginBottom: 20 }}>
           {[
             { label: 'Toplam', val: stats.toplam, color: C.primary },
-            { label: 'Sicak', val: stats.sicak, color: '#E53935' },
-            { label: 'Soguk', val: stats.soguk, color: '#2196F3' },
+            { label: 'Sıcak', val: stats.sicak, color: '#E53935' },
+            { label: 'Soğuk', val: stats.soguk, color: '#2196F3' },
             { label: 'Kaynak', val: `${stats.kaynak}+`, color: C.gold },
           ].map(s => (
             <div key={s.label} style={{ background: C.white, borderRadius: 10, padding: '14px 16px', border: `1px solid ${C.border}`, borderTop: `3px solid ${s.color}` }}>
@@ -174,7 +174,7 @@ export default function BitkilerPage() {
         <div style={{ background: C.white, borderRadius: 12, padding: '16px 20px', marginBottom: 20, border: `1px solid ${C.border}` }}>
           <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap' as const, alignItems: 'center', marginBottom: 12 }}>
             <input
-              type="text" placeholder="Turkce, Arapca veya fayda ara..."
+              type="text" placeholder="Türkçe, Arapça veya fayda ara..."
               value={arama} onChange={e => setArama(e.target.value)}
               style={{ flex: 1, minWidth: 220, padding: '10px 14px', border: `1px solid ${C.border}`, borderRadius: 8, fontSize: 16, minHeight: 44, fontFamily: garamond.style.fontFamily, outline: 'none', background: C.surface }}
             />
@@ -184,16 +184,16 @@ export default function BitkilerPage() {
             {/* Mizac */}
             <select value={mizacF} onChange={e => setMizacF(e.target.value)}
               style={{ padding: '8px 12px', border: `1px solid ${C.border}`, borderRadius: 8, fontSize: 12, outline: 'none', fontFamily: garamond.style.fontFamily, minHeight: 36 }}>
-              <option value="">Tum Mizaclar</option>
-              <option value="sıcak">Sicak</option>
-              <option value="soğuk">Soguk</option>
-              <option value="ılık">Ilik</option>
+              <option value="">Tüm Mizaçlar</option>
+              <option value="sıcak">Sıcak</option>
+              <option value="soğuk">Soğuk</option>
+              <option value="ılık">Ilık</option>
               <option value="bilinmiyor">Bilinmiyor</option>
             </select>
             {/* Nem */}
             <select value={nemF} onChange={e => setNemF(e.target.value)}
               style={{ padding: '8px 12px', border: `1px solid ${C.border}`, borderRadius: 8, fontSize: 12, outline: 'none', fontFamily: garamond.style.fontFamily, minHeight: 36 }}>
-              <option value="">Tum Nem</option>
+              <option value="">Tüm Nem</option>
               <option value="kuru">Kuru</option>
               <option value="nemli">Nemli</option>
               <option value="bilinmiyor">Bilinmiyor</option>
@@ -201,13 +201,13 @@ export default function BitkilerPage() {
             {/* Organ */}
             <select value={organF} onChange={e => setOrganF(e.target.value)}
               style={{ padding: '8px 12px', border: `1px solid ${C.border}`, borderRadius: 8, fontSize: 12, outline: 'none', fontFamily: garamond.style.fontFamily, minHeight: 36 }}>
-              <option value="">Tum Organlar</option>
+              <option value="">Tüm Organlar</option>
               {uniqueOrganlar.map(o => <option key={o} value={o}>{o}</option>)}
             </select>
             {/* Kaynak */}
             <select value={kaynakF} onChange={e => setKaynakF(e.target.value)}
               style={{ padding: '8px 12px', border: `1px solid ${C.border}`, borderRadius: 8, fontSize: 12, outline: 'none', fontFamily: garamond.style.fontFamily, minHeight: 36 }}>
-              <option value="">Tum Kaynaklar</option>
+              <option value="">Tüm Kaynaklar</option>
               {uniqueKaynaklar.map(k => <option key={k} value={k}>{k}</option>)}
             </select>
             {(mizacF || nemF || organF || kaynakF || arama) && (
@@ -306,7 +306,7 @@ export default function BitkilerPage() {
                         {/* Kaynak metin */}
                         {b.kaynak_metin && (
                           <div style={{ background: C.surface, borderRadius: 8, padding: '10px 14px', marginBottom: 12 }}>
-                            <div style={{ fontSize: 10, color: C.secondary, letterSpacing: 1, marginBottom: 4 }}>KLASIK KAYNAK</div>
+                            <div style={{ fontSize: 10, color: C.secondary, letterSpacing: 1, marginBottom: 4 }}>KLASİK KAYNAK</div>
                             <div style={{ fontSize: 12, color: C.dark, lineHeight: 1.6, fontStyle: 'italic' }}>{b.kaynak_metin}</div>
                           </div>
                         )}
@@ -314,14 +314,14 @@ export default function BitkilerPage() {
                         {/* Kontrendikasyon */}
                         {hasKontrendikasyon && (
                           <div style={{ background: '#FFF8E7', border: `1px solid ${C.gold}`, borderRadius: 8, padding: '8px 12px', marginBottom: 12, fontSize: 11, color: C.secondary }}>
-                            {'\u26A0'} Dikkat: Bu bitki ile ilgili ozel uyarilar mevcuttur. Kullanim oncesi danismana basvurun.
+                            {'\u26A0'} Dikkat: Bu bitki ile ilgili özel uyarılar mevcuttur. Kullanım öncesi danışmana başvurun.
                           </div>
                         )}
 
                         {/* Tum organlar */}
                         {b.organlar?.length > 0 && (
                           <div style={{ marginBottom: 10 }}>
-                            <div style={{ fontSize: 10, color: C.secondary, letterSpacing: 1, marginBottom: 4 }}>ETKILEDIGI ORGANLAR</div>
+                            <div style={{ fontSize: 10, color: C.secondary, letterSpacing: 1, marginBottom: 4 }}>ETKİLEDİĞİ ORGANLAR</div>
                             <div style={{ display: 'flex', gap: 4, flexWrap: 'wrap' as const }}>
                               {b.organlar.map((o, i) => (
                                 <span key={i} style={{ fontSize: 10, background: '#E8F5E9', color: C.primary, padding: '2px 8px', borderRadius: 10 }}>{o}</span>
@@ -353,7 +353,7 @@ export default function BitkilerPage() {
               <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: 6, marginBottom: 40 }}>
                 <button onClick={() => setSayfa(Math.max(1, sayfa - 1))} disabled={sayfa === 1}
                   style={{ padding: '8px 14px', borderRadius: 8, border: `1px solid ${C.border}`, background: C.white, color: sayfa === 1 ? '#ccc' : C.primary, cursor: sayfa === 1 ? 'default' : 'pointer', fontSize: 12 }}>
-                  {'\u2190'} Onceki
+                  {'\u2190'} Önceki
                 </button>
                 {Array.from({ length: Math.min(7, totalPages) }, (_, i) => {
                   let p: number

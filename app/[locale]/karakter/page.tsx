@@ -476,18 +476,18 @@ export default function KarakterAnaliziPage() {
         <div onClick={() => setAuthModal(false)} style={{ position: 'fixed', inset: 0, zIndex: 1000, background: 'rgba(0,0,0,0.6)', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 20 }}>
           <div onClick={e => e.stopPropagation()} style={{ background: '#FAF6EF', borderRadius: 20, maxWidth: 420, width: '100%', padding: '40px 36px', textAlign: 'center' }}>
             <div style={{ fontSize: 48, marginBottom: 16 }}>{'\uD83D\uDD12'}</div>
-            <div style={{ fontFamily: cinzel.style.fontFamily, fontSize: 20, color: '#1A2E1E', marginBottom: 8 }}>Bu Ozellik Uyelere Ozeldir</div>
+            <div style={{ fontFamily: cinzel.style.fontFamily, fontSize: 20, color: '#1A2E1E', marginBottom: 8 }}>Bu Özellik Üyelere Özeldir</div>
             <p style={{ fontSize: 14, color: 'rgba(0,0,0,0.5)', lineHeight: 1.6, marginBottom: 24 }}>
-              Kalp Sehri karakter analizini kullanmak icin giris yapin veya uye olun.
+              Kalp Şehri karakter analizini kullanmak için giriş yapın veya üye olun.
             </p>
             <div style={{ display: 'flex', gap: 12, justifyContent: 'center' }}>
               <button onClick={() => router.push('/giris')}
                 style={{ padding: '12px 28px', borderRadius: 10, background: '#1A2E1E', color: '#D4A843', fontFamily: cinzel.style.fontFamily, fontSize: 14, fontWeight: 600, letterSpacing: 1, border: 'none', cursor: 'pointer' }}>
-                Giris Yap
+                Giriş Yap
               </button>
               <button onClick={() => router.push('/kayit')}
                 style={{ padding: '12px 28px', borderRadius: 10, background: '#D4A843', color: '#1A2E1E', fontFamily: cinzel.style.fontFamily, fontSize: 14, fontWeight: 600, letterSpacing: 1, border: 'none', cursor: 'pointer' }}>
-                Uye Ol
+                Üye Ol
               </button>
             </div>
             <button onClick={() => setAuthModal(false)}

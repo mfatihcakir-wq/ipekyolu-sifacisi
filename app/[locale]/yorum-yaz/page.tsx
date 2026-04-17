@@ -22,11 +22,11 @@ export default function YorumYazPage() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     if (!adSoyad.trim() || !yorum.trim()) {
-      setError('Ad soyad ve yorum alanlari zorunludur.')
+      setError('Ad soyad ve yorum alanları zorunludur.')
       return
     }
     if (!kvkk) {
-      setError('KVKK metnini onaylamaniz gerekmektedir.')
+      setError('KVKK metnini onaylamanız gerekmektedir.')
       return
     }
     setError('')
@@ -39,13 +39,13 @@ export default function YorumYazPage() {
       })
       const data = await res.json()
       if (!res.ok) {
-        setError(data.error || 'Bir hata olustu.')
+        setError(data.error || 'Bir hata oluştu.')
         setLoading(false)
         return
       }
       setSuccess(true)
     } catch {
-      setError('Baglanti hatasi. Lutfen tekrar deneyin.')
+      setError('Bağlantı hatası. Lütfen tekrar deneyin.')
     }
     setLoading(false)
   }
@@ -61,16 +61,16 @@ export default function YorumYazPage() {
             }}>
               <div style={{ fontSize: 48, marginBottom: 16 }}>{"✓"}</div>
               <h2 style={{ fontFamily: cinzel.style.fontFamily, fontSize: 22, fontWeight: 600, color: C.primary, marginBottom: 12 }}>
-                {"Yorumunuz Alindi"}
+                {"Yorumunuz Alındı"}
               </h2>
               <p style={{ fontSize: 16, color: C.secondary, lineHeight: 1.7, marginBottom: 24 }}>
-                {"Yorumunuz incelendikten sonra yayinlanacaktir. Katkilariniz icin tesekkur ederiz."}
+                {"Yorumunuz incelendikten sonra yayınlanacaktır. Katkılarınız için teşekkür ederiz."}
               </p>
               <a href="/" style={{
                 display: 'inline-block', background: C.gold, color: C.primary, fontFamily: cinzel.style.fontFamily,
                 fontSize: 13, fontWeight: 600, padding: '12px 32px', borderRadius: 10, textDecoration: 'none', letterSpacing: 1,
               }}>
-                {"Ana Sayfaya Don"}
+                {"Ana Sayfaya Dön"}
               </a>
             </div>
           </div>
@@ -86,10 +86,10 @@ export default function YorumYazPage() {
       <main style={{ flex: 1, padding: '48px 16px' }}>
         <div style={{ maxWidth: 560, margin: '0 auto' }}>
           <h1 style={{ fontFamily: cinzel.style.fontFamily, fontSize: 24, fontWeight: 600, color: C.primary, textAlign: 'center', marginBottom: 8 }}>
-            {"Deneyiminizi Paylasin"}
+            {"Deneyiminizi Paylaşın"}
           </h1>
           <p style={{ textAlign: 'center', fontStyle: 'italic', fontSize: 15, color: C.secondary, marginBottom: 32 }}>
-            {"Yorumunuz incelendikten sonra yayinlanacaktir."}
+            {"Yorumunuz incelendikten sonra yayınlanacaktır."}
           </p>
 
           <form onSubmit={handleSubmit} style={{
@@ -98,7 +98,7 @@ export default function YorumYazPage() {
             {/* Puan */}
             <div style={{ marginBottom: 24 }}>
               <label style={{ fontFamily: cinzel.style.fontFamily, fontSize: 12, fontWeight: 600, color: C.primary, letterSpacing: 1, display: 'block', marginBottom: 8 }}>
-                {"Puaniniz"}
+                {"Puanınız"}
               </label>
               <div style={{ display: 'flex', gap: 4 }}>
                 {[1, 2, 3, 4, 5].map(n => (
@@ -121,7 +121,7 @@ export default function YorumYazPage() {
                 type="text"
                 value={adSoyad}
                 onChange={e => setAdSoyad(e.target.value)}
-                placeholder="Adiniz Soyadiniz"
+                placeholder="Adınız Soyadınız"
                 style={{
                   width: '100%', minHeight: 44, fontSize: 16, padding: '10px 14px',
                   border: `1px solid ${C.border}`, borderRadius: 10, fontFamily: garamond.style.fontFamily,
@@ -133,13 +133,13 @@ export default function YorumYazPage() {
             {/* Sehir */}
             <div style={{ marginBottom: 20 }}>
               <label style={{ fontFamily: cinzel.style.fontFamily, fontSize: 12, fontWeight: 600, color: C.primary, letterSpacing: 1, display: 'block', marginBottom: 6 }}>
-                {"Sehir"}
+                {"Şehir"}
               </label>
               <input
                 type="text"
                 value={sehir}
                 onChange={e => setSehir(e.target.value)}
-                placeholder="Sehriniz (istege bagli)"
+                placeholder="Şehriniz (isteğe bağlı)"
                 style={{
                   width: '100%', minHeight: 44, fontSize: 16, padding: '10px 14px',
                   border: `1px solid ${C.border}`, borderRadius: 10, fontFamily: garamond.style.fontFamily,
@@ -179,7 +179,7 @@ export default function YorumYazPage() {
                   style={{ marginTop: 3 }}
                 />
                 <span style={{ fontSize: 13, color: C.secondary, lineHeight: 1.6 }}>
-                  {"Kisisel verilerimin KVKK kapsaminda islenmesini ve yorumumun site uzerinde yayinlanmasini onayliyorum."}
+                  {"Kişisel verilerimin KVKK kapsamında işlenmesini ve yorumumun site üzerinde yayınlanmasını onaylıyorum."}
                 </span>
               </label>
             </div>
@@ -204,7 +204,7 @@ export default function YorumYazPage() {
                 padding: '14px 24px', borderRadius: 10, border: 'none', cursor: loading ? 'not-allowed' : 'pointer',
               }}
             >
-              {loading ? 'Gonderiliyor...' : 'Yorumu Gonder'}
+              {loading ? 'Gönderiliyor...' : 'Yorumu Gönder'}
             </button>
           </form>
         </div>
