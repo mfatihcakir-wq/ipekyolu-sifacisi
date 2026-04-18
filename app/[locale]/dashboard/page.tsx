@@ -384,6 +384,7 @@ export default function DashboardPage() {
   const [gecmisAnalizler, setGecmisAnalizler] = useState<any[]>([])
   const [gecmisYukleniyor, setGecmisYukleniyor] = useState(false)
   const [userEmail, setUserEmail] = useState<string>('')
+  const [userRol, setUserRol] = useState<string>('')
   const router = useRouter()
   const pathname = usePathname()
   const searchParams = useSearchParams()
@@ -395,6 +396,8 @@ export default function DashboardPage() {
   useEffect(() => {
     supabase.auth.getUser().then(({ data: { user } }) => {
       if (user?.email) setUserEmail(user.email)
+      const rol = (user?.app_metadata as { rol?: string } | undefined)?.rol
+      if (rol) setUserRol(rol)
     })
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
@@ -469,6 +472,7 @@ export default function DashboardPage() {
     setYukleniyor(false)
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   async function analizYap() {
     if (!secili) return
 
@@ -561,6 +565,7 @@ export default function DashboardPage() {
     setAnalizYukleniyor(false)
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   async function onaylaVeGonder() {
     if (!secili || !analiz) { gosterToast('Önce analiz yapın'); return }
     try {
@@ -592,6 +597,7 @@ export default function DashboardPage() {
     }
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   async function tamamlandiIsaretle() {
     if (!secili) return
     await supabase.from('detailed_forms')
@@ -1097,6 +1103,17 @@ body { font-family: 'Plus Jakarta Sans', sans-serif; background: #f5f5f5; paddin
               )
             })}
           </nav>
+          {userRol === 'hekim' && (
+            <div style={{ padding: '12px 8px', borderTop: `1px solid ${C.border}` }}>
+              <div style={{ fontSize: 10, color: C.secondary, letterSpacing: 1.5, textTransform: 'uppercase' as const, padding: '0 8px', marginBottom: 6 }}>Hekim Paneli</div>
+              <Link href="/dashboard/hekim/gelen-kutu" style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '7px 12px', borderRadius: 6, fontSize: 12, color: C.secondary, textDecoration: 'none', marginBottom: 2 }}>
+                📋 Gelen Kutu
+              </Link>
+              <Link href="/dashboard/hekim/maliyet" style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '7px 12px', borderRadius: 6, fontSize: 12, color: C.secondary, textDecoration: 'none' }}>
+                💰 Maliyet Takibi
+              </Link>
+            </div>
+          )}
           <div style={{ padding: '12px 16px', borderTop: `1px solid ${C.border}` }}>
             <div style={{ fontSize: 12, color: C.secondary, marginBottom: 8 }}>{"M. Fatih Çakır"}</div>
             <button onClick={() => { supabase.auth.signOut(); router.push('/login') }}
@@ -1108,6 +1125,16 @@ body { font-family: 'Plus Jakarta Sans', sans-serif; background: #f5f5f5; paddin
 
         {/* ANA İÇERİK */}
         <div style={{ padding: '24px 20px', maxWidth: 1200, flex: 1, minWidth: 0 }}>
+        <div style={{ marginBottom: 20, background: '#F3F2EE', border: '1px solid #C9C5BD', borderRadius: 12, padding: '14px 18px', display: 'flex', gap: 12, alignItems: 'flex-start' }}>
+          <span style={{ fontSize: 20 }}>🗄️</span>
+          <div style={{ flex: 1 }}>
+            <div style={{ fontWeight: 600, color: '#3D3A33', fontSize: 14 }}>Eski Panel — Salt Okunur</div>
+            <div style={{ fontSize: 13, color: '#5C5A53', marginTop: 4, lineHeight: 1.5 }}>
+              Bu panel yeni analiz kaydedemez. Yeni akış için{' '}
+              <a href="/dashboard/hekim/gelen-kutu" style={{ color: '#1C3A26', fontWeight: 600, textDecoration: 'underline' }}>Hekim Paneli</a>&apos;ni kullanın.
+            </div>
+          </div>
+        </div>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(160px, 1fr))', gap: 12, marginBottom: 24 }}>
           {[
             { label: 'Toplam Hasta', val: istatistik.toplam, accent: '#6B5744' },
@@ -1242,9 +1269,9 @@ body { font-family: 'Plus Jakarta Sans', sans-serif; background: #f5f5f5; paddin
                 )}
 
                 {!analiz && (
-                  <button onClick={analizYap} disabled={analizYukleniyor}
-                    style={{ width: '100%', padding: 16, background: analizYukleniyor ? '#999' : C.primary, border: 'none', borderRadius: 10, cursor: analizYukleniyor ? 'not-allowed' : 'pointer', fontFamily: cinzel.style.fontFamily, fontSize: 14, fontWeight: 600, color: C.white, letterSpacing: 2 }}>
-                    {analizYukleniyor ? 'Klasik kaynaklar taraniyor...' : 'Analiz Et'}
+                  <button disabled title="Eski pipeline devre disi — Hekim Paneli'ni kullanin"
+                    style={{ width: '100%', padding: 16, background: '#999', border: 'none', borderRadius: 10, cursor: 'not-allowed', fontFamily: cinzel.style.fontFamily, fontSize: 14, fontWeight: 600, color: C.white, letterSpacing: 2, opacity: 0.6 }}>
+                    Analiz Et (devre disi)
                   </button>
                 )}
               </div>
@@ -1292,9 +1319,9 @@ body { font-family: 'Plus Jakarta Sans', sans-serif; background: #f5f5f5; paddin
 
                   {/* AKSIYON BUTONLARI */}
                   <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10, marginTop: 16 }}>
-                    <button onClick={tamamlandiIsaretle}
-                      style={{ background: secili.durum === 'tamamlandi' ? '#E8F5E9' : C.primary, color: secili.durum === 'tamamlandi' ? C.primary : 'white', border: 'none', borderRadius: 10, padding: 14, fontSize: 13, fontWeight: 600, cursor: 'pointer', fontFamily: cinzel.style.fontFamily }}>
-                      {secili.durum === 'tamamlandi' ? 'Tamamlandi' : 'Onayla ve Gonder'}
+                    <button disabled title="Eski pipeline devre disi"
+                      style={{ background: '#E5E5E5', color: '#999', border: 'none', borderRadius: 10, padding: 14, fontSize: 13, fontWeight: 600, cursor: 'not-allowed', fontFamily: cinzel.style.fontFamily, opacity: 0.6 }}>
+                      {secili.durum === 'tamamlandi' ? 'Tamamlandi' : 'Onayla (devre disi)'}
                     </button>
                     <a href="https://wa.me/905331687226"
                       target="_blank"
@@ -1304,14 +1331,14 @@ body { font-family: 'Plus Jakarta Sans', sans-serif; background: #f5f5f5; paddin
                   </div>
                   <div style={{ fontSize: 10, color: '#999', marginTop: 4, textAlign: 'center' as const }}>{"Rapora ek yorum veya soru sormak icin"}</div>
 
-                  <button onClick={onaylaVeGonder}
-                    style={{ width: '100%', marginTop: 12, padding: 14, background: '#B8860B', border: 'none', borderRadius: 10, cursor: 'pointer', fontSize: 13, fontWeight: 700, color: '#1C3A26', fontFamily: cinzel.style.fontFamily, letterSpacing: 1.5 }}>
-                    {"✓ ONAYLA VE HASTAYA GÖNDER"}
+                  <button disabled title="Eski pipeline devre disi — Hekim Paneli'ni kullanin"
+                    style={{ width: '100%', marginTop: 12, padding: 14, background: '#E5E5E5', border: 'none', borderRadius: 10, cursor: 'not-allowed', fontSize: 13, fontWeight: 700, color: '#999', fontFamily: cinzel.style.fontFamily, letterSpacing: 1.5, opacity: 0.6 }}>
+                    {"✓ ONAYLA (devre disi)"}
                   </button>
 
-                  <button onClick={analizYap}
-                    style={{ width: '100%', marginTop: 8, padding: 10, background: 'transparent', border: `1px solid ${C.border}`, borderRadius: 8, cursor: 'pointer', fontSize: 12, color: C.secondary, fontFamily: cinzel.style.fontFamily }}>
-                    Yeniden Analiz Et
+                  <button disabled title="Eski pipeline devre disi"
+                    style={{ width: '100%', marginTop: 8, padding: 10, background: 'transparent', border: `1px solid ${C.border}`, borderRadius: 8, cursor: 'not-allowed', fontSize: 12, color: '#999', fontFamily: cinzel.style.fontFamily, opacity: 0.6 }}>
+                    Yeniden Analiz (devre disi)
                   </button>
 
                   {/* ANALİZ GEÇMİŞİ */}

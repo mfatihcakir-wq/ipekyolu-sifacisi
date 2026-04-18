@@ -65,6 +65,7 @@ export default function HastalarPage() {
     setLoading(false)
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   async function sil(id: string) {
     if (!confirm('Bu formu silmek istediginizden emin misiniz?')) return
     await supabase.from('detailed_forms').delete().eq('id', id)
@@ -171,8 +172,8 @@ export default function HastalarPage() {
                             style={{ fontSize: 10, padding: '4px 10px', background: 'transparent', color: '#25D366', border: '1px solid #25D366', borderRadius: 6, fontWeight: 600, textDecoration: 'none', display: 'inline-block' }}>
                             {"💬"}
                           </a>
-                          <button onClick={() => sil(f.id)}
-                            style={{ fontSize: 10, padding: '4px 10px', background: '#FFEBEE', color: '#C62828', border: 'none', borderRadius: 6, cursor: 'pointer', fontWeight: 600 }}>
+                          <button disabled title="Eski pipeline devre disi"
+                            style={{ fontSize: 10, padding: '4px 10px', background: '#F5F5F5', color: '#999', border: 'none', borderRadius: 6, cursor: 'not-allowed', fontWeight: 600, opacity: 0.6 }}>
                             Sil
                           </button>
                         </div>

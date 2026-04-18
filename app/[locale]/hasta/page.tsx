@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { Cormorant_Garamond as Cinzel, EB_Garamond } from 'next/font/google'
 import { createClient } from '@/lib/supabase'
+import { DurumEtiketi } from './DurumEtiketi'
 
 const cinzel = Cinzel({ display: 'swap', preload: false, subsets: ['latin', 'latin-ext'], weight: ['400', '500', '600'] })
 const garamond = EB_Garamond({ display: 'swap', preload: false, subsets: ['latin', 'latin-ext'], weight: ['400', '500'], style: ['normal', 'italic'] })
@@ -23,6 +24,14 @@ interface Analiz {
   analiz_sonucu?: any
 }
 
+interface Talep {
+  id: string
+  created_at: string
+  durum: string
+  sikayetler: string | null
+  onaylandi_at: string | null
+}
+
 const SIDEBAR_ITEMS = [
   { label: 'Ana Sayfa', href: '/', icon: 'M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z' },
   { label: 'Analizlerim', href: '/hasta', icon: 'M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2', active: true },
@@ -38,6 +47,7 @@ export default function HastaPage() {
   const [loading, setLoading] = useState(true)
   const [ad, setAd] = useState('')
   const [analizler, setAnalizler] = useState<Analiz[]>([])
+  const [talepler, setTalepler] = useState<Talep[]>([])
 
   useEffect(() => {
     async function yukle() {
@@ -46,13 +56,22 @@ export default function HastaPage() {
 
       setAd(user.user_metadata?.full_name || user.email?.split('@')[0] || 'Kullanici')
 
-      const { data: forms } = await supabase
-        .from('detailed_forms')
-        .select('id, created_at, durum, tum_form_verisi, analiz_sonucu')
-        .eq('user_id', user.id)
-        .order('created_at', { ascending: false })
-        .limit(20)
-      setAnalizler(forms || [])
+      const [formsRes, taleplerRes] = await Promise.all([
+        supabase
+          .from('detailed_forms')
+          .select('id, created_at, durum, tum_form_verisi, analiz_sonucu')
+          .eq('user_id', user.id)
+          .order('created_at', { ascending: false })
+          .limit(20),
+        supabase
+          .from('analiz_talepleri')
+          .select('id, sikayetler, durum, created_at, onaylandi_at')
+          .eq('user_id', user.id)
+          .order('created_at', { ascending: false })
+          .limit(20),
+      ])
+      setAnalizler(formsRes.data || [])
+      setTalepler(taleplerRes.data || [])
 
       setLoading(false)
     }
@@ -87,9 +106,15 @@ export default function HastaPage() {
         width: 240, background: C.primary, padding: '24px 0', flexShrink: 0,
         display: 'flex', flexDirection: 'column', position: 'sticky' as const, top: 0, height: '100vh',
       }}>
-        <div style={{ padding: '0 20px', marginBottom: 32 }}>
+        <div style={{ padding: '0 20px', marginBottom: 20 }}>
           <div style={{ fontFamily: cinzel.style.fontFamily, color: C.gold, fontSize: 13, fontWeight: 600, letterSpacing: 2 }}>İPEK YOLU</div>
           <div style={{ fontFamily: cinzel.style.fontFamily, color: C.gold, fontSize: 10, letterSpacing: 3, opacity: 0.6 }}>SIFACISI</div>
+        </div>
+        <div style={{ padding: '0 20px', marginBottom: 20 }}>
+          <button onClick={() => router.push('/analiz')}
+            style={{ width: '100%', padding: '10px 14px', background: C.gold, color: C.primary, border: 'none', borderRadius: 10, fontFamily: cinzel.style.fontFamily, fontSize: 11, fontWeight: 700, letterSpacing: 1.5, cursor: 'pointer' }}>
+            ✦ YENİ ANALİZ BAŞLAT
+          </button>
         </div>
         <nav style={{ flex: 1 }}>
           {SIDEBAR_ITEMS.map(item => (
@@ -175,28 +200,10 @@ export default function HastaPage() {
           ))}
         </div>
 
-        {/* Son analiz detay karti */}
-        {analizler.length > 0 && analizler[0].durum === 'tamamlandi' && (
-          <div style={{ background: C.white, borderRadius: 14, border: `1px solid ${C.border}`, padding: '20px 24px', marginBottom: 20 }}>
-            <div style={{ fontFamily: cinzel.style.fontFamily, fontSize: 11, color: C.primary, letterSpacing: 2, marginBottom: 12 }}>SON ANALIZ SONUCU</div>
-            <div style={{ fontSize: 14, color: C.dark, fontWeight: 500, marginBottom: 8 }}>
-              {analizler[0].tum_form_verisi?.ad_soyad || 'Analiz'} — {new Date(analizler[0].created_at).toLocaleDateString('tr-TR')}
-            </div>
-            <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' as const, marginBottom: 8 }}>
-              {analizler[0].tum_form_verisi?.symptoms?.split(',').slice(0, 3).map((s: string, i: number) => (
-                <span key={i} style={{ fontSize: 10, background: C.surface, padding: '3px 8px', borderRadius: 10, color: C.secondary }}>{s.trim()}</span>
-              ))}
-            </div>
-            <div style={{ fontSize: 12, color: C.secondary, fontStyle: 'italic' }}>
-              Detay icin takip panelini ziyaret edin.
-            </div>
-          </div>
-        )}
-
-        {/* Son analizler listesi */}
+        {/* YENI ANALIZLER (analiz_talepleri) */}
         <div style={{ marginBottom: 24 }}>
           <div style={{ fontFamily: cinzel.style.fontFamily, fontSize: 12, color: C.primary, letterSpacing: 2, marginBottom: 12 }}>ANALIZLERIM</div>
-          {analizler.length === 0 ? (
+          {talepler.length === 0 && analizler.length === 0 ? (
             <div style={{ background: C.white, borderRadius: 12, border: `1px solid ${C.border}`, padding: '40px', textAlign: 'center' }}>
               <div style={{ fontSize: 40, marginBottom: 12, opacity: 0.3 }}>{'\u2697'}</div>
               <p style={{ fontSize: 15, color: C.dark, marginBottom: 6 }}>Henuz analiz yok</p>
@@ -206,13 +213,56 @@ export default function HastaPage() {
                 Ilk Analizini Yap
               </button>
             </div>
+          ) : talepler.length === 0 ? (
+            <div style={{ background: C.white, borderRadius: 12, border: `1px solid ${C.border}`, padding: '24px', textAlign: 'center' }}>
+              <p style={{ fontSize: 13, color: C.secondary, marginBottom: 12 }}>Yeni sistemde henüz analizin yok.</p>
+              <button onClick={() => router.push('/analiz')}
+                style={{ padding: '10px 24px', background: C.primary, color: C.gold, border: 'none', borderRadius: 10, fontFamily: cinzel.style.fontFamily, fontSize: 12, cursor: 'pointer', letterSpacing: 1, fontWeight: 600 }}>
+                Yeni Analiz Başlat
+              </button>
+            </div>
           ) : (
             <div style={{ display: 'grid', gap: 8 }}>
+              {talepler.map(t => {
+                const tarih = new Date(t.created_at).toLocaleDateString('tr-TR', { day: 'numeric', month: 'short', year: 'numeric' })
+                return (
+                  <div key={t.id} style={{ background: C.white, borderRadius: 12, border: `1px solid ${C.border}`, padding: '14px 18px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap' as const, gap: 8 }}>
+                    <div style={{ flex: 1, minWidth: 200 }}>
+                      <div style={{ fontSize: 14, color: C.dark, fontWeight: 500, lineHeight: 1.4 }}>
+                        {t.sikayetler ? (t.sikayetler.length > 80 ? t.sikayetler.slice(0, 80) + '...' : t.sikayetler) : 'Şikayet belirtilmemiş'}
+                      </div>
+                      <div style={{ fontSize: 12, color: C.secondary, marginTop: 2 }}>
+                        Talep: {tarih}
+                        {t.onaylandi_at && ` · Hazırlandı: ${new Date(t.onaylandi_at).toLocaleDateString('tr-TR')}`}
+                      </div>
+                    </div>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+                      <DurumEtiketi durum={t.durum} />
+                      {t.durum === 'onayli' && (
+                        <a href={`/hasta/analizlerim/${t.id}`} style={{ padding: '6px 14px', background: '#B8860B', color: '#1C3A26', borderRadius: 8, fontSize: 11, fontWeight: 700, textDecoration: 'none', letterSpacing: 0.5 }}>
+                          {"Görüntüle →"}
+                        </a>
+                      )}
+                    </div>
+                  </div>
+                )
+              })}
+            </div>
+          )}
+        </div>
+
+        {/* ARSIV — Eski detailed_forms kayitlari */}
+        {analizler.length > 0 && (
+          <details style={{ marginBottom: 24 }}>
+            <summary style={{ cursor: 'pointer', fontFamily: cinzel.style.fontFamily, fontSize: 12, color: C.secondary, letterSpacing: 2, marginBottom: 12, padding: '8px 0' }}>
+              📁 ARŞİV KAYITLARI ({analizler.length})
+            </summary>
+            <div style={{ display: 'grid', gap: 8, marginTop: 8 }}>
               {analizler.map(a => {
                 const form = a.tum_form_verisi || {}
                 const tarih = new Date(a.created_at).toLocaleDateString('tr-TR', { day: 'numeric', month: 'short', year: 'numeric' })
                 return (
-                  <div key={a.id} style={{ background: C.white, borderRadius: 12, border: `1px solid ${C.border}`, padding: '14px 18px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap' as const, gap: 8 }}>
+                  <div key={a.id} style={{ background: '#FDFBF5', borderRadius: 12, border: `1px solid ${C.border}`, padding: '14px 18px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap' as const, gap: 8, opacity: 0.85 }}>
                     <div style={{ flex: 1, minWidth: 200 }}>
                       <div style={{ fontSize: 14, color: C.dark, fontWeight: 500 }}>{form.ad_soyad || 'Analiz'}</div>
                       <div style={{ fontSize: 12, color: C.secondary, marginTop: 2 }}>
@@ -228,8 +278,8 @@ export default function HastaPage() {
                         {a.durum === 'onaylandi' ? 'Onaylandı' : a.durum === 'tamamlandi' ? 'Tamamlandi' : a.durum === 'bekliyor' ? 'Bekliyor' : a.durum}
                       </div>
                       {(a.durum === 'onaylandi' || a.durum === 'tamamlandi') && a.analiz_sonucu && (
-                        <a href={`/hasta/analiz/${a.id}`} style={{ padding: '6px 14px', background: '#B8860B', color: '#1C3A26', borderRadius: 8, fontSize: 11, fontWeight: 700, textDecoration: 'none', letterSpacing: 0.5 }}>
-                          {"Analizi Görüntüle →"}
+                        <a href={`/hasta/analiz/${a.id}`} style={{ padding: '6px 14px', background: 'transparent', border: `1px solid ${C.border}`, color: C.secondary, borderRadius: 8, fontSize: 11, fontWeight: 600, textDecoration: 'none', letterSpacing: 0.5 }}>
+                          Arşiv →
                         </a>
                       )}
                     </div>
@@ -237,8 +287,8 @@ export default function HastaPage() {
                 )
               })}
             </div>
-          )}
-        </div>
+          </details>
+        )}
 
         {/* Hikmet */}
         <div style={{ marginTop: 24, background: C.surface, border: `1px solid ${C.border}`, borderRadius: 12, padding: '16px 20px', textAlign: 'center' }}>

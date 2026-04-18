@@ -56,6 +56,18 @@ export default function HastaAnalizDetayPage() {
           {"← HASTA PANELİ"}
         </a>
 
+        <div style={{ marginBottom: 24, background: '#FFF8E7', border: '1px solid #F4D35E', borderRadius: 12, padding: '14px 18px', display: 'flex', gap: 12, alignItems: 'flex-start' }}>
+          <span style={{ fontSize: 20 }}>📁</span>
+          <div style={{ flex: 1 }}>
+            <div style={{ fontWeight: 600, color: '#8B6914', fontSize: 14 }}>Arşiv Kaydı</div>
+            <div style={{ fontSize: 13, color: '#8B6914', marginTop: 4, lineHeight: 1.5 }}>
+              Bu analiz eski sistemde oluşturulmuştur ve salt okunur moddadır. Yeni analiz için{' '}
+              <a href="/analiz" style={{ color: '#B8860B', fontWeight: 600, textDecoration: 'underline' }}>Analiz Başlat</a>{' '}
+              sayfasını kullanın.
+            </div>
+          </div>
+        </div>
+
         <div style={{ background: 'white', border: '1px solid #DEB887', borderRadius: 16, padding: '36px 40px' }}>
           <div style={{ fontFamily: 'Cormorant Garamond,serif', fontSize: 10, letterSpacing: 3, color: '#B8860B', marginBottom: 8 }}>{"ANALİZ SONUCU"}</div>
           <h1 style={{ fontFamily: 'Cormorant Garamond,serif', fontSize: 28, color: '#1A1208', marginBottom: 8 }}>{analiz.mizac || 'Mizaç Belirlenmedi'}</h1>
