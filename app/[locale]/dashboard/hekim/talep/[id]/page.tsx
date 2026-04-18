@@ -2,6 +2,8 @@ import { createServerSupabaseClient } from '@/lib/supabase-server'
 import { redirect, notFound } from 'next/navigation'
 import Link from 'next/link'
 import { DurumDegistirForm } from './DurumDegistirForm'
+import { AnalizBaslatClient } from './AnalizBaslatClient'
+import { TaslakGoruntule } from './TaslakGoruntule'
 
 export const dynamic = 'force-dynamic'
 
@@ -24,6 +26,12 @@ export default async function TalepDetayPage({ params }: { params: Params }) {
     .single()
 
   if (error || !talep) notFound()
+
+  const { data: sonuc } = await supabase
+    .from('analiz_sonuclari')
+    .select('*')
+    .eq('talep_id', id)
+    .maybeSingle()
 
   return (
     <main className="max-w-4xl mx-auto px-6 py-12">
@@ -86,8 +94,17 @@ export default async function TalepDetayPage({ params }: { params: Params }) {
         )}
       </div>
 
-      <div className="mt-12 p-4 bg-amber-50 border border-amber-200 rounded text-sm text-amber-900">
-        <strong>Not:</strong> Claude analiz üretme özelliği Faz 2&apos;de eklenecek. Şu an sadece talep verisini inceleyebilirsin.
+      <div className="mt-12 space-y-6">
+        {!sonuc && talep.durum !== 'onayli' && (
+          <AnalizBaslatClient talepId={talep.id} durum={talep.durum} />
+        )}
+        {sonuc && (
+          <TaslakGoruntule
+            talepId={talep.id}
+            sonuc={sonuc}
+            talepDurumu={talep.durum}
+          />
+        )}
       </div>
     </main>
   )
