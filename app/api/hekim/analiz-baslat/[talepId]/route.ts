@@ -5,7 +5,7 @@ import { MIZAN_SYSTEM_PROMPT, MIZAN_SYSTEM_PROMPT_VERSION } from '@/lib/mizan/sy
 import { klasikKaynakCek } from '@/lib/mizan/kaynak-cek'
 
 const MODEL = 'claude-opus-4-7'
-const MAX_TOKENS = 8000
+const MAX_TOKENS = 12000
 const INPUT_COST_PER_TOKEN = 5 / 1_000_000
 const OUTPUT_COST_PER_TOKEN = 25 / 1_000_000
 

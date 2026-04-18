@@ -1,4 +1,5 @@
 'use client'
+/* eslint-disable @typescript-eslint/no-explicit-any */
 
 import { createClient } from '@/lib/supabase'
 import { useRouter } from 'next/navigation'
@@ -33,6 +34,15 @@ export function TaslakGoruntule({
     etkilenen_sistem?: string
     fitri_hali?: Record<string, unknown>
     mizac?: Record<string, unknown>
+    hiltlar?: Record<string, { oran?: number; durum?: string; aciklama?: string }>
+    sebep_analizi?: { badi_sebep?: string; muid_sebepler?: string[]; kok_mudahale?: string }
+    uygulama_formlari?: Array<{ isim?: string; tip?: string } & Record<string, unknown>>
+    bitki_recetesi?: unknown[]
+    terkib_recetesi?: unknown[]
+    klinik_gozlemler?: unknown[]
+    uyarilar?: unknown[]
+    kontrol_takvimi?: unknown[]
+    ilac_etkilesimleri?: unknown[]
   }
   const baslangic = (sonuc.onayli_cikti || sonuc.ham_cikti || {}) as Cikti
   const [cikti, setCikti] = useState<Cikti>(baslangic)
@@ -179,6 +189,85 @@ export function TaslakGoruntule({
             disabled={onayli}
           />
         </details>
+
+        {/* Hılt Oranları */}
+        <fieldset className="border border-stone-200 rounded p-4 space-y-2">
+          <legend className="text-sm font-medium text-stone-700 px-2">Hılt Oranları</legend>
+          {(['dem', 'balgam', 'sari_safra', 'kara_safra'] as const).map((h) => (
+            <div key={h} className="grid grid-cols-[120px_60px_1fr] gap-2 items-center">
+              <div className="text-xs text-stone-500 capitalize">{h.replace('_', ' ')}</div>
+              <input
+                type="number"
+                min={0}
+                max={100}
+                value={cikti.hiltlar?.[h]?.oran ?? 0}
+                onChange={(e) => alanGuncelle(['hiltlar', h, 'oran'], parseInt(e.target.value) || 0)}
+                disabled={onayli}
+                className="p-1 border border-stone-200 rounded text-sm disabled:bg-stone-50"
+              />
+              <input
+                type="text"
+                value={cikti.hiltlar?.[h]?.aciklama ?? ''}
+                onChange={(e) => alanGuncelle(['hiltlar', h, 'aciklama'], e.target.value)}
+                disabled={onayli}
+                placeholder="durum + açıklama"
+                className="p-1 border border-stone-200 rounded text-sm disabled:bg-stone-50"
+              />
+            </div>
+          ))}
+          <div className="text-xs text-stone-500 pt-2">
+            Toplam: {(['dem', 'balgam', 'sari_safra', 'kara_safra'] as const).reduce((s, h) => s + (cikti.hiltlar?.[h]?.oran ?? 0), 0)} (100 olmalı)
+          </div>
+        </fieldset>
+
+        {/* Sebep Analizi */}
+        <fieldset className="border border-stone-200 rounded p-4 space-y-2">
+          <legend className="text-sm font-medium text-stone-700 px-2">Sebep Analizi</legend>
+          <BolumEdit
+            baslik="Yakın Sebep (Bâdî)"
+            deger={cikti.sebep_analizi?.badi_sebep}
+            onChange={(v) => alanGuncelle(['sebep_analizi', 'badi_sebep'], v)}
+            multiline
+            disabled={onayli}
+          />
+          <BolumEdit
+            baslik="Kök Müdahale"
+            deger={cikti.sebep_analizi?.kok_mudahale}
+            onChange={(v) => alanGuncelle(['sebep_analizi', 'kok_mudahale'], v)}
+            multiline
+            disabled={onayli}
+          />
+          <div className="text-xs text-stone-500 pt-2">
+            Uzak sebepler ({cikti.sebep_analizi?.muid_sebepler?.length ?? 0} adet) — detaylı düzenleme için &quot;Tam JSON&quot; bölümünü kullan
+          </div>
+        </fieldset>
+
+        {/* Uygulama Formları özet */}
+        <fieldset className="border border-stone-200 rounded p-4">
+          <legend className="text-sm font-medium text-stone-700 px-2">Uygulama Formları</legend>
+          <div className="text-sm text-stone-700">
+            {cikti.uygulama_formlari && cikti.uygulama_formlari.length > 0
+              ? `${cikti.uygulama_formlari.length} form önerilmiş: ${cikti.uygulama_formlari.map((u: any) => u.isim || u.tip).join(', ')}`
+              : 'Uygulama formu önerilmemiş'}
+          </div>
+          <div className="text-xs text-stone-500 mt-2">
+            Detaylı düzenleme için &quot;Tam JSON&quot; bölümünü kullan
+          </div>
+        </fieldset>
+
+        {/* Kontrol Özeti */}
+        <fieldset className="border border-stone-200 rounded p-4">
+          <legend className="text-sm font-medium text-stone-700 px-2">İçerik Sayaçları</legend>
+          <div className="text-xs text-stone-600 space-y-1">
+            <div>Bitki reçetesi: {cikti.bitki_recetesi?.length ?? 0} bitki</div>
+            <div>Terkîb reçetesi: {cikti.terkib_recetesi?.length ?? 0} formül</div>
+            <div>Uygulama formları: {cikti.uygulama_formlari?.length ?? 0}</div>
+            <div>Klinik gözlemler: {cikti.klinik_gozlemler?.length ?? 0}</div>
+            <div>Uyarılar: {cikti.uyarilar?.length ?? 0}</div>
+            <div>Kontrol takvimi: {cikti.kontrol_takvimi?.length ?? 0} madde</div>
+            <div>İlaç etkileşimleri: {cikti.ilac_etkilesimleri?.length ?? 0}</div>
+          </div>
+        </fieldset>
 
         <fieldset className="border border-amber-200 bg-amber-50 rounded p-4">
           <legend className="text-sm font-medium text-amber-900 px-2">
