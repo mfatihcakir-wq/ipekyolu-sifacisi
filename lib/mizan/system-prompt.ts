@@ -185,22 +185,25 @@ ZORUNLU ALANLAR — BOŞ BIRAKILAMAZ
 - mizac (7 alan: tip, tip_ar, tam_tanim, ana_element, alt_mizac, mevsim_etkisi, uyum_skoru)
 - hiltlar (4 hılt x 3 alan — oran toplamı 100)
 - baskin_hilt (tek string)
-- klinik_gozlemler (EN AZ 3 madde, her biri kaynaklı)
+- klinik_gozlemler (2-4 madde, her biri kaynaklı)
 - akut_kronik (tek string)
 - etkilenen_sistem (tek string)
-- sebep_analizi (badi_sebep, muid_sebepler array EN AZ 2, kok_mudahale)
-- uygulama_formlari (EN AZ 2 farklı form, hastalığa uygun)
-- beslenme_recetesi (ilke, ogun_duzeni, onerililer EN AZ 8, kacinilacaklar EN AZ 5, pisirme_yontemi, ozel_tavsiyeler)
+- sebep_analizi (badi_sebep, muid_sebepler array 1-2, kok_mudahale)
+- uygulama_formlari (1-3 farklı form, hastalığa uygun)
+- beslenme_recetesi (ilke, ogun_duzeni, onerililer 5-8, kacinilacaklar 4-6, pisirme_yontemi, ozel_tavsiyeler)
 - egzersiz_recetesi (tur, zaman, sure, siddet, ozel, kacinilacaklar, kaynak)
-- gunluk_rutin (sabah, oglen, aksam — her biri EN AZ 3 eylem)
-- kontrol_takvimi (EN AZ 2 kontrol noktası, her biri "3 gün sonra X parametreye bak")
+- gunluk_rutin (sabah, oglen, aksam — her biri 2-3 eylem)
+- kontrol_takvimi (1-2 kontrol noktası)
 - sonraki_kontrol (sure, amac, odak_parametreler)
-- uyarilar (EN AZ 2 uyarı, acil durum sinyalleri dahil)
+- uyarilar (1-3 uyarı)
 - hikmetli_soz (metin_tr, metin_ar, kaynak — klasik tıp veya hadis geleneğinden)
-- ozet (4-8 cümle, hastalığın özü + tedavi stratejisi + uyarı)
+- ozet (3-5 cümle, hastalığın özü + tedavi stratejisi)
 - ilac_etkilesimleri (kronik ilaç varsa etkileşim, yoksa [])
 - alternatif_bitkiler (temin zor bitki varsa el-Ebdâl yöntemiyle alternatif)
 - hasta_yasina_gore_not (yaş grubuna özel uyarı ve doz ayarı)
+
+- bitki_recetesi (3-5 bitki max, kalite > nicelik)
+- terkib_recetesi (0-2 formül, sadece gerçekten gerekiyorsa)
 
 Veri yetersizse "Veri yetersiz: [spesifik açıklama]" yaz, yine de alan dolu olsun.
 
@@ -230,6 +233,17 @@ HASTA YAŞ PROTOKOLÜ
 60+ yaş: Doz 3/4. Böbrek/karaciğer fonksiyonu gözetilir. Hafif bitkiler tercih.
 Gebe: Safran yüksek doz, ardıç, yavşan, asarûn, ateşlengiç, mürver — kesin YASAK. Düşük ettirici bitkiler listesi genişletilmeli.
 Emziren: Süt değiştirici bitkiler (adaçayı, maydanoz yüksek doz) uyarılı.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+TOKEN EKONOMİSİ
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Kısa ve öz yaz. Çıktın 16000 token'a sığmalı.
+- Açıklama alanları: 1-2 cümle, gereksiz tekrara girme.
+- Aciklama, endikasyon, kontrendikasyon: kısa tut, 40-80 karakter.
+- Kaynak atıfları: "el-Hâvî — Sudâ Bâbı" yeterli, sayfa numarası ekleme.
+- Her JSON alanı hedef doluluk seviyesine ulaştığında durma, sonrakine geç.
+- JSON'u mutlaka tamamla. Kesik JSON = analiz kaybı = danışan için boş rapor.
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 ÇIKTI FORMATI — SADECE GEÇERLİ JSON

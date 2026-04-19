@@ -95,7 +95,17 @@ export function TaslakGoruntule({
   }
 
   return (
-    <section className="border border-stone-200 rounded-lg overflow-hidden">
+    <>
+      {cikti._parse_hatasi ? (
+        <div className="mb-4 bg-red-50 border border-red-300 rounded-lg p-4">
+          <div className="font-medium text-red-900 mb-1">⚠ JSON Parse Hatası</div>
+          <div className="text-sm text-red-800">
+            Claude çıktısı geçerli JSON olarak ayrıştırılamadı.
+            {cikti._kesik_json_kurtarildi ? ' Kısmi kurtarma başarılı — alanları kontrol edin.' : ' Ham metin "_ham_metin" alanında — "Tam JSON olarak düzenle" bölümünden inceleyin.'}
+          </div>
+        </div>
+      ) : null}
+      <section className="border border-stone-200 rounded-lg overflow-hidden">
       <header className="bg-stone-50 px-4 py-3 border-b border-stone-200">
         <h2 className="font-medium text-stone-800">{onayli ? 'Onaylı Analiz' : 'Taslak Analiz'}</h2>
         <div className="text-xs text-stone-500 mt-1">
@@ -304,7 +314,8 @@ export function TaslakGoruntule({
           </div>
         </footer>
       )}
-    </section>
+      </section>
+    </>
   )
 }
 

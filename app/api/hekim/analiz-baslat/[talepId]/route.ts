@@ -5,7 +5,7 @@ import { MIZAN_SYSTEM_PROMPT, MIZAN_SYSTEM_PROMPT_VERSION } from '@/lib/mizan/sy
 import { klasikKaynakCek } from '@/lib/mizan/kaynak-cek'
 
 const MODEL = 'claude-opus-4-7'
-const MAX_TOKENS = 12000
+const MAX_TOKENS = 16000
 const INPUT_COST_PER_TOKEN = 5 / 1_000_000
 const OUTPUT_COST_PER_TOKEN = 25 / 1_000_000
 
@@ -104,14 +104,58 @@ Yukarıdaki TÜM verileri bütünleştirerek kişisel öneri rehberi hazırla. H
 
     let parsedCikti: Record<string, unknown>
     try {
-      const jsonText = rawText
+      const cleaned = rawText
         .replace(/^```json\s*/i, '')
         .replace(/```\s*$/, '')
         .trim()
-      parsedCikti = JSON.parse(jsonText)
+      parsedCikti = JSON.parse(cleaned)
     } catch (parseError) {
-      console.error('JSON parse hatası:', parseError)
-      parsedCikti = { _ham_metin: rawText, _parse_hatasi: true }
+      console.error('JSON parse hatası (ilk deneme):', parseError)
+
+      try {
+        const cleaned = rawText
+          .replace(/^```json\s*/i, '')
+          .replace(/```\s*$/, '')
+          .trim()
+
+        let lastValidBracket = -1
+        let depth = 0
+        let inString = false
+        let escape = false
+
+        for (let i = 0; i < cleaned.length; i++) {
+          const ch = cleaned[i]
+          if (escape) { escape = false; continue }
+          if (ch === '\\') { escape = true; continue }
+          if (ch === '"') { inString = !inString; continue }
+          if (inString) continue
+          if (ch === '{' || ch === '[') depth++
+          if (ch === '}' || ch === ']') {
+            depth--
+            if (depth === 0) lastValidBracket = i
+          }
+        }
+
+        if (lastValidBracket > 0) {
+          const truncated = cleaned.substring(0, lastValidBracket + 1)
+          parsedCikti = JSON.parse(truncated)
+          parsedCikti._kesik_json_kurtarildi = true
+          console.warn('Kesik JSON kurtarıldı, son geçerli obje sınırı:', lastValidBracket)
+        } else {
+          parsedCikti = {
+            _ham_metin: rawText,
+            _parse_hatasi: true,
+            ozet: 'JSON parse hatası — ham metin _ham_metin alanında. Hekim taslağı manuel düzenlemeli.',
+          }
+        }
+      } catch (secondError) {
+        console.error('JSON parse hatası (ikinci deneme):', secondError)
+        parsedCikti = {
+          _ham_metin: rawText,
+          _parse_hatasi: true,
+          ozet: 'JSON parse hatası — ham metin _ham_metin alanında. Hekim taslağı manuel düzenlemeli.',
+        }
+      }
     }
 
     const inputTokens = response.usage.input_tokens
