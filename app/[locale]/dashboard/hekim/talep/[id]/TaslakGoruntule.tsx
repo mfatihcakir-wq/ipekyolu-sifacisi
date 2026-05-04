@@ -101,7 +101,7 @@ export function TaslakGoruntule({
           <div className="font-medium text-red-900 mb-1">⚠ JSON Parse Hatası</div>
           <div className="text-sm text-red-800">
             Claude çıktısı geçerli JSON olarak ayrıştırılamadı.
-            {cikti._kesik_json_kurtarildi ? ' Kısmi kurtarma başarılı — alanları kontrol edin.' : ' Ham metin "_ham_metin" alanında — "Tam JSON olarak düzenle" bölümünden inceleyin.'}
+            {cikti._kesik_json_kurtarildi ? ' Kısmi kurtarma başarılı; alanları kontrol edin.' : ' Ham metin "_ham_metin" alanında; "Tam JSON olarak düzenle" bölümünden inceleyin.'}
           </div>
         </div>
       ) : null}
@@ -248,7 +248,7 @@ export function TaslakGoruntule({
             disabled={onayli}
           />
           <div className="text-xs text-stone-500 pt-2">
-            Uzak sebepler ({cikti.sebep_analizi?.muid_sebepler?.length ?? 0} adet) — detaylı düzenleme için &quot;Tam JSON&quot; bölümünü kullan
+            Uzak sebepler ({cikti.sebep_analizi?.muid_sebepler?.length ?? 0} adet); detaylı düzenleme için &quot;Tam JSON&quot; bölümünü kullan
           </div>
         </fieldset>
 

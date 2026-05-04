@@ -25,7 +25,7 @@ export default function KVKKPage() {
           <p style={pStyle}>{"6698 sayılı Kişisel Verilerin Korunması Kanunu (\u201CKVKK\u201D) md. 10 uyarınca, İpek Yolu Şifacısı platformu adına veri sorumlusu sıfatıyla hareket eden gerçek kişi aşağıda belirtilmiştir:"}</p>
           <ul style={ulStyle}>
             <li><strong>{"Ad-Soyad: "}</strong>{"Mehmet Fatih Çakır"}</li>
-            <li><strong>{"Başvuru Adresi: "}</strong>{"[BURAYI KULLANICI DOLDURACAK — faaliyet/tebligat adresi]"}</li>
+            <li><strong>{"Başvuru Adresi: "}</strong>{"[BURAYI KULLANICI DOLDURACAK; faaliyet/tebligat adresi]"}</li>
             <li><strong>{"E-posta: "}</strong>{"m.fatih.cakir@gmail.com"}</li>
             <li><strong>{"Telefon: "}</strong>{"+90 533 168 72 26"}</li>
             <li><strong>{"VERBİS Kaydı: "}</strong>{"Veri Sorumluları Siciline kayıt başvuru süreci devam etmektedir. Başvuru tamamlandığında sicil numarası bu metinde ilan edilecektir."}</li>
@@ -48,10 +48,10 @@ export default function KVKKPage() {
           <h2 style={h2Style}>{"3. İşleme Amacı ve Hukuki Dayanak"}</h2>
           <p style={pStyle}>{"Kişisel verileriniz şu amaçlarla, aşağıdaki hukuki sebeplere dayanılarak işlenir:"}</p>
           <ul style={ulStyle}>
-            <li>{"Klasik İslam tıbbı geleneğine dayalı bireysel danışmanlık sunmak "}<em>{"(açık rıza — md. 6/2)"}</em></li>
-            <li>{"Danışmanınızın kişiye özel bilgi rehberi hazırlaması "}<em>{"(sözleşmenin ifası — md. 5/2-c)"}</em></li>
+            <li>{"Klasik İslam tıbbı geleneğine dayalı bireysel danışmanlık sunmak "}<em>{"(açık rıza; md. 6/2)"}</em></li>
+            <li>{"Danışmanınızın kişiye özel bilgi rehberi hazırlaması "}<em>{"(sözleşmenin ifası; md. 5/2-c)"}</em></li>
             <li>{"WhatsApp üzerinden iletişim kurulması "}<em>{"(açık rıza)"}</em></li>
-            <li>{"Hizmet kalitesinin iyileştirilmesi ve analiz sisteminin geliştirilmesi "}<em>{"(meşru menfaat — md. 5/2-f)"}</em></li>
+            <li>{"Hizmet kalitesinin iyileştirilmesi ve analiz sisteminin geliştirilmesi "}<em>{"(meşru menfaat; md. 5/2-f)"}</em></li>
           </ul>
           <p style={pStyle}><strong>{"Bu platform tıbbi tanı, tedavi veya reçete hizmeti sunmaz."}</strong>{" Modern hekim konsültasyonunun yerini tutmaz. Paylaşılan bilgiler geleneksel/tarihî bir çerçevede sunulan genel bilgilendirmedir."}</p>
         </div>
@@ -62,7 +62,7 @@ export default function KVKKPage() {
           <ul style={ulStyle}>
             <li><strong>{"Supabase Inc. "}</strong>{"(veritabanı, ABD)"}</li>
             <li><strong>{"Vercel Inc. "}</strong>{"(barındırma, ABD)"}</li>
-            <li><strong>{"Anthropic PBC "}</strong>{"(analiz motoru — Claude yapay zeka; ABD). Anthropic, API üzerinden gönderilen verileri model eğitiminde kullanmaz. Detaylar için: "}<a href="https://www.anthropic.com/legal/privacy" target="_blank" rel="noopener noreferrer" style={{ color: C.primary, textDecoration: 'underline' }}>{"https://www.anthropic.com/legal/privacy"}</a></li>
+            <li><strong>{"Anthropic PBC "}</strong>{"(analiz motoru, Claude yapay zeka; ABD). Anthropic, API üzerinden gönderilen verileri model eğitiminde kullanmaz. Detaylar için: "}<a href="https://www.anthropic.com/legal/privacy" target="_blank" rel="noopener noreferrer" style={{ color: C.primary, textDecoration: 'underline' }}>{"https://www.anthropic.com/legal/privacy"}</a></li>
           </ul>
           <p style={pStyle}>{"Yurt dışına aktarım, KVKK md. 9/6 çerçevesinde açık rızanıza dayanmaktadır."}</p>
         </div>

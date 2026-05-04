@@ -20,7 +20,7 @@ export default function AtlasPage() {
       <div className="mb-4">
         <h2 className="text-2xl font-bold text-[#1B5E3B]">Anatomi Atlas</h2>
         <p className="text-sm text-gray-500 mt-1">
-          3D interaktif insan anatomisi — Klasik İslam tıbbı perspektifi
+          3D interaktif insan anatomisi, Klasik İslam tıbbı perspektifi
         </p>
       </div>
       <AnatomyViewer />

@@ -4,10 +4,9 @@ import { NextRequest, NextResponse } from 'next/server'
 import { createClient } from '@supabase/supabase-js'
 import { createServerClient } from '@supabase/ssr'
 import { cookies } from 'next/headers'
+import { isAdminEmail } from '@/lib/admin'
 
-const ADMIN_EMAIL = 'm.fatih.cakir@gmail.com'
-
-// Service role client — lazy init (build sirasinda env yoksa hata vermez)
+// Service role client; lazy init (build sirasinda env yoksa hata vermez)
 function getSupabaseAdmin() {
   return createClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -18,7 +17,7 @@ function getSupabaseAdmin() {
 
 export async function GET(request: NextRequest) {
   try {
-    // Admin yetki kontrolu — SSR client ile cookie'den user
+    // Admin yetki kontrolu, SSR client ile cookie'den user
     const cookieStore = cookies()
     const supabaseAuth = createServerClient(
       process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -31,7 +30,7 @@ export async function GET(request: NextRequest) {
       }
     )
     const { data: { user } } = await supabaseAuth.auth.getUser()
-    if (!user || user.email !== ADMIN_EMAIL) {
+    if (!user || !isAdminEmail(user.email)) {
       return NextResponse.json({ error: 'Yetkisiz' }, { status: 401 })
     }
 

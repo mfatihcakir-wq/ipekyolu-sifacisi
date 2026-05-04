@@ -9,7 +9,7 @@ export async function POST(request: NextRequest) {
   }
   const resend = new Resend(process.env.RESEND_API_KEY)
   const FROM_EMAIL = process.env.FROM_EMAIL || 'onboarding@resend.dev'
-  const ADMIN_EMAIL = process.env.ADMIN_EMAIL || 'm.fatih.cakir@gmail.com'
+  const ADMIN_EMAIL = process.env.ADMIN_NOTIFICATION_EMAIL || 'm.fatih.cakir@gmail.com'
   try {
     const { to, subject, type, sonuc_verisi, hasta_adi, kayit_no } = await request.json()
 
@@ -26,7 +26,7 @@ export async function POST(request: NextRequest) {
       html = analizRaporuHtml(raporData)
     }
 
-    const emailSubject = subject || `İpek Yolu Şifacısı — ${type === 'cilt' ? 'Cilt Analiz' : 'Mizac Analiz'} Raporu`
+    const emailSubject = subject || `İpek Yolu Şifacısı; ${type === 'cilt' ? 'Cilt Analiz' : 'Mizac Analiz'} Raporu`
 
     const { data, error } = await resend.emails.send({
       from: `İpek Yolu Şifacısı <${FROM_EMAIL}>`,
@@ -46,7 +46,7 @@ export async function POST(request: NextRequest) {
       await resend.emails.send({
         from: `İpek Yolu Şifacısı <${FROM_EMAIL}>`,
         to: [ADMIN_EMAIL],
-        subject: `[Rapor Gonderildi] ${hasta_adi} — ${type}`,
+        subject: `[Rapor Gonderildi] ${hasta_adi}; ${type}`,
         html: `<p><strong>${hasta_adi}</strong> icin ${type} raporu gonderildi.</p><p>Alici: ${to}</p><p>Kayit: ${kayit_no}</p><p style="margin-top:16px"><a href="${dashboardUrl}" style="display:inline-block;background:#1C3A26;color:#B8860B;padding:12px 24px;border-radius:8px;text-decoration:none;font-weight:600">Panelde İncele → ${kayit_no ? `Form #${kayit_no}` : 'Dashboard'}</a></p>`,
       })
     } catch { /* admin bildirimi opsiyonel */ }

@@ -41,3 +41,9 @@ next-env.d.ts
 # backup files
 *.bak
 *.html
+
+# supabase CLI temp
+/supabase/.temp/
+
+# büyük seed dataları (data/ klasörüne taşındı)
+/data/

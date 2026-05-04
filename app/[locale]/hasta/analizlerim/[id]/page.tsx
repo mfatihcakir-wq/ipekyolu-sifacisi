@@ -71,7 +71,7 @@ export default async function AnalizDetayPage({ params }: { params: Promise<{ id
       <header className="mb-8">
         <h1 className="font-serif text-3xl text-stone-900">Analiz Raporu</h1>
         <div className="text-sm text-stone-500 mt-1">
-          Onaylandı: {sonuc.onaylandi_at ? new Date(sonuc.onaylandi_at).toLocaleDateString('tr-TR') : '—'}
+          Onaylandı: {sonuc.onaylandi_at ? new Date(sonuc.onaylandi_at).toLocaleDateString('tr-TR') : ','}
         </div>
       </header>
 
@@ -182,7 +182,7 @@ export default async function AnalizDetayPage({ params }: { params: Promise<{ id
                     {typeof y === 'string' ? y : (
                       <>
                         <strong>{y.isim}</strong>
-                        {y.aciklama && <> — {y.aciklama}</>}
+                        {y.aciklama && <>; {y.aciklama}</>}
                       </>
                     )}
                   </li>
@@ -213,7 +213,7 @@ export default async function AnalizDetayPage({ params }: { params: Promise<{ id
                     <div className="text-xs text-stone-500 mb-1">Bileşenler</div>
                     <ul className="text-sm text-stone-700 space-y-0.5">
                       {u.bilesenler.map((b: any, j: number) => (
-                        <li key={j}>• {b.ad} {b.ar && `(${b.ar})`} — {b.miktar} {b.fonksiyon && `· ${b.fonksiyon}`}</li>
+                        <li key={j}>• {b.ad} {b.ar && `(${b.ar})`}; {b.miktar} {b.fonksiyon && `· ${b.fonksiyon}`}</li>
                       ))}
                     </ul>
                   </div>
@@ -274,7 +274,7 @@ export default async function AnalizDetayPage({ params }: { params: Promise<{ id
                     <div className="text-xs text-stone-500 mb-1">Bileşenler</div>
                     <ul className="text-sm text-stone-700 space-y-0.5">
                       {t.bilesenler.map((b: any, j: number) => (
-                        <li key={j}>• {b.ad} {b.ar && `(${b.ar})`} — {b.miktar} {b.fonksiyon && `· ${b.fonksiyon}`}</li>
+                        <li key={j}>• {b.ad} {b.ar && `(${b.ar})`}; {b.miktar} {b.fonksiyon && `· ${b.fonksiyon}`}</li>
                       ))}
                     </ul>
                   </div>
@@ -393,7 +393,7 @@ export default async function AnalizDetayPage({ params }: { params: Promise<{ id
             <div className="text-sm text-stone-600 italic mb-2">{c.hikmetli_soz.metin_tr}</div>
           )}
           {c.hikmetli_soz.kaynak && (
-            <div className="text-xs text-stone-400">— {c.hikmetli_soz.kaynak}</div>
+            <div className="text-xs text-stone-400">, {c.hikmetli_soz.kaynak}</div>
           )}
         </section>
       )}

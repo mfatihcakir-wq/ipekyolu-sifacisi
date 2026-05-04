@@ -1,13 +1,42 @@
 import { notFound } from 'next/navigation'
 import { createClient } from '@supabase/supabase-js'
 import Link from 'next/link'
+import type { Metadata } from 'next'
 
 export const revalidate = 0
 
 const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
 )
+
+export async function generateMetadata({ params }: { params: Promise<{ locale: string; slug: string }> }): Promise<Metadata> {
+  const { slug } = await params
+  const { data: hekim } = await supabase
+    .from('hekim_biyografileri')
+    .select('isim, isim_ar, dogum_olum, eserler, biyografi')
+    .eq('slug', slug)
+    .single()
+
+  if (!hekim) {
+    return { title: 'Hekim bulunamadı' }
+  }
+
+  const eser = Array.isArray(hekim.eserler) && hekim.eserler.length > 0 ? hekim.eserler[0] : null
+  const ozet = (hekim.biyografi || '').slice(0, 160).replace(/\s+/g, ' ').trim()
+
+  return {
+    title: `${hekim.isim} (${hekim.dogum_olum || ''})`.trim(),
+    description: eser
+      ? `${hekim.isim}, ${eser} müellifi. ${ozet}`
+      : `${hekim.isim} biyografisi. ${ozet}`,
+    openGraph: {
+      title: `${hekim.isim}, klasik İslam tıbbının büyük hekimleri`,
+      description: ozet || `${hekim.isim} biyografisi.`,
+      type: 'profile',
+    },
+  }
+}
 
 export default async function HekimDetay({ params }: { params: Promise<{ locale: string; slug: string }> }) {
   const { locale, slug } = await params

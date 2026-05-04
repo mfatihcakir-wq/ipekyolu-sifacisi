@@ -269,7 +269,7 @@ export default function AnatomyViewer() {
 
   return (
     <div className="flex flex-col lg:flex-row gap-4 h-[calc(100vh-8rem)]">
-      {/* Sol Panel — Katman Seçici */}
+      {/* Sol Panel, Katman Seçici */}
       <div className="lg:w-48 flex-shrink-0">
         <div className="bg-white rounded-xl shadow-sm p-4">
           <h3 className="text-xs font-medium text-gray-500 uppercase tracking-wider mb-3">Katmanlar</h3>
@@ -305,14 +305,14 @@ export default function AnatomyViewer() {
         </div>
       </div>
 
-      {/* Orta — 3D Viewer */}
+      {/* Orta; 3D Viewer */}
       <div className="flex-1 bg-white rounded-xl shadow-sm overflow-hidden min-h-[400px]">
         <Canvas camera={{ position: [0, 2, 6], fov: 45 }}>
           <Scene katman={katman} onSelect={setSelected} selectedId={selected?.id || null} />
         </Canvas>
       </div>
 
-      {/* Sağ Panel — Detay */}
+      {/* Sağ Panel, Detay */}
       <div className="lg:w-80 flex-shrink-0">
         {selected ? (
           <div className="bg-white rounded-xl shadow-sm p-5 space-y-4">
@@ -328,7 +328,7 @@ export default function AnatomyViewer() {
             <div className="flex items-center gap-2">
               <span className="w-3 h-3 rounded-full" style={{ backgroundColor: HILT_COLORS[selected.hilt].color }} />
               <span className="text-sm font-medium" style={{ color: HILT_COLORS[selected.hilt].color }}>
-                {HILT_COLORS[selected.hilt].label} — {HILT_COLORS[selected.hilt].mizac}
+                {HILT_COLORS[selected.hilt].label}; {HILT_COLORS[selected.hilt].mizac}
               </span>
             </div>
 

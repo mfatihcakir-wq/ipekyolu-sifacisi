@@ -8,7 +8,7 @@ export async function POST(request: NextRequest) {
 
   const resend = new Resend(process.env.RESEND_API_KEY)
   const FROM_EMAIL = process.env.FROM_EMAIL || 'onboarding@resend.dev'
-  const ADMIN_EMAIL = process.env.ADMIN_EMAIL || 'm.fatih.cakir@gmail.com'
+  const ADMIN_EMAIL = process.env.ADMIN_NOTIFICATION_EMAIL || 'm.fatih.cakir@gmail.com'
 
   try {
     const {
@@ -43,9 +43,9 @@ export async function POST(request: NextRequest) {
 
         <table style="width:100%;border-collapse:collapse;margin-bottom:20px">
           <tr><td style="padding:6px 0;color:#6B5744;font-size:12px;letter-spacing:1px">AD SOYAD</td><td style="padding:6px 0;color:#1C1C1C"><strong>${escapeHtml(ad_soyad)}</strong></td></tr>
-          <tr><td style="padding:6px 0;color:#6B5744;font-size:12px;letter-spacing:1px">E-POSTA</td><td style="padding:6px 0;color:#1C1C1C">${escapeHtml(email || '—')}</td></tr>
-          <tr><td style="padding:6px 0;color:#6B5744;font-size:12px;letter-spacing:1px">TELEFON</td><td style="padding:6px 0;color:#1C1C1C">${escapeHtml(telefon || '—')}</td></tr>
-          <tr><td style="padding:6px 0;color:#6B5744;font-size:12px;letter-spacing:1px">CİLT TİPİ</td><td style="padding:6px 0;color:#1C1C1C">${escapeHtml(cilt_tipi || '—')}</td></tr>
+          <tr><td style="padding:6px 0;color:#6B5744;font-size:12px;letter-spacing:1px">E-POSTA</td><td style="padding:6px 0;color:#1C1C1C">${escapeHtml(email || ',')}</td></tr>
+          <tr><td style="padding:6px 0;color:#6B5744;font-size:12px;letter-spacing:1px">TELEFON</td><td style="padding:6px 0;color:#1C1C1C">${escapeHtml(telefon || ',')}</td></tr>
+          <tr><td style="padding:6px 0;color:#6B5744;font-size:12px;letter-spacing:1px">CİLT TİPİ</td><td style="padding:6px 0;color:#1C1C1C">${escapeHtml(cilt_tipi || ',')}</td></tr>
           <tr><td style="padding:6px 0;color:#6B5744;font-size:12px;letter-spacing:1px">FORM ID</td><td style="padding:6px 0;color:#1C1C1C;font-family:monospace;font-size:12px">${escapeHtml(form_id)}</td></tr>
         </table>
 
@@ -61,7 +61,7 @@ export async function POST(request: NextRequest) {
     const { data, error } = await resend.emails.send({
       from: `İpek Yolu Şifacısı <${FROM_EMAIL}>`,
       to: [ADMIN_EMAIL],
-      subject: `Yeni Cilt Analizi Formu — ${ad_soyad}`,
+      subject: `Yeni Cilt Analizi Formu; ${ad_soyad}`,
       html,
     })
 

@@ -387,7 +387,7 @@ export default function AnalizClient() {
           }
           const avgR = rSum / count
 
-          // Parmak tespiti — red channel ortalamasi
+          // Parmak tespiti; red channel ortalamasi
           let redSum = 0, redCount = 0
           for (let i = 0; i < frame.data.length; i += 16) {
             redSum += frame.data[i]; redCount++
@@ -853,9 +853,9 @@ export default function AnalizClient() {
               <label style={s.label}>{"Hamilelik"}</label>
               <select style={s.select} value={form.pregnancy} onChange={e => set('pregnancy', e.target.value)}>
                 <option value="hayir">{"Hayır / Geçerli Değil"}</option>
-                <option value="hamile_1">{"Hamile — 1. trimester"}</option>
-                <option value="hamile_2">{"Hamile — 2. trimester"}</option>
-                <option value="hamile_3">{"Hamile — 3. trimester"}</option>
+                <option value="hamile_1">{"Hamile; 1. trimester"}</option>
+                <option value="hamile_2">{"Hamile; 2. trimester"}</option>
+                <option value="hamile_3">{"Hamile; 3. trimester"}</option>
                 <option value="emziren">{"Emziren"}</option>
               </select>
             </div>
@@ -865,11 +865,11 @@ export default function AnalizClient() {
               <label style={s.label}>{"Şikayet Süresi"}</label>
               <select style={s.select} value={form.sikayet_suresi} onChange={e => set('sikayet_suresi', e.target.value)}>
                 <option value="">{"Seçin"}</option>
-                <option value="akut_3gun">{"Akut — 3 gün altı"}</option>
-                <option value="akut_2hafta">{"Akut — 2 hafta altı"}</option>
-                <option value="subakut_3ay">{"Subakut — 3 ay altı"}</option>
-                <option value="kronik_6ay">{"Kronik — 6 ay altı"}</option>
-                <option value="kronik_uzun">{"Kronik — 1 yıl üstü"}</option>
+                <option value="akut_3gun">{"Akut; 3 gün altı"}</option>
+                <option value="akut_2hafta">{"Akut; 2 hafta altı"}</option>
+                <option value="subakut_3ay">{"Subakut; 3 ay altı"}</option>
+                <option value="kronik_6ay">{"Kronik; 6 ay altı"}</option>
+                <option value="kronik_uzun">{"Kronik; 1 yıl üstü"}</option>
               </select>
             </div>
             <div>
@@ -1593,11 +1593,11 @@ export default function AnalizClient() {
               <label style={s.label}>{"Ruh Hali (Hılt)"}</label>
               <select style={s.select} value={form.mood_detail} onChange={e => set('mood_detail', e.target.value)}>
                 <option value="">{"Seçin"}</option>
-                <option value="ofke_hiddet">{"Öfke / hiddet — Safravî"}</option>
-                <option value="korku_vesvese">{"Korku / vesvese — Sevdavî"}</option>
-                <option value="huzun_aglama">{"Hüzün / içe kapanma — Sevdavî"}</option>
-                <option value="nese_cosku">{"Neşe / coşku — Demevî"}</option>
-                <option value="uyusukluk_tembellik">{"Uyuşukluk / tembellik — Balgamî"}</option>
+                <option value="ofke_hiddet">{"Öfke / hiddet, Safravî"}</option>
+                <option value="korku_vesvese">{"Korku / vesvese, Sevdavî"}</option>
+                <option value="huzun_aglama">{"Hüzün / içe kapanma, Sevdavî"}</option>
+                <option value="nese_cosku">{"Neşe / coşku, Demevî"}</option>
+                <option value="uyusukluk_tembellik">{"Uyuşukluk / tembellik, Balgamî"}</option>
                 <option value="karisik">{"Karışık / değişken"}</option>
               </select>
             </div>
@@ -1724,10 +1724,10 @@ export default function AnalizClient() {
           {"Kan Tahlili Değerleri (Opsiyonel)"}
         </div>
         <div style={s.card}>
-          <div style={s.tip}>{"Tahlil değerleriniz varsa girin. Yoksa atlayabilirsiniz — analiz yine de yapılacaktır."}</div>
+          <div style={s.tip}>{"Tahlil değerleriniz varsa girin. Yoksa atlayabilirsiniz; analiz yine de yapılacaktır."}</div>
 
           <div style={{ fontSize: 12, fontWeight: 600, color: C.primary, marginBottom: 10, letterSpacing: 1 }}>{"KAN SAYIMI"}</div>
-          <div style={s.tip}>{"el-Kânûn Kitab 1 — İbn Sînâ: Hemoglobin kan hıltının miktarını ve kalitesini gösterir; düşüklüğü soğuk-nemli mizaca işaret eder. CRP ve Sedimantasyon vücuttaki yangıyı sayısal olarak ölçer — safra baskısının nesnel kanıtıdır."}</div>
+          <div style={s.tip}>{"el-Kânûn Kitab 1: İbn Sînâ: Hemoglobin kan hıltının miktarını ve kalitesini gösterir; düşüklüğü soğuk-nemli mizaca işaret eder. CRP ve Sedimantasyon vücuttaki yangıyı sayısal olarak ölçer; safra baskısının nesnel kanıtıdır."}</div>
           <div className="analiz-grid3" style={{ ...s.grid3, marginBottom: 12 }}>
             <div>
               <label style={s.label}>{"HGB (g/dL)"}</label>
@@ -1752,7 +1752,7 @@ export default function AnalizClient() {
           </div>
 
           <div style={{ fontSize: 12, fontWeight: 600, color: C.primary, marginBottom: 10, letterSpacing: 1 }}>{"KARACİĞER & SAFRA"}</div>
-          <div style={s.tip}>{"el-Kânûn Kitab 3 — Karaciğer: Sarı safra karaciğerde üretilir, AST/ALT/GGT bu organın sağlığını gösterir. Ürik asit kara safra birikiminin somut ölçütüdür."}</div>
+          <div style={s.tip}>{"el-Kânûn Kitab 3: Karaciğer: Sarı safra karaciğerde üretilir, AST/ALT/GGT bu organın sağlığını gösterir. Ürik asit kara safra birikiminin somut ölçütüdür."}</div>
           <div className="analiz-grid3" style={{ ...s.grid3, marginBottom: 12 }}>
             <div>
               <label style={s.label}>{"ALT (U/L)"}</label>
@@ -1772,8 +1772,8 @@ export default function AnalizClient() {
             </div>
           </div>
 
-          <div style={{ fontSize: 12, fontWeight: 600, color: C.primary, marginBottom: 10, letterSpacing: 1 }}>{"TİROİD — TABİÎ HARARET"}</div>
-          <div style={s.tip}>{"el-Kânûn — Tabiî Hararet: TSH yüksekliği \u2192 yavaş metabolizma \u2192 balgam baskınlığı. TSH düşüklüğü \u2192 hızlı metabolizma \u2192 safra baskınlığı."}</div>
+          <div style={{ fontSize: 12, fontWeight: 600, color: C.primary, marginBottom: 10, letterSpacing: 1 }}>{"TİROİD, TABİÎ HARARET"}</div>
+          <div style={s.tip}>{"el-Kânûn, Tabiî Hararet: TSH yüksekliği \u2192 yavaş metabolizma \u2192 balgam baskınlığı. TSH düşüklüğü \u2192 hızlı metabolizma \u2192 safra baskınlığı."}</div>
           <div className="analiz-grid2" style={{ ...s.grid2, marginBottom: 12 }}>
             <div>
               <label style={s.label}>{"TSH (mIU/L)"}</label>
@@ -1794,7 +1794,7 @@ export default function AnalizClient() {
           </div>
 
           <div style={{ fontSize: 12, fontWeight: 600, color: C.primary, marginBottom: 10, letterSpacing: 1 }}>{"ŞEKER METABOLİZMASI"}</div>
-          <div style={s.tip}>{"el-Kânûn Kitab 3 — Ziyabitus: İbn Sînâ diyabeti \"böbreklerin iç rutubeti tutamaması\" olarak tanımlar; balgam baskınlığının böbreğe yansımasıdır."}</div>
+          <div style={s.tip}>{"el-Kânûn Kitab 3: Ziyabitus: İbn Sînâ diyabeti \"böbreklerin iç rutubeti tutamaması\" olarak tanımlar; balgam baskınlığının böbreğe yansımasıdır."}</div>
           <div className="analiz-grid2" style={{ ...s.grid2, marginBottom: 12 }}>
             <div>
               <label style={s.label}>{"Açlık Glukozu (mg/dL)"}</label>
@@ -1807,7 +1807,7 @@ export default function AnalizClient() {
           </div>
 
           <div style={{ fontSize: 12, fontWeight: 600, color: C.primary, marginBottom: 10, letterSpacing: 1 }}>{"VİTAMİN & MİNERAL"}</div>
-          <div style={s.tip}>{"Bahrü\u2019l-Cevâhir — el-Herevî: D vitamini eksikliği soğuk-kuru mizaca, B12 eksikliği kara safra baskısına zemin hazırlar."}</div>
+          <div style={s.tip}>{"Bahrü\u2019l-Cevâhir, el-Herevî: D vitamini eksikliği soğuk-kuru mizaca, B12 eksikliği kara safra baskısına zemin hazırlar."}</div>
           <div className="analiz-grid2" style={s.grid2}>
             <div>
               <label style={s.label}>{"D Vitamini (ng/mL)"}</label>
@@ -1839,9 +1839,9 @@ export default function AnalizClient() {
               <select style={s.select} value={form.exercise_habit} onChange={e => set('exercise_habit', e.target.value)}>
                 <option value="">{"Seçin"}</option>
                 <option value="hic">{"Hareketsiz / hiç egzersiz yok"}</option>
-                <option value="hafif">{"Hafif — yürüyüş, esneme"}</option>
-                <option value="orta">{"Orta — düzenli hareket"}</option>
-                <option value="yogun">{"Yoğun — spor, antrenman"}</option>
+                <option value="hafif">{"Hafif; yürüyüş, esneme"}</option>
+                <option value="orta">{"Orta; düzenli hareket"}</option>
+                <option value="yogun">{"Yoğun; spor, antrenman"}</option>
               </select>
             </div>
             <div>
@@ -1867,17 +1867,17 @@ export default function AnalizClient() {
           <div style={s.tip}>{"Fıtrî mizaç doğuştan gelen sabit yapınızdır. Şu anki şikayetlerinizden bağımsız olarak, genel eğilimlerinizi yanıtlayın."}</div>
           <div className="analiz-grid2" style={s.grid2}>
             {[
-              { key: 'fitri_sac', label: 'Saç Yapısı', opts: [['','Seçin'],['ince_duz','İnce/Düz — Balgamî'],['kalin_kivircik','Kalın/Kıvırcık — Safravî/Demevî'],['kuru_kirik','Kuru/Kırık — Sevdavî'],['normal','Normal/Orta']] },
-              { key: 'fitri_cilt', label: 'Doğal Cilt Tipi', opts: [['','Seçin'],['cok_kuru','Çok kuru — Sevdavî'],['kuru','Kuru — Sevdavî/Balgamî'],['normal','Normal'],['yagly','Yağlı — Demevî/Safravî']] },
-              { key: 'fitri_beden', label: 'Beden Yapısı', opts: [['','Seçin'],['ince_narin','İnce/Narin — Safravî/Sevdavî'],['orta','Orta yapılı'],['dolgun','Dolgun/Iri — Demevî/Balgamî']] },
-              { key: 'fitri_uyku', label: 'Uyku Eğilimi', opts: [['','Seçin'],['az_uyku','Az uyku yeter — Safravî'],['normal_uyku','Normal 7-8h'],['cok_uyku','Çok uyurum — Balgamî'],['duzensiz_uyku','Düzensiz — Sevdavî']] },
-              { key: 'fitri_sindirim', label: 'Sindirim Hızı', opts: [['','Seçin'],['cok_hizli','Çok hızlı — Safravî'],['hizli','Hızlı'],['normal_sind','Normal'],['yavas','Yavaş — Balgamî'],['cok_yavas','Çok yavaş — Sevdavî']] },
-              { key: 'fitri_mizac_ruh', label: 'Ruh Hali Eğilimi', opts: [['','Seçin'],['neşeli_enerjik','Neşeli/Enerjik — Demevî'],['ofkeli_hizli','Öfkeli/Hızlı — Safravî'],['sakin_agir','Sakin/Ağır — Balgamî'],['dusunceli_melankolik','Düşünceli/Melankolik — Sevdavî']] },
-              { key: 'fitri_terleme', label: 'Terleme Eğilimi', opts: [['','Seçin'],['cok_terler','Çok terler — Demevî/Safravî'],['normal_terler','Normal'],['az_terler','Az terler — Balgamî/Sevdavî']] },
-              { key: 'fitri_isi_hassas', label: 'Isı Hassasiyeti', opts: [['','Seçin'],['soguga_hassas','Soğuğa hassas — Balgamî/Sevdavî'],['sicaga_hassas','Sıcağa hassas — Safravî/Demevî'],['dengeli_isi','Dengeli']] },
-              { key: 'fitri_mevsim', label: 'Sevdiğiniz Mevsim', opts: [['','Seçin'],['ilkbahar','İlkbahar — Demevî'],['yaz','Yaz — Safravî'],['sonbahar','Sonbahar — Sevdavî'],['kis','Kış — Balgamî']] },
-              { key: 'fitri_kilo', label: 'Kilo Eğilimi', opts: [['','Seçin'],['kilo_almaz','Zor kilo alır — Safravî/Sevdavî'],['normal_kilo','Normal'],['kilo_alir','Kolay kilo alır — Balgamî/Demevî']] },
-              { key: 'fitri_enerji', label: 'Enerji Düzeyi', opts: [['','Seçin'],['yuksek_enerji','Yüksek enerjili — Demevî/Safravî'],['orta_enerji','Orta'],['dusuk_enerji','Düşük/Ağır — Balgamî'],['dalgali_enerji','Dalgalı — Sevdavî']] },
+              { key: 'fitri_sac', label: 'Saç Yapısı', opts: [['','Seçin'],['ince_duz','İnce/Düz, Balgamî'],['kalin_kivircik','Kalın/Kıvırcık, Safravî/Demevî'],['kuru_kirik','Kuru/Kırık, Sevdavî'],['normal','Normal/Orta']] },
+              { key: 'fitri_cilt', label: 'Doğal Cilt Tipi', opts: [['','Seçin'],['cok_kuru','Çok kuru, Sevdavî'],['kuru','Kuru, Sevdavî/Balgamî'],['normal','Normal'],['yagly','Yağlı, Demevî/Safravî']] },
+              { key: 'fitri_beden', label: 'Beden Yapısı', opts: [['','Seçin'],['ince_narin','İnce/Narin, Safravî/Sevdavî'],['orta','Orta yapılı'],['dolgun','Dolgun/Iri, Demevî/Balgamî']] },
+              { key: 'fitri_uyku', label: 'Uyku Eğilimi', opts: [['','Seçin'],['az_uyku','Az uyku yeter, Safravî'],['normal_uyku','Normal 7-8h'],['cok_uyku','Çok uyurum, Balgamî'],['duzensiz_uyku','Düzensiz, Sevdavî']] },
+              { key: 'fitri_sindirim', label: 'Sindirim Hızı', opts: [['','Seçin'],['cok_hizli','Çok hızlı, Safravî'],['hizli','Hızlı'],['normal_sind','Normal'],['yavas','Yavaş, Balgamî'],['cok_yavas','Çok yavaş, Sevdavî']] },
+              { key: 'fitri_mizac_ruh', label: 'Ruh Hali Eğilimi', opts: [['','Seçin'],['neşeli_enerjik','Neşeli/Enerjik, Demevî'],['ofkeli_hizli','Öfkeli/Hızlı, Safravî'],['sakin_agir','Sakin/Ağır, Balgamî'],['dusunceli_melankolik','Düşünceli/Melankolik, Sevdavî']] },
+              { key: 'fitri_terleme', label: 'Terleme Eğilimi', opts: [['','Seçin'],['cok_terler','Çok terler, Demevî/Safravî'],['normal_terler','Normal'],['az_terler','Az terler, Balgamî/Sevdavî']] },
+              { key: 'fitri_isi_hassas', label: 'Isı Hassasiyeti', opts: [['','Seçin'],['soguga_hassas','Soğuğa hassas, Balgamî/Sevdavî'],['sicaga_hassas','Sıcağa hassas, Safravî/Demevî'],['dengeli_isi','Dengeli']] },
+              { key: 'fitri_mevsim', label: 'Sevdiğiniz Mevsim', opts: [['','Seçin'],['ilkbahar','İlkbahar, Demevî'],['yaz','Yaz, Safravî'],['sonbahar','Sonbahar, Sevdavî'],['kis','Kış, Balgamî']] },
+              { key: 'fitri_kilo', label: 'Kilo Eğilimi', opts: [['','Seçin'],['kilo_almaz','Zor kilo alır, Safravî/Sevdavî'],['normal_kilo','Normal'],['kilo_alir','Kolay kilo alır, Balgamî/Demevî']] },
+              { key: 'fitri_enerji', label: 'Enerji Düzeyi', opts: [['','Seçin'],['yuksek_enerji','Yüksek enerjili, Demevî/Safravî'],['orta_enerji','Orta'],['dusuk_enerji','Düşük/Ağır, Balgamî'],['dalgali_enerji','Dalgalı, Sevdavî']] },
             ].map(f => (
               <div key={f.key}>
                 <label style={s.label}>{f.label}</label>
@@ -1921,7 +1921,7 @@ export default function AnalizClient() {
             multiple
             style={{ display: 'block', marginTop: 8, fontSize: 13, color: C.dark }}
           />
-          <div style={{ fontSize: 11, color: '#999', marginTop: 6 }}>{"PDF, JPG, PNG — Kan tahlili, EKG, ultrason"}</div>
+          <div style={{ fontSize: 11, color: '#999', marginTop: 6 }}>{"PDF, JPG, PNG, Kan tahlili, EKG, ultrason"}</div>
         </div>
 
         {/* KVKK */}
@@ -1934,7 +1934,7 @@ export default function AnalizClient() {
 
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: 24 }}>
           <button onClick={() => setAdim(7)} style={{ padding: '10px 24px', border: `1px solid ${C.border}`, borderRadius: 8, background: C.white, color: C.secondary, cursor: 'pointer', fontSize: 13 }}>{"\u2190 Geri"}</button>
-          <div style={{ fontSize: 11, color: '#999' }}>{"8 / 8 — Son adım"}</div>
+          <div style={{ fontSize: 11, color: '#999' }}>{"8 / 8: Son adım"}</div>
         </div>
 
         <button
@@ -1959,7 +1959,7 @@ export default function AnalizClient() {
 
       </div>
 
-      {/* WhatsApp yardim butonu — sabit */}
+      {/* WhatsApp yardim butonu; sabit */}
       <a
         href="https://wa.me/905331687226?text=Merhaba%2C%20analiz%20formunda%20yardim%20istiyorum."
         target="_blank"

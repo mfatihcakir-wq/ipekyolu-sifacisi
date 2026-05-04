@@ -145,7 +145,7 @@ Yukarıdaki TÜM verileri bütünleştirerek kişisel öneri rehberi hazırla. H
           parsedCikti = {
             _ham_metin: rawText,
             _parse_hatasi: true,
-            ozet: 'JSON parse hatası — ham metin _ham_metin alanında. Hekim taslağı manuel düzenlemeli.',
+            ozet: 'JSON parse hatası; ham metin _ham_metin alanında. Hekim taslağı manuel düzenlemeli.',
           }
         }
       } catch (secondError) {
@@ -153,7 +153,7 @@ Yukarıdaki TÜM verileri bütünleştirerek kişisel öneri rehberi hazırla. H
         parsedCikti = {
           _ham_metin: rawText,
           _parse_hatasi: true,
-          ozet: 'JSON parse hatası — ham metin _ham_metin alanında. Hekim taslağı manuel düzenlemeli.',
+          ozet: 'JSON parse hatası; ham metin _ham_metin alanında. Hekim taslağı manuel düzenlemeli.',
         }
       }
     }

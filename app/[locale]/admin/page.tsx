@@ -1,14 +1,13 @@
 import { redirect } from 'next/navigation'
 import { createServerSupabaseClient } from '@/lib/supabase-server'
 import MakaleUret from '@/components/MakaleUret'
-
-const ADMIN_EMAIL = 'm.fatih.cakir@gmail.com'
+import { isAdminEmail } from '@/lib/admin'
 
 export default async function AdminPage() {
   const supabase = createServerSupabaseClient()
   const { data: { user } } = await supabase.auth.getUser()
 
-  if (!user || user.email !== ADMIN_EMAIL) {
+  if (!user || !isAdminEmail(user.email)) {
     redirect('/giris')
   }
 

@@ -55,7 +55,7 @@ export default function GizlilikPage() {
 
         <div style={{ marginBottom: 28 }}>
           <h2 style={h2Style}>{"4. Veri Paylaşımı"}</h2>
-          <p style={pStyle}>{"Kişisel verileriniz hiçbir koşulda reklam amacıyla üçüncü taraflarla paylaşılmaz. Veriler yalnızca teknik altyapı sağlayıcılarıyla — "}<strong>{"Supabase"}</strong>{" (veritabanı), "}<strong>{"Vercel"}</strong>{" (hosting) ve "}<strong>{"Anthropic"}</strong>{" (yapay zeka analizi) — hizmetin ifası için zorunlu olarak paylaşılır. Anthropic, API çağrıları üzerinden gelen verileri model eğitiminde kullanmaz."}</p>
+          <p style={pStyle}>{"Kişisel verileriniz hiçbir koşulda reklam amacıyla üçüncü taraflarla paylaşılmaz. Veriler yalnızca teknik altyapı sağlayıcılarıyla; "}<strong>{"Supabase"}</strong>{" (veritabanı), "}<strong>{"Vercel"}</strong>{" (hosting) ve "}<strong>{"Anthropic"}</strong>{" (yapay zeka analizi); hizmetin ifası için zorunlu olarak paylaşılır. Anthropic, API çağrıları üzerinden gelen verileri model eğitiminde kullanmaz."}</p>
         </div>
 
         <div style={{ marginBottom: 28 }}>

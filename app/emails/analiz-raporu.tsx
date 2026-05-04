@@ -17,7 +17,7 @@ export function analizRaporuHtml(data: {
     <tr><td style="padding:8px 0;border-bottom:1px solid ${border};">
       <div style="font-size:14px;font-weight:600;color:${primary};">🌿 ${b.bitki}${b.ar ? ` (${b.ar})` : ''}</div>
       ${b.doz ? `<div style="font-size:13px;color:${dark};margin-top:2px;">Doz: ${b.doz}</div>` : ''}
-      ${b.sure ? `<div style="font-size:12px;color:#666;">Sure: ${b.sure}</div>` : ''}
+      ${b.sure ? `<div style="font-size:12px;color:#666;">Süre: ${b.sure}</div>` : ''}
       ${b.endikasyon ? `<div style="font-size:12px;color:#666;">${b.endikasyon}</div>` : ''}
       ${b.kaynak ? `<div style="font-size:11px;color:#999;font-style:italic;margin-top:2px;">${b.kaynak}</div>` : ''}
     </td></tr>
@@ -29,8 +29,8 @@ export function analizRaporuHtml(data: {
         <tr><td style="padding:14px;">
           <div style="font-size:15px;font-weight:600;color:${primary};">${t.ad}</div>
           ${t.tur ? `<div style="font-size:11px;color:${gold};text-transform:uppercase;letter-spacing:1px;margin-bottom:6px;">${t.tur}</div>` : ''}
-          ${t.icerik ? `<div style="font-size:13px;color:${dark};margin-bottom:4px;"><strong>Icerik:</strong> ${t.icerik}</div>` : ''}
-          ${t.hazirlama ? `<div style="font-size:13px;color:${dark};margin-bottom:4px;"><strong>Hazirlama:</strong> ${t.hazirlama}</div>` : ''}
+          ${t.icerik ? `<div style="font-size:13px;color:${dark};margin-bottom:4px;"><strong>İçerik:</strong> ${t.icerik}</div>` : ''}
+          ${t.hazirlama ? `<div style="font-size:13px;color:${dark};margin-bottom:4px;"><strong>Hazırlama:</strong> ${t.hazirlama}</div>` : ''}
           ${t.doz ? `<div style="font-size:13px;color:${dark};"><strong>Doz:</strong> ${t.doz}</div>` : ''}
           ${t.kaynak ? `<div style="font-size:11px;color:#999;font-style:italic;margin-top:4px;">${t.kaynak}</div>` : ''}
         </td></tr>
@@ -40,7 +40,7 @@ export function analizRaporuHtml(data: {
 
   const gidaHtml = (sonuc.gida_protokolu || []).length > 0 ? `
     <tr><td style="padding:16px 0 8px;">
-      <div style="font-size:11px;font-weight:700;color:${primary};letter-spacing:2px;text-transform:uppercase;margin-bottom:8px;">Gida Protokolu</div>
+      <div style="font-size:11px;font-weight:700;color:${primary};letter-spacing:2px;text-transform:uppercase;margin-bottom:8px;">Gıda Protokolü</div>
       ${(sonuc.gida_protokolu || []).map((g: string) => `<div style="font-size:13px;color:${dark};padding:2px 0;">✓ ${g}</div>`).join('')}
     </td></tr>
   ` : ''
@@ -51,7 +51,7 @@ export function analizRaporuHtml(data: {
         <tr><td style="padding:20px;text-align:center;">
           ${sonuc.hikmetli_soz.metin_ar ? `<div style="font-size:18px;color:${gold};margin-bottom:8px;direction:rtl;font-family:serif;">${sonuc.hikmetli_soz.metin_ar}</div>` : ''}
           <div style="font-size:14px;color:${cream};margin-bottom:6px;font-style:italic;">${sonuc.hikmetli_soz.metin}</div>
-          ${sonuc.hikmetli_soz.kaynak ? `<div style="font-size:11px;color:rgba(255,255,255,0.5);">— ${sonuc.hikmetli_soz.kaynak}</div>` : ''}
+          ${sonuc.hikmetli_soz.kaynak ? `<div style="font-size:11px;color:rgba(255,255,255,0.5);">, ${sonuc.hikmetli_soz.kaynak}</div>` : ''}
         </td></tr>
       </table>
     </td></tr>

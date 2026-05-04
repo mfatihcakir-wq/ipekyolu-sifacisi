@@ -24,7 +24,7 @@ export async function POST() {
 
     const ornekMetin = chunks
       .slice(0, 20)
-      .map(c => `[${c.hekim_adi} — ${c.eser_adi}]\n${c.icerik_tr?.substring(0, 200)}`)
+      .map(c => `[${c.hekim_adi}; ${c.eser_adi}]\n${c.icerik_tr?.substring(0, 200)}`)
       .join('\n\n---\n\n')
 
     const response = await anthropic.messages.create({

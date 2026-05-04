@@ -48,7 +48,7 @@ function kalanGunHesapla(isoTarih: string | null | undefined): number {
 }
 
 function tarihFormat(iso: string | null | undefined): string {
-  if (!iso) return '—'
+  if (!iso) return ','
   return new Date(iso).toLocaleDateString('tr-TR', { day: 'numeric', month: 'long', year: 'numeric' })
 }
 
@@ -145,7 +145,7 @@ export default function ProfilPage() {
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(160px, 1fr))', gap: 12, marginTop: 12 }}>
             <div>
               <div style={{ fontFamily: cinzel.style.fontFamily, fontSize: 10, color: C.secondary, letterSpacing: 2, marginBottom: 4 }}>TELEFON</div>
-              <div style={{ fontSize: 14, color: C.dark }}>{profil.telefon || '—'}</div>
+              <div style={{ fontSize: 14, color: C.dark }}>{profil.telefon || ','}</div>
             </div>
             <div>
               <div style={{ fontFamily: cinzel.style.fontFamily, fontSize: 10, color: C.secondary, letterSpacing: 2, marginBottom: 4 }}>ÜYELİK</div>

@@ -20,7 +20,7 @@ const HEKIM_PROFILLER = [
   { id: 'rusd', ad: 'İbn Rüşd', renk: '#7C3AED', kitap: 'el-Külliyyât', aciklama: 'Mantık çerçevesi', sistem_prompt_eki: 'Sen İbn Rüşd perspektifinden yanıt ver. Mantıksal sebep-sonuç çerçevesini kullan. el-Külliyyât fit-Tıb eserindeki taksim metoduna atıf yap.' },
   { id: 'zehravi', ad: 'ez-Zehravî', renk: '#EA580C', kitap: 'et-Tasrîf', aciklama: 'Cerrahi bakış', sistem_prompt_eki: 'Sen ez-Zehravî perspektifinden yanıt ver. Pratik müdahale ve cerrahi bakış açısını ön plana çıkar. et-Tasrîf eserindeki uygulamalara atıf yap.' },
   { id: 'beytar', ad: 'İbn Beytâr', renk: '#92400E', kitap: 'el-Câmi', aciklama: 'Bitki otoritesi', sistem_prompt_eki: 'Sen İbn Beytâr perspektifinden yanıt ver. Bitki ve müfredat bilgisini ön plana çıkar. el-Câmi li-Müfredât eserindeki maddelere atıf yap.' },
-  { id: 'tokadi', ad: 'Tokadî', renk: '#92600A', kitap: 'Tahbîzül-Mathûn', aciklama: 'Osmanlı tatbik geleneği', isim: 'Mustafa b. Yusuf Tokadî', isim_ar: '\u0637\u0648\u0642\u0627\u062f\u064a', lakap: 'Şârihu\u2019l-Kânûn', olum: 'ö. 1195/1781', kaynak_kodu: 'SRC-007', ikon: '\uD83D\uDCDC', metot: 'Osmanlı tatbik geleneği, el-Kânûn Türkçe şerhi, yerel formüller', sistem_prompt_eki: 'Sen Mustafa b. Yusuf Tokadi sin (ö.1195/1781) \u2014 Tahbizül-Mathûn müellifi, el-Kânûn un en kapsamlı Osmanlıca sarihisin. Methodun: İbn Sînâ nın teorisini Osmanlı cografyasının bitkilerine ve iklimine uygula. Teoriden pratige köprü kur. Anadolu da temin edilebilir bitkilerle formüller öner. Osmanlıca tıb terminolojisini kullan, modern Türkçeye çevir. Kaynak: Tahbizül-Mathûn fit-Tib a atıf yap.' },
+  { id: 'tokadi', ad: 'Tokatlı', renk: '#92600A', kitap: 'Tahbîzü\u2019l-Mathûn', aciklama: 'Osmanlı tatbik geleneği', isim: 'Tokatlı Mustafa Efendi', isim_ar: '\u0637\u0648\u0642\u0627\u062f\u064a', lakap: 'Şârihu\u2019l-Kânûn', olum: 'ö. 1195/1781', kaynak_kodu: 'SRC-007', ikon: '\uD83D\uDCDC', metot: 'Osmanlı tatbik geleneği, el-Kânûn Türkçe şerhi, yerel formüller', sistem_prompt_eki: 'Sen Tokatlı Mustafa Efendi\u2019sin (ö.1195/1781) , Tahbîzü\u2019l-Mathûn müellifi, el-Kânûn un en kapsamlı Osmanlıca sarihisin. Methodun: İbn Sînâ nın teorisini Osmanlı cografyasının bitkilerine ve iklimine uygula. Teoriden pratige köprü kur. Anadolu da temin edilebilir bitkilerle formüller öner. Osmanlıca tıb terminolojisini kullan, modern Türkçeye çevir. Kaynak: Tahbîzü\u2019l-Mathûn fit-Tib a atıf yap.' },
 ]
 
 interface VakaKayit {
@@ -159,7 +159,7 @@ export default function ArsivPage() {
         `${hekim.kitap} eserinde belirtildiği üzere, bu mizac tipinde ` +
         `dikkat edilmesi gereken hususlar mevcuttur. Detaylı hekim yorumu için ` +
         `API entegrasyonu yapılandırılmalıdır.\n\n` +
-        `\u2014 ${hekim.ad}, ${hekim.kitap}`
+        `, ${hekim.ad}, ${hekim.kitap}`
       )
       setHekimYukleniyor(false)
     }, 2000)
@@ -222,9 +222,9 @@ export default function ArsivPage() {
           <select value={kaynakFiltre} onChange={e => setKaynakFiltre(e.target.value)}
             style={{ padding: '8px 12px', border: `1px solid ${C.border}`, borderRadius: 8, fontSize: 13, outline: 'none', fontFamily: garamond.style.fontFamily }}>
             <option value="">{"Tüm Kaynaklar"}</option>
-            <option value="havi">{"el-Hâvî \u2014 er-Râzî"}</option>
-            <option value="tahbiz">{"Tahbîzül-Mathûn \u2014 Tokadî"}</option>
-            <option value="samil">{"el-Şâmil \u2014 İbn Nefîs"}</option>
+            <option value="havi">{"el-Hâvî , er-Râzî"}</option>
+            <option value="tahbiz">{"Tahbîzü\u2019l-Mathûn, Tokatlı"}</option>
+            <option value="samil">{"el-Şâmil , İbn Nefîs"}</option>
             <option value="cevahir">{"Bahrül-Cevâhir"}</option>
             <option value="kanun">{"el-Kânûn"}</option>
           </select>
@@ -343,7 +343,7 @@ export default function ArsivPage() {
                   {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
                   {secili.sonuc_json.bitki_recetesi.map((b: any, i: number) => (
                     <div key={i} style={{ fontSize: 12, padding: '6px 0', borderBottom: `1px solid ${C.border}` }}>
-                      <div>{'\uD83C\uDF3F'} <strong>{b.bitki}</strong>{b.ar ? ` (${b.ar})` : ''} {'\u2014'} {b.doz}</div>
+                      <div>{'\uD83C\uDF3F'} <strong>{b.bitki}</strong>{b.ar ? ` (${b.ar})` : ''} {','} {b.doz}</div>
                       {b.kaynak && <div style={{ fontSize: 10, color: '#888', marginTop: 2, fontStyle: 'italic' }}>{b.kaynak}</div>}
                     </div>
                   ))}
@@ -360,7 +360,7 @@ export default function ArsivPage() {
               )}
 
               {/* WA BUTONU */}
-              <a href="https://wa.me/905331687226" target="_blank"
+              <a href="https://wa.me/905331687226" target="_blank" rel="noopener noreferrer"
                 style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6, background: 'transparent', color: '#25D366', border: '1px solid #25D366', borderRadius: 10, padding: '12px', fontSize: 12, fontWeight: 600, textDecoration: 'none', fontFamily: cinzel.style.fontFamily }}>
                 {"💬 Kisisel Not Ekle"}
               </a>
@@ -391,7 +391,7 @@ export default function ArsivPage() {
               <div>
                 <div style={{ fontFamily: cinzel.style.fontFamily, fontSize: 14, color: C.primary, letterSpacing: 2 }}>{"HEKİM YORUMU"}</div>
                 {hekimVaka && (
-                  <div style={{ fontSize: 12, color: C.secondary, marginTop: 2 }}>{hekimVaka.detailed_forms?.tam_ad} {'\u2014'} {hekimVaka.mizac}</div>
+                  <div style={{ fontSize: 12, color: C.secondary, marginTop: 2 }}>{hekimVaka.detailed_forms?.tam_ad} {','} {hekimVaka.mizac}</div>
                 )}
               </div>
               <button onClick={() => setHekimModal(false)} style={{ background: 'none', border: 'none', fontSize: 20, cursor: 'pointer', color: '#999' }}>{'\u2715'}</button>

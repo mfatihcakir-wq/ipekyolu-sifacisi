@@ -208,7 +208,7 @@ export default function MakaleUret() {
             </select>
           </div>
           <div>
-            <label style={s.label}>KAYNAKLAR — VERİTABANINDAKİ ESERLER</label>
+            <label style={s.label}>KAYNAKLAR, VERİTABANINDAKİ ESERLER</label>
             <div style={{ display: 'flex', flexWrap: 'wrap' as const, gap: 8 }}>
               {kaynaklar.length === 0 && (
                 <div style={{ fontFamily: 'EB Garamond,serif', fontSize: 13, color: 'rgba(245,234,212,0.3)', fontStyle: 'italic' }}>Kaynaklar yükleniyor...</div>
@@ -219,7 +219,7 @@ export default function MakaleUret() {
                     borderColor: seciliKaynaklar.includes(k.kaynak_kodu) ? 'rgba(212,168,67,0.6)' : 'rgba(212,168,67,0.15)',
                     background: seciliKaynaklar.includes(k.kaynak_kodu) ? 'rgba(212,168,67,0.15)' : 'transparent',
                     color: seciliKaynaklar.includes(k.kaynak_kodu) ? '#D4A843' : 'rgba(245,234,212,0.4)' }}>
-                  {k.hekim_adi} — {k.eser_adi} ({k.kayit_sayisi.toLocaleString('tr-TR')})
+                  {k.hekim_adi}; {k.eser_adi} ({k.kayit_sayisi.toLocaleString('tr-TR')})
                 </button>
               ))}
             </div>

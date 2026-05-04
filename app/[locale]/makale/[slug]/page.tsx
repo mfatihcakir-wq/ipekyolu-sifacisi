@@ -1,10 +1,37 @@
 import { notFound } from 'next/navigation'
 import { createClient } from '@supabase/supabase-js'
+import type { Metadata } from 'next'
 
 const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
 )
+
+export async function generateMetadata({ params }: { params: Promise<{ locale: string; slug: string }> }): Promise<Metadata> {
+  const { slug } = await params
+  const { data: makale } = await supabase
+    .from('makaleler')
+    .select('baslik, baslik_ar, kategori, ozet, icerik')
+    .eq('slug', slug)
+    .eq('yayinda', true)
+    .single()
+
+  if (!makale) {
+    return { title: 'Makale bulunamadı' }
+  }
+
+  const ozet = makale.ozet || (makale.icerik || '').slice(0, 160).replace(/\s+/g, ' ').trim()
+
+  return {
+    title: makale.baslik,
+    description: ozet,
+    openGraph: {
+      title: makale.baslik,
+      description: ozet,
+      type: 'article',
+    },
+  }
+}
 
 export default async function MakaleDetay({ params }: { params: Promise<{ locale: string; slug: string }> }) {
   const { slug } = await params

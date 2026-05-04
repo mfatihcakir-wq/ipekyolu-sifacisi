@@ -13,7 +13,7 @@ export default function LandingClient() {
   const router = useRouter()
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [yorumlar, setYorumlar] = useState<any[]>([])
-  const kayitSayisi = '46.000+'
+  const kayitSayisi = '54.200+'
   const [hizliSikayet, setHizliSikayet] = useState('')
   const [hizliYukleniyor, setHizliYukleniyor] = useState(false)
   const [hizliYanit, setHizliYanit] = useState<string | null>(null)
@@ -105,7 +105,7 @@ export default function LandingClient() {
             ))}
           </div>
 
-          <div style={{ fontFamily: 'Cormorant Garamond,serif', fontSize: 11, color: 'rgba(184,134,11,0.3)', letterSpacing: 2.5, paddingBottom: 48 }}>{"38 KLASİK ESER · "}{kayitSayisi}{" METİN KAYDI · 1.180 BİTKİ"}</div>
+          <div style={{ fontFamily: 'Cormorant Garamond,serif', fontSize: 11, color: 'rgba(184,134,11,0.3)', letterSpacing: 2.5, paddingBottom: 48 }}>{"98 KLASİK KAYNAK · "}{kayitSayisi}{" METİN KAYDI · 1.180+ BİTKİ"}</div>
         </div>
 
         {/* ORTA: Büyük hareketli logo */}
@@ -152,7 +152,7 @@ export default function LandingClient() {
             {"En büyük şikayetiniz nedir?"}
           </h2>
           <p style={{ fontSize: 14, color: 'rgba(245,237,224,0.55)', fontStyle: 'italic', marginBottom: 24, fontFamily: 'EB Garamond,serif' }}>
-            {"30 saniyede başlayın — detaylı analiz sonra gelir"}
+            {"30 saniyede başlayın; detaylı analiz sonra gelir"}
           </p>
           <div className="hizli-form" style={{ display: 'flex', gap: 10, marginBottom: 12 }}>
             <input
@@ -260,7 +260,7 @@ export default function LandingClient() {
       <section style={{ background: '#F5EFE0', display: 'grid', gridTemplateColumns: 'repeat(4,1fr)', borderBottom: '1px solid #DEB887' }} className="stats-grid">
         {[
           { n: 38, l: 'KLASİK ESER', s: 'el-Hâvî, el-Kânûn, el-Şâmil' },
-          { n: '46.000+', l: 'METİN KAYDI', s: 'İndekslenmiş parça' },
+          { n: '54.200+', l: 'METİN KAYDI', s: 'İndekslenmiş parça' },
           { n: '1.180', l: 'BİTKİ & MADDE', s: 'İbn Beytâr kaynağı' },
           { n: 9, l: 'NABIZ SIFATI', s: 'İbn Sînâ metodolojisi' },
         ].map(({ n, l, s }, i, arr) => (
@@ -272,7 +272,7 @@ export default function LandingClient() {
         ))}
       </section>
 
-      {/* CTA — STATS SONRASI */}
+      {/* CTA, STATS SONRASI */}
       <section style={{ textAlign: 'center', padding: '56px clamp(24px,5vw,80px)', background: '#F5EFE0', borderBottom: '1px solid #DEB887' }}>
         <p style={{ fontFamily: 'Cormorant Garamond,serif', fontSize: 18, marginBottom: 20, color: '#1C3A26', letterSpacing: 0.5 }}>
           {"Bin yıllık birikimle hazırlanan analiziniz sizi bekliyor."}
@@ -297,7 +297,7 @@ export default function LandingClient() {
             <div style={{ position: 'absolute' as const, top: 28, left: '18%', right: '18%', height: 1, background: 'rgba(184,134,11,0.18)' }} />
             {[
               { n: '01', h: 'Formu Doldurun', p: 'Şikayetlerinizi, nabız ve dil bulgularınızı, yaşam alışkanlıklarınızı paylaşın.' },
-              { n: '02', h: 'Klasik Analiz', p: '38 klasik eserden ilgili bölümler derlenir, mizacınıza özel protokol hazırlanır.' },
+              { n: '02', h: 'Klasik Analiz', p: '98 klasik kaynaktan ilgili bölümler derlenir, mizacınıza özel protokol hazırlanır.' },
               { n: '03', h: 'Danışmanınız Ulaşır', p: '24-48 saat içinde uzman danışmanınız WhatsApp ile protokolünüzü iletir.' },
             ].map(({ n, h, p }) => (
               <div key={n} style={{ textAlign: 'center' as const }}>
@@ -425,7 +425,7 @@ export default function LandingClient() {
         </section>
       )}
 
-      {/* BIG CTA — sayfa sonu */}
+      {/* BIG CTA; sayfa sonu */}
       <section style={{ background: '#1C3A26', padding: '88px clamp(24px,5vw,80px)', textAlign: 'center', position: 'relative' as const, overflow: 'hidden' }}>
         <div style={{ position: 'absolute' as const, inset: 0, background: 'radial-gradient(circle at 50% 50%, rgba(184,134,11,0.08) 0%, transparent 70%)', pointerEvents: 'none' }} />
         <div style={{ position: 'relative' as const, zIndex: 1, maxWidth: 720, margin: '0 auto' }}>
@@ -441,7 +441,7 @@ export default function LandingClient() {
             {"ANALİZİMİ BAŞLAT →"}
           </a>
           <div style={{ marginTop: 24, fontFamily: 'Cormorant Garamond,serif', fontSize: 11, color: 'rgba(184,134,11,0.4)', letterSpacing: 2 }}>
-            {"38 KLASİK ESER · 46.000+ KAYIT · 1.180 BİTKİ"}
+            {"98 KLASİK KAYNAK · 54.200+ KAYIT · 1.180+ BİTKİ"}
           </div>
         </div>
       </section>

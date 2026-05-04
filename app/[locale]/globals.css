@@ -38,7 +38,7 @@
   --font-baslik:      var(--font-cormorant), 'Cormorant Garamond', Georgia, serif;
   --font-govde:       'EB Garamond', Georgia, serif;
   --font-arapca:      'Noto Naskh Arabic', serif;
-  /* Typography Scale — İpek Yolu Şifacısı */
+  /* Typography Scale, İpek Yolu Şifacısı */
   --fs-xs:    10px;   /* etiket, badge, letter-spacing'li küçük metin */
   --fs-sm:    12px;   /* ikincil açıklama */
   --fs-base:  16px;   /* gövde metin */

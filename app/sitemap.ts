@@ -1,13 +1,49 @@
 import { MetadataRoute } from 'next'
+import { createClient } from '@supabase/supabase-js'
 
-export default function sitemap(): MetadataRoute.Sitemap {
-  const base = 'https://ipekyolu-sifacisi.vercel.app'
-  return [
-    { url: base, lastModified: new Date(), changeFrequency: 'weekly', priority: 1 },
-    { url: `${base}/analiz`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.9 },
-    { url: `${base}/hakkimizda`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.7 },
-    { url: `${base}/sss`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.7 },
-    { url: `${base}/kvkk`, lastModified: new Date(), changeFrequency: 'yearly', priority: 0.3 },
-    { url: `${base}/gizlilik-politikasi`, lastModified: new Date(), changeFrequency: 'yearly', priority: 0.3 },
+const BASE = 'https://www.ipekyolusifacisi.com'
+
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
+  const staticRoutes: MetadataRoute.Sitemap = [
+    { url: BASE, lastModified: new Date(), changeFrequency: 'weekly', priority: 1 },
+    { url: `${BASE}/analiz`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.9 },
+    { url: `${BASE}/bitkiler`, lastModified: new Date(), changeFrequency: 'weekly', priority: 0.9 },
+    { url: `${BASE}/karakter`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.8 },
+    { url: `${BASE}/hakkimizda`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.7 },
+    { url: `${BASE}/sss`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.7 },
+    { url: `${BASE}/kvkk`, lastModified: new Date(), changeFrequency: 'yearly', priority: 0.3 },
+    { url: `${BASE}/gizlilik-politikasi`, lastModified: new Date(), changeFrequency: 'yearly', priority: 0.3 },
   ]
+
+  // Hekim ve makale slug'larını Supabase'den dinamik çek
+  try {
+    const supabase = createClient(
+      process.env.NEXT_PUBLIC_SUPABASE_URL!,
+      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+    )
+
+    const [hekimRes, makaleRes] = await Promise.all([
+      supabase.from('hekim_biyografileri').select('slug, guncellenme').eq('aktif', true),
+      supabase.from('makaleler').select('slug, guncellenme').eq('yayinda', true),
+    ])
+
+    const hekimRoutes: MetadataRoute.Sitemap = (hekimRes.data || []).map((h: { slug: string; guncellenme?: string }) => ({
+      url: `${BASE}/hekim/${h.slug}`,
+      lastModified: h.guncellenme ? new Date(h.guncellenme) : new Date(),
+      changeFrequency: 'monthly' as const,
+      priority: 0.8,
+    }))
+
+    const makaleRoutes: MetadataRoute.Sitemap = (makaleRes.data || []).map((m: { slug: string; guncellenme?: string }) => ({
+      url: `${BASE}/makale/${m.slug}`,
+      lastModified: m.guncellenme ? new Date(m.guncellenme) : new Date(),
+      changeFrequency: 'monthly' as const,
+      priority: 0.7,
+    }))
+
+    return [...staticRoutes, ...hekimRoutes, ...makaleRoutes]
+  } catch (e) {
+    console.error('sitemap dynamic fetch failed; statik liste döndürülüyor:', e)
+    return staticRoutes
+  }
 }
