@@ -29,7 +29,7 @@ export default async function MaliyetPage() {
     <main className="max-w-4xl mx-auto px-6 py-12">
       <h1 className="font-serif text-3xl text-stone-900 mb-2">Maliyet Takibi</h1>
       <p className="text-sm text-stone-500 mb-8">
-        Bu ay — {buAyBaslangici.toLocaleDateString('tr-TR', { month: 'long', year: 'numeric' })}
+        Bu ay; {buAyBaslangici.toLocaleDateString('tr-TR', { month: 'long', year: 'numeric' })}
       </p>
 
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">

@@ -3,8 +3,8 @@ import { NextRequest, NextResponse } from 'next/server'
 import { createClient, type SupabaseClient } from '@supabase/supabase-js'
 import { createServerClient } from '@supabase/ssr'
 import { cookies } from 'next/headers'
-
-const ADMIN_EMAIL = 'm.fatih.cakir@gmail.com'
+import { isAdminEmail } from '@/lib/admin'
+import { ANALIZ_SYSTEM_PROMPT } from '@/lib/mizan/analiz-prompt'
 
 export const maxDuration = 300
 export const runtime = 'nodejs'
@@ -120,7 +120,7 @@ async function klasikKaynaklariGetir(sikayetler: string, sb: SupabaseClient<any,
       if (!tumSonuclar.has(key)) tumSonuclar.set(key, r)
     })
 
-    // 6. Puanlama — FTS + sikayet eslesmesi
+    // 6. Puanlama, FTS + sikayet eslesmesi
     const skorla = (r: Record<string, string>) => {
       const icerik = (r.icerik_tr || '').toLowerCase()
       let skor = parseInt(r.oncelik) || 5
@@ -129,7 +129,7 @@ async function klasikKaynaklariGetir(sikayetler: string, sb: SupabaseClient<any,
       return skor
     }
 
-    // 7. Fallback — hic sonuc yoksa
+    // 7. Fallback; hic sonuc yoksa
     if (tumSonuclar.size < 5) {
       const { data: fallback } = await sb
         .from('klasik_kaynaklar')
@@ -152,7 +152,7 @@ async function klasikKaynaklariGetir(sikayetler: string, sb: SupabaseClient<any,
     const tokenBudget = 2000
 
     for (const k of sirali) {
-      const parca = `\n[${k.kaynak_kodu}] ${k.kitap_adi} — ${k.bolum}\n${(k.icerik_tr || '').slice(0, 400)}\n`
+      const parca = `\n[${k.kaynak_kodu}] ${k.kitap_adi}; ${k.bolum}\n${(k.icerik_tr || '').slice(0, 400)}\n`
       if (baglamMetni.length + parca.length > tokenBudget) break
       baglamMetni += parca
     }
@@ -165,103 +165,6 @@ async function klasikKaynaklariGetir(sikayetler: string, sb: SupabaseClient<any,
   }
 }
 
-const SYSTEM_PROMPT = `Sen klasik İslam tıbbının ortak aklısın — 31.400+ kayıtlık veritabanından besleniyorsun.
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-KLİNİK FAYDAYA GÖRE KAYNAK HİYERARŞİSİ (33 KİTAP)
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-KLİNİK ÇEKİRDEK (31.369 chunk, 38 kaynak — FTS her analizde en alakalı metinleri bulur):
-  SABIT BAĞLAM (her analizde gelir):
-  → [SRC-012] el-Mansûrî fi't-Tıb — er-Râzî: temel mizaç+tedavi teorisi
-  → [SRC-006] el-Şâmil — İbn Nefîs: nabız, idrar, klinik gözlem fasılları
-  → [SRC-005] Semptom-Hılt Veritabanı: semptom→hılt eşleştirmesi
-
-  FTS İLE BULUNAN (şikayete göre):
-  → [SRC-010] el-Hâvî fi't-Tıb — er-Râzî: 10.150 chunk
-  → [SRC-007] Tahbîzü'l-Mathûn — Tokadî (1782): 6.076 chunk
-
-⚠️ TAHBİZ ÖZEL KURALI: Tahbîzü'l-Mathûn Osmanlı Türkçesi ile yazılmıştır. Modern Türkçeye çevirerek aktar.
-
-KATMAN 0 — FITRİ-HÂLİ KARŞILAŞTIRMASI
-  Fıtrî mizaç = Doğuştan sabit yapı. Hâlî mizaç = Şu anki durum.
-  PRENSİP: Hastalık = fıtrî mizacın bozulmasıdır. Tedavi = hâlîyi fıtrîye döndürmektir.
-
-AKUT / KRONİK PROTOKOL — ZORUNLU
-AKUT (<4 hafta): Hızlı müdahale. Yüksek doz, kısa süre (3-7 gün).
-KRONİK (>4 hafta): Yavaş iyileştirme. Düşük doz, uzun süre (4-12 hafta).
-
-KATMAN 1 — MİZAC TAAYYÜNİ
-  Araçlar: Nabız (9 sıfat) + İdrar + Dil/Yüz + Lab değerleri
-  Çıktı: Baskın hılt (dem/balgam/safrâ/kara safra) + Mizaç tipi
-
-KATMAN 2 — SEBEP ANALİZİ (İbn Rüşd — el-Külliyyât yöntemi)
-  Bâdî sebep (yakın): Şu an vücutta olan
-  Mûid sebep (uzak): Neden oldu — gıda, iklim, hareket, ruh hali
-
-KATMAN 3 — ALÂMET OKUMASI (İbn Nefîs — el-Şâmil yöntemi)
-  → Yüz sarı + idrar köpüklü + nabız zayıf = Safra hılt baskınlığı
-  → Dil beyaz kaplı + nabız yavaş + terleyememe = Balgam baskınlığı
-  → Yüz kırmızı + nabız hızlı/sert + ağız kuruluğu = Safrâ/Dem baskınlığı
-  → Dil koyu + nabız sert/düzensiz + korku = Kara safra baskınlığı
-
-KATMAN 4 — TEDAVİ HİYERARŞİSİ (er-Râzî — el-Hâvî yöntemi)
-  1. AĞDIYE (Gıda): Önce beslenmeyi düzelt.
-  2. MÜFREDÂT (Tek bitki): Sonra basit bitkiyle destekle.
-  3. TERKİB (Bileşik formül): En son, sadece gerekirse.
-
-VERİTABANI KULLANIMI — KAYNAK ATIF ZORUNLUDUR
-⚠️ KRİTİK: Önerdiğin her bitki veya tedavi için kaynağını belirt.
-  Format: "el-Hâvî Cilt X'te er-Râzî şöyle der..."
-  Kaynak gösteremiyorsan o bilgiyi VERME.
-  ✅ Doğru: "Tahbîzü'l-Mathûn — Cüz'iyyât, Humma Fasılları'nda..."
-  ❌ Yanlış: "el-Kânûn'a göre safra fazlalığı ateşe yol açar"
-
-KAYNAK ATIF KURALI: "el-Kânûn" tek başına YASAK — hangi kitap, hangi fasıl belirt.
-
-REDAKSİYON KURALLARI:
-- Bitki adlarını Türkçe + parantez içinde Latince yaz: "Hindibâ (Cichorium intybus)"
-- Türkçe karakter kullan: ğ, ş, ı, ö, ü, ç
-- Arapça terimler parantez içinde: "sarı safra (safrâ)"
-
-EGZERSİZ KURALI — ZORUNLU:
-egzersiz_recetesi MUTLAKA doldur.
-Format: {"tur":"yürüyüş/nefes/esneme","zaman":"sabah/akşam","sure":"20 dakika","siddet":"hafif/orta","ozel":"Tahbîzü'l-Mathûn Riyazet bölümüne göre açıklama","kacinilacaklar":"ağır egzersiz","kaynak":"Tahbîzü'l-Mathûn — Külliyât, Riyazet Bölümü"}
-
-BESLENME KURALI:
-- EN AZ 8 önerilen gıda, EN AZ 5 kaçınılacak gıda.
-- AZ YEMEK temeldir. En fazla 2 ana öğün.
-
-TERKİB REÇETESİ (sadece gıda + tek bitki yetmediğinde doldur; yoksa boş bırak):
-terkib_recetesi: [{
-  "isim": "formülün klasik adı (örn: Cüvâriş-i Kebîr, Dehnü'l-Benefsec)",
-  "tur": "macun|şerbet|şurup|yağ|toz|hap|merhem|buhur",
-  "bilesenler": [{"ad":"bitki/madde adı","miktar":"10g veya dirhem"}],
-  "uygulama": "günde 2 kez, aç karına; 7 gün",
-  "kaynak": "el-Kânûn Cüz 5 — Fasılası... veya el-Hâvî Cilt 7 Bileşik İlaçlar..."
-}]
-
-TERKİB DOZAJ FORMLARI:
-- Macun (ma'cûn): katı/yoğun, uzun süreli kullanım — el-Kânûn "Edviye-i Mürekkebe"
-- Şerbet: sulu, içime hazır — akut tedavide hızlı etki
-- Şurup (şarâb): yoğun/tatlı, akut durumlar, 7-14 gün
-- Yağ (duhn): harici kullanım — masaj, merhem tabanı
-- Toz (sefûf): şifa suyu veya bal ile alınır
-- Hap (habb): standart dozaj, zarlı mide için uygun
-- Merhem: topikal — yara, cilt, eklem
-- Buhur: inhalasyon — sinüs, göğüs, baş ağrısı
-
-HASTA YAŞ PROTOKOLÜ:
-- 0-7 yaş: Doz 1/4. Güçlü bitkiler yasak.
-- 7-14 yaş: Doz 1/2.
-- 60+ yaş: Doz 3/4. Hafif bitkiler.
-- Hamile: Düşük ettirici bitkiler YASAK (safran yüksek doz, ardıç, yavşan, asarûn).
-
-FITRİ-HÂLİ ZORUNLU ALAN — BOŞ BIRAKMA:
-fitri_hali.fitri_mizac, fitri_hali.hali_mizac, fitri_hali.sapma, fitri_hali.tedavi_hedefi
-
-ZORUNLU JSON ÇIKTISI (başka format kabul edilmez):
-{"fitri_hali":{"fitri_mizac":"","hali_mizac":"","sapma":"","tedavi_hedefi":""},"mizac":{"tip":"","tip_ar":"","tam_tanim":"","ana_element":"","alt_mizac":"","mevsim_etkisi":"","uyum_skoru":0,"sure":"","kaynak":""},"hiltlar":{"dem":{"oran":25,"durum":"normal","aciklama":""},"balgam":{"oran":25,"durum":"normal","aciklama":""},"sari_safra":{"oran":25,"durum":"normal","aciklama":""},"kara_safra":{"oran":25,"durum":"normal","aciklama":""}},"baskin_hilt":"","klinik_gozlemler":[],"bitki_recetesi":[{"bitki":"","ar":"","doz":"","hazirlanis":"","endikasyon":"","kaynak":"","kontrendikasyon":""}],"terkib_recetesi":[],"gunluk_rutin":{"sabah":[],"oglen":[],"aksam":[]},"beslenme_recetesi":{"ilke":"","onerililer":[],"kacinilacaklar":[],"pisirime_yontemi":"","ozel_tavsiyeler":"","kaynak":""},"egzersiz_recetesi":{"tur":"","zaman":"","sure":"","siddet":"","ozel":"","kacinilacaklar":"","kaynak":""},"kontrol_takvimi":[],"uyarilar":[],"hikmetli_soz":{"metin":"","metin_ar":"","kaynak":""},"ozet":"","ilac_etkilesimleri":[],"alternatif_bitkiler":[],"hasta_yasina_gore_not":"","sonraki_kontrol":{"sure":"4 hafta","amac":"","odak_parametreler":[]},"sebep_analizi":{"badi_sebep":"","muid_sebepler":[],"kok_mudahale":""},"akut_kronik":"akut","etkilenen_sistem":""}
-`
 
 async function haftalikKontrol() {
   const cookieStore = await cookies()
@@ -278,7 +181,7 @@ async function haftalikKontrol() {
   const { data: { user } } = await userSupabase.auth.getUser()
   if (!user) return { user: null, userSupabase, limitResp: NextResponse.json({ error: 'Giriş gerekli' }, { status: 401 }) }
 
-  if (user.email === ADMIN_EMAIL) return { user, userSupabase, limitResp: null }
+  if (isAdminEmail(user.email)) return { user, userSupabase, limitResp: null }
 
   const { data: profile } = await userSupabase
     .from('profiles')
@@ -385,9 +288,9 @@ SONBAHAR → Kara safra artar → Isıtıcı/neşelendirici
 KIŞ → Balgam artar → Kurutucu/ısıtıcı
 Hastanın mevsimi: ${mevsim || 'belirtilmemiş'}
 
-[TAKSİM — AKUT/KRONİK]
+[TAKSİM, AKUT/KRONİK]
 Şikayet süresi: ${sikayet_suresi || 'belirtilmemiş'}
-${sikayet_suresi?.includes('akut') ? 'AKUT HASTALIK — Hızlı müdahale, yüksek doz kısa süre' : sikayet_suresi?.includes('kronik') ? 'KRONİK HASTALIK — Yavaş iyileştirme, kök sebebe in' : 'Süre belirtilmemiş — verilere göre değerlendir'}
+${sikayet_suresi?.includes('akut') ? 'AKUT HASTALIK, Hızlı müdahale, yüksek doz kısa süre' : sikayet_suresi?.includes('kronik') ? 'KRONİK HASTALIK, Yavaş iyileştirme, kök sebebe in' : 'Süre belirtilmemiş; verilere göre değerlendir'}
 
 [3 KANAL UYUM]
 KANAL 1 NABIZ: Büyüklük=${nabiz?.buyukluk || '-'} | Kuvvet=${nabiz?.kuvvet || '-'} | Hız=${nabiz?.hiz || '-'}
@@ -395,9 +298,9 @@ KANAL 2 DİL: Renk=${dil?.renk || '-'} | Kaplama=${dil?.kaplama || '-'}
 KANAL 3 İDRAR: Renk=${idrar?.renk || '-'} | Kıvam=${idrar?.berraklik || '-'}
 Kanallar örtüşüyorsa teşhis güvenilir. Ayrışıyorsa gözleme güven.
 
-[SEBEP ANALİZİ — İbn Rüşd Yöntemi]
+[SEBEP ANALİZİ, İbn Rüşd Yöntemi]
 BÂDİ SEBEP (yakın/şimdiki): ${sikayet}
-MÛİD SEBEPLER (uzak/alışkanlık — tedavide ele al):
+MÛİD SEBEPLER (uzak/alışkanlık; tedavide ele al):
   Gıda: ${diet_type || yasam?.beslenme || '-'} | Sindirim: ${digestion || '-'}
   Hareket: ${exercise_habit || yasam?.egzersiz || '-'}
   Uyku: ${sleep || '-'} | Ruh hali: ${mood_detail || yasam?.ruh || '-'}
@@ -415,7 +318,7 @@ ${klasikBaglam && klasikBaglam !== 'Klasik kaynaklarda esleme bulunamadi.' ? `--
       system: [
         {
           type: 'text',
-          text: SYSTEM_PROMPT,
+          text: ANALIZ_SYSTEM_PROMPT,
           cache_control: { type: 'ephemeral' }
         }
       ],
@@ -463,7 +366,7 @@ ${klasikBaglam && klasikBaglam !== 'Klasik kaynaklarda esleme bulunamadi.' ? `--
     } catch (parseErr) {
       console.error('JSON parse hatasi:', parseErr)
       console.error('Temizlenmis JSON ilk 400:', cleanJson.substring(0, 400))
-      // Partial JSON dene — sadece temel alanlari cikar
+      // Partial JSON dene; sadece temel alanlari cikar
       try {
         const ozet = cleanJson.match(/"ozet"\s*:\s*"([^"]{10,})"/)?.[1] || 'Analiz tamamlandi'
         const mizac = cleanJson.match(/"mizac"\s*:\s*"([^"]{3,})"/)?.[1] || 'Belirlenmedi'
@@ -473,7 +376,7 @@ ${klasikBaglam && klasikBaglam !== 'Klasik kaynaklarda esleme bulunamadi.' ? `--
       }
     }
 
-    if (user && user.email !== ADMIN_EMAIL) {
+    if (user && !isAdminEmail(user.email)) {
       await userSupabase
         .from('profiles')
         .update({ last_analysis_at: new Date().toISOString() })

@@ -107,7 +107,7 @@ export default function MakalelerSection() {
           <div style={{fontFamily:'Cormorant Garamond,serif',fontSize:9,letterSpacing:5,color:'rgba(212,168,67,.5)',marginBottom:12}}>İLİM · MAARİF · HİKMET</div>
           <h2 style={{fontFamily:'Cormorant Garamond,serif',fontSize:'clamp(26px,3.5vw,40px)',fontWeight:700,color:'#F5EAD4',letterSpacing:2,marginBottom:8}}>Klasik Tıbbın <span style={{color:'#D4A843'}}>Hazinesi</span></h2>
           <div style={{fontFamily:'serif',fontSize:16,color:'rgba(212,168,67,.35)',marginBottom:12,direction:'rtl' as const}}>كنوز الطب الإسلامي الكلاسيكي</div>
-          <p style={{fontFamily:'EB Garamond,serif',fontSize:17,fontStyle:'italic',color:'rgba(245,234,212,.4)',maxWidth:520,margin:'0 auto 16px',lineHeight:1.7}}>31.369 metin kaydından derlenen, kaynak gösterimli makaleler.</p>
+          <p style={{fontFamily:'EB Garamond,serif',fontSize:17,fontStyle:'italic',color:'rgba(245,234,212,.4)',maxWidth:520,margin:'0 auto 16px',lineHeight:1.7}}>54.200+ metin kaydından derlenen, kaynak gösterimli makaleler.</p>
           <div style={{display:'inline-block',background:'rgba(212,168,67,0.08)',border:'1px solid rgba(212,168,67,0.15)',borderRadius:20,padding:'6px 16px',fontFamily:'Cormorant Garamond,serif',fontSize:8,color:'rgba(212,168,67,0.5)',letterSpacing:2}}>✦ KLASİK METİNLERDEN DERLENDİ · KAYNAK GÖSTERİMLİ</div>
         </div>
 
@@ -155,7 +155,7 @@ export default function MakalelerSection() {
         </div>
 
         <div style={{textAlign:'center'}}>
-          <div style={{fontFamily:'Cormorant Garamond,serif',fontSize:9,letterSpacing:3,color:'rgba(212,168,67,0.5)',padding:'12px 36px'}}>YAKINDA — TÜM MAKALELER</div>
+          <div style={{fontFamily:'Cormorant Garamond,serif',fontSize:9,letterSpacing:3,color:'rgba(212,168,67,0.5)',padding:'12px 36px'}}>YAKINDA, TÜM MAKALELER</div>
         </div>
       </div>
     </section>
@@ -175,7 +175,7 @@ export default function MakalelerSection() {
             <Link key={h.id} href={`/hekim/${h.slug}`} style={{background:'rgba(255,255,255,0.05)',border:'1px solid rgba(212,168,67,0.25)',borderRadius:14,padding:'24px 16px',textAlign:'center' as const,textDecoration:'none',display:'block'}}>
               <div style={{width:60,height:60,margin:'0 auto 12px',position:'relative'}}>
                 <div style={{position:'absolute',inset:0,borderRadius:'50%',border:'1px solid rgba(212,168,67,0.4)',animation:'gentlePulse 3s ease-in-out infinite',animationDelay:`${i*0.4}s`}}/>
-                <div style={{width:'100%',height:'100%',borderRadius:'50%',background:'rgba(212,168,67,0.12)',border:'1px solid rgba(212,168,67,0.35)',display:'flex',alignItems:'center',justifyContent:'center',fontFamily:'serif',fontSize:13,color:'#D4A843',lineHeight:1.3}}>{h.isim_ar?.split(' ').slice(-1)[0]||'—'}</div>
+                <div style={{width:'100%',height:'100%',borderRadius:'50%',background:'rgba(212,168,67,0.12)',border:'1px solid rgba(212,168,67,0.35)',display:'flex',alignItems:'center',justifyContent:'center',fontFamily:'serif',fontSize:13,color:'#D4A843',lineHeight:1.3}}>{h.isim_ar?.split(' ').slice(-1)[0]||','}</div>
               </div>
               {h.isim_ar && (<div style={{fontFamily:'serif',fontSize:13,color:'rgba(212,168,67,0.7)',marginBottom:4,direction:'rtl' as const}}>{h.isim_ar}</div>)}
               <div style={{fontFamily:'Cormorant Garamond,serif',fontSize:12,fontWeight:600,color:'#F5EAD4',marginBottom:4,lineHeight:1.3}}>{h.isim}</div>

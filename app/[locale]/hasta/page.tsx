@@ -101,7 +101,7 @@ export default function HastaPage() {
 
   return (
     <div style={{ minHeight: '100vh', display: 'flex', fontFamily: garamond.style.fontFamily, background: C.cream }}>
-      {/* SIDEBAR — masaustu */}
+      {/* SIDEBAR; masaustu */}
       <aside className="hasta-sidebar" style={{
         width: 240, background: C.primary, padding: '24px 0', flexShrink: 0,
         display: 'flex', flexDirection: 'column', position: 'sticky' as const, top: 0, height: '100vh',
@@ -156,7 +156,7 @@ export default function HastaPage() {
             Hosgeldiniz, {ad}
           </h1>
           <p style={{ fontSize: 14, color: C.secondary, fontStyle: 'italic' }}>
-            &ldquo;Saglik, bedenin fıtrî mizaçina donmesidir.&rdquo; — İbn Sînâ
+            &ldquo;Saglik, bedenin fıtrî mizaçina donmesidir.&rdquo;; İbn Sînâ
           </p>
         </div>
 
@@ -251,7 +251,7 @@ export default function HastaPage() {
           )}
         </div>
 
-        {/* ARSIV — Eski detailed_forms kayitlari */}
+        {/* ARSIV, Eski detailed_forms kayitlari */}
         {analizler.length > 0 && (
           <details style={{ marginBottom: 24 }}>
             <summary style={{ cursor: 'pointer', fontFamily: cinzel.style.fontFamily, fontSize: 12, color: C.secondary, letterSpacing: 2, marginBottom: 12, padding: '8px 0' }}>

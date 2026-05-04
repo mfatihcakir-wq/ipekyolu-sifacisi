@@ -3,10 +3,13 @@ import { createServerClient } from '@supabase/ssr'
 import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
 import { routing } from './i18n/routing'
+import { isAdminEmail } from './lib/admin'
 
 const intlMiddleware = createMiddleware(routing)
 
-const AUTH_ROUTE_RE = /^\/(?:[a-z]{2}\/)?(?:dashboard|hasta|analiz|profil|admin)(?:\/|$)/
+// /analiz misafir kullanıcılara açıktır; form sonunda kayıt akışı başlar.
+// Auth gereken rotalar: dashboard, hasta, profil, admin
+const AUTH_ROUTE_RE = /^\/(?:[a-z]{2}\/)?(?:dashboard|hasta|profil|admin)(?:\/|$)/
 
 export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl
@@ -58,8 +61,7 @@ export async function middleware(request: NextRequest) {
 
   // Admin rota koruması: /admin sadece hekim veya admin email
   if (/^\/(?:[a-z]{2}\/)?admin(?:\/|$)/.test(pathname)) {
-    const adminEmail = user.email === 'm.fatih.cakir@gmail.com'
-    if (rol !== 'hekim' && !adminEmail) {
+    if (rol !== 'hekim' && !isAdminEmail(user.email)) {
       return NextResponse.redirect(new URL('/', request.url))
     }
   }

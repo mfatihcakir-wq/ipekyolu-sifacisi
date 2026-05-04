@@ -11,7 +11,7 @@ const garamond = EB_Garamond({ display: 'swap', preload: false, subsets: ['latin
 const CEPHE_META: Record<string, {name:string,arabic:string,yon:string,renk:string,tanim:string}> = {
   dunya: { name:'Dünyâ', arabic:'جبهة الدنيا', yon:'ÖNDEN · CEPHE I', renk:'#D4A843', tanim:'Dünyanın aldatıcı cazibesine karşı kalbin savunması' },
   heva: { name:'Hevâ', arabic:'جبهة الهوى', yon:'SAĞDAN · CEPHE III', renk:'#78A0C8', tanim:'Nefsin tutkuları ve arzularının yönettiği cephe' },
-  nefs: { name:'Nefs', arabic:'جبهة النفس', yon:'SOLDAN · CEPHE II', renk:'#C47878', tanim:'Nefsin karanlık yüzü — kibir ve ucubun kalbi kuşattığı cephe' },
+  nefs: { name:'Nefs', arabic:'جبهة النفس', yon:'SOLDAN · CEPHE II', renk:'#C47878', tanim:'Nefsin karanlık yüzü; kibir ve ucubun kalbi kuşattığı cephe' },
   seytan: { name:'Şeytân', arabic:'جبهة الشيطان', yon:'ENSEDEN · CEPHE IV', renk:'#A07BC8', tanim:'İman ve yakîn savaşının en gizli cephesi' },
 }
 
@@ -24,53 +24,53 @@ interface Cephe {
 }
 
 const CEPHELER: Cephe[] = [
-  { id: 'dunya', ad: 'Dunya Cephesi', ad_ar: '\u062C\u0628\u0647\u0629 \u0627\u0644\u062F\u0646\u064A\u0627', aciklama: 'Dunyanin aldatici cazibesine karsi savunma', askerler: [
-    { id: 'riya', soru: 'Yaptigim iyiliklerin fark edilmesini isterim', tanim: 'Ibadetle dunya menfaatini murad etmek', ornek: 'Bir iyilik yaptiginda, kimse gormedi mi diye icinde hafif bir bosluk hissediyorsun.' },
-    { id: 'tefahur', soru: 'Sahip olduklarimla ovunme egilimim var', tanim: 'Mal, makam, nesep gibi dunyevi seylerle buyuklenmek', ornek: 'Konusmalar sirasinda basarilarini, gecmisini ya da sahip olduklarini sikca gundeme getirdigini fark ediyorsun.' },
-    { id: 'batar', soru: 'Nimetler karsisinda sukur yerine simarik bir sevinc yasarim', tanim: 'Nimete kavusunca sukur yerine simariklikla ferahlamak', ornek: 'Iyi bir haber aldiginda ilk tepkin sevincten cok iste boyle olur hissi oluyor.' },
-    { id: 'heva', soru: 'Aklima gelen her istegin pesinden giderim', tanim: 'Nefsin mesru olmayan arzularina uymak', ornek: 'Bir seyi istememeye karar versem bile, bir sure sonra kendimi onu yaparken buluyorum.' },
-    { id: 'lub', soru: 'Bos eglenceler zamanimi tuketir', tanim: 'Oyun ve gecici eglencelere dalmak', ornek: 'Onemli seyleri erteleyip anlik eglenceler icin zaman harcadigini fark ediyorsun.' },
-    { id: 'zur', soru: 'Birini kotulemek icin gercegi carpitirim', tanim: 'Buhtana yakin, baskasini kucultmek icin soylenen yalan', ornek: 'Birinden sikayet ederken olayi oldugundan farkli anlattigin olmustur.' },
-    { id: 'kizb', soru: 'Zaman zaman yalan soylerim', tanim: 'Mutlak yalan — gercegi soylemekten kacinmak', ornek: 'Zor bir durumdan kurtulmak ya da birini uzmemek icin gercek olmayan seyler soyledigin oluyor.' },
-    { id: 'giss', soru: 'Baskalari manipule ederim', tanim: 'Icinde baska niyet tasiyarak disarida farkli gorunmek', ornek: 'Birini bir seye ikna ederken asil niyetini acikca soylemedin olmustur.' },
-    { id: 'hadia', soru: 'Insanlari yaniltirim', tanim: 'Aldatmak — soz ya da davranisla yanilgiya dusurmek', ornek: 'Birinin yanlis anlamasina izin verdigin ya da bunu kullandigin olmustur.' },
-    { id: 'tefrit', soru: 'Dini yukumluluklerimi erteleyip ihmal ederim', tanim: 'Ser-i serifle amelde kusur ve ihmal etmek', ornek: 'Namaz, oruc gibi yukumlulukleri ertelediginde icinde hafif bir sikisma hissediyorsun ama geciyor.' },
+  { id: 'dunya', ad: 'Dünyâ Cephesi', ad_ar: '\u062C\u0628\u0647\u0629 \u0627\u0644\u062F\u0646\u064A\u0627', aciklama: 'Dünyanın aldatıcı cazibesine karşı kalbin savunması', askerler: [
+    { id: 'riya', soru: 'Yaptığım iyiliklerin fark edilmesini isterim', tanim: 'İbadetle dünyevî menfaat murat etmek', ornek: 'Bir iyilik yaptığında, kimse görmedi mi diye içinde hafif bir boşluk hissediyorsun.' },
+    { id: 'tefahur', soru: 'Sahip olduklarımla övünme eğilimim var', tanim: 'Mal, makam, nesep gibi dünyevî şeylerle büyüklenmek', ornek: 'Konuşmalar sırasında başarılarını, geçmişini ya da sahip olduklarını sıkça gündeme getirdiğini fark ediyorsun.' },
+    { id: 'batar', soru: 'Nimetler karşısında şükür yerine şımarık bir sevinç yaşarım', tanim: 'Nimete kavuşunca şükür yerine şımarıklıkla ferahlamak', ornek: 'İyi bir haber aldığında ilk tepkin şükürden çok "işte böyle olur" hissi oluyor.' },
+    { id: 'heva', soru: 'Aklıma gelen her isteğin peşinden giderim', tanim: 'Nefsin meşru olmayan arzularına uymak', ornek: 'Bir şeyi istememeye karar versem bile, bir süre sonra kendimi onu yaparken buluyorum.' },
+    { id: 'lub', soru: 'Boş eğlenceler zamanımı tüketir', tanim: 'Oyun ve geçici eğlencelere dalmak', ornek: 'Önemli şeyleri erteleyip anlık eğlenceler için zaman harcadığını fark ediyorsun.' },
+    { id: 'zur', soru: 'Birini kötülemek için gerçeği çarpıtırım', tanim: 'Buhtana yakın, başkasını küçültmek için söylenen yalan', ornek: 'Birinden şikâyet ederken olayı olduğundan farklı anlattığın olmuştur.' },
+    { id: 'kizb', soru: 'Zaman zaman yalan söylerim', tanim: 'Gerçeği söylemekten kaçınmak; yalan beyan', ornek: 'Zor bir durumdan kurtulmak ya da birini üzmemek için gerçek olmayan şeyler söylediğin oluyor.' },
+    { id: 'giss', soru: 'Başkalarını manipüle ederim', tanim: 'İçinde başka niyet taşıyarak dışarıda farklı görünmek', ornek: 'Birini bir şeye ikna ederken asıl niyetini açıkça söylemediğin olmuştur.' },
+    { id: 'hadia', soru: 'İnsanları yanıltırım', tanim: 'Aldatmak; söz ya da davranışla yanılgıya düşürmek', ornek: 'Birinin yanlış anlamasına izin verdiğin ya da bunu kullandığın olmuştur.' },
+    { id: 'tefrit', soru: 'Dinî yükümlülüklerimi erteleyip ihmal ederim', tanim: 'Şer-i şerifte amelde kusur ve ihmal etmek', ornek: 'Namaz, oruç gibi yükümlülükleri ertelediğinde içinde hafif bir sıkışma hissediyorsun ama geçiyor.' },
   ]},
-  { id: 'heva', ad: 'Heva Cephesi', ad_ar: '\u062C\u0628\u0647\u0629 \u0627\u0644\u0647\u0648\u0649', aciklama: 'Nefsin tutkularinin yonettigi cephe', askerler: [
-    { id: 'hased', soru: 'Birinin basarisi karsisinda icimde bir sikisma hissederim', tanim: 'Baskasindaki nimetin gitmesini ya da ona ulasamamasini istemek', ornek: 'Bir arkadasin terfi aldiginda sevinmek istiyorsun ama bir kosede neden o ben degil sorusu dolaniyor.' },
-    { id: 'tecebbur', soru: 'Haksizlik etme egilimim var', tanim: 'Zalim olmak — gucu haksiz yere kullanmak', ornek: 'Elinde firsat ya da otorite oldugunda, bunu kendi cikarin icin kullandigin olmustur.' },
-    { id: 'ucub', soru: 'Basarilarimin kendi cabamdan kaynaklandigini dusunurum', tanim: 'Basariyi Hakkin lutfundan degil kendinden bilmek', ornek: 'Bir seyi basardiginda Allah nasip etti demek yerine ben yaptim hissi one geciyor.' },
-    { id: 'tekebbur', soru: 'Kendimi baskasindan ustun goruyorum', tanim: 'Buyukluk ve iyilik iddiasiyla baskalari kuculusemek', ornek: 'Bazi insanlarla konusurken onlari icten ice yetersiz ya da siradan buldugun oluyor.' },
-    { id: 'gill', soru: 'Icim disima uymaz', tanim: 'Disarida farkli gorunup iceride baska hissetmek', ornek: 'Guler yuz gostersen de icinde o kisiye karsi sogukluk ya da kirginlik tasidigini oluyor.' },
-    { id: 'mekr', soru: 'Amacima ulasmak icin hile yaparim', tanim: 'Hile etmek — dolayli yollarla istedigini elde etmek', ornek: 'Dogrudan sormak yerine dolayli yollarla ya da oyunlarla istedigini elde etmeye calistigin olmustur.' },
-    { id: 'vesvese', soru: 'Zihnim karanlik ve supheli dusuncelerle dolar', tanim: 'Gonlunde yerlesen gizli karanlik kelam', ornek: 'Zihnin bazen seni surukledigi dusuncelerden rahatsiz oluyorsun ama onlari durduramiiyorsun.' },
-    { id: 'gadr', soru: 'Verdigim sozu tutmam', tanim: 'Hiyanet edip dogrulugunu yitirmek', ornek: 'Verdigin sozu ya da taahüdü sartlar degisince kolayca gecersiz saydigin olmustur.' },
-    { id: 'hikd', soru: 'Kin beslerim', tanim: 'Kin tutmak — birine karsi duyguyu icte yasatmak', ornek: 'Yillar once yasanan bir olay aklina geldiginde hala ayni aciyi ya da ofkeyi hissediyorsun.' },
-    { id: 'muhalefet', soru: 'Kurallara ve otoriteye uymakta zorlanirim', tanim: 'Ilahi ve seri emirlere uymaktan icten kacinmak', ornek: 'Bir kural ya da emir mantikli gelse bile, sirf biri soyledi diye ona uymakta icsel bir direnc hissediyorsun.' },
+  { id: 'heva', ad: 'Hevâ Cephesi', ad_ar: '\u062C\u0628\u0647\u0629 \u0627\u0644\u0647\u0648\u0649', aciklama: 'Nefsin tutkularının yönettiği cephe', askerler: [
+    { id: 'hased', soru: 'Birinin başarısı karşısında içimde bir sıkışma hissederim', tanim: 'Başkasındaki nimetin gitmesini ya da ona ulaşamamasını istemek', ornek: 'Bir arkadaşın terfi aldığında sevinmek istiyorsun ama bir köşede "neden o, ben değil?" sorusu dolaşıyor.' },
+    { id: 'tecebbur', soru: 'Haksızlık etme eğilimim var', tanim: 'Zalim olmak; gücü haksız yere kullanmak', ornek: 'Elinde fırsat ya da otorite olduğunda, bunu kendi çıkarın için kullandığın olmuştur.' },
+    { id: 'ucub', soru: 'Başarılarımın kendi çabamdan kaynaklandığını düşünürüm', tanim: 'Başarıyı Hakk\u2019ın lutfundan değil kendinden bilmek', ornek: 'Bir şeyi başardığında "Allah nasip etti" demek yerine "ben yaptım" hissi öne geçiyor.' },
+    { id: 'tekebbur', soru: 'Kendimi başkasından üstün görüyorum', tanim: 'Büyüklük ve iyilik iddiasıyla başkalarını küçültmek', ornek: 'Bazı insanlarla konuşurken onları içten içe yetersiz ya da sıradan bulduğun oluyor.' },
+    { id: 'gill', soru: 'İçim dışıma uymaz', tanim: 'Dışarıda farklı görünüp içeride başka hissetmek', ornek: 'Güler yüz gösterdiğinde de içinde o kişiye karşı soğukluk ya da kırgınlık taşıdığın oluyor.' },
+    { id: 'mekr', soru: 'Amacıma ulaşmak için hile yaparım', tanim: 'Hile etmek; dolaylı yollarla istediğini elde etmek', ornek: 'Doğrudan sormak yerine dolaylı yollarla ya da oyunlarla istediğini elde etmeye çalıştığın olmuştur.' },
+    { id: 'vesvese', soru: 'Zihnim karanlık ve şüpheli düşüncelerle dolar', tanim: 'Gönlünde yerleşen gizli karanlık kelâm', ornek: 'Zihnin bazen seni sürüklediği düşüncelerden rahatsız oluyorsun ama onları durduramıyorsun.' },
+    { id: 'gadr', soru: 'Verdiğim sözü tutmam', tanim: 'Hıyanet edip doğruluğunu yitirmek', ornek: 'Verdiğin sözü ya da taahhüdü şartlar değişince kolayca geçersiz saydığın olmuştur.' },
+    { id: 'hikd', soru: 'Kin beslerim', tanim: 'Kin tutmak; birine karşı duyguyu içte yaşatmak', ornek: 'Yıllar önce yaşanan bir olay aklına geldiğinde hâlâ aynı acıyı ya da öfkeyi hissediyorsun.' },
+    { id: 'muhalefet', soru: 'Kurallara ve otoriteye uymakta zorlanırım', tanim: 'İlâhî ve şerî emirlere uymaktan içten kaçınmak', ornek: 'Bir kural ya da emir mantıklı gelse bile, sırf biri söyledi diye ona uymakta içsel bir direnç hissediyorsun.' },
   ]},
-  { id: 'nefs', ad: 'Nefs Cephesi', ad_ar: '\u062C\u0628\u0647\u0629 \u0627\u0644\u0646\u0641\u0633', aciklama: 'Nefsin zayifliklarindan beslenen cephe', askerler: [
-    { id: 'hirs', soru: 'Baskasindaki gibi ben de istiyorum diye arzulara kapilirim', tanim: 'Baskasinda gordugu nimete benzerini elde etmek icin arzuya dusmek', ornek: 'Birinin sahip oldugu bir seyi gorunce bende de olsaydi dusuncesi zihni mesgul etmeye basliyor.' },
-    { id: 'sehvet', soru: 'Nefsimin isteklerine kolayca boyun egerim', tanim: 'Nefsin muvafik olani talep etmesi — dizginlenemeyen arzu', ornek: 'Yapmamaya karar verdigin bir seyi, o an onune gelince yapiveriyorsun.' },
-    { id: 'suhh', soru: 'Sahip olduklarimi paylasmakta zorlanirim', tanim: 'Uzerinden ve baskasindan eli tutmak — asiri pintilik', ornek: 'Paylasman gereken bir seyi verirken icinde belirgin bir isteksizlik ya da pismanlik hissediyorsun.' },
-    { id: 'ragbet', soru: 'Iyilik yerine dunyevi seylere yonelirim', tanim: 'Hayra meyletmeyip baska seylere yonelmek', ornek: 'Degerli biliyorsun ama zamanin buyuk bolumu seni asil gelistirecek seyler icin degil baska seyler icin geciyor.' },
-    { id: 'zayig', soru: 'Batil ve anlamsiz seylere meyledigimi fark ederim', tanim: 'Batila meyledip egilmek — degersiz olana kayma', ornek: 'Zamaninin ya da enerjinin onemli bir kisminin gercekten anlam ifade etmeyen seylere gittigini goruyorsun.' },
-    { id: 'kasavet', soru: 'Gunahlarim beni etkilemez, vicdan azabi duymam', tanim: 'Kalbin katilasmassi — gunahtan elem duymamak', ornek: 'Yanlis bir sey yaptiginda icinde bir sizi yerine zaten herkes yapar hissi geliyor.' },
-    { id: 'buhl', soru: 'Vermem gereken yerde cimri davranirim', tanim: 'Seran ve muruvveten gerekli yerde mali harcamamak', ornek: 'Insan iliskilerinde ya da hayirda vermesi gereken yerde gerekce arayip erteledigin oluyor.' },
-    { id: 'emel', soru: 'Gercekci olmayan hayaller kurarak oyalanirim', tanim: 'Uzun arzu ve temenni — ahireti unutturan dunya hayalleri', ornek: 'Gelecek icin buyuk planlar kuruyorsun ama bugun yapman gerekenleri surekli yarina birakiyorsun.' },
-    { id: 'tama', soru: 'Supheli de olsa elde etmek icin cabalarim', tanim: 'Haram veya mekruha ihtimali olan seyi elde etmeye kast etmek', ornek: 'Bir seyin dogrulundangun tam emin olmassan da elde etmek icin gormezden geldigin olmustur.' },
-    { id: 'kesel', soru: 'Ibadet ve sorumlulukdlarimda tembellik yaparim', tanim: 'Sustluk — ibadet ve sorumlulukdlarda yorgunluk ve isteksizlik', ornek: 'Yapman gerektigini bildigin seyleri surekli erteliyorsun, baslamak icin bir turlu dogru an gelmiyor.' },
+  { id: 'nefs', ad: 'Nefs Cephesi', ad_ar: '\u062C\u0628\u0647\u0629 \u0627\u0644\u0646\u0641\u0633', aciklama: 'Nefsin zayıflıklarından beslenen cephe', askerler: [
+    { id: 'hirs', soru: 'Başkasındaki gibi ben de istiyorum diye arzulara kapılırım', tanim: 'Başkasında gördüğü nimete benzerini elde etmek için arzuya düşmek', ornek: 'Birinin sahip olduğu bir şeyi görünce "bende de olsaydı" düşüncesi zihni meşgul etmeye başlıyor.' },
+    { id: 'sehvet', soru: 'Nefsimin isteklerine kolayca boyun eğerim', tanim: 'Nefsin muvâfık olanı talep etmesi; dizginlenemeyen arzu', ornek: 'Yapmamaya karar verdiğin bir şeyi, o an önüne gelince yapıveriyorsun.' },
+    { id: 'suhh', soru: 'Sahip olduklarımı paylaşmakta zorlanırım', tanim: 'Kendinden ve başkasından eli tutmak; aşırı pintilik', ornek: 'Paylaşman gereken bir şeyi verirken içinde belirgin bir isteksizlik ya da pişmanlık hissediyorsun.' },
+    { id: 'ragbet', soru: 'İyilik yerine dünyevî şeylere yönelirim', tanim: 'Hayra meyletmeyip başka şeylere yönelmek', ornek: 'Değerli olduğunu biliyorsun ama zamanın büyük bölümü seni asıl geliştirecek şeyler için değil başka şeyler için geçiyor.' },
+    { id: 'zayig', soru: 'Bâtıl ve anlamsız şeylere meylettiğimi fark ederim', tanim: 'Bâtıla meyledip eğilmek; değersiz olana kayma', ornek: 'Zamanının ya da enerjinin önemli bir kısmının gerçekten anlam ifade etmeyen şeylere gittiğini görüyorsun.' },
+    { id: 'kasavet', soru: 'Günahlarım beni etkilemez, vicdan azabı duymam', tanim: 'Kalbin katılaşması; günahtan elem duymamak', ornek: 'Yanlış bir şey yaptığında içinde bir sızı yerine "zaten herkes yapar" hissi geliyor.' },
+    { id: 'buhl', soru: 'Vermem gereken yerde cimri davranırım', tanim: 'Şer\u2019an ve mürüvveten gerekli yerde mali harcamamak', ornek: 'İnsan ilişkilerinde ya da hayırda vermesi gereken yerde gerekçe arayıp ertelediğin oluyor.' },
+    { id: 'emel', soru: 'Gerçekçi olmayan hayaller kurarak oyalanırım', tanim: 'Uzun arzu ve temenni; ahireti unutturan dünya hayalleri', ornek: 'Gelecek için büyük planlar kuruyorsun ama bugün yapman gerekenleri sürekli yarına bırakıyorsun.' },
+    { id: 'tama', soru: 'Şüpheli de olsa elde etmek için çabalarım', tanim: 'Haram veya mekruh ihtimali olan şeyi elde etmeye kasdetmek', ornek: 'Bir şeyin doğruluğundan tam emin olmasan da elde etmek için görmezden geldiğin olmuştur.' },
+    { id: 'kesel', soru: 'İbadet ve sorumluluklarımda tembellik yaparım', tanim: 'Süstlük; ibadet ve sorumluluklarda yorgunluk ve isteksizlik', ornek: 'Yapman gerektiğini bildiğin şeyleri sürekli erteliyorsun, başlamak için bir türlü doğru an gelmiyor.' },
   ]},
-  { id: 'seytan', ad: 'Seytan Cephesi', ad_ar: '\u062C\u0628\u0647\u0629 \u0627\u0644\u0634\u064A\u0637\u0627\u0646', aciklama: 'Iman ve inanc savasinin cephesi', askerler: [
-    { id: 'zulum', soru: 'Haksizlik yaparim', tanim: 'Seyin mevziine uygun olmayan yere konulmasi', ornek: 'Guc ya da bilgi avantajini birinin aleyhine kullandigin, buna ragmen haksizlik etmedim dedigin olmustur.' },
-    { id: 'hiyanet', soru: 'Guvenilir degilimdir', tanim: 'Isinde hainlik edip dogru sozu saklayip soylememek', ornek: 'Biri sana bir seyi emanet ettiginde ya da guvendiginde beklentisini tam karsilamadigin olmustur.' },
-    { id: 'kufur', soru: 'Iman ve inanc konularinda ciddi supheler yasarim', tanim: 'Mumin olmak gerekirken mumin olmamak', ornek: 'Bazi anlarda temel inancharina dair icten bir suphe ya da sogukluk hissediyorsun.' },
-    { id: 'terk_ane', soru: 'Yardim etmem gereken yerde seyirci kalirim', tanim: 'Yerinde ve zamaninda yardim etmemek', ornek: 'Birisinin zor durumda oldugunu gordugunde yardim etme kapasiten olsa da gecip gittigin olmustur.' },
-    { id: 'bugz', soru: 'Dindar ve erdemli insanlara karsi icimde sogukluk var', tanim: 'Ulemayi ve salihleri sevmemek', ornek: 'Dini hassasiyetleri olan insanlar soz konusu olunca icinde aciklamsasi guc bir sogukluk ya da rahatsizlik beliriyor.' },
-    { id: 'nifak', soru: 'Sozlerim ve davranislarim birbiriyle celisir', tanim: 'Sozu isine ve icerisi disina muhalif olmak', ornek: 'Dogruluktan, durustlukten soz ederken davranislarinla bunu yansitmadigin olmustur.' },
-    { id: 'sekk', soru: 'Allahin gucune dair suphelerim olur', tanim: 'Hak Tealanin her seye gucunun yettigine dair suphe', ornek: 'Zor bir durumda Allah bunu duzeltebilir mi sorusu degil duzeltmeyecek hissi geliyor.' },
-    { id: 'hilaf_emr', soru: 'Ilahi emirlere uymakta direnc gosteririm', tanim: 'Hak Tealanin emrine ve emrettigine icten uymamak', ornek: 'Bir emri bildigin halde simdi degil deyip surekli erteledigin ya da gecerli saymaigin oluyor.' },
-    { id: 'tegaful', soru: 'Sunneti ve dini pratikleri onemsemem', tanim: 'Sunnetten gafil olmak — onu hayattan dislamak', ornek: 'Sunnetin onemli oldugunu biliyorsun ama pratikte hayatinda cok az yer kapliyor.' },
-    { id: 'bidat', soru: 'Dinde olmayan seyleri dine dahil ederim', tanim: 'Rasul ve Sahabe den sonra izinsiz dinde icat etmek', ornek: 'Dini konularda herkes boyle yapiyor ya da ben boyle hissediyorum gerekcresiyle kaynaklarda olmayan seyleri benimsedigin olmustur.' },
+  { id: 'seytan', ad: 'Şeytân Cephesi', ad_ar: '\u062C\u0628\u0647\u0629 \u0627\u0644\u0634\u064A\u0637\u0627\u0646', aciklama: 'İman ve inanç savaşının cephesi', askerler: [
+    { id: 'zulum', soru: 'Haksızlık yaparım', tanim: 'Bir şeyin uygun olmayan yere konulması', ornek: 'Güç ya da bilgi avantajını birinin aleyhine kullandığın, buna rağmen "haksızlık etmedim" dediğin olmuştur.' },
+    { id: 'hiyanet', soru: 'Güvenilir değilimdir', tanim: 'İşinde hainlik edip doğru sözü saklayıp söylememek', ornek: 'Biri sana bir şeyi emanet ettiğinde ya da güvendiğinde beklentisini tam karşılamadığın olmuştur.' },
+    { id: 'kufur', soru: 'İman ve inanç konularında ciddi şüpheler yaşarım', tanim: 'Mü\u2019min olmak gerekirken mü\u2019min olmamak', ornek: 'Bazı anlarda temel inançlarına dair içten bir şüphe ya da soğukluk hissediyorsun.' },
+    { id: 'terk_avn', soru: 'Yardım etmem gereken yerde seyirci kalırım', tanim: 'Yerinde ve zamanında yardım etmemek', ornek: 'Birisinin zor durumda olduğunu gördüğünde yardım etme kapasiten olsa da geçip gittiğin olmuştur.' },
+    { id: 'bugz', soru: 'Dindar ve erdemli insanlara karşı içimde soğukluk var', tanim: 'Ulemâyı ve salihleri sevmemek', ornek: 'Dinî hassasiyetleri olan insanlar söz konusu olunca içinde açıklaması güç bir soğukluk ya da rahatsızlık beliriyor.' },
+    { id: 'nifak', soru: 'Sözlerim ve davranışlarım birbiriyle çelişir', tanim: 'Sözün işine, içinin dışına muhalif olmak', ornek: 'Doğruluktan, dürüstlükten söz ederken davranışlarınla bunu yansıtmadığın olmuştur.' },
+    { id: 'sekk', soru: 'Allah\u2019ın gücüne dair şüphelerim olur', tanim: 'Hak Teâlâ\u2019nın her şeye gücünün yettiğine dair şüphe', ornek: 'Zor bir durumda "Allah bunu düzeltebilir mi?" değil "düzeltmeyecek" hissi geliyor.' },
+    { id: 'hilaf_emr', soru: 'İlâhî emirlere uymakta direnç gösteririm', tanim: 'Hak Teâlâ\u2019nın emrine ve emrettiğine içten uymamak', ornek: 'Bir emri bildiğin halde "şimdi değil" deyip sürekli ertelediğin ya da geçerli saymadığın oluyor.' },
+    { id: 'tegaful', soru: 'Sünneti ve dinî pratikleri önemsemem', tanim: 'Sünnetten gafil olmak; onu hayattan dışlamak', ornek: 'Sünnetin önemli olduğunu biliyorsun ama pratikte hayatında çok az yer kaplıyor.' },
+    { id: 'bidat', soru: 'Dinde olmayan şeyleri dine dahil ederim', tanim: 'Resul ve Sahâbe\u2019den sonra izinsiz dinde icat etmek', ornek: 'Dinî konularda "herkes böyle yapıyor" ya da "ben böyle hissediyorum" gerekçesiyle kaynaklarda olmayan şeyleri benimsediğin olmuştur.' },
   ]},
 ]
 
@@ -203,7 +203,7 @@ export default function KarakterAnaliziPage() {
                 <polygon points="250,120 310,140 330,210 310,280 250,300 190,280 170,210 190,140" />
               </g>
 
-              {/* Attack lines — dashed animated */}
+              {/* Attack lines; dashed animated */}
               <line x1="250" y1="60" x2="250" y2="155" stroke="#D4A843" strokeWidth="1" strokeDasharray="4 4" opacity="0.25" className="karakter-dash" />
               <line x1="440" y1="225" x2="325" y2="225" stroke="#78A0C8" strokeWidth="1" strokeDasharray="4 4" opacity="0.25" className="karakter-dash" />
               <line x1="60" y1="225" x2="175" y2="225" stroke="#C47878" strokeWidth="1" strokeDasharray="4 4" opacity="0.25" className="karakter-dash" />
@@ -228,19 +228,19 @@ export default function KarakterAnaliziPage() {
               <circle cx="250" cy="295" r="5" fill="#A07BC8" opacity="0.6" className="karakter-glow" />
 
               {/* Directional labels */}
-              {/* Dunya — top */}
+              {/* Dunya; top */}
               <text x="250" y="40" textAnchor="middle" fill="#D4A843" fontFamily={cinzel.style.fontFamily} fontSize="9" letterSpacing="2" opacity="0.7">ONDEN</text>
               <text x="250" y="55" textAnchor="middle" fill="#D4A843" fontFamily={cinzel.style.fontFamily} fontSize="13" opacity="0.9">Dunya</text>
 
-              {/* Heva — right */}
+              {/* Heva; right */}
               <text x="450" y="220" textAnchor="middle" fill="#78A0C8" fontFamily={cinzel.style.fontFamily} fontSize="9" letterSpacing="2" opacity="0.7">SAGDAN</text>
               <text x="450" y="235" textAnchor="middle" fill="#78A0C8" fontFamily={cinzel.style.fontFamily} fontSize="13" opacity="0.9">Heva</text>
 
-              {/* Nefs — left */}
+              {/* Nefs; left */}
               <text x="50" y="220" textAnchor="middle" fill="#C47878" fontFamily={cinzel.style.fontFamily} fontSize="9" letterSpacing="2" opacity="0.7">SOLDAN</text>
               <text x="50" y="235" textAnchor="middle" fill="#C47878" fontFamily={cinzel.style.fontFamily} fontSize="13" opacity="0.9">Nefs</text>
 
-              {/* Seytan — bottom */}
+              {/* Seytan; bottom */}
               <text x="250" y="405" textAnchor="middle" fill="#A07BC8" fontFamily={cinzel.style.fontFamily} fontSize="9" letterSpacing="2" opacity="0.7">ENSEDEN</text>
               <text x="250" y="420" textAnchor="middle" fill="#A07BC8" fontFamily={cinzel.style.fontFamily} fontSize="13" opacity="0.9">Seytan</text>
             </svg>

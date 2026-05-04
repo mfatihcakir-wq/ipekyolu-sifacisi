@@ -3,7 +3,6 @@ import localFont from "next/font/local";
 import { Cormorant_Garamond, EB_Garamond, Roboto } from 'next/font/google';
 import { NextIntlClientProvider } from 'next-intl';
 import { getMessages } from 'next-intl/server';
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { Analytics } from '@vercel/analytics/react';
 import "./globals.css";
 
@@ -50,16 +49,17 @@ export const viewport = {
 }
 
 export const metadata: Metadata = {
+  metadataBase: new URL('https://www.ipekyolusifacisi.com'),
   title: {
-    default: "İpek Yolu Şifacısı — Klasik İslam Tıbbı Danışmanlığı",
+    default: "İpek Yolu Şifacısı; Klasik İslam Tıbbı Danışmanlığı",
     template: "%s · İpek Yolu Şifacısı"
   },
-  description: "Bin yıllık İslam ve Osmanlı tıbbının birikimi ile hazırlanmış, sizin mizacınıza özel sağlık danışmanlığı. el-Hâvî, el-Kânûn, Tahbîzü'l-Mathûn — 38 klasik eserden 46.000+ kayıt.",
+  description: "Bin yıllık İslam ve Osmanlı tıbbının birikimi ile hazırlanmış, sizin mizacınıza özel sağlık danışmanlığı. el-Hâvî, el-Kânûn, Tahbîzü'l-Mathûn; 98 klasik kaynaktan 54.000+ kayıt.",
   keywords: ["İslam tıbbı", "mizaç analizi", "klasik tıp", "bitkisel tedavi", "danışmanlık", "İbn Sînâ", "el-Kânûn"],
   openGraph: {
     title: "İpek Yolu Şifacısı",
     description: "Vücudunuzun dilini anlıyoruz. Bin yıllık İslam tıbbı geleneğiyle hazırlanmış, size özel sağlık danışmanlığı.",
-    url: "https://ipekyolu-sifacisi.vercel.app",
+    url: "https://www.ipekyolusifacisi.com",
     siteName: "İpek Yolu Şifacısı",
     locale: "tr_TR",
     type: "website",

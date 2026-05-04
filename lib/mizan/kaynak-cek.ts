@@ -106,14 +106,14 @@ export async function klasikKaynakCek(talep: TalepVerisi): Promise<string> {
   if (sabitTumu.length > 0) {
     context += '=== SABİT BAĞLAM ===\n\n'
     for (const k of sabitTumu) {
-      context += `📖 ${k.kitap_adi} — ${k.bolum}\n${(k.icerik_tr || '').slice(0, 800)}\n\n`
+      context += `📖 ${k.kitap_adi}; ${k.bolum}\n${(k.icerik_tr || '').slice(0, 800)}\n\n`
     }
   }
 
   if (ilgiliKayitlar.length > 0) {
     context += '=== ŞİKAYETLE İLGİLİ KAYITLAR ===\n\n'
     for (const k of ilgiliKayitlar.slice(0, 15)) {
-      context += `📖 ${k.kitap_adi} — ${k.bolum}\n${(k.icerik_tr || '').slice(0, 600)}\n\n`
+      context += `📖 ${k.kitap_adi}; ${k.bolum}\n${(k.icerik_tr || '').slice(0, 600)}\n\n`
     }
   }
 

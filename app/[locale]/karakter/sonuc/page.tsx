@@ -38,7 +38,7 @@ export default function KarakterSonucPage() {
           <div style={{ fontSize: 48, marginBottom: 16 }}>{'\u26A0\uFE0F'}</div>
           <h1 style={{ fontFamily: cinzel.style.fontFamily, fontSize: 22, color: C.primary, marginBottom: 12 }}>{"Lutfen Bir Uzmana Basvurun"}</h1>
           <p style={{ fontSize: 15, color: C.secondary, lineHeight: 1.8, marginBottom: 24 }}>{s.kriz_mesaji || 'Paylastiginiz bilgiler profesyonel destek gerektiriyor.'}</p>
-          <a href="https://wa.me/905331687226" target="_blank" style={{ display: 'inline-flex', alignItems: 'center', gap: 8, background: '#25D366', color: 'white', borderRadius: 10, padding: '14px 28px', fontSize: 14, fontWeight: 600, textDecoration: 'none' }}>{"WhatsApp ile Ulasin"}</a>
+          <a href="https://wa.me/905331687226" target="_blank" rel="noopener noreferrer" style={{ display: 'inline-flex', alignItems: 'center', gap: 8, background: '#25D366', color: 'white', borderRadius: 10, padding: '14px 28px', fontSize: 14, fontWeight: 600, textDecoration: 'none' }}>{"WhatsApp ile Ulasin"}</a>
         </div>
       </div>
       <Footer />
@@ -118,7 +118,7 @@ export default function KarakterSonucPage() {
           <div style={{ background: C.surface, borderRadius: 14, border: `1px solid ${C.border}`, padding: '24px 28px', marginBottom: 16 }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 14 }}>
               <span style={{ fontSize: 18 }}>{'\u2694\uFE0F'}</span>
-              <span style={{ fontFamily: cinzel.style.fontFamily, fontSize: 14, color: C.primary }}>{"Baskin Cephe \u2014 "}{CY[bc] || ''}{"den Gelen Kusatma"}</span>
+              <span style={{ fontFamily: cinzel.style.fontFamily, fontSize: 14, color: C.primary }}>{"Baskin Cephe, "}{CY[bc] || ''}{"den Gelen Kusatma"}</span>
             </div>
             <p style={{ fontSize: 15, color: C.dark, lineHeight: 1.85 }}>{akd && oz.akademik ? oz.akademik : oz.sade}</p>
             {oz.kaynak && <div style={{ fontSize: 11, color: C.gold, marginTop: 10 }}>{oz.kaynak}</div>}
@@ -129,13 +129,13 @@ export default function KarakterSonucPage() {
         {(sb.badi || sb.badi_sebep || sb.muid || sb.muid_sebepler) && (
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12, marginBottom: 16 }}>
             <div style={{ background: C.white, borderRadius: 12, border: `1px solid ${C.border}`, padding: '18px 20px' }}>
-              <div style={{ fontSize: 10, color: '#C62828', fontWeight: 600, letterSpacing: 1, marginBottom: 8 }}>{"BADI SEBEP \u2014 YAKIN"}</div>
+              <div style={{ fontSize: 10, color: '#C62828', fontWeight: 600, letterSpacing: 1, marginBottom: 8 }}>{"BADI SEBEP, YAKIN"}</div>
               <p style={{ fontSize: 13, color: C.dark, lineHeight: 1.7 }}>
                 {akd && (sb.badi?.akademik) ? sb.badi.akademik : (sb.badi?.sade || sb.badi?.baslik || sb.badi_sebep || '')}
               </p>
             </div>
             <div style={{ background: C.white, borderRadius: 12, border: `1px solid ${C.border}`, padding: '18px 20px' }}>
-              <div style={{ fontSize: 10, color: '#1565C0', fontWeight: 600, letterSpacing: 1, marginBottom: 8 }}>{"MUID SEBEPLER \u2014 UZAK"}</div>
+              <div style={{ fontSize: 10, color: '#1565C0', fontWeight: 600, letterSpacing: 1, marginBottom: 8 }}>{"MUID SEBEPLER, UZAK"}</div>
               {sb.muid?.sade ? (
                 <p style={{ fontSize: 13, color: C.dark, lineHeight: 1.7 }}>{akd && sb.muid.akademik ? sb.muid.akademik : sb.muid.sade}</p>
               ) : (
@@ -222,7 +222,7 @@ export default function KarakterSonucPage() {
                 <div style={{ background: '#F0FDF4', borderRadius: 8, padding: '12px' }}>
                   <div style={{ fontSize: 10, color: '#1B5E20', fontWeight: 600, marginBottom: 6 }}>{"ONERILEN"}</div>
                   {rc.beslenme.onerililer.map((g: { gida: string, neden?: string }, i: number) => (
-                    <div key={i} style={{ fontSize: 12, color: C.dark, padding: '2px 0' }}>{'\u2713'} {g.gida}{g.neden ? ` \u2014 ${g.neden}` : ''}</div>
+                    <div key={i} style={{ fontSize: 12, color: C.dark, padding: '2px 0' }}>{'\u2713'} {g.gida}{g.neden ? `, ${g.neden}` : ''}</div>
                   ))}
                 </div>
               )}
@@ -230,7 +230,7 @@ export default function KarakterSonucPage() {
                 <div style={{ background: '#FFF3E0', borderRadius: 8, padding: '12px' }}>
                   <div style={{ fontSize: 10, color: '#E65100', fontWeight: 600, marginBottom: 6 }}>{"KACINILACAK"}</div>
                   {rc.beslenme.kacinilacaklar.map((g: { gida: string, neden?: string }, i: number) => (
-                    <div key={i} style={{ fontSize: 12, color: C.dark, padding: '2px 0' }}>{'\u2717'} {g.gida}{g.neden ? ` \u2014 ${g.neden}` : ''}</div>
+                    <div key={i} style={{ fontSize: 12, color: C.dark, padding: '2px 0' }}>{'\u2717'} {g.gida}{g.neden ? `, ${g.neden}` : ''}</div>
                   ))}
                 </div>
               )}
@@ -244,7 +244,7 @@ export default function KarakterSonucPage() {
             <div style={{ fontSize: 9, color: 'rgba(255,255,255,0.4)', letterSpacing: 2, marginBottom: 12 }}>{"HIKMET"}</div>
             {hk.metin_ar && <div style={{ fontFamily: cinzel.style.fontFamily, fontSize: 22, color: C.gold, direction: 'rtl' as const, lineHeight: 1.9, marginBottom: 10 }}>{hk.metin_ar}</div>}
             {(hk.metin_tr || hk.metin) && <div style={{ fontFamily: cinzel.style.fontFamily, fontSize: 16, color: 'rgba(255,255,255,0.7)', fontStyle: 'italic', marginBottom: 8 }}>{hk.metin_tr || hk.metin}</div>}
-            {hk.kaynak && <div style={{ fontSize: 10, color: 'rgba(255,255,255,0.3)' }}>{'\u2014'} {hk.kaynak}</div>}
+            {hk.kaynak && <div style={{ fontSize: 10, color: 'rgba(255,255,255,0.3)' }}>{','} {hk.kaynak}</div>}
           </div>
         )}
 
@@ -264,7 +264,7 @@ export default function KarakterSonucPage() {
           <button onClick={() => window.print()} style={{ padding: '14px 10px', border: `1.5px solid ${C.border}`, borderRadius: 10, background: C.white, color: C.secondary, fontSize: 12, fontWeight: 600, cursor: 'pointer', fontFamily: cinzel.style.fontFamily }}>
             {"PDF Indir"}
           </button>
-          <a href="https://wa.me/905331687226?text=Karakter%20analizi%20sonucum%20hakkinda%20gorusmek%20istiyorum" target="_blank" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', background: C.primary, color: C.gold, borderRadius: 10, padding: '14px 10px', fontSize: 12, fontWeight: 600, textDecoration: 'none', fontFamily: cinzel.style.fontFamily }}>
+          <a href="https://wa.me/905331687226?text=Karakter%20analizi%20sonucum%20hakkinda%20gorusmek%20istiyorum" target="_blank" rel="noopener noreferrer" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', background: C.primary, color: C.gold, borderRadius: 10, padding: '14px 10px', fontSize: 12, fontWeight: 600, textDecoration: 'none', fontFamily: cinzel.style.fontFamily }}>
             {"WhatsApp"}
           </a>
           <button onClick={() => router.push('/karakter')} style={{ padding: '14px 10px', border: `1.5px solid ${C.gold}`, borderRadius: 10, background: C.white, color: C.primary, fontSize: 12, fontWeight: 600, cursor: 'pointer', fontFamily: cinzel.style.fontFamily }}>

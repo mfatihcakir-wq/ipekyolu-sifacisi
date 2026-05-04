@@ -1,6 +1,5 @@
 'use client'
 import { useState } from 'react'
-import { useRouter } from 'next/navigation'
 import { Cormorant_Garamond as Cinzel, EB_Garamond } from 'next/font/google'
 import Header from '../components/Header'
 import Footer from '../components/Footer'
@@ -13,18 +12,16 @@ const C = { primary: '#1C3A26', gold: '#B8860B', cream: '#FAF6EF', secondary: '#
 const SORULAR = [
   { s: 'Bu analiz tıbbi teşhis midir?', c: 'Hayır. Bu analiz klasik İslam tıbbı geleneğine dayanan bir danışmanlık hizmetidir. Modern tıbbın tanı ve tedavilerinin yerini tutmaz. Ciddi sağlık sorunlarında mutlaka uzman hekime başvurunuz.' },
   { s: 'Analiz ne kadar sürer?', c: 'Formunuz iletildikten sonra danışmanınız 24-48 saat içinde WhatsApp üzerinden size ulaşır. Acil durumlarda doğrudan WhatsApp hattımızdan iletişime geçebilirsiniz.' },
-  { s: 'Hangi klasik kaynaklardan yararlanıyorsunuz?', c: '38 klasik İslam ve Osmanlı tıbbı eserinden yararlanıyoruz. Başlıcaları: el-Hâvî fi\u2019t-Tıb (er-Râzî), el-Şâmil (İbn Nefîs), Tahbîzü\u2019l-Mathûn (Tokadi Mustafa Efendi) ve el-Kânûn fi\u2019t-Tıb (İbn Sînâ). Tamamı dijitalleştirilmiş ve yapılandırılmış formatta analiz motoruna entegre edilmiştir.' },
+  { s: 'Hangi klasik kaynaklardan yararlanıyorsunuz?', c: '98 klasik İslam ve Osmanlı tıbbı eserinden yararlanıyoruz. Başlıcaları: el-Hâvî fi\u2019t-Tıb (er-Râzî), el-Şâmil (İbn Nefîs), Tahbîzü\u2019l-Mathûn (Tokatlı Mustafa Efendi) ve el-Kânûn fi\u2019t-Tıb (İbn Sînâ). Tamamı dijitalleştirilmiş ve yapılandırılmış formatta analiz motoruna entegre edilmiştir.' },
   { s: 'Analiz sonuçları kişiye özel midir?', c: 'Evet. Her analiz; nabız gözlemi (9 sıfat), dil ve yüz muayenesi, idrar ve dışkı gözlemi, laboratuvar değerleri ve fıtrî mizaç sorularına göre ayrı ayrı değerlendirilir. Hiçbir analiz bir diğerinin kopyası değildir.' },
   { s: 'Platform ücretli mi?', c: 'Hayır. Platform şu an ücretsizdir. Analiz formunu doldurabilir, bitki atlasına ve danışmanlık içeriklerine ücretsiz erişebilirsiniz.' },
   { s: 'Danışman kimdir?', c: 'Danışmanınız M. Fatih Çakır; Kocaeli Üniversitesi Tıp Tarihi yüksek lisansı ve FSM Vakıf Üniversitesi İslam Bilim Tarihi doktora programı öğrencisidir. Osmanlı Türkçesi ve Arapça bilgisiyle birincil kaynaklara doğrudan erişen bir araştırmacıdır.' },
   { s: 'Verilerim güvende mi?', c: 'Evet. Tüm sağlık verileriniz 6698 sayılı KVKK kapsamında korunmaktadır. Bilgileriniz üçüncü taraflarla paylaşılmaz, reklam amacıyla kullanılmaz. Detaylar için KVKK Aydınlatma Metnimizi inceleyebilirsiniz.' },
-  { s: 'Sistem mi karar veriyor?', c: 'Hayır. Dijital sistemimiz 38 klasik eserden ilgili bölümleri bulur ve eşleştirir; ancak nihai değerlendirme ve protokol kararı her zaman danışman tarafından verilir. Sistem araçtır, karar insanındır.' },
+  { s: 'Sistem mi karar veriyor?', c: 'Hayır. Dijital sistemimiz 98 klasik kaynaktan ilgili bölümleri bulur ve eşleştirir; ancak nihai değerlendirme ve protokol kararı her zaman danışman tarafından verilir. Sistem araçtır, karar insanındır.' },
   { s: 'Üye olmadan form doldurabilir miyim?', c: 'Evet. Analiz formunu üye olmadan doldurabilirsiniz. Formunuz danışmana iletilir. Detaylı analiz ve sürekli takip için üyelik gereklidir.' },
 ]
 
 export default function SSSPage() {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-const router = useRouter()
   const [acik, setAcik] = useState<number | null>(null)
 
   return (
@@ -54,7 +51,7 @@ const router = useRouter()
 
         <div style={{ marginTop: 32, textAlign: 'center' as const }}>
           <p style={{ fontSize: 13, color: '#999', marginBottom: 12 }}>{"Sorunuz burada yok mu?"}</p>
-          <a href="https://wa.me/905331687226" target="_blank" style={{ display: 'inline-block', background: '#25D366', color: 'white', borderRadius: 10, padding: '12px 24px', fontSize: 13, fontWeight: 600, textDecoration: 'none', fontFamily: cinzel.style.fontFamily, letterSpacing: 1 }}>
+          <a href="https://wa.me/905331687226" target="_blank" rel="noopener noreferrer" style={{ display: 'inline-block', background: '#25D366', color: 'white', borderRadius: 10, padding: '12px 24px', fontSize: 13, fontWeight: 600, textDecoration: 'none', fontFamily: cinzel.style.fontFamily, letterSpacing: 1 }}>
             {"WhatsApp ile Sorun"}
           </a>
         </div>

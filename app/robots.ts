@@ -7,6 +7,6 @@ export default function robots(): MetadataRoute.Robots {
       allow: '/',
       disallow: ['/dashboard', '/dashboard/', '/api/'],
     },
-    sitemap: 'https://ipekyolu-sifacisi.vercel.app/sitemap.xml',
+    sitemap: 'https://www.ipekyolusifacisi.com/sitemap.xml',
   }
 }

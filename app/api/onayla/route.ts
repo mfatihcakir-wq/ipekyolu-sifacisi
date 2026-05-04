@@ -38,7 +38,7 @@ export async function POST(req: NextRequest) {
         await resend.emails.send({
           from: `İpek Yolu Şifacısı <${FROM_EMAIL}>`,
           to: [hasta_email],
-          subject: 'Analiziniz Hazır — İpek Yolu Şifacısı',
+          subject: 'Analiziniz Hazır, İpek Yolu Şifacısı',
           html: `<div style="font-family:sans-serif;max-width:600px;margin:0 auto">
             <div style="background:#1C3A26;padding:24px;text-align:center">
               <h1 style="color:#B8860B;margin:0;font-size:20px;letter-spacing:2px">İPEK YOLU ŞİFACISI</h1>
@@ -53,7 +53,7 @@ export async function POST(req: NextRequest) {
                 ANALİZİMİ GÖRÜNTÜLE →
               </a>
               <p style="font-size:13px;color:#9B8060;margin-top:32px;font-style:italic">
-                İpek Yolu Şifacısı — Klasik İslam Tıbbı Danışmanlığı
+                İpek Yolu Şifacısı, Klasik İslam Tıbbı Danışmanlığı
               </p>
             </div>
           </div>`,

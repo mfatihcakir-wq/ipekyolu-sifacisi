@@ -24,7 +24,7 @@ export function ciltRaporuHtml(data: {
           <div style="font-size:13px;color:${dark};margin-bottom:6px;"><strong>Bilesenler:</strong> ${(u.bilesenler || []).join(', ')}</div>
           <div style="font-size:13px;color:${dark};margin-bottom:6px;"><strong>Hazirlenis:</strong> ${u.hazirlanis}</div>
           <div style="font-size:13px;color:${dark};margin-bottom:6px;"><strong>Uygulama:</strong> ${u.uygulama}</div>
-          ${u.sure ? `<div style="font-size:12px;color:#666;margin-top:4px;">Sure: ${u.sure}</div>` : ''}
+          ${u.sure ? `<div style="font-size:12px;color:#666;margin-top:4px;">Süre: ${u.sure}</div>` : ''}
           ${u.kaynak ? `<div style="font-size:11px;color:#999;margin-top:4px;font-style:italic;">Kaynak: ${u.kaynak}</div>` : ''}
         </td></tr>
       </table>
@@ -61,14 +61,14 @@ export function ciltRaporuHtml(data: {
       ${sonuc.beslenme.ilke ? `<div style="font-size:13px;color:${dark};margin-bottom:10px;font-style:italic;">${sonuc.beslenme.ilke}</div>` : ''}
       ${(sonuc.beslenme.onerililer || []).length > 0 ? `
         <div style="margin-bottom:8px;">
-          <div style="font-size:12px;font-weight:600;color:${primary};margin-bottom:4px;">Onerilen Gidalar:</div>
-          ${(sonuc.beslenme.onerililer || []).map((g: { gida: string; neden: string }) => `<div style="font-size:13px;color:${dark};padding:2px 0;">✓ <strong>${g.gida}</strong> — ${g.neden}</div>`).join('')}
+          <div style="font-size:12px;font-weight:600;color:${primary};margin-bottom:4px;">Önerilen Gidalar:</div>
+          ${(sonuc.beslenme.onerililer || []).map((g: { gida: string; neden: string }) => `<div style="font-size:13px;color:${dark};padding:2px 0;">✓ <strong>${g.gida}</strong>; ${g.neden}</div>`).join('')}
         </div>
       ` : ''}
       ${(sonuc.beslenme.kacinilacaklar || []).length > 0 ? `
         <div style="margin-bottom:8px;">
           <div style="font-size:12px;font-weight:600;color:#8B0000;margin-bottom:4px;">Kacinilacaklar:</div>
-          ${(sonuc.beslenme.kacinilacaklar || []).map((g: { gida: string; neden: string }) => `<div style="font-size:13px;color:${dark};padding:2px 0;">✗ <strong>${g.gida}</strong> — ${g.neden}</div>`).join('')}
+          ${(sonuc.beslenme.kacinilacaklar || []).map((g: { gida: string; neden: string }) => `<div style="font-size:13px;color:${dark};padding:2px 0;">✗ <strong>${g.gida}</strong>; ${g.neden}</div>`).join('')}
         </div>
       ` : ''}
       ${sonuc.beslenme.su_tavsiyesi ? `<div style="font-size:13px;color:${dark};margin-top:6px;">Su: ${sonuc.beslenme.su_tavsiyesi}</div>` : ''}
@@ -81,7 +81,7 @@ export function ciltRaporuHtml(data: {
         <tr><td style="padding:20px;text-align:center;">
           ${sonuc.hikmetli_soz.metin_ar ? `<div style="font-size:18px;color:${gold};margin-bottom:8px;direction:rtl;font-family:serif;">${sonuc.hikmetli_soz.metin_ar}</div>` : ''}
           <div style="font-size:14px;color:${cream};margin-bottom:6px;font-style:italic;">${sonuc.hikmetli_soz.metin}</div>
-          ${sonuc.hikmetli_soz.kaynak ? `<div style="font-size:11px;color:rgba(255,255,255,0.5);">— ${sonuc.hikmetli_soz.kaynak}</div>` : ''}
+          ${sonuc.hikmetli_soz.kaynak ? `<div style="font-size:11px;color:rgba(255,255,255,0.5);">, ${sonuc.hikmetli_soz.kaynak}</div>` : ''}
         </td></tr>
       </table>
     </td></tr>
@@ -115,7 +115,7 @@ export function ciltRaporuHtml(data: {
     ` : ''}
     ${sonuc.hilt_baglantisi ? `
     <div style="background:#FFF8E7;border-left:3px solid ${gold};padding:10px 14px;border-radius:0 6px 6px 0;font-size:13px;color:${dark};margin-bottom:16px;">
-      <strong>Mizac Baglantisi:</strong> ${sonuc.hilt_baglantisi}
+      <strong>Mizâc Baglantisi:</strong> ${sonuc.hilt_baglantisi}
     </div>
     ` : ''}
     ${sonuc.mizac_tipi ? `<div style="display:inline-block;background:${primary};color:${cream};font-size:11px;padding:4px 12px;border-radius:12px;margin-bottom:16px;">${sonuc.mizac_tipi}</div>` : ''}

@@ -136,7 +136,7 @@ export default function CiltRaporPage() {
         {/* BUTONLAR */}
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10, marginTop: 8 }}>
           <a href={`https://wa.me/905331687226?text=${encodeURIComponent('Merhaba, cilt analizim hakkinda bilgi almak istiyorum.')}`}
-            target="_blank"
+            target="_blank" rel="noopener noreferrer"
             style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6, background: '#25D366', color: 'white', borderRadius: 10, padding: 13, fontSize: 13, fontWeight: 600, textDecoration: 'none', fontFamily: cinzel.style.fontFamily }}>
             WhatsApp
           </a>

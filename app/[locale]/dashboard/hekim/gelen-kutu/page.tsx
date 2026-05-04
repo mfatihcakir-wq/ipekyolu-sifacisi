@@ -100,7 +100,7 @@ export default async function GelenKutuPage() {
                     )}
                   </td>
                   <td className="px-4 py-3 text-sm text-stone-700 max-w-md">
-                    <div className="line-clamp-2">{t.sikayetler || '—'}</div>
+                    <div className="line-clamp-2">{t.sikayetler || ','}</div>
                   </td>
                   <td className="px-4 py-3">
                     <span className={`inline-block px-2 py-1 rounded text-xs font-medium ${DURUM_RENKLERI[t.durum] ?? ''}`}>

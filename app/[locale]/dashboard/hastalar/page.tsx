@@ -168,7 +168,7 @@ export default function HastalarPage() {
                             style={{ fontSize: 10, padding: '4px 10px', background: C.primary, color: 'white', border: 'none', borderRadius: 6, cursor: 'pointer', fontWeight: 600 }}>
                             Analiz
                           </button>
-                          <a href="https://wa.me/905331687226" target="_blank"
+                          <a href="https://wa.me/905331687226" target="_blank" rel="noopener noreferrer"
                             style={{ fontSize: 10, padding: '4px 10px', background: 'transparent', color: '#25D366', border: '1px solid #25D366', borderRadius: 6, fontWeight: 600, textDecoration: 'none', display: 'inline-block' }}>
                             {"💬"}
                           </a>

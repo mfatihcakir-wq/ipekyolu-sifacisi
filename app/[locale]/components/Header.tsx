@@ -5,6 +5,8 @@ import { useRouter, usePathname } from 'next/navigation'
 import { Cormorant_Garamond as Cinzel } from 'next/font/google'
 import { createClient } from '@/lib/supabase'
 import Logo from '@/components/Logo'
+import Link from 'next/link'
+import { isAdminEmail } from '@/lib/admin'
 
 const cinzel = Cinzel({ display: 'swap', preload: false, subsets: ['latin', 'latin-ext'], weight: ['400', '500', '600'] })
 
@@ -14,8 +16,6 @@ const C = {
 }
 
 
-const ADMIN_EMAIL = 'm.fatih.cakir@gmail.com'
-
 const NAV_LINKS = [
   { href: '/#nasil-calisir', label: 'Nasıl Çalışır' },
   { href: '/bitkiler', label: 'Bitkiler' },
@@ -23,7 +23,7 @@ const NAV_LINKS = [
   { href: '/hakkimizda', label: 'Hakkımızda' },
 ]
 
-// Dil secici kaldirildi — sadece TR
+// Dil secici kaldirildi; sadece TR
 
 interface HeaderUser {
   email?: string
@@ -42,7 +42,7 @@ export default function Header() {
     supabase.auth.getUser().then(({ data }) => {
       const u = data.user as HeaderUser | null
       setUser(u)
-      if (u?.email === ADMIN_EMAIL) setIsAdmin(true)
+      if (isAdminEmail(u?.email)) setIsAdmin(true)
     })
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
@@ -66,16 +66,17 @@ export default function Header() {
         <div style={{ maxWidth: 1200, margin: '0 auto', padding: '0 20px', height: 64, display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
 
           {/* SOL: Logo */}
-          <a href="/" style={{ textDecoration: 'none', flexShrink: 0 }}>
+          <Link href="/" style={{ textDecoration: 'none', flexShrink: 0 }} aria-label="İpek Yolu Şifacısı ana sayfa">
             <Logo size={36} color="light" animated={true} />
-          </a>
+          </Link>
 
           {/* ORTA: Desktop Nav */}
           <nav className="header-desktop-nav" style={{ display: 'flex', gap: 4, alignItems: 'center' }}>
             {navLinks.map(link => (
-              <a
+              <Link
                 key={link.href}
                 href={link.href}
+                aria-current={isActive(link.href) ? "page" : undefined}
                 style={{
                   background: 'none',
                   border: 'none',
@@ -92,7 +93,7 @@ export default function Header() {
                 }}
               >
                 {link.label}
-              </a>
+              </Link>
             ))}
           </nav>
 
@@ -102,10 +103,10 @@ export default function Header() {
             {/* Auth Butonlari */}
             {!user ? (
               <div className="header-auth-btns" style={{ display: 'flex', gap: 6 }}>
-                <a href="/giris"
+                <Link href="/giris"
                   style={{ background: 'rgba(255,255,255,0.1)', border: '1px solid rgba(255,255,255,0.2)', color: 'white', borderRadius: 6, padding: '6px 14px', fontSize: 11, cursor: 'pointer', fontFamily: cinzel.style.fontFamily, letterSpacing: 1, textDecoration: 'none' }}>
                   {"Giriş"}
-                </a>
+                </Link>
               </div>
             ) : (
               <div style={{ position: 'relative', display: 'flex', alignItems: 'center', gap: 8 }}>
@@ -115,14 +116,14 @@ export default function Header() {
                 </button>
                 {profilAcik && (
                   <div style={{ position: 'absolute', top: 36, right: 0, background: 'white', borderRadius: 8, boxShadow: '0 4px 16px rgba(0,0,0,0.15)', overflow: 'hidden', minWidth: 160, zIndex: 200 }}>
-                    <a href="/profil" onClick={() => setProfilAcik(false)}
+                    <Link href="/profil" onClick={() => setProfilAcik(false)}
                       style={{ display: 'block', width: '100%', padding: '10px 16px', border: 'none', background: 'white', cursor: 'pointer', fontSize: 13, color: C.primary, textAlign: 'left' as const, textDecoration: 'none' }}>
                       {"Profilim"}
-                    </a>
-                    <a href="/hasta" onClick={() => setProfilAcik(false)}
+                    </Link>
+                    <Link href="/hasta" onClick={() => setProfilAcik(false)}
                       style={{ display: 'block', width: '100%', padding: '10px 16px', border: 'none', background: 'white', cursor: 'pointer', fontSize: 13, color: C.primary, textAlign: 'left' as const, textDecoration: 'none', borderTop: '1px solid #eee' }}>
                       {"Analizlerim"}
-                    </a>
+                    </Link>
                     <button onClick={cikisYap}
                       style={{ display: 'block', width: '100%', padding: '10px 16px', border: 'none', background: 'white', cursor: 'pointer', fontSize: 13, color: '#C62828', textAlign: 'left', borderTop: '1px solid #eee' }}>
                       {"Çıkış Yap"}
@@ -133,7 +134,7 @@ export default function Header() {
             )}
 
             {/* Hamburger (mobil) */}
-            <button onClick={() => setMenuAcik(!menuAcik)} className="header-hamburger"
+            <button onClick={() => setMenuAcik(!menuAcik)} className="header-hamburger" aria-label={menuAcik ? "Menüyü kapat" : "Menüyü aç"} aria-expanded={menuAcik}
               style={{ background: 'none', border: 'none', color: 'white', fontSize: 24, cursor: 'pointer', padding: 0, display: 'none', minWidth: 44, minHeight: 44, alignItems: 'center', justifyContent: 'center' }}>
               {menuAcik ? '\u2715' : '\u2630'}
             </button>
@@ -144,10 +145,11 @@ export default function Header() {
         {menuAcik && (
           <div style={{ background: C.primary, borderTop: '1px solid rgba(255,255,255,0.1)', padding: '16px', left: 0, right: 0, width: '100%', overflowX: 'hidden' as const, boxSizing: 'border-box' as const }}>
             {navLinks.map(link => (
-              <a key={link.href} href={link.href} onClick={() => setMenuAcik(false)}
+              <Link key={link.href} href={link.href} onClick={() => setMenuAcik(false)}
+                aria-current={isActive(link.href) ? "page" : undefined}
                 style={{ display: 'block', width: '100%', padding: '10px 0', border: 'none', background: 'none', color: isActive(link.href) ? C.gold : 'rgba(255,255,255,0.7)', fontSize: 13, cursor: 'pointer', textAlign: 'left' as const, fontFamily: cinzel.style.fontFamily, letterSpacing: 1, borderBottom: '1px solid rgba(255,255,255,0.05)', textDecoration: 'none' }}>
                 {link.label}
-              </a>
+              </Link>
             ))}
           </div>
         )}

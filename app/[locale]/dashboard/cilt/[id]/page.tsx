@@ -366,7 +366,7 @@ export default function DashboardCiltDetailPage() {
                     </div>
                     {sonuc.hikmetli_soz.kaynak && (
                       <div style={{ fontSize: 11, color: 'rgba(255,255,255,0.45)' }}>
-                        {"— "}{sonuc.hikmetli_soz.kaynak}
+                        {", "}{sonuc.hikmetli_soz.kaynak}
                       </div>
                     )}
                   </div>
@@ -477,7 +477,7 @@ export default function DashboardCiltDetailPage() {
                         {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
                         {(sonuc.beslenme.onerililer || []).map((g: any, i: number) => (
                           <div key={i} style={{ fontSize: 13, color: C.dark, padding: '3px 0' }}>
-                            {"\u2713 "}<strong>{g.gida}</strong>{" \u2014 "}{g.neden}
+                            {"\u2713 "}<strong>{g.gida}</strong>{", "}{g.neden}
                           </div>
                         ))}
                       </div>
@@ -488,7 +488,7 @@ export default function DashboardCiltDetailPage() {
                         {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
                         {(sonuc.beslenme.kacinilacaklar || []).map((g: any, i: number) => (
                           <div key={i} style={{ fontSize: 13, color: C.dark, padding: '3px 0' }}>
-                            {"\u2717 "}<strong>{g.gida}</strong>{" \u2014 "}{g.neden}
+                            {"\u2717 "}<strong>{g.gida}</strong>{", "}{g.neden}
                           </div>
                         ))}
                       </div>
