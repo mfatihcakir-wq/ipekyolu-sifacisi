@@ -66,9 +66,9 @@ export const KANONIK_ISIMLER = {
 
 // İletişim
 export const ILETISIM = {
-  whatsapp: '905331687226',
-  whatsappURL: 'https://wa.me/905331687226',
-  whatsappFormatlanmis: '+90 533 168 72 26',
+  whatsapp: '447418600856',
+  whatsappURL: 'https://wa.me/447418600856',
+  whatsappFormatlanmis: '+44 7418 600856',
   email: 'm.fatih.cakir@gmail.com',
   domain: 'https://www.ipekyolusifacisi.com',
   instagram: 'https://www.instagram.com/ipekyolusicfacisi',

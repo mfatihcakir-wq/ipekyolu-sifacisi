@@ -360,7 +360,7 @@ export default function ArsivPage() {
               )}
 
               {/* WA BUTONU */}
-              <a href="https://wa.me/905331687226" target="_blank" rel="noopener noreferrer"
+              <a href="https://wa.me/447418600856" target="_blank" rel="noopener noreferrer"
                 style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6, background: 'transparent', color: '#25D366', border: '1px solid #25D366', borderRadius: 10, padding: '12px', fontSize: 12, fontWeight: 600, textDecoration: 'none', fontFamily: cinzel.style.fontFamily }}>
                 {"💬 Kisisel Not Ekle"}
               </a>

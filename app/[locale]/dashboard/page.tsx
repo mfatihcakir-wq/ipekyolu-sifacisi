@@ -1323,7 +1323,7 @@ body { font-family: 'Plus Jakarta Sans', sans-serif; background: #f5f5f5; paddin
                       style={{ background: '#E5E5E5', color: '#999', border: 'none', borderRadius: 10, padding: 14, fontSize: 13, fontWeight: 600, cursor: 'not-allowed', fontFamily: cinzel.style.fontFamily, opacity: 0.6 }}>
                       {secili.durum === 'tamamlandi' ? 'Tamamlandi' : 'Onayla (devre disi)'}
                     </button>
-                    <a href="https://wa.me/905331687226"
+                    <a href="https://wa.me/447418600856"
                       target="_blank" rel="noopener noreferrer"
                       style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6, background: 'transparent', color: '#25D366', border: '1px solid #25D366', borderRadius: 10, padding: 14, fontSize: 12, fontWeight: 600, textDecoration: 'none', fontFamily: cinzel.style.fontFamily }}>
                       {"💬 Kisisel Not Ekle"}

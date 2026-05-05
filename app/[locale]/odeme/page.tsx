@@ -22,7 +22,7 @@ export default function OdemePage() {
         </p>
         <div className="flex flex-col sm:flex-row gap-3 justify-center pt-4">
           <a
-            href="https://wa.me/905331687226"
+            href="https://wa.me/447418600856"
             className="inline-flex items-center justify-center px-6 py-3 bg-emerald-800 text-white text-sm tracking-wide hover:bg-emerald-900 transition"
           >
             WhatsApp ile İletişim

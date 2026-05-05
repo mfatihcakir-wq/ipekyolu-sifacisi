@@ -397,7 +397,7 @@ export default function LandingClient() {
               ))}
             </div>
             <div style={{ display: 'flex', gap: 12 }}>
-              <a href="https://wa.me/905331687226" style={{ fontFamily: 'Cormorant Garamond,serif', fontSize: 10, fontWeight: 700, color: 'white', background: '#25D366', padding: '12px 24px', borderRadius: 9, letterSpacing: 1, textDecoration: 'none' }}>{"WhatsApp"}</a>
+              <a href="https://wa.me/447418600856" style={{ fontFamily: 'Cormorant Garamond,serif', fontSize: 10, fontWeight: 700, color: 'white', background: '#25D366', padding: '12px 24px', borderRadius: 9, letterSpacing: 1, textDecoration: 'none' }}>{"WhatsApp"}</a>
               <a href="/hakkimizda" style={{ fontFamily: 'Cormorant Garamond,serif', fontSize: 10, color: '#1C3A26', background: 'transparent', padding: '11px 20px', borderRadius: 9, border: '1.5px solid #1C3A26', letterSpacing: 1, textDecoration: 'none' }}>{"Hakkımızda"}</a>
             </div>
           </div>
