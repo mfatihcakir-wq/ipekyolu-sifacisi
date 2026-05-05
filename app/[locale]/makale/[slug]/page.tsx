@@ -1,6 +1,8 @@
 import { notFound } from 'next/navigation'
 import { createClient } from '@supabase/supabase-js'
 import type { Metadata } from 'next'
+import ReactMarkdown from 'react-markdown'
+import remarkGfm from 'remark-gfm'
 
 const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -47,14 +49,9 @@ export default async function MakaleDetay({ params }: { params: Promise<{ locale
     notFound()
   }
 
-  const icerikParagraflari = (makale.icerik || '')
-    .split('\n')
-    .filter((p: string) => p.trim().length > 0)
-
   return (
     <div style={{ minHeight: '100vh', background: '#1A2E1E' }}>
       <div style={{ maxWidth: 800, margin: '0 auto', padding: '80px 24px 120px' }}>
-        {/* Kategori */}
         <div style={{ marginBottom: 24 }}>
           <span style={{
             display: 'inline-block',
@@ -72,7 +69,6 @@ export default async function MakaleDetay({ params }: { params: Promise<{ locale
           </span>
         </div>
 
-        {/* Arapca Baslik */}
         {makale.baslik_ar && (
           <div style={{
             fontFamily: "'Amiri', serif",
@@ -87,7 +83,6 @@ export default async function MakaleDetay({ params }: { params: Promise<{ locale
           </div>
         )}
 
-        {/* Turkce Baslik */}
         <h1 style={{
           fontFamily: 'Cormorant Garamond, serif',
           fontSize: 36,
@@ -99,7 +94,6 @@ export default async function MakaleDetay({ params }: { params: Promise<{ locale
           {makale.baslik}
         </h1>
 
-        {/* Ayirici */}
         <div style={{
           height: 2,
           background: 'linear-gradient(90deg, #D4A843, transparent)',
@@ -107,70 +101,150 @@ export default async function MakaleDetay({ params }: { params: Promise<{ locale
           borderRadius: 1
         }} />
 
-        {/* Ozet */}
-        <blockquote style={{
-          borderLeft: '3px solid #D4A843',
-          paddingLeft: 24,
-          marginBottom: 48,
-          fontStyle: 'italic' as const,
-          fontSize: 18,
-          color: 'rgba(245,234,212,0.85)',
-          lineHeight: 1.8
-        }}>
-          {makale.ozet}
-        </blockquote>
+        {makale.ozet && (
+          <blockquote style={{
+            borderLeft: '3px solid #D4A843',
+            paddingLeft: 24,
+            marginBottom: 48,
+            fontStyle: 'italic' as const,
+            fontSize: 18,
+            color: 'rgba(245,234,212,0.85)',
+            lineHeight: 1.8
+          }}>
+            {makale.ozet}
+          </blockquote>
+        )}
 
-        {/* Icerik */}
-        <div style={{ marginBottom: 64 }}>
-          {icerikParagraflari.map((paragraf: string, i: number) => {
-            // Markdown baslik kontrolu
-            if (paragraf.startsWith('### ')) {
-              return (
-                <h3 key={i} style={{
+        <div className="makale-icerik" style={{ marginBottom: 64 }}>
+          <ReactMarkdown
+            remarkPlugins={[remarkGfm]}
+            components={{
+              h2: ({ children }) => (
+                <h2 style={{
                   fontFamily: 'Cormorant Garamond, serif',
-                  fontSize: 20,
-                  fontWeight: 600,
-                  color: '#D4A843',
-                  marginTop: 40,
-                  marginBottom: 16
-                }}>
-                  {paragraf.replace('### ', '')}
-                </h3>
-              )
-            }
-            if (paragraf.startsWith('## ')) {
-              return (
-                <h2 key={i} style={{
-                  fontFamily: 'Cormorant Garamond, serif',
-                  fontSize: 24,
+                  fontSize: 26,
                   fontWeight: 700,
                   color: '#D4A843',
                   marginTop: 48,
-                  marginBottom: 20
-                }}>
-                  {paragraf.replace('## ', '')}
-                </h2>
-              )
-            }
-            return (
-              <p key={i} style={{
-                fontSize: 17,
-                color: 'rgba(245,234,212,0.9)',
-                lineHeight: 1.9,
-                marginBottom: 20,
-                textAlign: 'justify' as const
-              }}>
-                {paragraf}
-              </p>
-            )
-          })}
+                  marginBottom: 20,
+                  lineHeight: 1.3
+                }}>{children}</h2>
+              ),
+              h3: ({ children }) => (
+                <h3 style={{
+                  fontFamily: 'Cormorant Garamond, serif',
+                  fontSize: 21,
+                  fontWeight: 600,
+                  color: '#D4A843',
+                  marginTop: 36,
+                  marginBottom: 14,
+                  lineHeight: 1.4
+                }}>{children}</h3>
+              ),
+              p: ({ children }) => (
+                <p style={{
+                  fontSize: 17,
+                  color: 'rgba(245,234,212,0.9)',
+                  lineHeight: 1.9,
+                  marginBottom: 18,
+                  textAlign: 'justify' as const
+                }}>{children}</p>
+              ),
+              strong: ({ children }) => (
+                <strong style={{ color: '#F5EAD4', fontWeight: 700 }}>{children}</strong>
+              ),
+              em: ({ children }) => (
+                <em style={{ color: '#E8D8B0' }}>{children}</em>
+              ),
+              ul: ({ children }) => (
+                <ul style={{
+                  marginBottom: 24,
+                  paddingLeft: 24,
+                  color: 'rgba(245,234,212,0.9)',
+                  lineHeight: 1.9
+                }}>{children}</ul>
+              ),
+              ol: ({ children }) => (
+                <ol style={{
+                  marginBottom: 24,
+                  paddingLeft: 24,
+                  color: 'rgba(245,234,212,0.9)',
+                  lineHeight: 1.9
+                }}>{children}</ol>
+              ),
+              li: ({ children }) => (
+                <li style={{ fontSize: 17, marginBottom: 8 }}>{children}</li>
+              ),
+              blockquote: ({ children }) => (
+                <blockquote style={{
+                  borderLeft: '3px solid #D4A843',
+                  paddingLeft: 20,
+                  margin: '24px 0',
+                  fontStyle: 'italic' as const,
+                  color: 'rgba(245,234,212,0.8)',
+                  fontSize: 17,
+                  lineHeight: 1.8
+                }}>{children}</blockquote>
+              ),
+              hr: () => (
+                <hr style={{
+                  border: 'none',
+                  borderTop: '1px solid rgba(212,168,67,0.3)',
+                  margin: '40px 0'
+                }} />
+              ),
+              table: ({ children }) => (
+                <div style={{ overflowX: 'auto', marginBottom: 24 }}>
+                  <table style={{
+                    width: '100%',
+                    borderCollapse: 'collapse' as const,
+                    fontSize: 15,
+                    color: 'rgba(245,234,212,0.9)'
+                  }}>{children}</table>
+                </div>
+              ),
+              th: ({ children }) => (
+                <th style={{
+                  padding: '12px 16px',
+                  textAlign: 'left' as const,
+                  borderBottom: '2px solid rgba(212,168,67,0.5)',
+                  color: '#D4A843',
+                  fontWeight: 700
+                }}>{children}</th>
+              ),
+              td: ({ children }) => (
+                <td style={{
+                  padding: '10px 16px',
+                  borderBottom: '1px solid rgba(212,168,67,0.15)',
+                  verticalAlign: 'top' as const
+                }}>{children}</td>
+              ),
+              code: ({ children }) => (
+                <code style={{
+                  background: 'rgba(212,168,67,0.1)',
+                  padding: '2px 6px',
+                  borderRadius: 3,
+                  fontSize: 15,
+                  color: '#D4A843'
+                }}>{children}</code>
+              ),
+              a: ({ href, children }) => (
+                <a href={href} style={{
+                  color: '#D4A843',
+                  textDecoration: 'underline'
+                }}>{children}</a>
+              ),
+            }}
+          >
+            {makale.icerik || ''}
+          </ReactMarkdown>
         </div>
 
-        {/* Kaynaklar */}
-        {makale.kaynaklar && makale.kaynaklar.length > 0 && (
+        {makale.kaynak_kodlar && Array.isArray(makale.kaynak_kodlar) && makale.kaynak_kodlar.length > 0 && (
           <div style={{
             borderTop: '1px solid rgba(212,168,67,0.3)',
-            paddingTop: 32
+            paddingTop: 32,
+            marginTop: 32
           }}>
             <h3 style={{
               fontFamily: 'Cormorant Garamond, serif',
@@ -179,30 +253,22 @@ export default async function MakaleDetay({ params }: { params: Promise<{ locale
               color: '#D4A843',
               marginBottom: 16
             }}>
-              {"Kaynaklar"}
+              {"Kaynak Kodları"}
             </h3>
-            <ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>
-              {makale.kaynaklar.map((kaynak: string, i: number) => (
-                <li key={i} style={{
-                  fontSize: 15,
-                  color: 'rgba(245,234,212,0.7)',
-                  paddingLeft: 20,
-                  position: 'relative' as const,
-                  marginBottom: 8,
-                  lineHeight: 1.6
+            <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8 }}>
+              {makale.kaynak_kodlar.map((kod: string, i: number) => (
+                <span key={i} style={{
+                  fontSize: 12,
+                  fontFamily: 'monospace',
+                  background: 'rgba(212,168,67,0.1)',
+                  color: '#D4A843',
+                  padding: '4px 10px',
+                  borderRadius: 4
                 }}>
-                  <span style={{
-                    position: 'absolute' as const,
-                    left: 0,
-                    top: 0,
-                    color: '#D4A843'
-                  }}>
-                    {"\u2022"}
-                  </span>
-                  {kaynak}
-                </li>
+                  {kod}
+                </span>
               ))}
-            </ul>
+            </div>
           </div>
         )}
       </div>

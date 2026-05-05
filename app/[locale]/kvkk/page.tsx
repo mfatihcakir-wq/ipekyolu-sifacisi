@@ -18,17 +18,16 @@ export default function KVKKPage() {
       <Header />
       <div style={{ maxWidth: 800, margin: '0 auto', padding: '48px 24px' }}>
         <h1 style={{ fontFamily: cinzel.style.fontFamily, fontSize: 28, color: C.primary, marginBottom: 8, fontWeight: 500 }}>{"KVKK Aydınlatma Metni"}</h1>
-        <p style={{ fontSize: 13, color: '#999', marginBottom: 32 }}>{"Son güncelleme: Nisan 2026"}</p>
+        <p style={{ fontSize: 13, color: '#999', marginBottom: 32 }}>{"Son güncelleme: Mayıs 2026"}</p>
 
         <div style={{ marginBottom: 28 }}>
           <h2 style={h2Style}>{"1. Veri Sorumlusunun Kimliği"}</h2>
-          <p style={pStyle}>{"6698 sayılı Kişisel Verilerin Korunması Kanunu (\u201CKVKK\u201D) md. 10 uyarınca, İpek Yolu Şifacısı platformu adına veri sorumlusu sıfatıyla hareket eden gerçek kişi aşağıda belirtilmiştir:"}</p>
+          <p style={pStyle}>{"6698 sayılı Kişisel Verilerin Korunması Kanunu (KVKK) md. 10 uyarınca, İpek Yolu Şifacısı platformu adına veri sorumlusu sıfatıyla hareket eden gerçek kişi aşağıda belirtilmiştir:"}</p>
           <ul style={ulStyle}>
             <li><strong>{"Ad-Soyad: "}</strong>{"Mehmet Fatih Çakır"}</li>
-            <li><strong>{"Başvuru Adresi: "}</strong>{"[BURAYI KULLANICI DOLDURACAK; faaliyet/tebligat adresi]"}</li>
             <li><strong>{"E-posta: "}</strong>{"m.fatih.cakir@gmail.com"}</li>
-            <li><strong>{"Telefon: "}</strong>{"+44 7418 600856"}</li>
-            <li><strong>{"VERBİS Kaydı: "}</strong>{"Veri Sorumluları Siciline kayıt başvuru süreci devam etmektedir. Başvuru tamamlandığında sicil numarası bu metinde ilan edilecektir."}</li>
+            <li><strong>{"WhatsApp: "}</strong>{"+44 7418 600856"}</li>
+            <li><strong>{"Tebligat Adresi: "}</strong>{"Yazılı başvuru için talep üzerine bildirilir."}</li>
           </ul>
         </div>
 
@@ -48,23 +47,18 @@ export default function KVKKPage() {
           <h2 style={h2Style}>{"3. İşleme Amacı ve Hukuki Dayanak"}</h2>
           <p style={pStyle}>{"Kişisel verileriniz şu amaçlarla, aşağıdaki hukuki sebeplere dayanılarak işlenir:"}</p>
           <ul style={ulStyle}>
-            <li>{"Klasik İslam tıbbı geleneğine dayalı bireysel danışmanlık sunmak "}<em>{"(açık rıza; md. 6/2)"}</em></li>
-            <li>{"Danışmanınızın kişiye özel bilgi rehberi hazırlaması "}<em>{"(sözleşmenin ifası; md. 5/2-c)"}</em></li>
+            <li>{"Klasik İslam tıbbı geleneğine dayalı bireysel danışmanlık sunmak "}<em>{"(açık rıza)"}</em></li>
+            <li>{"Danışmanınızın kişiye özel bilgi rehberi hazırlaması "}<em>{"(sözleşmenin ifası)"}</em></li>
             <li>{"WhatsApp üzerinden iletişim kurulması "}<em>{"(açık rıza)"}</em></li>
-            <li>{"Hizmet kalitesinin iyileştirilmesi ve analiz sisteminin geliştirilmesi "}<em>{"(meşru menfaat; md. 5/2-f)"}</em></li>
+            <li>{"Hizmet kalitesinin iyileştirilmesi "}<em>{"(meşru menfaat)"}</em></li>
           </ul>
-          <p style={pStyle}><strong>{"Bu platform tıbbi tanı, tedavi veya reçete hizmeti sunmaz."}</strong>{" Modern hekim konsültasyonunun yerini tutmaz. Paylaşılan bilgiler geleneksel/tarihî bir çerçevede sunulan genel bilgilendirmedir."}</p>
+          <p style={pStyle}><strong>{"Bu platform tıbbi tanı, tedavi veya reçete hizmeti sunmaz."}</strong>{" Modern hekim konsültasyonunun yerini tutmaz. Paylaşılan bilgiler geleneksel ve tarihî bir çerçevede sunulan genel bilgilendirmedir."}</p>
         </div>
 
         <div style={{ marginBottom: 28 }}>
-          <h2 style={h2Style}>{"4. Verilerin Aktarıldığı Taraflar"}</h2>
-          <p style={pStyle}>{"Kişisel verileriniz reklam amacıyla hiçbir üçüncü tarafla paylaşılmaz. Aktarım yalnızca teknik altyapı sağlayıcılarıyla, hizmetin ifası için zorunlu olduğu ölçüde yapılır:"}</p>
-          <ul style={ulStyle}>
-            <li><strong>{"Supabase Inc. "}</strong>{"(veritabanı, ABD)"}</li>
-            <li><strong>{"Vercel Inc. "}</strong>{"(barındırma, ABD)"}</li>
-            <li><strong>{"Anthropic PBC "}</strong>{"(analiz motoru, Claude yapay zeka; ABD). Anthropic, API üzerinden gönderilen verileri model eğitiminde kullanmaz. Detaylar için: "}<a href="https://www.anthropic.com/legal/privacy" target="_blank" rel="noopener noreferrer" style={{ color: C.primary, textDecoration: 'underline' }}>{"https://www.anthropic.com/legal/privacy"}</a></li>
-          </ul>
-          <p style={pStyle}>{"Yurt dışına aktarım, KVKK md. 9/6 çerçevesinde açık rızanıza dayanmaktadır."}</p>
+          <h2 style={h2Style}>{"4. Verilerin Aktarımı"}</h2>
+          <p style={pStyle}>{"Kişisel verileriniz reklam veya pazarlama amacıyla hiçbir üçüncü tarafla paylaşılmaz. Aktarım yalnızca hizmetin sunulması için zorunlu olduğu ölçüde, gizlilik yükümlülüğü altındaki teknik altyapı sağlayıcılarıyla yapılır."}</p>
+          <p style={pStyle}>{"Yurt dışına aktarım yapıldığı durumlarda KVKK md. 9 çerçevesinde açık rızanıza dayanılmaktadır. Detaylı bilgi için bizimle iletişime geçebilirsiniz."}</p>
         </div>
 
         <div style={{ marginBottom: 28 }}>
@@ -74,13 +68,13 @@ export default function KVKKPage() {
 
         <div style={{ marginBottom: 28 }}>
           <h2 style={h2Style}>{"6. Saklama Süresi"}</h2>
-          <p style={pStyle}>{"Sağlık verileriniz, hizmet ilişkisinin sona ermesinden itibaren 2 yıl süreyle saklanır. Talep etmeniz halinde verileriniz 30 gün içinde kalıcı olarak silinir, yok edilir veya anonim hâle getirilir."}</p>
+          <p style={pStyle}>{"Sağlık verileriniz, hizmet ilişkisinin sona ermesinden itibaren 2 yıl süreyle saklanır. Talep etmeniz halinde verileriniz 30 gün içinde silinir veya anonim hâle getirilir."}</p>
         </div>
 
         <div style={{ marginBottom: 28 }}>
           <h2 style={h2Style}>{"7. Haklarınız (KVKK md. 11)"}</h2>
-          <p style={pStyle}>{"Kişisel verileriniz hakkında şu haklara sahipsiniz: işlenip işlenmediğini öğrenme, işlenme amacını ve bunların amaca uygun kullanılıp kullanılmadığını öğrenme, yurt içinde ve yurt dışında aktarıldığı üçüncü kişileri öğrenme, eksik veya yanlış işlenmişse düzeltilmesini isteme, silinmesini veya yok edilmesini isteme, düzeltme/silme işlemlerinin verilerin aktarıldığı üçüncü kişilere bildirilmesini isteme, otomatik sistemler vasıtasıyla analiz edilmesi suretiyle aleyhinize bir sonuç çıkmasına itiraz etme ve zarara uğramanız hâlinde tazminat talep etme."}</p>
-          <p style={pStyle}>{"Başvurularınızı "}<strong>{"m.fatih.cakir@gmail.com"}</strong>{" adresine veya yukarıdaki posta adresine yazılı olarak iletebilirsiniz. Başvurunuz en geç 30 gün içinde yanıtlanır."}</p>
+          <p style={pStyle}>{"Kişisel verileriniz hakkında şu haklara sahipsiniz: işlenip işlenmediğini öğrenme, işlenme amacını ve bunların amaca uygun kullanılıp kullanılmadığını öğrenme, aktarıldığı üçüncü kişileri öğrenme, eksik veya yanlış işlenmişse düzeltilmesini isteme, silinmesini veya yok edilmesini isteme, düzeltme/silme işlemlerinin üçüncü kişilere bildirilmesini isteme, otomatik sistemler vasıtasıyla analiz edilmesi suretiyle aleyhinize bir sonuç çıkmasına itiraz etme ve zarara uğramanız hâlinde tazminat talep etme."}</p>
+          <p style={pStyle}>{"Başvurularınızı "}<strong>{"m.fatih.cakir@gmail.com"}</strong>{" adresine yazılı olarak iletebilirsiniz. Başvurunuz en geç 30 gün içinde yanıtlanır."}</p>
         </div>
 
         <div style={{ marginBottom: 28 }}>
