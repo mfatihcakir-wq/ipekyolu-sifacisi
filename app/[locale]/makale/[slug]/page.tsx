@@ -239,38 +239,6 @@ export default async function MakaleDetay({ params }: { params: Promise<{ locale
             {makale.icerik || ''}
           </ReactMarkdown>
         </div>
-
-        {makale.kaynak_kodlar && Array.isArray(makale.kaynak_kodlar) && makale.kaynak_kodlar.length > 0 && (
-          <div style={{
-            borderTop: '1px solid rgba(212,168,67,0.3)',
-            paddingTop: 32,
-            marginTop: 32
-          }}>
-            <h3 style={{
-              fontFamily: 'Cormorant Garamond, serif',
-              fontSize: 18,
-              fontWeight: 600,
-              color: '#D4A843',
-              marginBottom: 16
-            }}>
-              {"Kaynak Kodları"}
-            </h3>
-            <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8 }}>
-              {makale.kaynak_kodlar.map((kod: string, i: number) => (
-                <span key={i} style={{
-                  fontSize: 12,
-                  fontFamily: 'monospace',
-                  background: 'rgba(212,168,67,0.1)',
-                  color: '#D4A843',
-                  padding: '4px 10px',
-                  borderRadius: 4
-                }}>
-                  {kod}
-                </span>
-              ))}
-            </div>
-          </div>
-        )}
       </div>
     </div>
   )
