@@ -39,10 +39,16 @@ const PER_PAGE = 20
 
 const FREE_LIMIT = 6
 
-export default function BitkilerClient() {
-  const [bitkiler, setBitkiler] = useState<Bitki[]>([])
-  const [totalCount, setTotalCount] = useState(0)
-  const [loading, setLoading] = useState(true)
+interface BitkilerClientProps {
+  initialBitkiler: Bitki[]
+  initialCount: number
+}
+
+export default function BitkilerClient({ initialBitkiler, initialCount }: BitkilerClientProps) {
+  // Server'dan gelen initial veri ile basla; ek client fetch'e gerek yok
+  const [bitkiler] = useState<Bitki[]>(initialBitkiler)
+  const [totalCount] = useState(initialCount)
+  const loading = false
   const [arama, setArama] = useState('')
   const [mizacF, setMizacF] = useState('')
   const [nemF, setNemF] = useState('')
@@ -52,29 +58,15 @@ export default function BitkilerClient() {
   const [expandedId, setExpandedId] = useState<string | null>(null)
   const [kullanici, setKullanici] = useState<{ id: string } | null>(null)
 
+  // Sadece auth check (bitki verisi server'dan props ile geldi)
   useEffect(() => {
-    async function yukle() {
-      setLoading(true)
-      try {
-        const [p1, p2, countRes, authRes] = await Promise.all([
-          supabase.from('bitkiler').select('*').order('ad_tr', { ascending: true }).range(0, 999),
-          supabase.from('bitkiler').select('*').order('ad_tr', { ascending: true }).range(1000, 1999),
-          supabase.from('bitkiler').select('id', { count: 'exact', head: true }),
-          supabase.auth.getUser(),
-        ])
-        const combined = [...(p1.data || []), ...(p2.data || [])]
-        if (p1.error) console.error('bitkiler p1 error:', p1.error)
-        if (p2.error) console.error('bitkiler p2 error:', p2.error)
-        setBitkiler(combined)
-        setTotalCount(countRes.count || combined.length)
-        const u = authRes.data.user
-        if (u) setKullanici({ id: u.id })
-      } catch (e) {
-        console.error('bitkiler exception:', e)
-      }
-      setLoading(false)
-    }
-    yukle()
+    let aktif = true
+    supabase.auth.getUser().then(res => {
+      if (!aktif) return
+      const u = res.data.user
+      if (u) setKullanici({ id: u.id })
+    })
+    return () => { aktif = false }
   }, [])
 
   // Unique organlar ve kaynaklar
