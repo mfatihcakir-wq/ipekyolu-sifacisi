@@ -23,20 +23,20 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     )
 
     const [hekimRes, makaleRes] = await Promise.all([
-      supabase.from('hekim_biyografileri').select('slug, guncellenme').eq('aktif', true),
-      supabase.from('makaleler').select('slug, guncellenme').eq('yayinda', true),
+      supabase.from('hekim_biyografileri').select('slug').eq('aktif', true),
+      supabase.from('makaleler').select('slug, guncelleme').eq('yayinda', true),
     ])
 
-    const hekimRoutes: MetadataRoute.Sitemap = (hekimRes.data || []).map((h: { slug: string; guncellenme?: string }) => ({
+    const hekimRoutes: MetadataRoute.Sitemap = (hekimRes.data || []).map((h: { slug: string }) => ({
       url: `${BASE}/hekim/${h.slug}`,
-      lastModified: h.guncellenme ? new Date(h.guncellenme) : new Date(),
+      lastModified: new Date(),
       changeFrequency: 'monthly' as const,
       priority: 0.8,
     }))
 
-    const makaleRoutes: MetadataRoute.Sitemap = (makaleRes.data || []).map((m: { slug: string; guncellenme?: string }) => ({
+    const makaleRoutes: MetadataRoute.Sitemap = (makaleRes.data || []).map((m: { slug: string; guncelleme?: string }) => ({
       url: `${BASE}/makale/${m.slug}`,
-      lastModified: m.guncellenme ? new Date(m.guncellenme) : new Date(),
+      lastModified: m.guncelleme ? new Date(m.guncelleme) : new Date(),
       changeFrequency: 'monthly' as const,
       priority: 0.7,
     }))
