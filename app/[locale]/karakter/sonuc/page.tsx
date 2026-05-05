@@ -38,7 +38,7 @@ export default function KarakterSonucPage() {
           <div style={{ fontSize: 48, marginBottom: 16 }}>{'\u26A0\uFE0F'}</div>
           <h1 style={{ fontFamily: cinzel.style.fontFamily, fontSize: 22, color: C.primary, marginBottom: 12 }}>{"Lutfen Bir Uzmana Basvurun"}</h1>
           <p style={{ fontSize: 15, color: C.secondary, lineHeight: 1.8, marginBottom: 24 }}>{s.kriz_mesaji || 'Paylastiginiz bilgiler profesyonel destek gerektiriyor.'}</p>
-          <a href="https://wa.me/905331687226" target="_blank" rel="noopener noreferrer" style={{ display: 'inline-flex', alignItems: 'center', gap: 8, background: '#25D366', color: 'white', borderRadius: 10, padding: '14px 28px', fontSize: 14, fontWeight: 600, textDecoration: 'none' }}>{"WhatsApp ile Ulasin"}</a>
+          <a href="https://wa.me/447418600856" target="_blank" rel="noopener noreferrer" style={{ display: 'inline-flex', alignItems: 'center', gap: 8, background: '#25D366', color: 'white', borderRadius: 10, padding: '14px 28px', fontSize: 14, fontWeight: 600, textDecoration: 'none' }}>{"WhatsApp ile Ulasin"}</a>
         </div>
       </div>
       <Footer />
@@ -264,7 +264,7 @@ export default function KarakterSonucPage() {
           <button onClick={() => window.print()} style={{ padding: '14px 10px', border: `1.5px solid ${C.border}`, borderRadius: 10, background: C.white, color: C.secondary, fontSize: 12, fontWeight: 600, cursor: 'pointer', fontFamily: cinzel.style.fontFamily }}>
             {"PDF Indir"}
           </button>
-          <a href="https://wa.me/905331687226?text=Karakter%20analizi%20sonucum%20hakkinda%20gorusmek%20istiyorum" target="_blank" rel="noopener noreferrer" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', background: C.primary, color: C.gold, borderRadius: 10, padding: '14px 10px', fontSize: 12, fontWeight: 600, textDecoration: 'none', fontFamily: cinzel.style.fontFamily }}>
+          <a href="https://wa.me/447418600856?text=Karakter%20analizi%20sonucum%20hakkinda%20gorusmek%20istiyorum" target="_blank" rel="noopener noreferrer" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', background: C.primary, color: C.gold, borderRadius: 10, padding: '14px 10px', fontSize: 12, fontWeight: 600, textDecoration: 'none', fontFamily: cinzel.style.fontFamily }}>
             {"WhatsApp"}
           </a>
           <button onClick={() => router.push('/karakter')} style={{ padding: '14px 10px', border: `1.5px solid ${C.gold}`, borderRadius: 10, background: C.white, color: C.primary, fontSize: 12, fontWeight: 600, cursor: 'pointer', fontFamily: cinzel.style.fontFamily }}>

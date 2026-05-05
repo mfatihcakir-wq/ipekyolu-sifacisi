@@ -6,7 +6,7 @@ const garamond = EB_Garamond({ display: 'swap', preload: false, subsets: ['latin
 
 const C = { primary: '#1C3A26', gold: '#B8860B' }
 
-const WHATSAPP_NUMBER = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || '905331687226'
+const WHATSAPP_NUMBER = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || '447418600856'
 const WHATSAPP_URL = `https://wa.me/${WHATSAPP_NUMBER}`
 const INSTAGRAM_URL = 'https://www.instagram.com/ipekyolusicfacisi'
 

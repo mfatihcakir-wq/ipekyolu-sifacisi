@@ -27,7 +27,7 @@ export default function KVKKPage() {
             <li><strong>{"Ad-Soyad: "}</strong>{"Mehmet Fatih Çakır"}</li>
             <li><strong>{"Başvuru Adresi: "}</strong>{"[BURAYI KULLANICI DOLDURACAK; faaliyet/tebligat adresi]"}</li>
             <li><strong>{"E-posta: "}</strong>{"m.fatih.cakir@gmail.com"}</li>
-            <li><strong>{"Telefon: "}</strong>{"+90 533 168 72 26"}</li>
+            <li><strong>{"Telefon: "}</strong>{"+44 7418 600856"}</li>
             <li><strong>{"VERBİS Kaydı: "}</strong>{"Veri Sorumluları Siciline kayıt başvuru süreci devam etmektedir. Başvuru tamamlandığında sicil numarası bu metinde ilan edilecektir."}</li>
           </ul>
         </div>

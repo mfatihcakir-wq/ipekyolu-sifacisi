@@ -51,7 +51,7 @@ export default function SSSPage() {
 
         <div style={{ marginTop: 32, textAlign: 'center' as const }}>
           <p style={{ fontSize: 13, color: '#999', marginBottom: 12 }}>{"Sorunuz burada yok mu?"}</p>
-          <a href="https://wa.me/905331687226" target="_blank" rel="noopener noreferrer" style={{ display: 'inline-block', background: '#25D366', color: 'white', borderRadius: 10, padding: '12px 24px', fontSize: 13, fontWeight: 600, textDecoration: 'none', fontFamily: cinzel.style.fontFamily, letterSpacing: 1 }}>
+          <a href="https://wa.me/447418600856" target="_blank" rel="noopener noreferrer" style={{ display: 'inline-block', background: '#25D366', color: 'white', borderRadius: 10, padding: '12px 24px', fontSize: 13, fontWeight: 600, textDecoration: 'none', fontFamily: cinzel.style.fontFamily, letterSpacing: 1 }}>
             {"WhatsApp ile Sorun"}
           </a>
         </div>

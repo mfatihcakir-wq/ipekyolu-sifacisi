@@ -1961,7 +1961,7 @@ export default function AnalizClient() {
 
       {/* WhatsApp yardim butonu; sabit */}
       <a
-        href="https://wa.me/905331687226?text=Merhaba%2C%20analiz%20formunda%20yardim%20istiyorum."
+        href="https://wa.me/447418600856?text=Merhaba%2C%20analiz%20formunda%20yardim%20istiyorum."
         target="_blank"
         rel="noopener noreferrer"
         style={{ position: 'fixed' as const, bottom: 20, right: 20, zIndex: 9998, display: 'flex', alignItems: 'center', gap: 10, background: '#25D366', color: 'white', padding: '12px 18px', borderRadius: 30, textDecoration: 'none', fontFamily: 'Roboto, sans-serif', fontSize: 13, fontWeight: 500, boxShadow: '0 4px 16px rgba(37,211,102,0.35)' }}

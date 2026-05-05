@@ -122,7 +122,7 @@ export default function HastaAnalizDetayPage() {
           )}
 
           <div style={{ marginTop: 32, paddingTop: 20, borderTop: '1px solid #DEB887', textAlign: 'center' as const }}>
-            <a href="https://wa.me/905331687226" target="_blank" rel="noopener noreferrer"
+            <a href="https://wa.me/447418600856" target="_blank" rel="noopener noreferrer"
               style={{ display: 'inline-block', padding: '12px 28px', background: '#25D366', color: 'white', textDecoration: 'none', borderRadius: 10, fontFamily: 'Cormorant Garamond,serif', fontSize: 12, fontWeight: 700, letterSpacing: 1 }}>
               {"DANIŞMANA SOR →"}
             </a>
