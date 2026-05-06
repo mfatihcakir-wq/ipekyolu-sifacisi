@@ -1,6 +1,8 @@
 'use client';
 import { useState, useEffect } from 'react';
 import Logo from '@/components/Logo';
+import { createClient } from '@/lib/supabase';
+import { isAdminEmail } from '@/lib/admin';
 
 const NAV = [
   { href: '/analiz', label: 'Analiz' },
@@ -11,6 +13,8 @@ const NAV = [
 
 export default function Header() {
   const [open, setOpen] = useState(false);
+  const [isAdmin, setIsAdmin] = useState(false);
+  const supabase = createClient();
 
   useEffect(() => {
     document.body.style.overflow = open ? 'hidden' : '';
@@ -18,6 +22,16 @@ export default function Header() {
       document.body.style.overflow = '';
     };
   }, [open]);
+
+  useEffect(() => {
+    supabase.auth.getUser().then(({ data }) => {
+      const u = data.user;
+      if (isAdminEmail(u?.email)) setIsAdmin(true);
+    });
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const navLinks = isAdmin ? [...NAV, { href: '/dashboard', label: 'Yönetim' }] : NAV;
 
   return (
     <header className="sticky top-0 z-40 bg-landing-krem/90 backdrop-blur-md border-b border-landing-altin/15">
@@ -30,7 +44,7 @@ export default function Header() {
         </a>
 
         <nav className="hidden md:flex items-center gap-8 font-roboto text-sm text-ikincil">
-          {NAV.map((n) => (
+          {navLinks.map((n) => (
             <a key={n.href} href={n.href} className="hover:text-kdyesil transition-colors">
               {n.label}
             </a>
@@ -59,7 +73,7 @@ export default function Header() {
       {open && (
         <div className="md:hidden fixed inset-0 top-16 bg-landing-krem z-30 flex flex-col">
           <nav className="flex flex-col p-8 gap-6 flex-1">
-            {NAV.map((n) => (
+            {navLinks.map((n) => (
               <a
                 key={n.href}
                 href={n.href}
