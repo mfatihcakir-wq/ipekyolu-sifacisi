@@ -2,7 +2,7 @@ export default function DestekBandi() {
   return (
     <section className="bg-landing-krem border-y border-landing-altin/20 py-12 md:py-16">
       <div className="max-w-3xl mx-auto px-6 text-center">
-        <p className="font-cormorant italic text-lg md:text-xl text-anametin leading-relaxed max-w-prose mx-auto">
+        <p className="font-roboto text-base md:text-lg text-anametin leading-relaxed max-w-prose mx-auto">
           İpek Yolu Şifacısı reklam, sponsor ve kurumsal destek almadan, şahsi
           imkânlarla yürütülen bir araştırma projesidir. Bu çabayı
           sürdürülebilir kılmak isterseniz{' '}
