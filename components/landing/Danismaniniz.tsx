@@ -1,19 +1,11 @@
-import Image from 'next/image';
-
 export default function Danismaniniz() {
   return (
     <section className="bg-kdyesil text-acikaltin py-24 md:py-32">
       <div className="max-w-5xl mx-auto px-6">
         <div className="grid md:grid-cols-3 gap-12 items-start">
           <div className="md:col-span-1">
-            <div className="aspect-square bg-acikaltin/10 mb-5 overflow-hidden relative">
-              <Image
-                src="/fatih.jpg"
-                alt="Mehmet Fatih Çakır"
-                fill
-                sizes="(min-width: 768px) 33vw, 100vw"
-                className="object-cover"
-              />
+            <div className="aspect-square bg-acikaltin/10 mb-5 flex items-center justify-center">
+              <span className="font-arapca text-7xl text-landing-altin opacity-30">طبّ</span>
             </div>
             <p className="font-cormorant text-2xl text-acikaltin mb-1">
               Mehmet Fatih Çakır

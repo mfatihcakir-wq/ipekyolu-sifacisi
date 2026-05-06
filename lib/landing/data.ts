@@ -54,6 +54,20 @@ const ESER_VITRINI: EserKart[] = [
 ];
 
 export async function fetchLandingData() {
+  try {
+    return await fetchLandingDataInner();
+  } catch (error) {
+    console.error('[fetchLandingData]', error);
+    return {
+      stats: FALLBACK_STATS,
+      hekimler: [] as Hekim[],
+      eserler: ESER_VITRINI,
+      makaleler: [] as Makale[],
+    };
+  }
+}
+
+async function fetchLandingDataInner() {
   const supabase = getSupabaseServer();
 
   const [chunkRes, karakterRes, bitkiRes, makaleRes, hekimRes] = await Promise.all([

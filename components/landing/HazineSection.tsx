@@ -82,7 +82,7 @@ export default function HazineSection({ hekimler, eserler, makaleler, counts }: 
 }
 
 function HekimGrid({ hekimler }: { hekimler: Hekim[] }) {
-  if (!hekimler.length) {
+  if (!hekimler || hekimler.length === 0) {
     return (
       <p className="text-center text-ikincil font-roboto">
         Hekim profilleri yakında eklenecek.
@@ -121,6 +121,13 @@ function HekimGrid({ hekimler }: { hekimler: Hekim[] }) {
 }
 
 function EserGrid({ eserler }: { eserler: EserKart[] }) {
+  if (!eserler || eserler.length === 0) {
+    return (
+      <p className="text-center text-ikincil font-roboto">
+        Eser vitrini yakında eklenecek.
+      </p>
+    );
+  }
   return (
     <div className="grid md:grid-cols-3 gap-6">
       {eserler.map((e) => (
@@ -147,7 +154,7 @@ function EserGrid({ eserler }: { eserler: EserKart[] }) {
 }
 
 function MakaleGrid({ makaleler }: { makaleler: Makale[] }) {
-  if (!makaleler.length) {
+  if (!makaleler || makaleler.length === 0) {
     return (
       <p className="text-center text-ikincil font-roboto">
         Yeni makaleler hazırlanıyor.
