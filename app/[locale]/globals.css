@@ -171,6 +171,17 @@ blockquote, cite, .alinti, .klasik-metin {
   }
 }
 
+/* Phase 2 landing redesign base layer */
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+  body {
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+  }
+}
+
 @keyframes rotS {
   from { transform: rotate(0deg); }
   to   { transform: rotate(360deg); }

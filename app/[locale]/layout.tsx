@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
-import { Cormorant_Garamond, EB_Garamond, Roboto } from 'next/font/google';
+import { Cormorant_Garamond, EB_Garamond, Roboto, Noto_Naskh_Arabic } from 'next/font/google';
 import { NextIntlClientProvider } from 'next-intl';
 import { getMessages } from 'next-intl/server';
 import { Analytics } from '@vercel/analytics/react';
@@ -41,6 +41,13 @@ const roboto = Roboto({
   variable: '--font-roboto',
   display: 'swap',
   preload: false,
+});
+
+const naskh = Noto_Naskh_Arabic({
+  subsets: ['arabic'],
+  weight: ['400', '700'],
+  display: 'swap',
+  variable: '--font-arapca',
 });
 
 export const viewport = {
@@ -85,7 +92,7 @@ export default async function RootLayout({
   const messages = await getMessages();
 
   return (
-    <html lang={locale} dir={locale === 'ar' ? 'rtl' : 'ltr'} className={`${cormorantGaramond.variable} ${ebGaramond.variable} ${roboto.variable}`}>
+    <html lang={locale} dir={locale === 'ar' ? 'rtl' : 'ltr'} className={`${cormorantGaramond.variable} ${ebGaramond.variable} ${roboto.variable} ${naskh.variable}`}>
       <head>
         <meta charSet="utf-8" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />

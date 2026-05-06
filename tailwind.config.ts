@@ -31,6 +31,13 @@ const config: Config = {
         // Vurgu
         green: '#059669',
         whatsapp: '#25D366',
+        // Phase 2 landing redesign tokenlari (mevcut altin/krem'e dokunmadan, landing-* prefix ile)
+        kdyesil: '#1C3A26',
+        'landing-altin': '#B8860B',
+        'landing-krem': '#FAF6EF',
+        acikaltin: '#F5EFE0',
+        anametin: '#1A1208',
+        ikincil: '#5C4A2A',
       },
       fontSize: {
         'xs': '11px',
@@ -47,7 +54,7 @@ const config: Config = {
         cormorant: ['var(--font-cormorant)', 'Georgia', 'serif'],
         garamond: ['var(--font-eb-garamond)', 'Georgia', 'serif'],
         roboto: ['var(--font-roboto)', 'Arial', 'sans-serif'],
-        arapca: ['Noto Naskh Arabic', 'serif'],
+        arapca: ['var(--font-arapca)', 'Noto Naskh Arabic', 'serif'],
       },
       maxWidth: {
         prose: '720px',
