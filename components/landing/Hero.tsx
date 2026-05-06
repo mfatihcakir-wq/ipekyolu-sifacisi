@@ -14,7 +14,7 @@ export default function Hero({ stats }: Props) {
               Klasik İslam Tıbbı, Bugünün Sağlığı İçin
             </p>
 
-            <h1 className="font-cormorant text-4xl md:text-6xl text-kdyesil leading-[1.05] tracking-tight mb-6">
+            <h1 className="font-cormorant text-4xl md:text-6xl text-kdyesil leading-[1.15] tracking-tight mb-6">
               Bedeniniz size bir şey söylüyor.
               <br />
               <span className="text-landing-altin italic">
