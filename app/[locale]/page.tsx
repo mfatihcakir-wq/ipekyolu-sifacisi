@@ -6,6 +6,7 @@ import OrnekAnaliz from '@/components/landing/OrnekAnaliz'
 import NasilCalisir from '@/components/landing/NasilCalisir'
 import HazineSection from '@/components/landing/HazineSection'
 import Danismaniniz from '@/components/landing/Danismaniniz'
+import DestekBandi from '@/components/landing/DestekBandi'
 import UcKapiCta from '@/components/landing/UcKapiCta'
 import LandingFooter from '@/components/landing/LandingFooter'
 import MobilStickyCta from '@/components/landing/MobilStickyCta'
@@ -49,6 +50,7 @@ export default async function Page() {
           }}
         />
         <Danismaniniz />
+        <DestekBandi />
         <UcKapiCta />
       </main>
       <LandingFooter />
