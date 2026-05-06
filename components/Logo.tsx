@@ -5,6 +5,7 @@ interface LogoProps {
   color?: 'light' | 'dark'
   animated?: boolean
   showText?: boolean
+  mode?: 'hero' | 'header' | 'footer'
 }
 
 export default function Logo({
@@ -12,7 +13,30 @@ export default function Logo({
   color = 'light',
   animated = true,
   showText = true,
+  mode = 'header',
 }: LogoProps) {
+  // Hero modu, sahneleme animasyonu yok; sadece hero-logo-anim wrapper
+  // (globals.css'teki gentlePulse + hover'da orbit yorungeleri + altin parilti).
+  // SVG element class'lari logo-body / logo-horn / logo-drop / orbit-* olarak
+  // basilir; hilt koordinatlari globals.css transform-origin'leri ile senkron.
+  if (mode === 'hero') {
+    return (
+      <div className="hero-logo-anim" style={{ width: size, height: size }}>
+        <svg width={size} height={size} viewBox="0 0 64 64" fill="none">
+          <ellipse cx="32" cy="37" rx="12" ry="10" fill="none" stroke="#B8860B" strokeWidth="1.5" className="logo-body" />
+          <path d="M22 37 Q22 25 32 23 Q42 25 42 37" fill="none" stroke="#B8860B" strokeWidth="1.5" className="logo-body" />
+          <rect x="29" y="21" width="6" height="3.5" rx="1" fill="none" stroke="#B8860B" strokeWidth="1.5" className="logo-body" />
+          <path d="M32 15 Q36 11 40 13 Q38 18 32 20 Q26 18 24 13 Q28 11 32 15Z" fill="#B8860B" className="logo-horn" />
+          <path d="M32 38 Q28.5 42 32 45.5 Q35.5 42 32 38Z" fill="#B8860B" opacity={0.55} className="logo-drop" />
+          <circle cx="33" cy="31" r="2.5" fill="#EF5350" className="orbit-dem" />
+          <circle cx="28" cy="33.5" r="1.8" fill="#FF7043" className="orbit-saf" />
+          <circle cx="37" cy="33.5" r="1.8" fill="#42A5F5" className="orbit-bal" />
+          <circle cx="33" cy="37" r="1.5" fill="#AB47BC" className="orbit-sev" />
+        </svg>
+      </div>
+    )
+  }
+
   const goldColor = '#B8860B'
   const textColor = color === 'light' ? '#F5EDE0' : '#1C3A26'
   const arColor = color === 'light' ? 'rgba(184,134,11,0.4)' : 'rgba(184,134,11,0.6)'

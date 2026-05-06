@@ -1,24 +1,16 @@
-const DURUM_MAP: Record<string, { etiket: string; bg: string; color: string }> = {
-  yeni: { etiket: 'Beklemede', bg: '#FEF3C7', color: '#92400E' },
-  isleniyor: { etiket: 'İnceleniyor', bg: '#DBEAFE', color: '#1E3A8A' },
-  taslak_hazir: { etiket: 'Son Kontrol', bg: '#EDE9FE', color: '#5B21B6' },
-  onayli: { etiket: 'Hazır', bg: '#D1FAE5', color: '#065F46' },
-  iptal: { etiket: 'İptal', bg: '#F3F4F6', color: '#6B7280' },
-  waitlist: { etiket: 'Sırada', bg: '#FED7AA', color: '#9A3412' },
+const DURUM_MAP: Record<string, { etiket: string; class: string }> = {
+  yeni: { etiket: 'Beklemede', class: 'bg-amber-100 text-amber-800' },
+  isleniyor: { etiket: 'İnceleniyor', class: 'bg-blue-100 text-blue-900' },
+  taslak_hazir: { etiket: 'Son Kontrol', class: 'bg-violet-100 text-violet-800' },
+  onayli: { etiket: 'Hazır', class: 'bg-emerald-100 text-emerald-800' },
+  iptal: { etiket: 'İptal', class: 'bg-gray-100 text-gray-500' },
+  waitlist: { etiket: 'Sırada', class: 'bg-orange-200 text-orange-800' },
 }
 
 export function DurumEtiketi({ durum }: { durum: string }) {
-  const info = DURUM_MAP[durum] || { etiket: durum, bg: '#F3F4F6', color: '#6B7280' }
+  const info = DURUM_MAP[durum] || { etiket: durum, class: 'bg-gray-100 text-gray-500' }
   return (
-    <span style={{
-      display: 'inline-block',
-      padding: '3px 10px',
-      borderRadius: 20,
-      fontSize: 11,
-      fontWeight: 600,
-      background: info.bg,
-      color: info.color,
-    }}>
+    <span className={`inline-block px-[10px] py-[3px] rounded-[20px] text-[11px] font-semibold ${info.class}`}>
       {info.etiket}
     </span>
   )
