@@ -1,4 +1,5 @@
 import type { LandingStats } from '@/lib/landing/types';
+import Logo from '@/components/Logo';
 
 type Props = { stats: LandingStats };
 
@@ -63,9 +64,9 @@ export default function Hero({ stats }: Props) {
             </blockquote>
           </div>
 
-          {/* SAĞ: Mizaç çarkı SVG + canlı sayılar */}
+          {/* SAĞ: Alembik logo + canlı sayılar */}
           <div className="md:col-span-5 flex flex-col items-center">
-            <MizacCarki />
+            <Logo size={300} mode="hero" />
 
             <div className="mt-10 grid grid-cols-3 gap-4 w-full max-w-sm">
               <Stat label="Klasik eser" value={stats.kaynak} />
@@ -92,98 +93,3 @@ function Stat({ label, value }: { label: string; value: number }) {
   );
 }
 
-/**
- * Mizaç çarkı: dört hılt (demevî, safravî, sevdavî, balgamî) eksenli, sıcak/soğuk
- * ve nemli/kuru eksenleri ile dört çeyrekli klasik diyagram.
- * SVG inline; ek istek yok, hafif.
- */
-function MizacCarki() {
-  return (
-    <svg
-      viewBox="0 0 320 320"
-      className="w-full max-w-[300px] h-auto"
-      role="img"
-      aria-label="Mizaç çarkı: dört hılt diyagramı"
-    >
-      {/* Dış halka */}
-      <circle cx="160" cy="160" r="148" fill="none" stroke="#B8860B" strokeWidth="0.5" opacity="0.4" />
-      <circle cx="160" cy="160" r="120" fill="none" stroke="#B8860B" strokeWidth="0.5" opacity="0.25" />
-      <circle cx="160" cy="160" r="60" fill="#FAF6EF" stroke="#B8860B" strokeWidth="0.5" opacity="0.6" />
-
-      {/* Dört çeyrek ayraç çizgileri */}
-      <line x1="12" y1="160" x2="308" y2="160" stroke="#B8860B" strokeWidth="0.5" opacity="0.3" />
-      <line x1="160" y1="12" x2="160" y2="308" stroke="#B8860B" strokeWidth="0.5" opacity="0.3" />
-
-      {/* Eksen etiketleri (Arapça + Türkçe) */}
-      <text x="160" y="22" textAnchor="middle" fontSize="10" fill="#5C4A2A" fontFamily="var(--font-roboto)" letterSpacing="2">
-        SICAK
-      </text>
-      <text x="160" y="305" textAnchor="middle" fontSize="10" fill="#5C4A2A" fontFamily="var(--font-roboto)" letterSpacing="2">
-        SOĞUK
-      </text>
-      <text x="14" y="164" textAnchor="start" fontSize="10" fill="#5C4A2A" fontFamily="var(--font-roboto)" letterSpacing="2">
-        NEM
-      </text>
-      <text x="306" y="164" textAnchor="end" fontSize="10" fill="#5C4A2A" fontFamily="var(--font-roboto)" letterSpacing="2">
-        KURU
-      </text>
-
-      {/* Dört hılt: konum + etiket + Arapça karşılığı */}
-      {/* Demevî (sıcak + nemli) - sol üst */}
-      <g>
-        <circle cx="100" cy="100" r="34" fill="#B8860B" opacity="0.12" />
-        <circle cx="100" cy="100" r="34" fill="none" stroke="#B8860B" strokeWidth="0.8" />
-        <text x="100" y="92" textAnchor="middle" fontSize="13" fill="#1C3A26" fontFamily="var(--font-cormorant)" fontWeight="500">
-          Demevî
-        </text>
-        <text x="100" y="108" textAnchor="middle" fontSize="13" fill="#B8860B" fontFamily="var(--font-arapca)">
-          دموي
-        </text>
-      </g>
-
-      {/* Safravî (sıcak + kuru) - sağ üst */}
-      <g>
-        <circle cx="220" cy="100" r="34" fill="#B8860B" opacity="0.12" />
-        <circle cx="220" cy="100" r="34" fill="none" stroke="#B8860B" strokeWidth="0.8" />
-        <text x="220" y="92" textAnchor="middle" fontSize="13" fill="#1C3A26" fontFamily="var(--font-cormorant)" fontWeight="500">
-          Safravî
-        </text>
-        <text x="220" y="108" textAnchor="middle" fontSize="13" fill="#B8860B" fontFamily="var(--font-arapca)">
-          صفراوي
-        </text>
-      </g>
-
-      {/* Balgamî (soğuk + nemli) - sol alt */}
-      <g>
-        <circle cx="100" cy="220" r="34" fill="#B8860B" opacity="0.12" />
-        <circle cx="100" cy="220" r="34" fill="none" stroke="#B8860B" strokeWidth="0.8" />
-        <text x="100" y="212" textAnchor="middle" fontSize="13" fill="#1C3A26" fontFamily="var(--font-cormorant)" fontWeight="500">
-          Balgamî
-        </text>
-        <text x="100" y="228" textAnchor="middle" fontSize="13" fill="#B8860B" fontFamily="var(--font-arapca)">
-          بلغمي
-        </text>
-      </g>
-
-      {/* Sevdavî (soğuk + kuru) - sağ alt */}
-      <g>
-        <circle cx="220" cy="220" r="34" fill="#B8860B" opacity="0.12" />
-        <circle cx="220" cy="220" r="34" fill="none" stroke="#B8860B" strokeWidth="0.8" />
-        <text x="220" y="212" textAnchor="middle" fontSize="13" fill="#1C3A26" fontFamily="var(--font-cormorant)" fontWeight="500">
-          Sevdavî
-        </text>
-        <text x="220" y="228" textAnchor="middle" fontSize="13" fill="#B8860B" fontFamily="var(--font-arapca)">
-          سوداوي
-        </text>
-      </g>
-
-      {/* Merkez: tıbb */}
-      <text x="160" y="155" textAnchor="middle" fontSize="22" fill="#1C3A26" fontFamily="var(--font-arapca)" fontWeight="700">
-        طبّ
-      </text>
-      <text x="160" y="175" textAnchor="middle" fontSize="9" fill="#5C4A2A" fontFamily="var(--font-roboto)" letterSpacing="3">
-        TIBB
-      </text>
-    </svg>
-  );
-}

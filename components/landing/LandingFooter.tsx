@@ -1,12 +1,13 @@
+import Logo from '@/components/Logo';
+
 export default function Footer() {
   return (
     <footer className="bg-anametin text-acikaltin pt-20 pb-10">
       <div className="max-w-6xl mx-auto px-6">
         <div className="grid md:grid-cols-12 gap-10 mb-16">
           <div className="md:col-span-5">
-            <span className="font-arapca text-3xl text-landing-altin">طبّ</span>
-            <h3 className="font-cormorant text-2xl mt-3 mb-4">İpek Yolu Şifacısı</h3>
-            <p className="font-roboto text-sm text-acikaltin/70 leading-relaxed max-w-md">
+            <Logo size={48} mode="footer" color="light" showText={true} />
+            <p className="mt-4 font-roboto text-sm text-acikaltin/70 leading-relaxed max-w-md">
               Klasik İslam ve Osmanlı tıp külliyatını yapay zekâ ile okunur kılan
               bir araştırma projesi. Sahaftaki kitabı mutfak masasına getirme
               çabası.

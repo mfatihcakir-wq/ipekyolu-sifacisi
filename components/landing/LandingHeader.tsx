@@ -1,5 +1,6 @@
 'use client';
 import { useState, useEffect } from 'react';
+import Logo from '@/components/Logo';
 
 const NAV = [
   { href: '/analiz', label: 'Analiz' },
@@ -22,7 +23,7 @@ export default function Header() {
     <header className="sticky top-0 z-40 bg-landing-krem/90 backdrop-blur-md border-b border-landing-altin/15">
       <div className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
         <a href="/" className="flex items-center gap-3" aria-label="Anasayfa">
-          <span className="font-arapca text-2xl text-kdyesil leading-none">طبّ</span>
+          <Logo size={36} mode="header" showText={false} />
           <span className="font-cormorant text-lg text-kdyesil hidden sm:inline">
             İpek Yolu Şifacısı
           </span>
