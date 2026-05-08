@@ -56,6 +56,7 @@ export default function Footer() {
           <div style={{ fontFamily: cinzel.style.fontFamily, color: C.gold, fontSize: 11, fontWeight: 600, letterSpacing: 2, marginBottom: 12 }}>{"KURUMSAL"}</div>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 8, fontSize: 13 }}>
             <Link href="/hakkimizda" style={{ color: 'rgba(255,255,255,0.6)', textDecoration: 'none' }}>{"Hakkımızda"}</Link>
+            <Link href="/proje-hakkinda" style={{ color: 'rgba(255,255,255,0.6)', textDecoration: 'none' }}>{"Proje Hakkında"}</Link>
             <Link href="/sss" style={{ color: 'rgba(255,255,255,0.6)', textDecoration: 'none' }}>{"Sıkça Sorulan Sorular"}</Link>
             <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer" style={{ color: 'rgba(255,255,255,0.6)', textDecoration: 'none' }}>{"WhatsApp İletişim"}</a>
             <a href={INSTAGRAM_URL} target="_blank" rel="noopener noreferrer" style={{ color: 'rgba(255,255,255,0.6)', textDecoration: 'none' }}>{"Instagram"}</a>
