@@ -24,6 +24,7 @@ export default function Footer() {
               <li><a href="/bitkiler" className="hover:text-landing-altin">Bitki külliyatı</a></li>
               <li><a href="/hekimler" className="hover:text-landing-altin">Hekimler</a></li>
               <li><a href="/makale" className="hover:text-landing-altin">Makaleler</a></li>
+              <li><a href="/proje-hakkinda" className="hover:text-landing-altin">Proje Hakkında</a></li>
             </ul>
           </div>
 
