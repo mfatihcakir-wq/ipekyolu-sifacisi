@@ -88,6 +88,11 @@ async function fetchLandingDataInner() {
       .limit(5),
   ]);
 
+  const responses = [chunkRes, karakterRes, bitkiRes, makaleRes, hekimRes];
+  for (const res of responses) {
+    if (res.error) throw new Error(`Supabase query failed: ${res.error.message}`);
+  }
+
   const chunkSayisi =
     (chunkRes.count ?? 0) + (karakterRes.count ?? 0) || FALLBACK_STATS.chunk;
 
