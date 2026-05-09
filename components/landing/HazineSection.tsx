@@ -81,7 +81,7 @@ export default function HazineSection({ hekimler, eserler, makaleler, counts }: 
   );
 }
 
-function HekimGrid({ hekimler }: { hekimler: Hekim[] }) {
+export function HekimGrid({ hekimler }: { hekimler: Hekim[] }) {
   if (!hekimler || hekimler.length === 0) {
     return (
       <p className="text-center text-ikincil font-roboto">
@@ -120,7 +120,7 @@ function HekimGrid({ hekimler }: { hekimler: Hekim[] }) {
   );
 }
 
-function EserGrid({ eserler }: { eserler: EserKart[] }) {
+export function EserGrid({ eserler }: { eserler: EserKart[] }) {
   if (!eserler || eserler.length === 0) {
     return (
       <p className="text-center text-ikincil font-roboto">
@@ -153,7 +153,7 @@ function EserGrid({ eserler }: { eserler: EserKart[] }) {
   );
 }
 
-function MakaleGrid({ makaleler }: { makaleler: Makale[] }) {
+export function MakaleGrid({ makaleler }: { makaleler: Makale[] }) {
   if (!makaleler || makaleler.length === 0) {
     return (
       <p className="text-center text-ikincil font-roboto">
