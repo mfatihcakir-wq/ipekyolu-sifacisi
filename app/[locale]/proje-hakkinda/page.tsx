@@ -1,5 +1,7 @@
 /* eslint-disable react/no-unescaped-entities */
 import type { Metadata } from "next";
+import LandingHeader from "@/components/landing/LandingHeader";
+import LandingFooter from "@/components/landing/LandingFooter";
 
 export const metadata: Metadata = {
   title: "Proje Hakkında | İpek Yolu Şifacısı",
@@ -9,7 +11,9 @@ export const metadata: Metadata = {
 
 export default function ProjeHakkindaPage() {
   return (
-    <main className="bg-landing-krem text-anametin">
+    <div className="bg-landing-krem text-anametin min-h-screen">
+      <LandingHeader />
+      <main>
       <article className="mx-auto max-w-3xl px-6 py-16 md:py-24 font-roboto">
         <header className="mb-12 md:mb-16">
           <h1 className="font-cormorant text-4xl md:text-5xl text-kdyesil leading-tight">
@@ -192,6 +196,8 @@ export default function ProjeHakkindaPage() {
           </p>
         </section>
       </article>
-    </main>
+      </main>
+      <LandingFooter />
+    </div>
   );
 }

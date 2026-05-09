@@ -8,7 +8,7 @@ const NAV = [
   { href: '/analiz', label: 'Analiz' },
   { href: '/bitkiler', label: 'Bitkiler' },
   { href: '/hekimler', label: 'Hekimler' },
-  { href: '/makale', label: 'Makaleler' },
+  { href: '/makaleler', label: 'Makaleler' },
 ];
 
 export default function Header() {

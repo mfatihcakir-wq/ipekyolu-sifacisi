@@ -8,7 +8,7 @@ const FALLBACK_STATS: LandingStats = {
   makale: 5,
 };
 
-const ESER_VITRINI: EserKart[] = [
+export const ESER_VITRINI: EserKart[] = [
   {
     kaynak_kodu: 'SRC-001',
     baslik: 'el-Kânûn fi\u2019t-Tıbb',
