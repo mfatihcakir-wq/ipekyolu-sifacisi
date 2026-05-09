@@ -61,8 +61,7 @@ export default function Footer() {
             saklıdır.
           </p>
           <div className="flex gap-6 flex-wrap">
-            <a href="/gizlilik" className="hover:text-landing-altin">Gizlilik</a>
-            <a href="/kullanim-sartlari" className="hover:text-landing-altin">Kullanım Şartları</a>
+            <a href="/gizlilik-politikasi" className="hover:text-landing-altin">Gizlilik</a>
             <a href="/kvkk" className="hover:text-landing-altin">KVKK</a>
           </div>
         </div>
